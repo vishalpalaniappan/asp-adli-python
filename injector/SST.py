@@ -29,7 +29,7 @@ class SST:
         self.id += 1
         return sstNode
     
-    def addAstNode(self, type, astNode, isSibling):
+    def addAstNode(self, node_type, astNode, isSibling):
         """
             This function accepts a python AST node and creates
             a SST node which it adds to the active node. 
@@ -42,11 +42,11 @@ class SST:
         """
 
         if isinstance(astNode.astNode, ast.FunctionDef):
-            type = "function"
+            node_type = "function"
 
         # Add the logtype id to the astNode to use when generating log statements.
         astNode.id = self.id
-        sstNode = self.createSSTNode(type, astNode.syntax, astNode.lineno)
+        sstNode = self.createSSTNode(node_type, astNode.syntax, astNode.lineno)
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
         else:
@@ -55,13 +55,13 @@ class SST:
         return sstNode
     
 
-    def addCustomNode(self, type, syntax, lineno, isSibling):
+    def addCustomNode(self, node_type, syntax, lineno, isSibling):
         """
             This function accepts a custom node and adds it to the
             SST. This is used because the python AST library does 
             not have nodes for else or finally blocks.
         """    
-        sstNode = self.createSSTNode(type, syntax, lineno)
+        sstNode = self.createSSTNode(node_type, syntax, lineno)
 
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
