@@ -1,6 +1,6 @@
 import sys
 import argparse
-from injector import processFile
+from injector.ProgramProcessor import ProgramProcessor
 
 def main(argv):
     args_parser = argparse.ArgumentParser(
@@ -22,7 +22,7 @@ def main(argv):
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
 
-    processFile(source)
+    ProgramProcessor(source).run()
 
 if "__main__" == __name__:
     sys.exit(main(sys.argv))
