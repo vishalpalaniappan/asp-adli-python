@@ -1,2 +1,0 @@
-def processFile(sourceFile):
-    pass

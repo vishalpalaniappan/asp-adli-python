@@ -1,6 +1,6 @@
 import sys
 import argparse
-import processFile
+from injector import processFile
 
 def main(argv):
     args_parser = argparse.ArgumentParser(
