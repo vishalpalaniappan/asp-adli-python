@@ -1,20 +1,41 @@
-
-from injector import LogInjector
+from injector import helper
+import json
+import ast
+from injector.LogInjector import LogInjector
 
 class ProgramProcessor:
 
     def __init__(self, sourceFile):
         self.sourceFile = sourceFile
+        self.fileTree = {}
         pass
 
-    def run(self):
-        """Process the source file for diagnostic log injection.
-        - Creates a queue to process all files in the program. 
-        - Creates a LogInjector instance for each file in the program. 
-        - Adds any local imports found to the queue and continues processing.
 
-        Args:
-            sourceFile: Path to the source file to be processed
-        """
-        inj = LogInjector.LogInjector(self.sourceFile, 0)
+    def getInjectedSourceRoot(self, inj):
+        '''
+            Given an injector object, this funtion returns 
+            a program injected with diagnostic logs.
+        '''
+        loggingSetupNodes = helper.getRootLoggingSetup("test")
+        fileTreeNodes = [
+            helper.getLoggingStatement(json.dumps(self.fileTree))
+        ]
+        injectedSourceNodes = inj.injectedTree.body
+
+        injectedNodes = loggingSetupNodes.body + fileTreeNodes + injectedSourceNodes
+        return ast.unparse(injectedNodes)
+
+    def run(self):
+        ltCount = 0
+        inj = LogInjector(self.sourceFile, ltCount)
         inj.run()
+
+        self.fileTree[self.sourceFile] = {
+            "source": inj.source,
+            "sst": inj.sst.tree
+        }
+
+        injectedSource = self.getInjectedSourceRoot(inj)
+
+        with open("test.py","w+") as f:
+            f.write(injectedSource)
