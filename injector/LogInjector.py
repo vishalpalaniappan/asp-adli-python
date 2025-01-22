@@ -16,11 +16,14 @@ class LogInjector:
         necessary information. The SST class accepts a NodeExtractor object and 
         uses the extracted information to populate the SST.
     """
-    def __init__(self, source, ltCount):
+    def __init__(self, sourceDir, source, ltCount):
         self.source = open(source,"r").read()
+        self.sourceDir = sourceDir
 
         self.sourcetree = ast.parse(self.source)
         self.injectedTree = ast.Module(body=[],type_ignores=[])
+
+        self.importsFound = []
 
         self.sst = SST(ltCount)
 
@@ -77,6 +80,8 @@ class LogInjector:
         ))
         
         injectedTree.append(tryStatement)
+
+        self.importsFound += helper.checkImport(self.sourceDir, childNode)
     
     def processIfStatement(self, ifNode, injectedTree):
         '''

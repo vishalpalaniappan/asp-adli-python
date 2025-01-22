@@ -1,12 +1,14 @@
 from injector import helper
 import json
 import ast
+import os
 from injector.LogInjector import LogInjector
 
 class ProgramProcessor:
 
     def __init__(self, sourceFile):
         self.sourceFile = sourceFile
+        self.sourceDir = os.path.dirname(sourceFile)
         self.fileTree = {}
         pass
 
@@ -27,7 +29,7 @@ class ProgramProcessor:
 
     def run(self):
         ltCount = 0
-        inj = LogInjector(self.sourceFile, ltCount)
+        inj = LogInjector(self.sourceDir, self.sourceFile, ltCount)
         inj.run()
 
         self.fileTree[self.sourceFile] = {
