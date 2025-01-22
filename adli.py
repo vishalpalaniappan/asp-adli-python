@@ -4,7 +4,7 @@ import processFile
 
 def main(argv):
     args_parser = argparse.ArgumentParser(
-        description="Injects diagnostic logs into source file."
+        description="Injects diagnostic logs into a program."
     )
 
     args_parser.add_argument(
