@@ -14,6 +14,21 @@ class SST:
         }
         self.id = ltCount
         self.activeNode = self.tree
+
+    def createSSTNode(self, type, syntax, lineno):
+        """
+            Creates an SST node with the provided arguments.
+        """
+        sstNode = {
+            "type": type,
+            "children": [],
+            "siblings": [],
+            "syntax": syntax,
+            "id": self.id,
+            "lineno": lineno
+        }
+        self.id += 1
+        return sstNode
     
     def addAstNode(self, type, astNode, isSibling):
         """
@@ -32,21 +47,11 @@ class SST:
 
         # Add the logtype id to the astNode to use when generating log statements.
         astNode.id = id
-        sstNode = {
-            "type": type,
-            "children": [],
-            "siblings": [],
-            "syntax": astNode.syntax,
-            "id": self.id,
-            "lineno": astNode.lineno
-        }
-
+        sstNode = self.createSSTNode(type, astNode.syntax, astNode.lineno)
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
         else:
             self.activeNode["children"].append(sstNode)
-
-        self.id += 1
 
         return sstNode
     
@@ -57,23 +62,14 @@ class SST:
             SST. This is used because the python AST library does 
             not have nodes for else or finally blocks.
         """    
-        node = {
-            "type": type,
-            "children": [],
-            "siblings": [],
-            "syntax": syntax,
-            "id": self.id,
-            "lineno": lineno
-        }
+        sstNode = self.createSSTNode(type, syntax, lineno)
 
         if (isSibling):
-            self.activeNode["siblings"].append(node)
+            self.activeNode["siblings"].append(sstNode)
         else:
-            self.activeNode["children"].append(node)
+            self.activeNode["children"].append(sstNode)
 
-        self.id += 1
-
-        return node
+        return sstNode
     
     
     def getLoggingStatement(self):
