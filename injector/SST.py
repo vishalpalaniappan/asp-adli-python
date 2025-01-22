@@ -45,7 +45,7 @@ class SST:
             type = "function"
 
         # Add the logtype id to the astNode to use when generating log statements.
-        astNode.id = id
+        astNode.id = self.id
         sstNode = self.createSSTNode(type, astNode.syntax, astNode.lineno)
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
@@ -69,16 +69,3 @@ class SST:
             self.activeNode["children"].append(sstNode)
 
         return sstNode
-    
-    
-    def getLoggingStatement(self):
-        """
-            Generates a logging statement using the logtype.
-        """
-        return ast.Expr(
-            ast.Call(
-                func=ast.Name(id='logger.info', ctx=ast.Load()),
-                args=[ast.Constant(value=self.id)],
-                keywords=[]
-            )
-        )
