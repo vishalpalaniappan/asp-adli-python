@@ -38,12 +38,12 @@ LogInjector:
 * Recursively processes the AST until all nodes are consumed with injected variable, logtype and exception log statements.
 
 NodeExtractor:
-* The NodeExtractor class is used to extract metadata from AST nodes (variables etc.) and to generate the logging statements.
+* Used to extract metadata from AST nodes (variables etc.) and to generate the logging statements.
 
 SST:
-* The SST class is used to add nodes to the simplified syntax tree tree and assign logtype ID's.
+* Used to add nodes to the simplified syntax tree tree and assign logtype ID's.
 
-The logging setup is added to each of the injected AST's and they are unparsed into injected source code and placed in the output folder while preserving the original folder structure.
+The logging setup is added to the injected AST's and they are unparsed and placed in the output folder while preserving the original program's folder structure.
 
 # Background
 
