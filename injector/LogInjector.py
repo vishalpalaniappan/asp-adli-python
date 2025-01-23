@@ -67,7 +67,7 @@ class LogInjector:
             ]
         ))
 
-        if isinstance(node.astNode, ast.FunctionDef) or isinstance(node.astNode, ast.Try) or isSibling:
+        if isinstance(node.astNode, ast.FunctionDef, ast.Try) or isSibling:
             injectedTree.append(node.astNode)
         else:
             injectedTree.append(tryStatement)
