@@ -1,8 +1,15 @@
 import sys
+import ast
 import argparse
 from injector.ProgramProcessor import ProgramProcessor
 
+def verify_python_compatibility():
+    if not hasattr(ast, 'unparse'):
+        raise RuntimeError("This program requires Python 3.9+ (ast.unparse not available)")
+
 def main(argv):
+    verify_python_compatibility()
+
     args_parser = argparse.ArgumentParser(
         description="Injects diagnostic logs into a program."
     )
