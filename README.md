@@ -5,7 +5,7 @@ diagnostic logs, please see the background section.
 
 # Usage
 
-Run the tool using the following command
+Run the tool using the following command (using Python 3.9+):
 
   ```shell
   python adli.py <source_path>
