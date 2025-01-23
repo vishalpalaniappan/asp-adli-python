@@ -22,10 +22,11 @@ class ProgramProcessor:
         self.injectors = []
         self.fileQueue = [sourceFile]
 
-    def run(self):
+    def run(self, output_dir: str = "output"):
         '''
-            Injects logs into files in the queue. Any local imports found
-            when processing a file is added to the queue.
+            Injects logs into files in the queue and add to file tree.
+            Any local imports found when processing a file is added to
+            the queue.
         '''
         while len(self.fileQueue) > 0: 
             inj = LogInjector(self.fileQueue.pop(), self.logTypeCount)
@@ -41,15 +42,13 @@ class ProgramProcessor:
             self.logTypeCount = inj.sst.logTypeId
 
         # Create output folder if it doesn't exist
-        outputFolder = os.path.join(os.getcwd(), "output")
+        outputFolder = os.path.join(os.getcwd(), output_dir)
         if not os.path.exists(outputFolder):
             os.makedirs(outputFolder)
                   
         # Write each injected source to file
         for inj in self.injectors:
-
             currFolder = os.path.join(outputFolder, inj.sourceDir)
-
             if not os.path.exists(currFolder):
                 os.makedirs(currFolder)
 
@@ -59,7 +58,6 @@ class ProgramProcessor:
                 source = self.getInjectedSource(inj)
 
             filePath = os.path.join(currFolder, inj.fileNameWExtension)
-            print(filePath, inj.fileNameWExtension)
             with open(filePath, "w+") as f:
                 f.write(source)
         

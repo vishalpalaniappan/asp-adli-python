@@ -1,6 +1,5 @@
 import ast
 import os
-import json
 import pathlib
 from injector import helper
 from injector.NodeExtractor import NodeExtractor
@@ -67,7 +66,7 @@ class LogInjector:
             import, it is processed to check for locally imported files.
         '''
         node = NodeExtractor(childNode)
-        sstChildNode = self.sst.addAstNode("child", node, False)
+        self.sst.addAstNode("child", node, False)
 
         # Add logging statements to the injected tree
         tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
@@ -148,7 +147,6 @@ class LogInjector:
                 sstRootNode = self.sst.activeNode
                 if isinstance(node,ast.Try):
                     self.processTryStatement(node,injectedTree)
-                    pass
                 elif isinstance(node, ast.If):
                     self.processIfStatement(node,injectedTree)
                 else:               
