@@ -1,6 +1,7 @@
 import ast
 import os
 import json
+import pathlib
 from injector import helper
 from injector.NodeExtractor import NodeExtractor
 from injector.SST import SST
@@ -16,9 +17,12 @@ class LogInjector:
         necessary information. The SST class accepts a NodeExtractor object and 
         uses the extracted information to populate the SST.
     """
-    def __init__(self, sourceDir, source, ltCount):
-        self.source = open(source,"r").read()
-        self.sourceDir = sourceDir
+    def __init__(self, sourcePath, ltCount):
+        self.sourcePath = sourcePath
+        self.sourceDir = os.path.dirname(sourcePath)
+        self.fileNameWExtension = os.path.basename(sourcePath)
+        self.fileName = pathlib.Path(sourcePath).stem
+        self.source = open(sourcePath,"r").read()
 
         self.sourcetree = ast.parse(self.source)
         self.injectedTree = ast.Module(body=[],type_ignores=[])
@@ -74,7 +78,7 @@ class LogInjector:
             type=ast.Name(id='Exception', ctx=ast.Load()),
             name='e',
             body=[
-                ast.parse("logger.info(f\"? " + str(node.id) +" {str(e)}\")"),
+                ast.parse("logger.info(f\"? " + str(node.logTypeId) +" {str(e)}\")"),
                 ast.parse("raise e")
             ]
         ))

@@ -48,7 +48,7 @@ class NodeExtractor():
         return ast.Expr(
             ast.Call(
                 func=ast.Name(id='logger.info', ctx=ast.Load()),
-                args=[ast.Constant(value=self.id)],
+                args=[ast.Constant(value=self.logTypeId)],
                 keywords=[]
             )
         )

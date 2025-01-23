@@ -4,14 +4,14 @@ class SST:
 
     def __init__(self, ltCount):
         """
-            Creates the root of the tree and initializes logTypeID.
+            Creates the root of the tree and initializes logType id.
         """
         self.tree = {
             "type": "root",
             "children": [],
             "siblings": [],
         }
-        self.id = ltCount
+        self.logTypeId = ltCount
         self.activeNode = self.tree
 
     def createSSTNode(self, type, syntax, lineno):
@@ -23,10 +23,10 @@ class SST:
             "children": [],
             "siblings": [],
             "syntax": syntax,
-            "id": self.id,
+            "id": self.logTypeId,
             "lineno": lineno
         }
-        self.id += 1
+        self.logTypeId += 1
         return sstNode
     
     def addAstNode(self, node_type, astNode, isSibling):
@@ -45,7 +45,7 @@ class SST:
             node_type = "function"
 
         # Add the logtype id to the astNode to use when generating log statements.
-        astNode.id = self.id
+        astNode.logTypeId = self.logTypeId
         sstNode = self.createSSTNode(node_type, astNode.syntax, astNode.lineno)
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
