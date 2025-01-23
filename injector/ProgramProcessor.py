@@ -89,7 +89,7 @@ class ProgramProcessor:
             Given an injector object, this funtion returns 
             a program injected with diagnostic logs.
         '''
-        loggingSetupNodes = helper.getRootLoggingSetup(str(fileName) + ".cdl")
+        loggingSetupNodes = helper.getRootLoggingSetup(str(fileName))
         fileTreeNodes = [
             helper.getLoggingStatement(
                 json.dumps(self.fileTree))
