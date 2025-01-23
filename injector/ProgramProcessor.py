@@ -43,8 +43,7 @@ class ProgramProcessor:
 
         # Create output folder if it doesn't exist
         outputFolder = os.path.join(os.getcwd(), output_dir)
-        if not os.path.exists(outputFolder):
-            os.makedirs(outputFolder)
+        self.clearAndCreateFolder(outputFolder)
                   
         # Write each injected source to file
         for inj in self.injectors:
