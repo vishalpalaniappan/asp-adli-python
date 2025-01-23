@@ -25,18 +25,25 @@ Running the program will generate a CDL file that can be viewed in the diagnosti
 The ADLI tool is designed to inject diagnostic logs into a python program. It uses the official python abstract syntax
 tree library to parse the code and inject the logs.
 
-* The ProgramProcessor class accepts a source path to a python program.
-* It initializes a file queue with the source path and processes the queue. 
+ProgramProcessor:
+* Accepts a source path to a python program.
+* Initializes a file queue with the source path and processes the queue. 
 * Each file in the queue is processed with the LogInjector class.
 * Any local imports found and added to the queue and processed.
 
-* The LogInjector class parses the python source code into an AST.
-* It creates an empty AST to populate with the injeted nodes.
-* It creates a simplified syntax tree to map the logtype/variables to a position in the program.
-* It recursively processes the AST until all nodes are consumed with injected variable, logtype and exception log statements.
+LogInjector:
+* Parses the python source code into an AST.
+* Creates an empty AST to populate with the injeted nodes.
+* Creates a simplified syntax tree(SST) to map the logtype/variables to a position in the program.
+* Recursively processes the AST until all nodes are consumed with injected variable, logtype and exception log statements.
 
+NodeExtractor:
 * The NodeExtractor class is used to extract metadata from AST nodes (variables etc.) and to generate the logging statements.
-* The SST class is used to add nodes to the SST tree and assign logtype ID's. 
+
+SST:
+* The SST class is used to add nodes to the simplified syntax tree tree and assign logtype ID's.
+
+The logging setup is added to each of the injected AST's and they are unparsed into injected source code and placed in the output folder while preserving the original folder structure.
 
 # Background
 
