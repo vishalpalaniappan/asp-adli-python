@@ -68,22 +68,9 @@ class LogInjector:
         '''
         node = NodeExtractor(childNode)
         self.sst.addAstNode("child", node, False)
-
-        # Add logging statements to the injected tree
-        tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
-        tryStatement.body.append(node.getLoggingStatement())
-        tryStatement.body.append(childNode)
-
-        tryStatement.handlers.append(ast.ExceptHandler(
-            type=ast.Name(id='Exception', ctx=ast.Load()),
-            name='e',
-            body=[
-                ast.parse("logger.info(f\"? " + str(node.logTypeId) +" {str(e)}\")"),
-                ast.parse("raise e")
-            ]
-        ))
         
-        injectedTree.append(tryStatement)
+        injectedTree.append(node.getLoggingStatement())
+        injectedTree.append(childNode)
 
         self.importsFound += helper.checkImport(self.sourceDir, childNode)
     
