@@ -1,7 +1,7 @@
 # Automated Diagnostic Log Injector (ADLI)
 
 This program allows you to inject diagnostic logs into a python program. For more information on
-diagnostic logs, please see the background section.
+diagnostic logs, please see the [background](#Background) section.
 
 # Usage
 
