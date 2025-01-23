@@ -22,7 +22,8 @@ class LogInjector:
         self.sourceDir = os.path.dirname(sourcePath)
         self.fileNameWExtension = os.path.basename(sourcePath)
         self.fileName = pathlib.Path(sourcePath).stem
-        self.source = open(sourcePath,"r").read()
+        with open(sourcePath, "r") as f:
+            self.source = f.read()
 
         self.sourcetree = ast.parse(self.source)
         self.injectedTree = ast.Module(body=[],type_ignores=[])
@@ -30,7 +31,6 @@ class LogInjector:
         self.importsFound = []
 
         self.sst = SST(ltCount)
-
     def run(self):
         """
             Runs the injector and returns the SST and injected code.
