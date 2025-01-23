@@ -88,6 +88,13 @@ class ProgramProcessor:
         '''
             Given an injector object, this funtion returns 
             a program injected with diagnostic logs.
+
+            Args:
+                inj: Injector object containing the processed AST
+                fileName: Name for the logger setup
+            
+            Returns:
+                str: The injected source code as a string
         '''
         loggingSetupNodes = helper.getRootLoggingSetup(str(fileName))
         fileTreeNodes = [

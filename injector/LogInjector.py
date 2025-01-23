@@ -156,6 +156,10 @@ class LogInjector:
             this function on child elements until the tree is consumed.
             As the sourcetree is traversed the nodes are copied from 
             source to injected tree with the corresponding log statements.
+
+            Args:
+                sourceTree: List of AST nodes to process
+                injectedTree: List to inject the processed nodes
         '''
         for node in sourceTree:
             if 'body' in node._fields:
