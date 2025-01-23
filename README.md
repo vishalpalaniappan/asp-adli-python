@@ -11,8 +11,7 @@ Run the tool using the following command (using Python 3.9+):
   python adli.py <source_path>
   ```
 
-The program will generate an output folder which contains a folder with the programs name.
-In this folder, you will find the injected source fils with the original folder structure.
+The program will generate an output folder which contains the injected source files with the original folder structure.
 
 Running the program will generate a CDL file that can be viewed in the diagnostic log viewer.
 
