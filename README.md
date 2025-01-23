@@ -29,13 +29,13 @@ ProgramProcessor:
 * Accepts a source path to a python program.
 * Initializes a file queue with the source path and processes the queue. 
 * Each file in the queue is processed with the LogInjector class.
-* Any local imports found and added to the queue and processed.
+* Any local imports found are added to the queue and processed.
 
 LogInjector:
 * Parses the python source code into an AST.
 * Creates an empty AST to populate with the injected nodes.
 * Creates a Simplified Syntax Tree(SST) to map the logtype/variables to a position in the program.
-* Recursively processes the AST until all nodes are consumed with injected variable, logtype and exception log statements.
+* Recursively processes the AST until all nodes are consumed while injecting variable, logtype and exception log statements.
 
 NodeExtractor:
 * Used to extract metadata from AST nodes (variables etc.) and to generate the logging statements.
