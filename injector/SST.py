@@ -14,7 +14,7 @@ class SST:
         self.logTypeId = ltCount
         self.activeNode = self.tree
 
-    def createSSTNode(self, type, syntax, lineno):
+    def createSSTNode(self, type, syntax, vars, lineno):
         """
             Creates an SST node with the provided arguments.
         """
@@ -24,7 +24,8 @@ class SST:
             "siblings": [],
             "syntax": syntax,
             "id": self.logTypeId,
-            "lineno": lineno
+            "lineno": lineno,
+            "variables": vars,
         }
         self.logTypeId += 1
         return sstNode
@@ -46,7 +47,7 @@ class SST:
 
         # Add the logtype id to the astNode to use when generating log statements.
         astNode.logTypeId = self.logTypeId
-        sstNode = self.createSSTNode(node_type, astNode.syntax, astNode.lineno)
+        sstNode = self.createSSTNode(node_type, astNode.syntax, astNode.vars, astNode.lineno)
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)
         else:
@@ -61,7 +62,7 @@ class SST:
             SST. This is used because the python AST library does 
             not have nodes for else or finally blocks.
         """    
-        sstNode = self.createSSTNode(node_type, syntax, lineno)
+        sstNode = self.createSSTNode(node_type, syntax, [], lineno)
 
         if (isSibling):
             self.activeNode["siblings"].append(sstNode)

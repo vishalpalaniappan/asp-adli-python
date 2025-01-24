@@ -1,5 +1,6 @@
 import ast
 import copy
+from injector.CollectVariableNames import CollectVariableNames
 
 class NodeExtractor():
     """
@@ -28,6 +29,7 @@ class NodeExtractor():
         """
         module = ast.Module(body=[self.astNode], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
+        self.vars = CollectVariableNames(self.astNode).var_names 
             
     def getEmptyASTRootNode(self,node):
         """
@@ -40,6 +42,16 @@ class NodeExtractor():
             if key in n._fields:
                 setattr(n, key, [])
         return n
+    
+    def getVariableLogStatements(self):
+        '''
+            Returns a list of log statements for each variable.
+        '''
+        variableLogStmts = []
+        for name in self.vars:
+            logStr = f"logger.info(\"# {self.logTypeId} %s\", str({name}))"
+            variableLogStmts.append(ast.parse(logStr))   
+        return variableLogStmts
     
     def getLoggingStatement(self):
         """
