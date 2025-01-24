@@ -61,7 +61,8 @@ class LogInjector:
             # Inject try except node into function body
             tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
             tryStatement.body.append(node.getLoggingStatement())
-            tryStatement.body.extend(node.getVariableLogStatements())
+            if len(node.vars) > 0:
+                tryStatement.body.extend(node.getVariableLogStatements())
             tryStatement.body.extend(node.astNode.body)
             tryStatement.handlers.append(helper.getExceptionLog(node.logTypeId))
             
@@ -70,7 +71,9 @@ class LogInjector:
             self.processTree(rootNode.body, tryStatement.body)
         else:
             node.astNode.body.insert(0, node.getLoggingStatement())
-            node.astNode.body.insert(1, node.getVariableLogStatements())
+            if len(node.vars) > 0:
+                for stmt in reversed(node.getVariableLogStatements()):
+                    node.astNode.body.insert(1, stmt)
             injectedTree.append(node.astNode)
             self.processTree(rootNode.body, node.astNode.body)
 
@@ -88,8 +91,10 @@ class LogInjector:
         
         injectedTree.append(node.getLoggingStatement())
         injectedTree.append(childNode)
-        for stmt in node.getVariableLogStatements():
-            injectedTree.append(stmt)
+        
+        if len(node.vars) > 0:
+            for stmt in node.getVariableLogStatements():
+                injectedTree.append(stmt)
 
         self.importsFound += helper.checkImport(self.sourceDir, childNode)
     
