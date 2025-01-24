@@ -25,7 +25,11 @@ class LogInjector:
             self.source = f.read()
 
         self.sourcetree = ast.parse(self.source)
-        self.injectedTree = ast.Module(body=[],type_ignores=[])
+
+        # Surround file with try except structure
+        mainTry = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
+        mainTry.handlers.append(helper.getExceptionLog(0))
+        self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])
 
         self.importsFound = []
 
@@ -34,7 +38,8 @@ class LogInjector:
         """
             Runs the injector and returns the SST and injected code.
         """
-        self.processTree(self.sourcetree.body, self.injectedTree.body)
+        mainTryBody = self.injectedTree.body[0].body
+        self.processTree(self.sourcetree.body, mainTryBody)
     
     def processRootNode(self, rootNode, injectedTree, isSibling):
         '''
