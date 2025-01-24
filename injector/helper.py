@@ -65,3 +65,16 @@ def getLoggingStatement(syntax):
             keywords=[]
         )
     )
+
+def getExceptionLog(logtype_id):
+    '''
+        Returns exception handler object for given logtypeid.
+    '''
+    return ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse("logger.info(f\"? " + str(logtype_id) +" {str(e)}\")"),
+            ast.parse("raise")
+        ]
+    )

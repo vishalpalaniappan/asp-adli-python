@@ -25,7 +25,11 @@ class LogInjector:
             self.source = f.read()
 
         self.sourcetree = ast.parse(self.source)
-        self.injectedTree = ast.Module(body=[],type_ignores=[])
+
+        # Surround file with try except structure
+        mainTry = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
+        mainTry.handlers.append(helper.getExceptionLog(0))
+        self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])
 
         self.importsFound = []
 
@@ -34,7 +38,8 @@ class LogInjector:
         """
             Runs the injector and returns the SST and injected code.
         """
-        self.processTree(self.sourcetree.body, self.injectedTree.body)
+        mainTryBody = self.injectedTree.body[0].body
+        self.processTree(self.sourcetree.body, mainTryBody)
     
     def processRootNode(self, rootNode, injectedTree, isSibling):
         '''
@@ -50,13 +55,23 @@ class LogInjector:
         '''
         node = NodeExtractor(rootNode)
         sstRootNode = self.sst.addAstNode("root", node, isSibling)
-
-        node.astNode.body.insert(0, node.getLoggingStatement())
-
-        injectedTree.append(node.astNode)
-
         self.sst.activeNode = sstRootNode
-        self.processTree(rootNode.body, node.astNode.body)
+
+        if isinstance(rootNode, ast.FunctionDef):
+            # Inject try except node into function body
+            tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
+            tryStatement.body.append(node.getLoggingStatement())
+            tryStatement.body.extend(node.astNode.body)
+            tryStatement.handlers.append(helper.getExceptionLog(node.logTypeId))
+            
+            node.astNode.body = [tryStatement]
+            injectedTree.append(node.astNode)
+            self.processTree(rootNode.body, tryStatement.body)
+        else:
+            node.astNode.body.insert(0, node.getLoggingStatement())
+            injectedTree.append(node.astNode)
+            self.processTree(rootNode.body, node.astNode.body)
+
         return sstRootNode
 
     def processChildNode(self, childNode, injectedTree):
