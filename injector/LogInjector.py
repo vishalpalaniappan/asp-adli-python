@@ -53,7 +53,7 @@ class LogInjector:
         self.sst.activeNode = sstRootNode
 
         if isinstance(rootNode, ast.FunctionDef):
-            # Inject try except node into funtion body
+            # Inject try except node into function body
             tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
             tryStatement.body.append(node.getLoggingStatement())
             tryStatement.body.extend(node.astNode.body)
