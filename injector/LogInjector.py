@@ -56,7 +56,7 @@ class LogInjector:
             # Inject try except node into funtion body
             tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
             tryStatement.body.append(node.getLoggingStatement())
-            tryStatement.body.append(node.astNode.body)
+            tryStatement.body.extend(node.astNode.body)
             tryStatement.handlers.append(helper.getExceptionLog(node.logTypeId))
             
             node.astNode.body = [tryStatement]
