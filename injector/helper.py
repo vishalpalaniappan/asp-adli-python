@@ -68,7 +68,9 @@ def getLoggingStatement(syntax):
 
 def getExceptionLog(logtype_id):
     '''
-        Returns exception handler object for given logtypeid.
+        Returns exception handler object for a given exception. The file name,
+        exception line and exception value are extracted from the exception and 
+        logged.        
     '''
     return ast.ExceptHandler(
         type=ast.Name(id='Exception', ctx=ast.Load()),
