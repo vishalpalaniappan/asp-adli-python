@@ -93,8 +93,7 @@ class LogInjector:
         injectedTree.append(childNode)
         
         if len(node.vars) > 0:
-            for stmt in node.getVariableLogStatements():
-                injectedTree.append(stmt)
+            injectedTree.extend(node.getVariableLogStatements())
 
         self.importsFound += helper.checkImport(self.sourceDir, childNode)
     
