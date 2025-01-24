@@ -75,6 +75,6 @@ def getExceptionLog(logtype_id):
         name='e',
         body=[
             ast.parse("logger.info(f\"? " + str(logtype_id) +" {str(e)}\")"),
-            ast.parse("raise e")
+            ast.parse("raise")
         ]
     )
