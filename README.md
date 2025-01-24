@@ -16,10 +16,6 @@ The program will generate an output folder which contains the injected source fi
 
 Running the program will generate a CDL file that can be viewed in the diagnostic log viewer.
 
-> [!NOTE]  
-> Currently the tool injects logtype and exception log statements. Support for variable log statements
-> will be added to the public repo soon.
-
 # How does it work? 
 
 The ADLI tool is designed to inject diagnostic logs into a python program. It uses the official python abstract syntax
