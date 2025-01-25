@@ -67,11 +67,21 @@ def getLoggingStatement(syntax):
     )
 
 def getExceptionLog(logtype_id):
-    '''
-        Returns exception handler object for a given exception. The file name,
-        exception line and exception value are extracted from the exception and 
-        logged.        
-    '''
+    """
+    Returns an AST exception handler object for logging exceptions.
+    
+    Parameters:
+        logtype_id (str): An identifier used to categorize or tag the exception log entry.
+    
+    Returns:
+        ast.ExceptHandler: An exception handler that logs the exception details and re-raises the exception.
+    
+    Notes:
+        - Captures the exception object as 'e'
+        - Logs the exception with the provided logtype_id
+        - Uses the generic Exception type for catching
+        - Re-raises the original exception after logging
+    """
     return ast.ExceptHandler(
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
