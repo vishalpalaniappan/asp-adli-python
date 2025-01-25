@@ -35,6 +35,7 @@ def getRootLoggingSetup(logFileName):
             logFileName: Name of the generated CDL log file.
     """
     module = ast.Module(body=[], type_ignores=[])
+    module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
     module.body.append(ast.parse("from pathlib import Path"))
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
@@ -50,6 +51,7 @@ def getLoggingSetup():
         Returns the logging setup for any imported files.
     """
     module = ast.Module(body=[], type_ignores=[])
+    module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
     module.body.append(ast.parse("logger = logging.getLogger('root')"))
     return module
@@ -74,7 +76,6 @@ def getExceptionLog(logtype_id):
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("logger.info(f\"? " + str(logtype_id) +" {str(e)}\")"),
-            ast.parse("raise")
+            ast.parse("logger.info(f\"? {traceback.format_exc()}\")"),
         ]
     )
