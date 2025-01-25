@@ -29,12 +29,8 @@ def main(argv):
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
 
-    try:
-        processor = ProgramProcessor(source)
-        processor.run()
-    except Exception as e:
-        print(f"Error processing file: {str(e)}", file=sys.stderr)
-        return -1
+    processor = ProgramProcessor(source)
+    processor.run()
 
 if "__main__" == __name__:
     sys.exit(main(sys.argv))
