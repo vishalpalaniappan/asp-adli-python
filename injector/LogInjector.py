@@ -56,26 +56,14 @@ class LogInjector:
         node = NodeExtractor(rootNode)
         sstRootNode = self.sst.addAstNode("root", node, isSibling)
         self.sst.activeNode = sstRootNode
-
-        if isinstance(rootNode, ast.FunctionDef):
-            # Inject try except node into function body
-            tryStatement = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
-            tryStatement.body.append(node.getLoggingStatement())
-            if len(node.vars) > 0:
-                tryStatement.body.extend(node.getVariableLogStatements())
-            tryStatement.body.extend(node.astNode.body)
-            tryStatement.handlers.append(helper.getExceptionLog(node.logTypeId))
-            
-            node.astNode.body = [tryStatement]
-            injectedTree.append(node.astNode)
-            self.processTree(rootNode.body, tryStatement.body)
-        else:
-            node.astNode.body.insert(0, node.getLoggingStatement())
-            if len(node.vars) > 0:
-                for stmt in reversed(node.getVariableLogStatements()):
-                    node.astNode.body.insert(1, stmt)
-            injectedTree.append(node.astNode)
-            self.processTree(rootNode.body, node.astNode.body)
+    
+        injectedTree.append(node.getLoggingStatement())
+        node.astNode.body.insert(0, node.getLoggingStatement())
+        if len(node.vars) > 0:
+            for stmt in reversed(node.getVariableLogStatements()):
+                node.astNode.body.insert(1, stmt)
+        injectedTree.append(node.astNode)
+        self.processTree(rootNode.body, node.astNode.body)
 
         return sstRootNode
 
