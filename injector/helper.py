@@ -75,7 +75,7 @@ def getExceptionLog(logtype_id):
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("logger.info(f\"? {traceback.format_exc()}\")"),
+            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
             ast.parse("raise"),
         ]
     )
