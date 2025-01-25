@@ -103,10 +103,10 @@ class LogInjector:
             injectedNode = injectedNode.orelse[0]
 
         #Process else block
-        if "next" in ifNode._fields:
+        if len(next) > 0:        
             self.sst.activeNode = self.sst.addCustomNode("root", "else:", None, True)
-            for child in ifNode.next:
-                self.processChildNode(child, injectedNode.next)
+            for child in next:
+                self.processChildNode(child, injectedNode.orelse)
             
             
     def processTryStatement(self, tryNode, injectedTree):
