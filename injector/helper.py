@@ -37,6 +37,7 @@ def getRootLoggingSetup(logFileName):
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
+    module.body.append(ast.parse("import sys"))
     module.body.append(ast.parse("from pathlib import Path"))
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
     s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.cdl')
@@ -67,7 +68,7 @@ def getLoggingStatement(syntax):
         )
     )
 
-def getExceptionLog(logtype_id):
+def getExceptionLog():
     '''
         Returns exception handler object for given logtypeid.
     '''
@@ -75,7 +76,9 @@ def getExceptionLog(logtype_id):
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
+            ast.parse("exc_type, exc_value, exc_tb = sys.exc_info()"),
+            ast.parse("tbe = traceback.TracebackException(exc_type, exc_value, exc_tb)"),
+            ast.parse("logger.error(f\"? {''.join(tbe.format_exception_only())}\")"),
             ast.parse("raise"),
         ]
     )
