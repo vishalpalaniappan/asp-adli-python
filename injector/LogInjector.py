@@ -56,8 +56,7 @@ class LogInjector:
         node = NodeExtractor(rootNode)
         sstRootNode = self.sst.addAstNode("root", node, isSibling)
         self.sst.activeNode = sstRootNode
-    
-        injectedTree.append(node.getLoggingStatement())
+
         node.astNode.body.insert(0, node.getLoggingStatement())
         if len(node.vars) > 0:
             for stmt in reversed(node.getVariableLogStatements()):
