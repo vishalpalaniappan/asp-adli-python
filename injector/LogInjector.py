@@ -56,8 +56,7 @@ class LogInjector:
         node = NodeExtractor(rootNode)
         sstRootNode = self.sst.addAstNode("root", node, isSibling)
         self.sst.activeNode = sstRootNode
-    
-        injectedTree.append(node.getLoggingStatement())
+
         node.astNode.body.insert(0, node.getLoggingStatement())
         if len(node.vars) > 0:
             for stmt in reversed(node.getVariableLogStatements()):
@@ -104,10 +103,10 @@ class LogInjector:
             injectedNode = injectedNode.orelse[0]
 
         #Process else block
-        if len(next) > 0:        
+        if "next" in ifNode._fields:
             self.sst.activeNode = self.sst.addCustomNode("root", "else:", None, True)
-            for child in next:
-                self.processChildNode(child, injectedNode.orelse)
+            for child in ifNode.next:
+                self.processChildNode(child, injectedNode.next)
             
             
     def processTryStatement(self, tryNode, injectedTree):
