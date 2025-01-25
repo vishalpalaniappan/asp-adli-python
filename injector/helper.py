@@ -51,7 +51,6 @@ def getLoggingSetup():
         Returns the logging setup for any imported files.
     """
     module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
     module.body.append(ast.parse("logger = logging.getLogger('root')"))
     return module
