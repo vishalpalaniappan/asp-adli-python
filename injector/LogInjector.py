@@ -38,7 +38,7 @@ class LogInjector:
         self.processTree(self.sourcetree.body, self.injectedTree.body)
 
         if (self.isRoot):
-            mainTry = ast.Try(body=[self.injectedTree.body],handlers=[], orelse=[],finalbody=[])
+            mainTry = ast.Try(body=self.injectedTree.body,handlers=[], orelse=[],finalbody=[])
             mainTry.handlers.append(helper.getExceptionLog())
             self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])        
     
