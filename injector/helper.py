@@ -43,13 +43,16 @@ def getRootLoggingSetup(logFileName):
     module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
     module.body.append(ast.parse("import sys"))
-    module.body.append(ast.parse("from pathlib import Path"))
-    module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
-    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.cdl')
-    module.body.append(ast.parse(s))
     module.body.append(ast.parse("logger = logging.getLogger('root')"))
-    module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
-    module.body.append(ast.parse("logger.addHandler(clp_handler)"))
+    module.body.append(ast.parse("logging.getLogger().setLevel(logging.DEBUG)"))
+    module.body.append(
+        ast.parse("file_handler = logging.FileHandler(\"" + logFileName + ".log\", mode=\"w+\", encoding=\"utf-8\")")
+    )
+    module.body.append(ast.parse("logger.addHandler(file_handler)"))    
+    module.body.append(
+        ast.parse("formatter = logging.Formatter(\"{asctime} {levelname} {message}\", style=\"{\", datefmt=\"%Y-%m-%d %H:%M\")")
+    )
+    module.body.append(ast.parse("file_handler.setFormatter(formatter)"))
     return module
 
 def getLoggingSetup():
@@ -57,8 +60,12 @@ def getLoggingSetup():
         Returns the logging setup for any imported files.
     """
     module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("logger = logging.getLogger('root')"))
+    module.body.append(ast.parse(
+        "import logging"
+    ))
+    module.body.append(ast.parse(
+        "logger = logging.getLogger('root')"
+    ))
     return module
 
 def getLoggingStatement(syntax):
