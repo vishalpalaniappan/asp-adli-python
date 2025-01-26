@@ -11,7 +11,9 @@ class NodeExtractor():
         be extended to support variables.
     """
     def __init__(self, node):
+        self.VARIABLE_NODE_TYPES = (ast.Assign, ast.AnnAssign)
         self.lineno = node.lineno
+        self.vars = []
 
         if 'body' in node._fields:
             if isinstance(node, ast.FunctionDef):
@@ -29,7 +31,9 @@ class NodeExtractor():
         """
         module = ast.Module(body=[self.astNode], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
-        self.vars = CollectVariableNames(self.astNode).var_names 
+
+        if isinstance(self.astNode, self.VARIABLE_NODE_TYPES):
+            self.vars = CollectVariableNames(self.astNode).var_names 
             
     def getEmptyASTRootNode(self,node):
         """
