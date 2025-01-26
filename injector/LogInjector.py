@@ -16,7 +16,8 @@ class LogInjector:
         necessary information. The SST class accepts a NodeExtractor object and 
         uses the extracted information to populate the SST.
     """
-    def __init__(self, sourcePath, ltCount):
+    def __init__(self, sourcePath, ltCount, isRoot):
+        self.isRoot = isRoot
         self.sourcePath = sourcePath
         self.sourceDir = os.path.dirname(sourcePath)
         self.fileNameWExtension = os.path.basename(sourcePath)
@@ -25,11 +26,7 @@ class LogInjector:
             self.source = f.read()
 
         self.sourcetree = ast.parse(self.source)
-
-        # Surround file with try except structure
-        mainTry = ast.Try(body=[],handlers=[], orelse=[],finalbody=[])
-        mainTry.handlers.append(helper.getExceptionLog(0))
-        self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])
+        self.injectedTree = ast.Module( body=[], type_ignores=[])
 
         self.importsFound = []
 
@@ -38,8 +35,12 @@ class LogInjector:
         """
             Runs the injector and returns the SST and injected code.
         """
-        mainTryBody = self.injectedTree.body[0].body
-        self.processTree(self.sourcetree.body, mainTryBody)
+        self.processTree(self.sourcetree.body, self.injectedTree.body)
+
+        if (self.isRoot):
+            mainTry = ast.Try(body=self.injectedTree.body,handlers=[], orelse=[],finalbody=[])
+            mainTry.handlers.append(helper.getExceptionLog())
+            self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])        
     
     def processRootNode(self, rootNode, injectedTree, isSibling):
         '''

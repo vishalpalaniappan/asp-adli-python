@@ -29,7 +29,9 @@ class ProgramProcessor:
             the queue.
         '''
         while len(self.fileQueue) > 0: 
-            inj = LogInjector(self.fileQueue.pop(), self.logTypeCount)
+            path = self.fileQueue.pop()
+            isRootPath = (path == self.sourceFile)
+            inj = LogInjector(path, self.logTypeCount, isRootPath)
             inj.run()
             self.injectors.append(inj)
 
