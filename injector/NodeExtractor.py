@@ -2,6 +2,8 @@ import ast
 import copy
 from injector.CollectVariableNames import CollectVariableNames
 
+VARIABLE_NODE_TYPES = (ast.Assign, ast.For)
+
 class NodeExtractor():
     """
         This class is used to process an AST node to extract
@@ -11,7 +13,6 @@ class NodeExtractor():
         be extended to support variables.
     """
     def __init__(self, node):
-        self.VARIABLE_NODE_TYPES = (ast.Assign, ast.For)
         self.lineno = node.lineno
         self.vars = []
 
@@ -32,7 +33,7 @@ class NodeExtractor():
         module = ast.Module(body=[self.astNode], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
 
-        if isinstance(self.astNode, self.VARIABLE_NODE_TYPES):
+        if isinstance(self.astNode, VARIABLE_NODE_TYPES):
             self.vars = CollectVariableNames(self.astNode).var_names 
             
     def getEmptyASTRootNode(self,node):
