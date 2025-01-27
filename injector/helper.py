@@ -88,8 +88,8 @@ def getExceptionLog():
 
 def getLoggingFunction():
     ''' 
-       Returns a funtion used to log values based on their type.
-       Returns an AST node containing the aspAdliLog function definition.
+       Returns a funtion used to log values based on their type as an AST node
+       containing the aspAdliLog function definition.
        
        The aspAdliLog function logs values with special handling for objects:
        - For objects with __dict__, it logs their dictionary representation
