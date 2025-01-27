@@ -1,6 +1,6 @@
-import ast
+import ast, os
 
-def checkImport(filePath, node):
+def checkImport(rootDir, node):
     """
         Given an import statement, this function tests if
         it is a local import and returns the path.
@@ -8,11 +8,16 @@ def checkImport(filePath, node):
     pathsToCheck = []
     if isinstance(node, ast.Import):
         name = node.names[0].name.replace('.','/')
-        path = name + '.py'
+        path = os.path.join(rootDir, name + '.py')
         pathsToCheck.append(path)
     elif isinstance(node, ast.ImportFrom):
-        module = node.module.replace('.','/')
-        name = node.names[0].name.replace('.','/')
+        module = os.path.join(
+            rootDir,
+            node.module.replace('.','/')
+        )
+        name = os.path.join(
+            node.names[0].name.replace('.','/')
+        )
         pathsToCheck.append(f"{module}/{name}.py".format(module,name))
         pathsToCheck.append(f"{module}.py".format(module))
     
