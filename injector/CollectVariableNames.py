@@ -42,7 +42,7 @@ class CollectVariableNames(ast.NodeVisitor):
 
     def visit_arg(self, node):
         '''
-            Visit subscript node and keep walking.
+            Visit arg node and keep walking.
         '''
         if("arg" in node._fields):
             self.var_names.append(node.arg)
