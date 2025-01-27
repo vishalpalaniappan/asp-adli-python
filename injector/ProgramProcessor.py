@@ -14,9 +14,9 @@ class ProgramProcessor:
     '''
 
     def __init__(self, sourceFile):
-        self.sourceFile = sourceFile
-        self.sourceName = pathlib.Path(sourceFile).stem
-        self.sourceDir = os.path.dirname(sourceFile)
+        self.rootFile = sourceFile
+        self.rootName = pathlib.Path(sourceFile).stem
+        self.rootDir = os.path.dirname(sourceFile)
         self.fileTree = {}
         self.logTypeCount = 1
         self.injectors = []
@@ -30,12 +30,11 @@ class ProgramProcessor:
         '''
         while len(self.fileQueue) > 0: 
             path = self.fileQueue.pop()
-            isRootPath = (path == self.sourceFile)
-            inj = LogInjector(path, self.logTypeCount, isRootPath)
+            inj = LogInjector(path, self.logTypeCount, self.rootFile)
             inj.run()
             self.injectors.append(inj)
 
-            self.fileTree[inj.sourcePath] = {
+            self.fileTree[inj.sourceFile] = {
                 "sst": inj.sst.tree,
                 "source": inj.source,
             }
@@ -44,16 +43,16 @@ class ProgramProcessor:
             self.logTypeCount = inj.sst.logTypeId
 
         # Create output folder if it doesn't exist
-        outputFolder = os.path.join(os.getcwd(), output_dir)
+        outputFolder = os.path.join(os.path.abspath(os.getcwd()), output_dir)
         self.clearAndCreateFolder(outputFolder)
                   
         # Write each injected source to file
         for inj in self.injectors:
-            currFolder = os.path.join(outputFolder, inj.sourceDir)
+            currFolder = os.path.join(outputFolder, inj.relativeDir)
             if not os.path.exists(currFolder):
                 os.makedirs(currFolder)
 
-            if (self.sourceFile == inj.sourcePath):
+            if (self.rootFile == inj.sourceFile):
                 source = self.getInjectedSourceRoot(inj, inj.fileName)
             else:
                 source = self.getInjectedSource(inj)

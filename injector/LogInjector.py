@@ -16,14 +16,15 @@ class LogInjector:
         necessary information. The SST class accepts a NodeExtractor object and 
         uses the extracted information to populate the SST.
     """
-    def __init__(self, sourcePath, ltCount, isRoot):
-        self.isRoot = isRoot
-        self.sourcePath = sourcePath
-        self.sourceDir = os.path.dirname(sourcePath)
-        self.fileNameWExtension = os.path.basename(sourcePath)
-        self.fileName = pathlib.Path(sourcePath).stem
-        with open(sourcePath, "r") as f:
-            self.source = f.read()
+    def __init__(self, sourceFile, ltCount, rootFile):
+
+        self.setFileInfo(sourceFile, rootFile)
+        
+        try:
+            with open(sourceFile, "r") as f:
+                self.source = f.read()
+        except IOError as e:
+            raise IOError(f"Failed to read source file {sourceFile}: {str(e)}")
 
         self.sourcetree = ast.parse(self.source)
         self.injectedTree = ast.Module( body=[], type_ignores=[])
@@ -31,13 +32,30 @@ class LogInjector:
         self.importsFound = []
 
         self.sst = SST(ltCount)
+
+    def setFileInfo(self, sourceFile, rootFile):
+        self.sourceFile = sourceFile
+        self.isRootFile = (sourceFile == rootFile)        
+        self.rootDir = os.path.dirname(rootFile)
+        self.sourceDir = os.path.dirname(sourceFile)
+
+        if os.path.isdir(self.sourceDir):
+            self.relativeDir = os.path.relpath(self.sourceDir, self.rootDir)
+            if (self.relativeDir == "."):
+                self.relativeDir = ""
+        else:
+            self.relativeDir = "./"
+
+        self.fileNameWExtension = os.path.basename(sourceFile)
+        self.fileName = pathlib.Path(sourceFile).stem
+
     def run(self):
         """
             Runs the injector and returns the SST and injected code.
         """
         self.processTree(self.sourcetree.body, self.injectedTree.body)
 
-        if (self.isRoot):
+        if (self.isRootFile):
             mainTry = ast.Try(body=self.injectedTree.body,handlers=[], orelse=[],finalbody=[])
             mainTry.handlers.append(helper.getExceptionLog())
             self.injectedTree = ast.Module( body=[mainTry], type_ignores=[])        
@@ -83,7 +101,7 @@ class LogInjector:
         if len(node.vars) > 0:
             injectedTree.extend(node.getVariableLogStatements())
 
-        self.importsFound += helper.checkImport(self.sourceDir, childNode)
+        self.importsFound += helper.checkImport(self.rootDir, childNode)
     
     def processIfStatement(self, ifNode, injectedTree):
         '''
