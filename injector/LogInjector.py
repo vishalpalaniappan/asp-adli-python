@@ -20,8 +20,11 @@ class LogInjector:
 
         self.setFileInfo(sourceFile, rootFile)
         
-        with open(sourceFile, "r") as f:
-            self.source = f.read()
+        try:
+            with open(sourceFile, "r") as f:
+                self.source = f.read()
+        except IOError as e:
+            raise IOError(f"Failed to read source file {sourceFile}: {str(e)}")
 
         self.sourcetree = ast.parse(self.source)
         self.injectedTree = ast.Module( body=[], type_ignores=[])
