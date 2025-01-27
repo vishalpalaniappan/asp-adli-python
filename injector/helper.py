@@ -102,7 +102,10 @@ def getLoggingFunction():
     return ast.parse(
     '''def aspAdliLog(val, logtypeid):
     if hasattr(val, "__dict__"):
-        val = val.__dict__
+        try:
+            val = val.__dict__
+        except (AttributeError, TypeError):
+            val = str(val)
     logger.info(f"# {logtypeid} {val}")
     '''
     )
