@@ -85,3 +85,16 @@ def getExceptionLog():
             ast.parse("raise"),
         ]
     )
+
+def getLoggingFunction():
+    ''' 
+        Returns a funtion used to log values based on their type.
+    '''
+
+    return ast.parse(
+    '''def aspAdliLog(val, logtypeid):
+    if hasattr(val, "__dict__"):
+        val = val.__dict__
+    logger.info(f"# {logtypeid} {val}")
+    '''
+    )

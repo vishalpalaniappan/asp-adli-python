@@ -2,6 +2,8 @@ import ast
 import copy
 from injector.CollectVariableNames import CollectVariableNames
 
+VARIABLE_NODE_TYPES = (ast.Assign, ast.For, ast.FunctionDef)
+
 class NodeExtractor():
     """
         This class is used to process an AST node to extract
@@ -32,7 +34,7 @@ class NodeExtractor():
         module = ast.Module(body=[self.astNode], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
 
-        if isinstance(self.astNode, self.VARIABLE_NODE_TYPES):
+        if isinstance(self.astNode, VARIABLE_NODE_TYPES):
             self.vars = CollectVariableNames(self.astNode).var_names 
             
     def getEmptyASTRootNode(self,node):
@@ -53,7 +55,7 @@ class NodeExtractor():
         '''
         variableLogStmts = []
         for name in self.vars:
-            logStr = f"logger.info(\"# {self.logTypeId} %s\", str({name}))"
+            logStr = f"aspAdliLog({name}, {self.logTypeId})"
             variableLogStmts.append(ast.parse(logStr))   
         return variableLogStmts
     
