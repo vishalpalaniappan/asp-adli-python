@@ -45,5 +45,6 @@ class CollectVariableNames(ast.NodeVisitor):
             Visit arg node and keep walking.
         '''
         if("arg" in node._fields):
-            self.var_names.append(node.arg)
+            if node.arg not in self.var_names:
+                self.var_names.append(node.arg)
         self.generic_visit(node)
