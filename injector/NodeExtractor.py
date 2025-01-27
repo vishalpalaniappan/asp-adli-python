@@ -2,7 +2,7 @@ import ast
 import copy
 from injector.CollectVariableNames import CollectVariableNames
 
-VARIABLE_NODE_TYPES = (ast.Assign, ast.For)
+VARIABLE_NODE_TYPES = (ast.Assign, ast.For, ast.FunctionDef)
 
 class NodeExtractor():
     """
@@ -54,7 +54,7 @@ class NodeExtractor():
         '''
         variableLogStmts = []
         for name in self.vars:
-            logStr = f"logger.info(\"# {self.logTypeId} %s\", str({name}))"
+            logStr = f"aspAdliLog({name}, {self.logTypeId})"
             variableLogStmts.append(ast.parse(logStr))   
         return variableLogStmts
     
