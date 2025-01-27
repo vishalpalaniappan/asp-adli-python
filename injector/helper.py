@@ -18,8 +18,8 @@ def checkImport(rootDir, node):
         name = os.path.join(
             node.names[0].name.replace('.','/')
         )
-        pathsToCheck.append(f"{module}/{name}.py".format(module,name))
-        pathsToCheck.append(f"{module}.py".format(module))
+        pathsToCheck.append(f"{module}/{name}.py")
+        pathsToCheck.append(f"{module}.py")
     
     validPaths = []
     for path in pathsToCheck:
