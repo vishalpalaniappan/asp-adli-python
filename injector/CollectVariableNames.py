@@ -7,7 +7,7 @@ class CollectVariableNames(ast.NodeVisitor):
     '''
     def __init__(self,node):
         self.var_names = []
-        ast.NodeVisitor.generic_visit(self, node)
+        self.generic_visit(node)
 
     def visit_Name(self,node):
         '''
@@ -16,7 +16,7 @@ class CollectVariableNames(ast.NodeVisitor):
         if (node.id not in self.var_names):
             if isinstance(node.ctx,ast.Store):
                 self.var_names.append(node.id)
-        ast.NodeVisitor.generic_visit(self, node)
+        self.generic_visit(node)
 
     def visit_Attribute(self, node):
         '''
@@ -27,7 +27,7 @@ class CollectVariableNames(ast.NodeVisitor):
         if (syntax not in self.var_names):
             if isinstance(node.ctx, ast.Store):
                 self.var_names.append(syntax)
-        ast.NodeVisitor.generic_visit(self, node)
+        self.generic_visit(node)
 
     def visit_Subscript(self, node):
         '''
@@ -38,4 +38,13 @@ class CollectVariableNames(ast.NodeVisitor):
         if (syntax not in self.var_names):
             if isinstance(node.ctx, ast.Store):
                 self.var_names.append(syntax)
-        ast.NodeVisitor.generic_visit(self, node)
+        self.generic_visit(node)
+
+    def visit_arg(self, node):
+        '''
+            Visit arg node and keep walking.
+        '''
+        if("arg" in node._fields):
+            if node.arg not in self.var_names:
+                self.var_names.append(node.arg)
+        self.generic_visit(node)

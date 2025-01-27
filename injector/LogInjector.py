@@ -55,6 +55,8 @@ class LogInjector:
         """
         self.processTree(self.sourcetree.body, self.injectedTree.body)
 
+        self.injectedTree.body.insert(0, helper.getLoggingFunction())
+
         if (self.isRootFile):
             mainTry = ast.Try(body=self.injectedTree.body,handlers=[], orelse=[],finalbody=[])
             mainTry.handlers.append(helper.getExceptionLog())
