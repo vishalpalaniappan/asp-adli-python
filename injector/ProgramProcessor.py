@@ -60,8 +60,6 @@ class ProgramProcessor:
             filePath = os.path.join(currFolder, inj.fileNameWExtension)
             with open(filePath, "w+") as f:
                 f.write(source)
-        
-
 
     def addToQueue(self, paths):
         '''
