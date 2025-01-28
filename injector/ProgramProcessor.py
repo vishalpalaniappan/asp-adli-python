@@ -34,7 +34,7 @@ class ProgramProcessor:
             inj.run()
             self.injectors.append(inj)
 
-            self.fileTree[inj.sourceFile] = {
+            self.fileTree[inj.fileTreeKey] = {
                 "sst": inj.sst.tree,
                 "source": inj.source,
             }
@@ -60,8 +60,6 @@ class ProgramProcessor:
             filePath = os.path.join(currFolder, inj.fileNameWExtension)
             with open(filePath, "w+") as f:
                 f.write(source)
-        
-
 
     def addToQueue(self, paths):
         '''
