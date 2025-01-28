@@ -13,7 +13,6 @@ class NodeExtractor():
         be extended to support variables.
     """
     def __init__(self, node):
-        self.VARIABLE_NODE_TYPES = (ast.Assign)
         self.lineno = node.lineno
         self.vars = []
 

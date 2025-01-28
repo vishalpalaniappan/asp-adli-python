@@ -39,15 +39,17 @@ class LogInjector:
         self.rootDir = os.path.dirname(rootFile)
         self.sourceDir = os.path.dirname(sourceFile)
 
+        self.fileNameWExtension = os.path.basename(sourceFile)
+        self.fileName = pathlib.Path(sourceFile).stem
+
         if os.path.isdir(self.sourceDir):
             self.relativeDir = os.path.relpath(self.sourceDir, self.rootDir)
             if (self.relativeDir == "."):
                 self.relativeDir = ""
+            self.fileTreeKey = os.path.join(self.relativeDir, self.fileNameWExtension)
         else:
             self.relativeDir = "./"
-
-        self.fileNameWExtension = os.path.basename(sourceFile)
-        self.fileName = pathlib.Path(sourceFile).stem
+            self.fileTreeKey = self.fileNameWExtension
 
     def run(self):
         """
