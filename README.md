@@ -46,7 +46,7 @@ The logging setup is added to the injected AST's and they are unparsed and place
 > [!NOTE]  
 > A more detailed introduction to diagnostic logging and the diagnostic tools it enables is in development.
 
-CDL files are generated through a process called Diagnostic Logging (DL) in which the log type, variable values and exceptions for each statement in the program are logged. Diagnostic logging is enabled by Automated Diagnostic Log Injector (ADLI) tools (coming soon!), which automatically insert the necessary log statements to extract the diagnostic information.
+CDL files are generated through a process called Diagnostic Logging (DL) in which the log type, variable values and exceptions for each statement in the program are logged. Diagnostic logging is enabled by Automated Diagnostic Log Injector (ADLI) tools, which automatically insert the necessary log statements to extract the diagnostic information.
 
 The ADLI tool uses Abstract Syntax Trees (AST's) to traverse through the structure of the program to extract variable names and insert the necessary log statements for logtypes and variables. It inserts try except statements to catch any exceptions which occured when running the program and logs it. It also inserts a log statement to inject the Simplified Syntax Tree (SST) of the program into the header of the CDL file. The SST maps every logtype and variable to a line in the program. The enables us to only log the logtype id, effectively compressing the logtypes by default.
 
