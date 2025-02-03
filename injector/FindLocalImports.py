@@ -38,13 +38,15 @@ def checkImport(rootDir, node):
     """
     pathsToCheck = []
     if isinstance(node, ast.Import):
-        name = node.names[0].name.replace('.', '/')
-        path = os.path.join(rootDir, name + '.py')
-        pathsToCheck.append(path)
+        for alias in node.names:
+            name = alias.name.replace('.', os.sep)
+            path = os.path.join(rootDir, f"{name}.py")
+            pathsToCheck.append(path)
     elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(rootDir, node.module.replace('.', '/'))
-        name = os.path.join(node.names[0].name.replace('.', '/'))
-        pathsToCheck.append(f"{module}/{name}.py")
+        module = os.path.join(rootDir, node.module.replace('.', os.sep))
+        for alias in node.names:
+            name = alias.name.replace('.', os.sep)
+            pathsToCheck.append(os.path.join(module, f"{name}.py"))
         pathsToCheck.append(f"{module}.py")
     
     # Check for valid paths
