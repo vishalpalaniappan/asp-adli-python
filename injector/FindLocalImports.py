@@ -61,6 +61,7 @@ def checkImport(rootDir, node):
             continue
 
     return validPaths
+
 def findLocalImports(sourceFile):
     """
         Find and returns all local imports associated with the source file.
