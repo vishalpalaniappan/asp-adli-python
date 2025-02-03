@@ -22,17 +22,28 @@ class ImportVisitor(ast.NodeVisitor):
     
 def checkImport(rootDir, node):
     """
-        Given an import statement, this function tests if it is a local
-        import and returns the path.
+        Check if an import statement refers to a local file.
+
+        Args:
+            rootDir (str): The root directory to resolve relative imports
+            node (ast.Import | ast.ImportFrom): The AST node representing the import
+
+        Returns:
+            list[str]: List of valid local file paths
+
+        Example:
+            >>> node = ast.parse("import foo.bar").body[0]
+            >>> checkImport("/root", node)
+            ['/root/foo/bar.py']
     """
     pathsToCheck = []
     if isinstance(node, ast.Import):
-        name = node.names[0].name.replace('.','/')
+        name = node.names[0].name.replace('.', '/')
         path = os.path.join(rootDir, name + '.py')
         pathsToCheck.append(path)
     elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(rootDir, node.module.replace('.','/'))
-        name = os.path.join(node.names[0].name.replace('.','/'))
+        module = os.path.join(rootDir, node.module.replace('.', '/'))
+        name = os.path.join(node.names[0].name.replace('.', '/'))
         pathsToCheck.append(f"{module}/{name}.py")
         pathsToCheck.append(f"{module}.py")
     
@@ -40,13 +51,16 @@ def checkImport(rootDir, node):
     validPaths = []
     for path in pathsToCheck:
         try:
-            open(path)
-            validPaths.append(path)
-        except Exception as e:
+            with open(path) as f:
+                validPaths.append(path)
+        except FileNotFoundError:
+            # Skip if file doesn't exist
+            continue
+        except (IOError, PermissionError) as e:
+            print(f"Warning: Failed to check {path}: {e}")
             continue
 
     return validPaths
-
 def findLocalImports(sourceFile):
     """
         Find and returns all local imports associated with the source file.
