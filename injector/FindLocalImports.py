@@ -75,12 +75,16 @@ def findLocalImports(sourceFile):
         try:
             with open(sourceFile, "r") as f:
                 source = f.read()
+            tree = ast.parse(source)
         except IOError as e:
             raise IOError(f"Failed to read source file {sourceFile}: {str(e)}") from e
+        except SyntaxError as e:
+            raise SyntaxError(f"Failed to parse source file {sourceFile}: {str(e)}") from e
         
+        # Add to pathsFound only after successful parsing
         pathsFound.append(sourceFile)        
 
-        for path in ImportVisitor(ast.parse(source), rootDir).importsFound:
+        for path in ImportVisitor(tree, rootDir).importsFound:
             if path not in fileQueue and path not in pathsFound:
                 fileQueue.append(path)
 
