@@ -22,8 +22,8 @@ class ImportVisitor(ast.NodeVisitor):
     
 def checkImport(rootDir, node):
     """
-        Given an import statement, this function tests if
-        it is a local import and returns the path.
+        Given an import statement, this function tests if it is a local
+        import and returns the path.
     """
     pathsToCheck = []
     if isinstance(node, ast.Import):
@@ -36,13 +36,14 @@ def checkImport(rootDir, node):
         pathsToCheck.append(f"{module}/{name}.py")
         pathsToCheck.append(f"{module}.py")
     
+    # Check for valid paths
     validPaths = []
     for path in pathsToCheck:
         try:
             open(path)
             validPaths.append(path)
         except Exception as e:
-            pass
+            continue
 
     return validPaths
 
@@ -60,7 +61,7 @@ def findLocalImports(sourceFile):
             with open(sourceFile, "r") as f:
                 source = f.read()
         except IOError as e:
-            raise IOError(f"Failed to read source file {sourceFile}: {str(e)}")
+            raise IOError(f"Failed to read source file {sourceFile}: {str(e)}") from e
         
         pathsFound.append(sourceFile)        
 
