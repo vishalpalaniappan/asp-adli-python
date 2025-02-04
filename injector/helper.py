@@ -1,4 +1,6 @@
-import ast, os
+import ast
+import os
+import copy
 
 def checkImport(rootDir, node):
     """
@@ -11,13 +13,8 @@ def checkImport(rootDir, node):
         path = os.path.join(rootDir, name + '.py')
         pathsToCheck.append(path)
     elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(
-            rootDir,
-            node.module.replace('.','/')
-        )
-        name = os.path.join(
-            node.names[0].name.replace('.','/')
-        )
+        module = os.path.join(rootDir, node.module.replace('.','/'))
+        name = os.path.join(node.names[0].name.replace('.','/'))
         pathsToCheck.append(f"{module}/{name}.py")
         pathsToCheck.append(f"{module}.py")
     
@@ -85,6 +82,18 @@ def getExceptionLog():
             ast.parse("raise"),
         ]
     )
+
+def getEmptyRootNode(astNode):
+    '''
+        Removes all child nodes from astnode. This is used to 
+        extract the variables without visting the child nodes.
+    '''
+    node = copy.copy(astNode)
+    keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
+    for key in keysToEmpty:
+        if key in node._fields:
+            setattr(node, key, [])
+    return node
 
 def getLoggingFunction():
     ''' 
