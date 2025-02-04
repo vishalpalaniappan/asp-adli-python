@@ -1,6 +1,7 @@
 import ast
 import os
 import copy
+import json
 
 def checkImport(rootDir, node):
     """
@@ -118,3 +119,34 @@ def getLoggingFunction():
     logger.info(f"# {logtypeid} {val}")
     '''
     )
+
+def injectRootLoggingSetup(tree, header, fileName):
+    '''
+        Injects try except structure around the given tree.
+        Injects root logging setup and function the given tree.
+    '''
+    mainTry = ast.Try(
+        body=tree.body,
+        handlers=[getExceptionLog()],
+        orelse=[],
+        finalbody=[]
+    )
+    
+    return ast.Module( body=[
+        getRootLoggingSetup(fileName).body,
+        getLoggingFunction().body,
+        getLoggingStatement(json.dumps(header)),
+        mainTry.body
+    ], type_ignores=[])
+
+def injectLoggingSetup(tree):
+    '''
+        Injects logging setup and function into the provided tree.
+    '''
+    loggingSetup = getLoggingSetup()
+    loggingFunction = getLoggingFunction()
+    return ast.Module( body=[
+        loggingSetup.body,
+        loggingFunction.body,
+        tree.body
+    ], type_ignores=[])

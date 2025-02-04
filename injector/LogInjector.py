@@ -6,9 +6,11 @@ LOG_TYPE_COUNT = 0
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap):
+        self.minLtCount = LOG_TYPE_COUNT + 1
         self.funcLogType = 0
         self.ltmap = ltMap
         self.generic_visit(node)
+        self.maxLtCount = LOG_TYPE_COUNT
 
     def processNode(self, node):
         '''

@@ -22,6 +22,9 @@ class ProgramProcessor:
         self.clearAndCreateFolder(self.outputDirectory)
 
     def run(self):
+        '''
+            Process the program and inject diagnostic logs.
+        '''
         ltMap = {}
         fileTree = {}
         fileOutputInfo = []
@@ -40,8 +43,13 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            fileTree[currRelPath] = source
-            LogInjector(currAst, ltMap)
+            injector = LogInjector(currAst, ltMap)
+
+            fileTree[currRelPath] = {
+                "source": source,
+                "minLt": injector.minLtCount,
+                "maxLt": injector.maxLtCount
+            }
 
             fileOutputInfo.append({
                 "outputFilePath": outputFilePath,
@@ -49,54 +57,27 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-        #Inject ltMap, fileTree and logging setup and write to output file.
+            self.writeInjectedTreesToFile(fileOutputInfo, fileTree, ltMap)
+
+    def writeInjectedTreesToFile(self, fileOutputInfo, fileTree, ltMap):
+        '''
+            Injectes logging setup + fileTree and writes injected trees to file.
+        '''
         for file in fileOutputInfo:     
             if (file["currFilePath"] == self.sourceFile):
                 header = {
                     "fileTree": fileTree,
                     "ltMap": ltMap
                 }
-                currAst = self.injectRootLoggingSetup(file["ast"], header)
+                currAst = helper.injectRootLoggingSetup(file["ast"], header, self.fileName)
             else:
-                currAst = self.injectLoggingSetup(file["ast"])
+                currAst = helper.injectLoggingSetup(file["ast"])
 
             with open(file["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
         with open("ltmap.json","w+") as f:
             f.write(json.dumps(ltMap))
-
-
-    def injectRootLoggingSetup(self, tree, header):
-        '''
-            Injects try except structure around the given tree.
-            Injects root logging setup and function the given tree.
-        '''
-        mainTry = ast.Try(
-            body=tree.body,
-            handlers=[helper.getExceptionLog()],
-            orelse=[],
-            finalbody=[]
-        )
-        
-        return ast.Module( body=[
-            helper.getRootLoggingSetup(self.fileName).body,
-            helper.getLoggingFunction().body,
-            helper.getLoggingStatement(json.dumps(header)),
-            mainTry.body
-        ], type_ignores=[])
-
-    def injectLoggingSetup(self, tree):
-        '''
-            Injects logging setup and function into the provided tree.
-        '''
-        loggingSetup = helper.getLoggingSetup()
-        loggingFunction = helper.getLoggingFunction()
-        return ast.Module( body=[
-            loggingSetup.body,
-            loggingFunction.body,
-            tree.body
-        ], type_ignores=[])
     
     def clearAndCreateFolder (self, path):
         '''
