@@ -42,7 +42,7 @@ def getRootLoggingSetup(logFileName):
     module.body.append(ast.parse("import sys"))
     module.body.append(ast.parse("from pathlib import Path"))
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
-    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.cdl')
+    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
     module.body.append(ast.parse(s))
     module.body.append(ast.parse("logger = logging.getLogger('root')"))
     module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
