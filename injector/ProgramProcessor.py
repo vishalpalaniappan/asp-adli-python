@@ -52,7 +52,11 @@ class ProgramProcessor:
         #Inject ltMap, fileTree and logging setup and write to output file.
         for file in fileOutputInfo:     
             if (file["currFilePath"] == self.sourceFile):
-                currAst = self.injectRootLoggingSetup(file["ast"], ltMap, fileTree)
+                header = {
+                    "fileTree": fileTree,
+                    "ltMap": ltMap
+                }
+                currAst = self.injectRootLoggingSetup(file["ast"], header)
             else:
                 currAst = self.injectLoggingSetup(file["ast"])
 
@@ -63,7 +67,7 @@ class ProgramProcessor:
             f.write(json.dumps(ltMap))
 
 
-    def injectRootLoggingSetup(self, tree, ltMap, fileTree):
+    def injectRootLoggingSetup(self, tree, header):
         '''
             Injects try except structure around the given tree.
             Injects root logging setup and function the given tree.
@@ -78,8 +82,7 @@ class ProgramProcessor:
         return ast.Module( body=[
             helper.getRootLoggingSetup(self.fileName).body,
             helper.getLoggingFunction().body,
-            helper.getLoggingStatement(json.dumps(ltMap)),
-            helper.getLoggingStatement(json.dumps(fileTree)),
+            helper.getLoggingStatement(json.dumps(header)),
             mainTry.body
         ], type_ignores=[])
 
