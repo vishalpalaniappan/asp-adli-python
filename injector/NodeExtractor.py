@@ -1,67 +1,74 @@
 import ast
 import copy
+from injector import helper
 from injector.CollectVariableNames import CollectVariableNames
 
 VARIABLE_NODE_TYPES = (ast.Assign, ast.For, ast.FunctionDef)
+VAR_COUNT = 0
 
 class NodeExtractor():
     """
         This class is used to process an AST node to extract
-        the syntax. It is passed into the SST class to populate
-        the SST nodes information. It also exposes functions to 
-        generate the logging statements for this node. This will 
-        be extended to support variables.
+        the syntax and variables. It also returns nodes with the
+        injected log statements which are used by NodeTransformer
+        to replace the original nodes.
     """
-    def __init__(self, node):
-        self.lineno = node.lineno
+    def __init__(self, node, logType, logTypeFuncId):
         self.vars = []
+        self.logTypeId = logType
+        self.astNode = node
+        self.extractFromASTNode()
 
-        if 'body' in node._fields:
-            if isinstance(node, ast.FunctionDef):
-                self.type = "function"
-            self.astNode = self.getEmptyASTRootNode(node)
-            self.extractFromASTNode()
-        else:
-            self.astNode = node
-            self.extractFromASTNode()
+        self.ltMap = {
+            "id": logType,
+            "funcid": logTypeFuncId,
+            "syntax": self.syntax,
+            "lineno": node.lineno,
+            "type": "function" if isinstance(node, ast.FunctionDef) else "child",
+            "vars": self.vars
+        }
 
     def extractFromASTNode(self):
-        """
+        '''
             Creates an AST module and initializes it with the astNode.
-            Unparses it to get the syntax and saves it.
-        """
-        module = ast.Module(body=[self.astNode], type_ignores=[])
+            Unparses it to get the syntax/variables. For nodes with 
+            a body, it removes all children before extracting the syntax
+            and variables. 
+        '''
+        global VAR_COUNT
+
+        if 'body' in self.astNode._fields:
+            node = helper.getEmptyRootNode(self.astNode)
+        else:
+            node = self.astNode
+
+        module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
 
-        if isinstance(self.astNode, VARIABLE_NODE_TYPES):
-            self.vars = CollectVariableNames(self.astNode).var_names 
-            
-    def getEmptyASTRootNode(self,node):
-        """
-            Removes all children from the AST node so that the syntax
-            of the parent can be extracted.
-        """
-        n = copy.copy(node)
-        keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
-        for key in keysToEmpty:
-            if key in n._fields:
-                setattr(n, key, [])
-        return n
+        if isinstance(node, VARIABLE_NODE_TYPES):
+            for var in CollectVariableNames(node).var_names:
+                VAR_COUNT += 1
+                self.vars.append({
+                    "varId": VAR_COUNT,
+                    "name": var
+                })
     
     def getVariableLogStatements(self):
         '''
             Returns a list of log statements for each variable.
         '''
         variableLogStmts = []
-        for name in self.vars:
-            logStr = f"aspAdliLog({name}, {self.logTypeId})"
+        for varObj in self.vars:
+            name = varObj["name"]
+            varId = varObj["varId"]
+            logStr = f"aspAdliLog({name}, {varId})"
             variableLogStmts.append(ast.parse(logStr))   
         return variableLogStmts
     
     def getLoggingStatement(self):
-        """
+        '''
             Generates a logging statement using the logtype.
-        """
+        '''
         return ast.Expr(
             ast.Call(
                 func=ast.Name(id='logger.info', ctx=ast.Load()),
@@ -69,3 +76,66 @@ class NodeExtractor():
                 keywords=[]
             )
         )
+
+    def getInjectedNodes(self):
+        '''
+            Returns a list with injected log statements 
+            to add to the tree.
+            
+            Example:
+                logger.info(<logtype_id>)
+                <original_ast_node>
+        '''
+        nodes = [
+            self.getLoggingStatement(),
+            self.astNode,
+            self.getVariableLogStatements()
+        ]
+        return nodes
+
+    def getInjectedNodesIf(self):
+        '''
+            Returns a list with injected log statements 
+            for if nodes to add to the tree.
+            
+            Example:
+                logger.info(<logtype_id>)
+                if <expression>:
+                    ...
+        '''
+        nodes = [
+            self.getLoggingStatement(),
+            self.astNode
+        ]
+        return nodes
+    
+    def getInjectedNodesFunc(self):
+        '''
+            Returns a list with injected log statements 
+            to add to the tree for functions.
+            
+            Example:
+                def function():
+                    logger.info(<logtype_id>)
+                    ...
+        '''
+        self.astNode.body.insert(0, self.getLoggingStatement())
+        return self.astNode
+    
+    def getInjectedNodesFor(self):
+        '''
+            Returns a list with injected log statements 
+            to add to the tree for FOR nodes.
+            
+            Example:
+                logger.info(<logtype_id>)
+                for i in numbers:
+                    ...
+                    logger.info(<logtype_id>)
+        '''
+        self.astNode.body.append(self.getLoggingStatement())
+        nodes = [
+            self.getLoggingStatement(),
+            self.astNode
+        ]
+        return nodes

@@ -1,10 +1,11 @@
 import shutil
 import os
 import ast
+import json
 from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
-from injector.LogInjectorVisitor import LogInjectorVisitor
+from injector.LogInjector import LogInjector
 
 class ProgramProcessor:
     '''
@@ -21,33 +22,48 @@ class ProgramProcessor:
         self.clearAndCreateFolder(self.outputDirectory)
 
     def run(self):
+        ltMap = {}
+        fileTree = {}
+        fileOutputInfo = []
+        files = findLocalImports(self.sourceFile)
 
-        for currFilePath in findLocalImports(self.sourceFile):
-            # Create output file path and output file directory
+        # Process every file found in the program
+        for currFilePath in files:
             currRelPath = os.path.relpath(currFilePath, self.sourceFileDirectory)
             outputFilePath = os.path.join(self.outputDirectory, currRelPath)
             outputFileDir = os.path.dirname(outputFilePath)
 
-            # Create directory if it doesn't exist
             if (not os.path.exists(outputFileDir)):
                 os.makedirs(outputFileDir)
 
-            # Read the current file and parse into AST
             with open(currFilePath, "r") as f:
-                currAst = ast.parse(f.read())
-            
-            # Inject adli specific nodes into source file
-            if (currFilePath == self.sourceFile):
-                currAst = self.injectRootLoggingSetup(currAst)
-            else:
-                currAst = self.injectLoggingSetup(currAst)
+                source = f.read()
 
-            # Write injected source into output directory
-            with open(outputFilePath, 'w+') as f:
+            currAst = ast.parse(source)
+            fileTree[currRelPath] = source
+            LogInjector(currAst, ltMap)
+
+            fileOutputInfo.append({
+                "outputFilePath": outputFilePath,
+                "currFilePath": currFilePath,
+                "ast": currAst                
+            })
+
+        #Inject ltMap, fileTree and logging setup and write to output file.
+        for file in fileOutputInfo:     
+            if (file["currFilePath"] == self.sourceFile):
+                currAst = self.injectRootLoggingSetup(file["ast"], ltMap, fileTree)
+            else:
+                currAst = self.injectLoggingSetup(file["ast"])
+
+            with open(file["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
+        with open("ltmap.json","w+") as f:
+            f.write(json.dumps(ltMap))
 
-    def injectRootLoggingSetup(self, tree):
+
+    def injectRootLoggingSetup(self, tree, ltMap, fileTree):
         '''
             Injects try except structure around the given tree.
             Injects root logging setup and function the given tree.
@@ -58,12 +74,12 @@ class ProgramProcessor:
             orelse=[],
             finalbody=[]
         )
-        loggingSetup = helper.getRootLoggingSetup(self.fileName)
-        loggingFunction = helper.getLoggingFunction()
         
         return ast.Module( body=[
-            loggingSetup.body,
-            loggingFunction.body,
+            helper.getRootLoggingSetup(self.fileName).body,
+            helper.getLoggingFunction().body,
+            helper.getLoggingStatement(json.dumps(ltMap)),
+            helper.getLoggingStatement(json.dumps(fileTree)),
             mainTry.body
         ], type_ignores=[])
 
