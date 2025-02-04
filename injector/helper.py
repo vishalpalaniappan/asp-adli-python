@@ -86,7 +86,7 @@ def getExceptionLog():
 def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
-        extract the variables without visting the child nodes.
+        extract the variables without visiting the child nodes.
     '''
     node = copy.copy(astNode)
     keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
