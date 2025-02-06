@@ -1,6 +1,5 @@
 import ast
 from injector.NodeExtractor import NodeExtractor
-from injector import helper
 
 LOG_TYPE_COUNT = 0
 
