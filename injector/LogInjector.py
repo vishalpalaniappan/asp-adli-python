@@ -76,3 +76,8 @@ class LogInjector(ast.NodeTransformer):
         _node = self.processNode(node)
         self.generic_visit(node)
         return _node.getInjectedNodesFor()
+    
+    def visit_While(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesWhile()

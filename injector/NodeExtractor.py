@@ -134,6 +134,26 @@ class NodeExtractor():
                     logger.info(<logtype_id>)
         '''
         self.astNode.body.append(self.getLoggingStatement())
+        self.astNode.body.insert(0, self.getVariableLogStatements())
+        nodes = [
+            self.getLoggingStatement(),
+            self.astNode
+        ]
+        return nodes
+    
+    def getInjectedNodesWhile(self):
+        '''
+            Returns a list with injected log statements 
+            to add to the tree for WHILE nodes.
+            
+            Example:
+                logger.info(<logtype_id>)
+                while (i < 10):
+                    ...
+                    logger.info(<logtype_id>)
+        '''
+        self.astNode.body.append(self.getLoggingStatement())
+        self.astNode.body.insert(0, self.getVariableLogStatements())
         nodes = [
             self.getLoggingStatement(),
             self.astNode
