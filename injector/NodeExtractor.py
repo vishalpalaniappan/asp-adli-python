@@ -113,7 +113,7 @@ class NodeExtractor():
         ]
         return nodes
 
-    def injectLogsTypeC(self) -> ast.AST:
+    def injectLogsTypeC(self) -> list[ast.AST]:
         '''
             Example:
                 def func_1():
@@ -124,7 +124,7 @@ class NodeExtractor():
         '''
         self.astNode.body.insert(0, self.getLoggingStatement())
         self.astNode.body.insert(1, self.getVariableLogStatements())
-        return self.astNode
+        return [self.astNode]
 
     def injectLogsTypeD(self) -> list[ast.AST]:
         '''
