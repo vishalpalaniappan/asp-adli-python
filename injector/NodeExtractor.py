@@ -103,6 +103,7 @@ class NodeExtractor():
                 if <expression>:
                     ...
         '''
+        self.astNode.body.insert(0, self.getVariableLogStatements())
         nodes = [
             self.getLoggingStatement(),
             self.astNode
