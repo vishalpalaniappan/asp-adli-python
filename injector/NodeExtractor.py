@@ -24,9 +24,13 @@ class NodeExtractor():
             "funcid": logTypeFuncId,
             "syntax": self.syntax,
             "lineno": node.lineno,
-            "type": "function" if isinstance(node, ast.FunctionDef) else "child",
+            "type": "child",
             "vars": self.vars
         }
+
+        if isinstance(node, ast.FunctionDef):
+            self.ltMap["type"] = "function"
+            self.ltMap["name"] = node.name
 
     def extractFromASTNode(self):
         '''
@@ -45,13 +49,13 @@ class NodeExtractor():
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
 
-        if isinstance(node, VARIABLE_NODE_TYPES):
-            for var in CollectVariableNames(node).var_names:
-                VAR_COUNT += 1
-                self.vars.append({
-                    "varId": VAR_COUNT,
-                    "name": var
-                })
+        # if isinstance(node, VARIABLE_NODE_TYPES):
+        for var in CollectVariableNames(node).var_names:
+            VAR_COUNT += 1
+            self.vars.append({
+                "varId": VAR_COUNT,
+                "name": var
+            })
     
     def getVariableLogStatements(self):
         '''
@@ -67,7 +71,7 @@ class NodeExtractor():
     
     def getLoggingStatement(self):
         '''
-            Generates a logging statement using the logtype.
+            Generates a logging statement using the logtype id.
         '''
         return ast.Expr(
             ast.Call(
@@ -77,14 +81,14 @@ class NodeExtractor():
             )
         )
 
-    def getInjectedNodes(self):
+    def injectLogsTypeA(self):
         '''
-            Returns a list with injected log statements 
-            to add to the tree.
-            
             Example:
                 logger.info(<logtype_id>)
                 <original_ast_node>
+                logger.info(<var_id_1>)
+                ...
+                logger.info(<var_id_n>)
         '''
         nodes = [
             self.getLoggingStatement(),
@@ -93,15 +97,14 @@ class NodeExtractor():
         ]
         return nodes
 
-    def getInjectedNodesIf(self):
+    def injectLogsTypeB(self):
         '''
-            Returns a list with injected log statements 
-            for if nodes to add to the tree.
-            
             Example:
                 logger.info(<logtype_id>)
                 if <expression>:
+                    logger.info(<var_id_1>)
                     ...
+                    logger.info(<var_id_n>)
         '''
         self.astNode.body.insert(0, self.getVariableLogStatements())
         nodes = [
@@ -109,47 +112,27 @@ class NodeExtractor():
             self.astNode
         ]
         return nodes
-    
-    def getInjectedNodesFunc(self):
+
+    def injectLogsTypeC(self):
         '''
-            Returns a list with injected log statements 
-            to add to the tree for functions.
-            
             Example:
-                def function():
+                def func_1():
                     logger.info(<logtype_id>)
                     ...
+                    logger.info(<var_id_1>)
+                    logger.info(<var_id_n>)
         '''
         self.astNode.body.insert(0, self.getLoggingStatement())
+        self.astNode.body.insert(1, self.getVariableLogStatements())
         return self.astNode
-    
-    def getInjectedNodesFor(self):
+
+    def injectLogsTypeD(self):
         '''
-            Returns a list with injected log statements 
-            to add to the tree for FOR nodes.
-            
             Example:
                 logger.info(<logtype_id>)
-                for i in numbers:
-                    ...
-                    logger.info(<logtype_id>)
-        '''
-        self.astNode.body.append(self.getLoggingStatement())
-        self.astNode.body.insert(0, self.getVariableLogStatements())
-        nodes = [
-            self.getLoggingStatement(),
-            self.astNode
-        ]
-        return nodes
-    
-    def getInjectedNodesWhile(self):
-        '''
-            Returns a list with injected log statements 
-            to add to the tree for WHILE nodes.
-            
-            Example:
-                logger.info(<logtype_id>)
-                while (i < 10):
+                for <expression>:
+                    logger.info(<var_id_1>)
+                    logger.info(<var_id_n>)
                     ...
                     logger.info(<logtype_id>)
         '''

@@ -36,80 +36,80 @@ class LogInjector(ast.NodeTransformer):
         _node = self.processNode(node)
         self.generic_visit(node)
         self.funcLogType = 0
-        return _node.getInjectedNodesFunc()
+        return _node.injectLogsTypeC()
 
     def visit_AsyncFunctionDef(self, node):
         return self.visit_FunctionDef(node)
     
     def visit_Raise(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeA()
     
     def visit_Return(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeA()
 
     def visit_Import(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeA()
     
     def visit_ImportFrom(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeA()
 
     def visit_Expr(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
-
-    def visit_If(self, node):
-        _node = self.processNode(node)
-        self.generic_visit(node)
-        return _node.getInjectedNodesIf()
+        return _node.injectLogsTypeA()
     
     def visit_Assign(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeA()
 
     def visit_AugAssign(self, node):
         _node = self.processNode(node)
-        return _node.getInjectedNodes()
-    
-    def visit_For(self, node):
-        _node = self.processNode(node)
-        self.generic_visit(node)
-        return _node.getInjectedNodesFor()
-    
-    def visit_While(self, node):
-        _node = self.processNode(node)
-        self.generic_visit(node)
-        return _node.getInjectedNodesWhile()
+        return _node.injectLogsTypeA()
     
     def visit_ClassDef(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodes()
+        return _node.injectLogsTypeC()
     
     def visit_Try(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodesFunc()
+        return _node.injectLogsTypeC()
 
     def visit_TryFinally(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodesFunc()
+        return _node.injectLogsTypeC()
 
     def visit_TryExcept(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodesFunc()
+        return _node.injectLogsTypeC()
 
     def visit_ExceptHandler(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodesFunc()
+        return _node.injectLogsTypeC()
 
     def visit_With(self, node):
         _node = self.processNode(node)
         self.generic_visit(node)
-        return _node.getInjectedNodesIf()
+        return _node.injectLogsTypeB()
+
+    def visit_If(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.injectLogsTypeB()
+    
+    def visit_For(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.injectLogsTypeD()
+    
+    def visit_While(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.injectLogsTypeD()
