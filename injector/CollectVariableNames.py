@@ -11,7 +11,7 @@ class CollectVariableNames(ast.NodeVisitor):
 
     def visit_Name(self,node):
         '''
-            Visit name node and keep walking.
+            Visit name node and save stored variables.
         '''
         if (node.id not in self.var_names):
             if isinstance(node.ctx,ast.Store):
@@ -20,7 +20,7 @@ class CollectVariableNames(ast.NodeVisitor):
 
     def visit_Attribute(self, node):
         '''
-            Visit attribute node and keep walking.
+            Visit attribute node and save stored variables.
         '''
         module = ast.Module(body=[node], type_ignores=[])
         syntax = ast.unparse(ast.fix_missing_locations((module)))
@@ -31,7 +31,7 @@ class CollectVariableNames(ast.NodeVisitor):
 
     def visit_Subscript(self, node):
         '''
-            Visit subscript node and keep walking.
+            Visit subscript node and save stored variables.
         '''
         module = ast.Module(body=[node], type_ignores=[])
         syntax = ast.unparse(ast.fix_missing_locations((module)))
@@ -42,7 +42,7 @@ class CollectVariableNames(ast.NodeVisitor):
 
     def visit_arg(self, node):
         '''
-            Visit arg node and keep walking.
+            Visit arg node and save stored variables.
         '''
         if("arg" in node._fields):
             if node.arg not in self.var_names:
