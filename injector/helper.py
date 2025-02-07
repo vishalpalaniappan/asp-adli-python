@@ -136,7 +136,7 @@ def injectRootLoggingSetup(tree, header, fileName):
         getRootLoggingSetup(fileName).body,
         getLoggingFunction().body,
         getLoggingStatement(json.dumps(header)),
-        mainTry.body
+        mainTry
     ], type_ignores=[])
 
 def injectLoggingSetup(tree):
