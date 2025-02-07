@@ -37,6 +37,9 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         self.funcLogType = 0
         return _node.getInjectedNodesFunc()
+
+    def visit_AsyncFunctionDef(self, node):
+        return self.visit_FunctionDef(node)
     
     def visit_Raise(self, node):
         _node = self.processNode(node)
@@ -80,3 +83,33 @@ class LogInjector(ast.NodeTransformer):
         _node = self.processNode(node)
         self.generic_visit(node)
         return _node.getInjectedNodesWhile()
+    
+    def visit_ClassDef(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodes()
+    
+    def visit_Try(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesFunc()
+
+    def visit_TryFinally(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesFunc()
+
+    def visit_TryExcept(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesFunc()
+
+    def visit_ExceptHandler(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesFunc()
+
+    def visit_With(self, node):
+        _node = self.processNode(node)
+        self.generic_visit(node)
+        return _node.getInjectedNodesIf()
