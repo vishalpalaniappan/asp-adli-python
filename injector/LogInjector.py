@@ -4,12 +4,13 @@ from injector.NodeExtractor import NodeExtractor
 LOG_TYPE_COUNT = 0
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, ltMap):
-        self.minLtCount = LOG_TYPE_COUNT + 1
+    def __init__(self, node, ltMap, logTypeCount):
+        self.logTypeCount = logTypeCount
+        self.minLtCount = self.logTypeCount
         self.funcLogType = 0
         self.ltmap = ltMap
         self.generic_visit(node)
-        self.maxLtCount = LOG_TYPE_COUNT
+        self.maxLtCount = self.logTypeCount
 
     def processNode(self, node):
         '''
@@ -18,10 +19,9 @@ class LogInjector(ast.NodeTransformer):
             adds to the ltMap and returns the node
             extractor object.
         '''
-        global LOG_TYPE_COUNT
-        LOG_TYPE_COUNT = LOG_TYPE_COUNT + 1
-        _node = NodeExtractor(node, LOG_TYPE_COUNT, self.funcLogType)
-        self.ltmap[LOG_TYPE_COUNT] = _node.ltMap
+        self.logTypeCount += 1
+        _node = NodeExtractor(node, self.logTypeCount, self.funcLogType)
+        self.ltmap[self.logTypeCount] = _node.ltMap
         return _node
     
     def visit_FunctionDef(self, node):
@@ -31,8 +31,7 @@ class LogInjector(ast.NodeTransformer):
             the function id of child nodes. Reset the function
             id to 0 (global scope) after visiting children.
         '''
-        global LOG_TYPE_COUNT
-        self.funcLogType = LOG_TYPE_COUNT + 1
+        self.funcLogType = self.logTypeCount + 1
         _node = self.processNode(node)
         self.generic_visit(node)
         self.funcLogType = 0

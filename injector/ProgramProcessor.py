@@ -29,6 +29,7 @@ class ProgramProcessor:
         fileTree = {}
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
+        logTypeCount = 0
 
         # Process every file found in the program
         for currFilePath in files:
@@ -43,7 +44,9 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap)
+            injector = LogInjector(currAst, ltMap, logTypeCount)
+
+            logTypeCount = injector.maxLtCount
 
             fileTree[currRelPath] = {
                 "source": source,
@@ -75,9 +78,6 @@ class ProgramProcessor:
 
             with open(file["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
-
-        with open("ltmap.json","w+") as f:
-            f.write(json.dumps(ltMap))
     
     def clearAndCreateFolder (self, path):
         '''
