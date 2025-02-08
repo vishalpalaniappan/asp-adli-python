@@ -1,7 +1,6 @@
 import shutil
 import os
 import ast
-import json
 from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
@@ -13,17 +12,19 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
-
     def __init__(self, sourceFile, workingDirectory):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
-        self.sourceFileDirectory = os.path.dirname(sourceFile)
+        self.sourceFileDirectory = os.path.dirname(sourceFile)                
         self.outputDirectory = os.path.join(workingDirectory, "output")
-        self.clearAndCreateFolder(self.outputDirectory)
+
+        if os.path.exists(self.outputDirectory):
+            shutil.rmtree(self.outputDirectory)
+        os.makedirs(self.outputDirectory)
 
     def run(self):
         '''
-            Process the program and inject diagnostic logs.
+            Find all files, inject logs and write to output folder.
         '''
         ltMap = {}
         fileTree = {}
@@ -60,31 +61,13 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-            self.writeInjectedTreesToFile(fileOutputInfo, fileTree, ltMap)
-
-    def writeInjectedTreesToFile(self, fileOutputInfo, fileTree, ltMap):
-        '''
-            Injectes logging setup + fileTree and writes injected trees to file.
-        '''
+        # Write files to output folder
         for file in fileOutputInfo:     
             if (file["currFilePath"] == self.sourceFile):
-                header = {
-                    "fileTree": fileTree,
-                    "ltMap": ltMap
-                }
+                header = {"fileTree": fileTree, "ltMap": ltMap}
                 currAst = helper.injectRootLoggingSetup(file["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(file["ast"])
 
             with open(file["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
-    
-    def clearAndCreateFolder (self, path):
-        '''
-            If folder exists, clear it and create it again.
-        '''
-        if not os.path.exists(path):
-            os.makedirs(path)
-        else:
-            shutil.rmtree(path)
-            os.makedirs(path)
