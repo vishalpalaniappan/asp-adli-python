@@ -3,7 +3,6 @@ import copy
 from injector import helper
 from injector.CollectVariableNames import CollectVariableNames
 
-VAR_COUNT = 0
 
 class NodeExtractor():
     """
@@ -23,6 +22,7 @@ class NodeExtractor():
             "funcid": logTypeFuncId,
             "syntax": self.syntax,
             "lineno": node.lineno,
+            "end_lineno": node.end_lineno,
             "type": "child",
             "vars": self.vars
         }
@@ -47,13 +47,7 @@ class NodeExtractor():
 
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
-
-        for var in CollectVariableNames(node).var_names:
-            VAR_COUNT += 1
-            self.vars.append({
-                "varId": VAR_COUNT,
-                "name": var
-            })
+        self.vars = CollectVariableNames(node).vars
     
     def getVariableLogStatements(self):
         '''
