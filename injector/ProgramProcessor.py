@@ -1,10 +1,13 @@
 import shutil
 import os
 import ast
+import json
 from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
+
+SAVE_LT_MAP = False
 
 class ProgramProcessor:
     '''
@@ -71,3 +74,7 @@ class ProgramProcessor:
 
             with open(file["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
+
+        if SAVE_LT_MAP:
+            with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
+                f.write(json.dumps(ltMap))
