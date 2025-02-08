@@ -3,7 +3,6 @@ import copy
 from injector import helper
 from injector.CollectVariableNames import CollectVariableNames
 
-VARIABLE_NODE_TYPES = (ast.Assign, ast.For, ast.FunctionDef)
 VAR_COUNT = 0
 
 class NodeExtractor():
@@ -49,7 +48,6 @@ class NodeExtractor():
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
 
-        # if isinstance(node, VARIABLE_NODE_TYPES):
         for var in CollectVariableNames(node).var_names:
             VAR_COUNT += 1
             self.vars.append({
