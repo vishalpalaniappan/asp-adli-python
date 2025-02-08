@@ -1,8 +1,6 @@
 import ast
 from injector.NodeExtractor import NodeExtractor
 
-LOG_TYPE_COUNT = 0
-
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
         self.logTypeCount = logTypeCount
