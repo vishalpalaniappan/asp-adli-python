@@ -45,7 +45,7 @@ def getRootLoggingSetup(logFileName):
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
     s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
     module.body.append(ast.parse(s))
-    module.body.append(ast.parse("logger = logging.getLogger('root')"))
+    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
     module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
     module.body.append(ast.parse("logger.addHandler(clp_handler)"))
     return module
@@ -56,7 +56,7 @@ def getLoggingSetup():
     """
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("logger = logging.getLogger('root')"))
+    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
     return module
 
 def getLoggingStatement(syntax):
