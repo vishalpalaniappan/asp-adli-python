@@ -15,7 +15,7 @@ class LogInjector(ast.NodeTransformer):
             This function is called on every visit.
             It passes the node to the node extractor,
             adds to the ltMap and returns the node
-            extractor object.
+            with the extracted data for injecting logs.
         '''
         self.logTypeCount += 1
         _node = NodeExtractor(node, self.logTypeCount, self.funcLogType)
@@ -25,15 +25,15 @@ class LogInjector(ast.NodeTransformer):
     def visit_FunctionDef(self, node):
         '''
             When visiting functions, set the function id so 
-            that when we continue walking, we can use it to set 
-            the function id of child nodes. Reset the function
-            id to 0 (global scope) after visiting children.
+            that when we continue visiting nodes, we can use it
+            to set the function id of child nodes. Reset the
+            function id to 0 (global scope) after visiting children.
         '''
         self.funcLogType = self.logTypeCount + 1
         _node = self.processNode(node)
         self.generic_visit(node)
         self.funcLogType = 0
-        return _node.injectLogsTypeC()
+        return _node.injectLogsTypeD()
 
     def visit_AsyncFunctionDef(self, node):
         return self.visit_FunctionDef(node)
@@ -41,42 +41,67 @@ class LogInjector(ast.NodeTransformer):
     '''
         INJECT LOGS TYPE A
         Example:
-                logger.info(<logtype_id>)
-                <original_ast_node>
-                logger.info(<var_id_1>)
-                ...
-                logger.info(<var_id_n>)
+            logger.info(<logtype_id>)
+            <original_ast_node>
+
+        INJECT LOGS TYPE B
+        Example:
+            logger.info(<logtype_id>)
+            <original_ast_node>
+            logger.info(<var_id_1>)
+            ...
+            logger.info(<var_id_n>)
     '''
+    def visit_Assign(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Pass(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Global(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Delete(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Nonlocal(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Break(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Continue(self, node):
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_Assert(self, node):
+        return self.processNode(node).injectLogsTypeB()
+
     def visit_Raise(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
     
     def visit_Return(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
 
     def visit_Import(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
     
     def visit_ImportFrom(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
 
     def visit_Expr(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
-    
-    def visit_Assign(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
 
     def visit_AugAssign(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeA()
+        return self.processNode(node).injectLogsTypeB()
+    
+    def visit_AnnAssign(self, node):
+        if "value" in node._fields and node.value == None:
+            return self.processNode(node).injectLogsTypeA()
+        else:
+            return self.processNode(node).injectLogsTypeB()
 
     '''
-        INJECT LOGS TYPE B
+        INJECT LOGS TYPE C
         Example:
             logger.info(<logtype_id>)
             if <expression>:
@@ -86,14 +111,18 @@ class LogInjector(ast.NodeTransformer):
     '''
     def visit_With(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeB()
+        return self.processNode(node).injectLogsTypeC()
+    
+    def visit_AsyncWith(self, node):
+        self.generic_visit(node)
+        return self.processNode(node).injectLogsTypeC()
 
     def visit_If(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeB()
+        return self.processNode(node).injectLogsTypeC()
     
     '''
-        INJECT LOGS TYPE C
+        INJECT LOGS TYPE D
         Example
             def func_1():
                 logger.info(<logtype_id>)
@@ -103,26 +132,26 @@ class LogInjector(ast.NodeTransformer):
     '''
     def visit_ClassDef(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+        return self.processNode(node).injectLogsTypeD()
     
     def visit_Try(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+        return self.processNode(node).injectLogsTypeD()
 
     def visit_TryFinally(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+        return self.processNode(node).injectLogsTypeD()
 
     def visit_TryExcept(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+        return self.processNode(node).injectLogsTypeD()
 
     def visit_ExceptHandler(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+        return self.processNode(node).injectLogsTypeD()
     
     '''
-        INJECT LOGS TYPE D
+        INJECT LOGS TYPE E
         Example:
             logger.info(<logtype_id>)
             for <expression>:
@@ -133,8 +162,12 @@ class LogInjector(ast.NodeTransformer):
     '''    
     def visit_For(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
+        return self.processNode(node).injectLogsTypeE()
+    
+    def visit_AsyncFor(self, node):
+        self.generic_visit(node)
+        return self.processNode(node).injectLogsTypeE()
     
     def visit_While(self, node):
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
+        return self.processNode(node).injectLogsTypeE()
