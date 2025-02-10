@@ -29,7 +29,6 @@ def checkImport(rootDir, node):
 
     return validPaths
 
-
 def getRootLoggingSetup(logFileName):
     """
         Returns the root logging setup for the program. 
