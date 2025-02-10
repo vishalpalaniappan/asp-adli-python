@@ -11,10 +11,11 @@ class NodeExtractor():
         injected log statements which are used by NodeTransformer
         to replace the original nodes.
     """
-    def __init__(self, node, logType, logTypeFuncId):
+    def __init__(self, node, logType, logTypeFuncId, globalsInFunc):
         self.vars = []
         self.logTypeId = logType
         self.astNode = node
+        self.globalsInFunc = globalsInFunc
         self.extractFromASTNode()
 
         self.ltMap = {
@@ -38,8 +39,6 @@ class NodeExtractor():
             a body, it removes all children before extracting the syntax
             and variables. 
         '''
-        global VAR_COUNT
-
         if 'body' in self.astNode._fields:
             node = helper.getEmptyRootNode(self.astNode)
         else:
@@ -48,6 +47,9 @@ class NodeExtractor():
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
         self.vars = CollectVariableNames(node).vars
+
+        for var in self.vars:
+            var["global"] = var["name"] in self.globalsInFunc
     
     def getVariableLogStatements(self):
         '''

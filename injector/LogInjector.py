@@ -7,6 +7,7 @@ class LogInjector(ast.NodeTransformer):
         self.minLtCount = self.logTypeCount
         self.funcLogType = 0
         self.ltmap = ltMap
+        self.globalsInFunc = []
         self.generic_visit(node)
         self.maxLtCount = self.logTypeCount
 
@@ -18,7 +19,7 @@ class LogInjector(ast.NodeTransformer):
             with the extracted data for injecting logs.
         '''
         self.logTypeCount += 1
-        _node = NodeExtractor(node, self.logTypeCount, self.funcLogType)
+        _node = NodeExtractor(node, self.logTypeCount, self.funcLogType, self.globalsInFunc)
         self.ltmap[self.logTypeCount] = _node.ltMap
         return _node
     
@@ -33,6 +34,7 @@ class LogInjector(ast.NodeTransformer):
         _node = self.processNode(node)
         self.generic_visit(node)
         self.funcLogType = 0
+        self.globalsInFunc = []
         return _node.injectLogsTypeD()
 
     def visit_AsyncFunctionDef(self, node):
@@ -59,6 +61,7 @@ class LogInjector(ast.NodeTransformer):
         return self.processNode(node).injectLogsTypeB()
     
     def visit_Global(self, node):
+        self.globalsInFunc += node.names
         return self.processNode(node).injectLogsTypeB()
     
     def visit_Delete(self, node):
