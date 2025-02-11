@@ -1,6 +1,15 @@
 import ast
 from injector.NodeExtractor import NodeExtractor
 
+# These imports are added when injecting logging setup 
+# and don't need to be imported twice.
+IMPORTS_TO_IGNORE = [
+    "import traceback",
+    "import logging",
+    "import json",
+    "import sys"
+]
+
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
         self.logTypeCount = logTypeCount
@@ -86,9 +95,13 @@ class LogInjector(ast.NodeTransformer):
         return self.processNode(node).injectLogsTypeB()
 
     def visit_Import(self, node):
+        if (ast.unparse(node) in IMPORTS_TO_IGNORE):
+            return
         return self.processNode(node).injectLogsTypeB()
     
     def visit_ImportFrom(self, node):
+        if (ast.unparse(node) in IMPORTS_TO_IGNORE):
+            return
         return self.processNode(node).injectLogsTypeB()
 
     def visit_Expr(self, node):
