@@ -39,6 +39,7 @@ def getRootLoggingSetup(logFileName):
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
+    module.body.append(ast.parse("import json"))
     module.body.append(ast.parse("import sys"))
     module.body.append(ast.parse("from pathlib import Path"))
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
@@ -55,17 +56,18 @@ def getLoggingSetup():
     """
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import logging"))
+    module.body.append(ast.parse("import json"))
     module.body.append(ast.parse("logger = logging.getLogger('adli')"))
     return module
 
-def getLoggingStatement(syntax):
+def getLoggingStatement(logStr):
     """
         Returns a logging statement as an AST node.
     """
     return ast.Expr(
         ast.Call(
             func=ast.Name(id='logger.info', ctx=ast.Load()),
-            args=[ast.Constant(value=syntax)],
+            args=[ast.Constant(value=logStr)],
             keywords=[]
         )
     )
@@ -109,13 +111,13 @@ def getLoggingFunction():
     '''
 
     return ast.parse(
-    '''def aspAdliLog(val, logtypeid):
-    if hasattr(val, "__dict__"):
-        try:
-            val = val.__dict__
-        except (AttributeError, TypeError):
-            val = str(val)
-    logger.info(f"# {logtypeid} {val}")
+    '''def aspAdliLog(val, varid):
+    try:
+        val = json.dumps(val, default=lambda o: o.__dict__)
+        logger.info(f"# {varid} {val}")
+    except:
+        print("Failed to parse variable")
+        pass
     '''
     )
 
@@ -131,7 +133,7 @@ def injectRootLoggingSetup(tree, header, fileName):
         finalbody=[]
     )
     
-    return ast.Module( body=[
+    return ast.Module(body=[
         getRootLoggingSetup(fileName).body,
         getLoggingFunction().body,
         getLoggingStatement(json.dumps(header)),
