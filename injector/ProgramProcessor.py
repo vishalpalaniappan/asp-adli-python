@@ -69,14 +69,14 @@ class ProgramProcessor:
             })
 
         # Write files to output folder
-        for file in fileOutputInfo:     
-            if (file["currFilePath"] == self.sourceFile):
+        for fileInfo in fileOutputInfo:     
+            if (fileInfo["currFilePath"] == self.sourceFile):
                 header = {"fileTree": fileTree, "ltMap": ltMap}
-                currAst = helper.injectRootLoggingSetup(file["ast"], header, self.fileName)
+                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
-                currAst = helper.injectLoggingSetup(file["ast"])
+                currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
-            with open(file["outputFilePath"], 'w+') as f:
+            with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
         if SAVE_LT_MAP:
