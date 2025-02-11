@@ -18,7 +18,7 @@ class ProgramProcessor:
     def __init__(self, sourceFile, workingDirectory):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
-        self.sourceFileDirectory = os.path.dirname(sourceFile)                
+        self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
         self.outputDirectory = os.path.join(workingDirectory, "output")
 
         if os.path.exists(self.outputDirectory):
