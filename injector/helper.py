@@ -72,18 +72,16 @@ def getLoggingStatement(logStr):
         )
     )
 
-def getExceptionLog():
+def getVariableLogStatement(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    return ast.ExceptHandler(
-        type=ast.Name(id='Exception', ctx=ast.Load()),
-        name='e',
-        body=[
-            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
-            ast.parse("raise"),
-        ]
-    )
+    tryStmt = f"""try:
+    aspAdliLog({name}, {varId})
+except Exception as e:
+    print("Failed to log variable named {name} with id {varId}")
+    """
+    return ast.parse(tryStmt)
 
 def getEmptyRootNode(astNode):
     '''
@@ -112,12 +110,11 @@ def getLoggingFunction():
 
     return ast.parse(
     '''def aspAdliLog(val, varid):
-    try:
-        val = json.dumps(val, default=lambda o: o.__dict__)
+        try:
+            val = json.dumps(val, default=lambda o: o.__dict__ )
+        except:
+            pass
         logger.info(f"# {varid} {val}")
-    except:
-        print("Failed to parse variable")
-        pass
     '''
     )
 
@@ -126,9 +123,18 @@ def injectRootLoggingSetup(tree, header, fileName):
         Injects try except structure around the given tree.
         Injects root logging setup and function the given tree.
     '''
+    handler = ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
+            ast.parse("raise"),
+        ]
+    )
+
     mainTry = ast.Try(
         body=tree.body,
-        handlers=[getExceptionLog()],
+        handlers=[handler],
         orelse=[],
         finalbody=[]
     )

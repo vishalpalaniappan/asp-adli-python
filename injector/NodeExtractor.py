@@ -59,8 +59,7 @@ class NodeExtractor():
         for varObj in self.vars:
             name = varObj["name"]
             varId = varObj["varId"]
-            logStr = f"aspAdliLog({name}, {varId})"
-            variableLogStmts.append(ast.parse(logStr))   
+            variableLogStmts.append(helper.getVariableLogStatement(name, varId))   
         return variableLogStmts
     
     def getLoggingStatement(self):
