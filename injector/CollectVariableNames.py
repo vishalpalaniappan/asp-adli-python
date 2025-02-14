@@ -12,6 +12,9 @@ class CollectVariableNames(ast.NodeVisitor):
         self.generic_visit(node)
         
     def addVariable(self, node, name):
+        '''
+            Add variable to vars list.
+        '''
         global VAR_COUNT
         VAR_COUNT += 1
         varInfo = {
