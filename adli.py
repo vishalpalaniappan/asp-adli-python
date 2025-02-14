@@ -1,5 +1,6 @@
 import sys
 import ast
+import os
 import argparse
 from injector.ProgramProcessor import ProgramProcessor
 
@@ -29,7 +30,8 @@ def main(argv):
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
 
-    processor = ProgramProcessor(source)
+    workingDirectory = os.path.dirname(os.path.abspath(__file__))
+    processor = ProgramProcessor(source, workingDirectory)
     processor.run()
 
 if "__main__" == __name__:

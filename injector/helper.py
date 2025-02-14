@@ -1,4 +1,7 @@
-import ast, os
+import ast
+import os
+import copy
+import json
 
 def checkImport(rootDir, node):
     """
@@ -11,13 +14,8 @@ def checkImport(rootDir, node):
         path = os.path.join(rootDir, name + '.py')
         pathsToCheck.append(path)
     elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(
-            rootDir,
-            node.module.replace('.','/')
-        )
-        name = os.path.join(
-            node.names[0].name.replace('.','/')
-        )
+        module = os.path.join(rootDir, node.module.replace('.','/'))
+        name = os.path.join(node.names[0].name.replace('.','/'))
         pathsToCheck.append(f"{module}/{name}.py")
         pathsToCheck.append(f"{module}.py")
     
@@ -31,7 +29,6 @@ def checkImport(rootDir, node):
 
     return validPaths
 
-
 def getRootLoggingSetup(logFileName):
     """
         Returns the root logging setup for the program. 
@@ -42,12 +39,13 @@ def getRootLoggingSetup(logFileName):
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import traceback"))
     module.body.append(ast.parse("import logging"))
+    module.body.append(ast.parse("import json"))
     module.body.append(ast.parse("import sys"))
     module.body.append(ast.parse("from pathlib import Path"))
     module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
-    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.cdl')
+    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
     module.body.append(ast.parse(s))
-    module.body.append(ast.parse("logger = logging.getLogger('root')"))
+    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
     module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
     module.body.append(ast.parse("logger.addHandler(clp_handler)"))
     return module
@@ -58,33 +56,44 @@ def getLoggingSetup():
     """
     module = ast.Module(body=[], type_ignores=[])
     module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("logger = logging.getLogger('root')"))
+    module.body.append(ast.parse("import json"))
+    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
     return module
 
-def getLoggingStatement(syntax):
+def getLoggingStatement(logStr):
     """
         Returns a logging statement as an AST node.
     """
     return ast.Expr(
         ast.Call(
             func=ast.Name(id='logger.info', ctx=ast.Load()),
-            args=[ast.Constant(value=syntax)],
+            args=[ast.Constant(value=logStr)],
             keywords=[]
         )
     )
 
-def getExceptionLog():
+def getVariableLogStatement(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    return ast.ExceptHandler(
-        type=ast.Name(id='Exception', ctx=ast.Load()),
-        name='e',
-        body=[
-            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
-            ast.parse("raise"),
-        ]
-    )
+    tryStmt = f"""try:
+    aspAdliLog({name}, {varId})
+except Exception as e:
+    print("Failed to log variable named {name} with id {varId}")
+    """
+    return ast.parse(tryStmt)
+
+def getEmptyRootNode(astNode):
+    '''
+        Removes all child nodes from astnode. This is used to 
+        extract the variables without visiting the child nodes.
+    '''
+    node = copy.copy(astNode)
+    keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
+    for key in keysToEmpty:
+        if key in node._fields:
+            setattr(node, key, [])
+    return node
 
 def getLoggingFunction():
     ''' 
@@ -100,12 +109,51 @@ def getLoggingFunction():
     '''
 
     return ast.parse(
-    '''def aspAdliLog(val, logtypeid):
-    if hasattr(val, "__dict__"):
+    '''def aspAdliLog(val, varid):
         try:
-            val = val.__dict__
-        except (AttributeError, TypeError):
-            val = str(val)
-    logger.info(f"# {logtypeid} {val}")
+            val = json.dumps(val, default=lambda o: o.__dict__ )
+        except:
+            pass
+        logger.info(f"# {varid} {val}")
     '''
     )
+
+def injectRootLoggingSetup(tree, header, fileName):
+    '''
+        Injects try except structure around the given tree.
+        Injects root logging setup and function the given tree.
+    '''
+    handler = ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
+            ast.parse("raise"),
+        ]
+    )
+
+    mainTry = ast.Try(
+        body=tree.body,
+        handlers=[handler],
+        orelse=[],
+        finalbody=[]
+    )
+    
+    return ast.Module(body=[
+        getRootLoggingSetup(fileName).body,
+        getLoggingFunction().body,
+        getLoggingStatement(json.dumps(header)),
+        mainTry
+    ], type_ignores=[])
+
+def injectLoggingSetup(tree):
+    '''
+        Injects logging setup and function into the provided tree.
+    '''
+    loggingSetup = getLoggingSetup()
+    loggingFunction = getLoggingFunction()
+    return ast.Module( body=[
+        loggingSetup.body,
+        loggingFunction.body,
+        tree.body
+    ], type_ignores=[])

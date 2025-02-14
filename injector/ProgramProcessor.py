@@ -1,10 +1,13 @@
-from injector import helper
-import pathlib
 import shutil
-import json
-import ast
 import os
+import ast
+import json
+from pathlib import Path
+from injector import helper
+from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
+
+SAVE_LT_MAP = False
 
 class ProgramProcessor:
     '''
@@ -12,104 +15,70 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
+    def __init__(self, sourceFile, workingDirectory):
+        self.sourceFile = os.path.abspath(sourceFile)
+        self.fileName = Path(self.sourceFile).stem
+        self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
+        self.outputDirectory = os.path.join(workingDirectory, "output")
 
-    def __init__(self, sourceFile):
-        self.rootFile = sourceFile
-        self.rootName = pathlib.Path(sourceFile).stem
-        self.rootDir = os.path.dirname(sourceFile)
-        self.fileTree = {}
-        self.logTypeCount = 1
-        self.injectors = []
-        self.fileQueue = [sourceFile]
+        if os.path.exists(self.outputDirectory):
+            shutil.rmtree(self.outputDirectory)
+        os.makedirs(self.outputDirectory)
 
-    def run(self, output_dir: str = "output"):
+    def run(self):
         '''
-            Injects logs into files in the queue and add to file tree.
-            Any local imports found when processing a file is added to
-            the queue.
+            Processes the program by doing the following:
+            ----------------------------------------------
+            1. Find all locally imported files in the program
+            2. Inject logs into each source file
+            3. Write injected log tree into output folder
         '''
-        while len(self.fileQueue) > 0: 
-            path = self.fileQueue.pop()
-            inj = LogInjector(path, self.logTypeCount, self.rootFile)
-            inj.run()
-            self.injectors.append(inj)
+        ltMap = {}
+        fileTree = {}
+        fileOutputInfo = []
+        files = findLocalImports(self.sourceFile)
+        logTypeCount = 0
 
-            self.fileTree[inj.fileTreeKey] = {
-                "sst": inj.sst.tree,
-                "source": inj.source,
+        # Process every file found in the program
+        for currFilePath in files:
+            currRelPath = os.path.relpath(currFilePath, self.sourceFileDirectory)
+            outputFilePath = os.path.join(self.outputDirectory, currRelPath)
+            outputFileDir = os.path.dirname(outputFilePath)
+
+            if (not os.path.exists(outputFileDir)):
+                os.makedirs(outputFileDir)
+
+            with open(currFilePath, "r") as f:
+                source = f.read()
+
+            currAst = ast.parse(source)
+            injector = LogInjector(currAst, ltMap, logTypeCount)
+
+            logTypeCount = injector.maxLtCount
+
+            fileTree[currRelPath] = {
+                "source": source,
+                "minLt": injector.minLtCount,
+                "maxLt": injector.maxLtCount
             }
 
-            self.addToQueue(inj.importsFound)
-            self.logTypeCount = inj.sst.logTypeId
+            fileOutputInfo.append({
+                "outputFilePath": outputFilePath,
+                "currFilePath": currFilePath,
+                "ast": currAst                
+            })
 
-        # Create output folder if it doesn't exist
-        outputFolder = os.path.join(os.path.abspath(os.getcwd()), output_dir)
-        self.clearAndCreateFolder(outputFolder)
-                  
-        # Write each injected source to file
-        for inj in self.injectors:
-            currFolder = os.path.join(outputFolder, inj.relativeDir)
-            if not os.path.exists(currFolder):
-                os.makedirs(currFolder)
-
-            if (self.rootFile == inj.sourceFile):
-                source = self.getInjectedSourceRoot(inj, inj.fileName)
+        # Write files to output folder
+        for fileInfo in fileOutputInfo:     
+            if (fileInfo["currFilePath"] == self.sourceFile):
+                header = {"fileTree": fileTree, "ltMap": ltMap}
+                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
-                source = self.getInjectedSource(inj)
+                currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
-            filePath = os.path.join(currFolder, inj.fileNameWExtension)
-            with open(filePath, "w+") as f:
-                f.write(source)
+            with open(fileInfo["outputFilePath"], 'w+') as f:
+                f.write(ast.unparse(currAst))
 
-    def addToQueue(self, paths):
-        '''
-            Adds the given paths to the queue if it is not already in the queue
-            or if it hasn't already been processed.
-        '''
-        for currentImport in paths:
-            if currentImport not in self.fileQueue and currentImport not in self.fileTree:
-                self.fileQueue.append(currentImport)     
-            
-
-    def getInjectedSource(self, inj):
-        '''
-            Given an injector object, this funtion returns 
-            a program injected with diagnostic logs.
-        '''
-        loggingSetupNodes = helper.getLoggingSetup()
-        injectedSourceNodes = inj.injectedTree.body
-
-        injectedNodes = loggingSetupNodes.body + injectedSourceNodes
-        return ast.unparse(injectedNodes)
-
-    def getInjectedSourceRoot(self, inj, fileName):
-        '''
-            Given an injector object, this funtion returns 
-            a program injected with diagnostic logs.
-
-            Args:
-                inj: Injector object containing the processed AST
-                fileName: Name for the logger setup
-            
-            Returns:
-                str: The injected source code as a string
-        '''
-        loggingSetupNodes = helper.getRootLoggingSetup(str(fileName))
-        fileTreeNodes = [
-            helper.getLoggingStatement(
-                json.dumps(self.fileTree))
-        ]
-        injectedSourceNodes = inj.injectedTree.body
-
-        injectedNodes = loggingSetupNodes.body + fileTreeNodes + injectedSourceNodes
-        return ast.unparse(injectedNodes)
-    
-    def clearAndCreateFolder (self, path):
-        '''
-            If folder exists, clear it and create it again.
-        '''
-        if not os.path.exists(path):
-            os.makedirs(path)
-        else:
-            shutil.rmtree(path)
-            os.makedirs(path)
+        if SAVE_LT_MAP:
+            with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
+                f.write(json.dumps(ltMap))
