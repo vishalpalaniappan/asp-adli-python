@@ -62,11 +62,3 @@ You can use GitHub issues to [report a bug][bug-report] or [request a feature][f
 
 [bug-report]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=bug_report.md
 [feature-req]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=feature_request.md
-
-# Docs
-
-In development.
-
-# Contributing
-
-In development.
