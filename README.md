@@ -36,7 +36,7 @@ NodeExtractor:
 CollectVariableNames:
 * Used to collect variable names from a given node by visiting child nodes.
 * Generates a unique varid for each variable.
-* Saves the varid and varaible metadata (name, colnum etc..).
+* Saves the varid and variable metadata (name, colnum etc..).
 
 The logging setup is added to the injected AST's and they are unparsed and placed in the output folder while preserving the original program's folder structure. At this point, the injected source code can be run and it will generate a log file which can be viewed using the [Diagnostic Log Viewer][dlv].
 
