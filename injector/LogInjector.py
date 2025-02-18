@@ -1,4 +1,5 @@
 import ast
+from injector.CheckDisabledVariable import isDisabledVariable
 from injector.NodeExtractor import NodeExtractor
 
 class LogInjector(ast.NodeTransformer):
@@ -102,6 +103,10 @@ class LogInjector(ast.NodeTransformer):
             return self.processNode(node).injectLogsTypeA()
         else:
             return self.processNode(node).injectLogsTypeB()
+
+    def visit_Expr(self, node):
+        isDisabledVariable(node)
+        return node
 
     '''
         INJECT LOGS TYPE C
