@@ -11,11 +11,16 @@ class NodeExtractor():
         injected log statements which are used by NodeTransformer
         to replace the original nodes.
     """
-    def __init__(self, node, logType, logTypeFuncId, globalsInFunc):
+    def __init__(self, node, logType, logTypeFuncId, globalsInFunc, globalDisabledVars, disabledVars):
         self.vars = []
         self.logTypeId = logType
         self.astNode = node
+
+        self.fId = logTypeFuncId
         self.globalsInFunc = globalsInFunc
+        self.globalDisabledVars = globalDisabledVars
+        self.disabledVars = disabledVars
+
         self.extractFromASTNode()
 
         self.ltMap = {
@@ -48,8 +53,32 @@ class NodeExtractor():
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
         self.vars = CollectVariableNames(node).vars
 
+        updatedVars = self.removeDisabledVariables(self.vars)
+        self.vars = updatedVars
+
         for var in self.vars:
             var["global"] = var["name"] in self.globalsInFunc
+
+    def removeDisabledVariables(self, vars):
+        '''
+            Rebuilds variable list without the disabled variables.
+             
+            Ways for a variable to be disabled:
+            - If in global scope and global variable is disabled 
+            - If global is defined in func and global variable is disabled
+            - If variable is disabled in function
+        '''
+        varList = []
+        for var in vars:
+            if (var["name"] in self.globalDisabledVars):
+                if (self.fId == 0 or var["name"] in self.globalsInFunc):
+                    continue
+            elif (var["name"] in self.disabledVars):
+                continue
+            varList.append(var)
+
+        return varList
+
     
     def getVariableLogStatements(self):
         '''

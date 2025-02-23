@@ -1,4 +1,5 @@
 import ast
+from injector.CheckDisabledVariable import getDisabledVariables
 from injector.NodeExtractor import NodeExtractor
 
 class LogInjector(ast.NodeTransformer):
@@ -8,7 +9,11 @@ class LogInjector(ast.NodeTransformer):
         self.funcLogType = 0
         self.ltmap = ltMap
         self.globalsInFunc = []
+        self.globalDisabledVariables = []
+        self.disabledVariables = []
+
         self.generic_visit(node)
+
         self.maxLtCount = self.logTypeCount
 
     def processNode(self, node):
@@ -19,7 +24,14 @@ class LogInjector(ast.NodeTransformer):
             with the extracted data for injecting logs.
         '''
         self.logTypeCount += 1
-        _node = NodeExtractor(node, self.logTypeCount, self.funcLogType, self.globalsInFunc)
+        _node = NodeExtractor(
+            node,
+            self.logTypeCount,
+            self.funcLogType,
+            self.globalsInFunc,
+            self.globalDisabledVariables,
+            self.disabledVariables
+        )
         self.ltmap[self.logTypeCount] = _node.ltMap
         return _node
     
@@ -32,9 +44,16 @@ class LogInjector(ast.NodeTransformer):
         '''
         self.funcLogType = self.logTypeCount + 1
         _node = self.processNode(node)
+        
         self.generic_visit(node)
-        self.funcLogType = 0
+
+        # Reset function specific variables
+        self.disabledVariables = []
         self.globalsInFunc = []
+
+        # Reset function to global scope        
+        self.funcLogType = 0
+
         return _node.injectLogsTypeD()
 
     def visit_AsyncFunctionDef(self, node):
@@ -92,6 +111,11 @@ class LogInjector(ast.NodeTransformer):
         return self.processNode(node).injectLogsTypeB()
 
     def visit_Expr(self, node):
+        if (self.funcLogType == 0):
+            self.globalDisabledVariables += getDisabledVariables(node)
+        else:
+            self.disabledVariables += getDisabledVariables(node)
+
         return self.processNode(node).injectLogsTypeB()
 
     def visit_AugAssign(self, node):
