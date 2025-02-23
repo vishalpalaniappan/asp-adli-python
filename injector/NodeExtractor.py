@@ -53,12 +53,12 @@ class NodeExtractor():
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
         self.vars = CollectVariableNames(node).vars
 
-        self.isVariableDisabled(self.vars)
+        self.vars = self.removeDisabledVariables(self.vars)
 
         for var in self.vars:
             var["global"] = var["name"] in self.globalsInFunc
 
-    def isVariableDisabled(self, vars):
+    def removeDisabledVariables(self, vars):
         '''
             Checks if the variable is disabled.
              
@@ -67,12 +67,16 @@ class NodeExtractor():
             - If global is defined in func and global variable is disabled
             - If variable is disabled in function
         '''
+        varList = []
         for var in vars:
             if (var["name"] in self.globalDisabledVars):
                 if (self.fId == 0 or var["name"] in self.globalsInFunc):
-                    vars.remove(var)
+                    continue
             elif (var["name"] in self.disabledVars):
-                vars.remove(var)
+                continue
+            varList.append(var)
+
+        return varList
 
     
     def getVariableLogStatements(self):
