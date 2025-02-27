@@ -1,7 +1,7 @@
 import ast
 import copy
 from injector import helper
-from injector.CollectVariableNames import CollectVariableNames
+from injector.CollectVariableNames import extractVariables
 
 
 class NodeExtractor():
@@ -51,7 +51,7 @@ class NodeExtractor():
 
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
-        self.vars = CollectVariableNames(node).vars
+        self.vars = extractVariables(node)
 
         updatedVars = self.removeDisabledVariables(self.vars)
         self.vars = updatedVars
@@ -86,7 +86,7 @@ class NodeExtractor():
         '''
         variableLogStmts = []
         for varObj in self.vars:
-            name = varObj["name"]
+            name = varObj["syntax"]
             varId = varObj["varId"]
             variableLogStmts.append(helper.getVariableLogStatement(name, varId))   
         return variableLogStmts
