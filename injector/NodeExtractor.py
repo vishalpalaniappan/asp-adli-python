@@ -30,7 +30,7 @@ class NodeExtractor():
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": "child",
-            "vars": self.vars
+            "vars": self.vars + self.tempVars
         }
 
         if isinstance(node, ast.FunctionDef):
@@ -51,7 +51,7 @@ class NodeExtractor():
 
         module = ast.Module(body=[node], type_ignores=[])
         self.syntax = ast.unparse(ast.fix_missing_locations((module)))
-        self.vars = extractVariables(node)
+        [self.tempVarStmts, self.vars, self.tempVars] = extractVariables(node)
 
         updatedVars = self.removeDisabledVariables(self.vars)
         self.vars = updatedVars
@@ -125,6 +125,7 @@ class NodeExtractor():
                 logger.info(<var_id_n>)
         '''
         nodes = [
+            self.tempVarStmts,
             self.getLoggingStatement(),
             self.astNode,
             self.getVariableLogStatements()
