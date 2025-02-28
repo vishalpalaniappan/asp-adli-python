@@ -103,9 +103,8 @@ def extractVariables(node):
         [vars, tempVars, stmts] = CollectVariableInfo(node.target).getInfo()
     elif isinstance(node, ast.AugAssign):
         [vars, tempVars, stmts] = CollectVariableInfo(node.target).getInfo()
-    # elif isinstance(node, ast.FunctionDef):
-    #     vars = CollectVariable(node).vars    
-    # elif isinstance(node, ast.AsyncFunctionDef):
-    #     vars = CollectVariable(node).vars
+    elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        for arg in node.args.args:
+            vars.append(getVariableInfo(arg.arg, [], arg.arg))
     
     return [stmts, vars, tempVars]
