@@ -7,7 +7,7 @@ from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 
-SAVE_LT_MAP = False
+SAVE_LT_MAP = True
 
 class ProgramProcessor:
     '''
@@ -52,10 +52,14 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst)
+            injector = LogInjector(currAst, ltMap, logTypeCount)
+
+            logTypeCount = injector.logTypeCount
 
             fileTree[currRelPath] = {
-                "source": source
+                "source": source,
+                "minLt": injector.minLogTypeCount,
+                "maxLt": injector.maxLogTypeCount
             }
 
             fileOutputInfo.append({
@@ -65,7 +69,12 @@ class ProgramProcessor:
             })
 
         # Write files to output folder
-        for fileInfo in fileOutputInfo:     
+        for fileInfo in fileOutputInfo:   
+            if (fileInfo["currFilePath"] == self.sourceFile):
+                header = {"fileTree": fileTree, "ltMap": ltMap}
+                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
+            else:
+                currAst = helper.injectLoggingSetup(fileInfo["ast"])  
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
