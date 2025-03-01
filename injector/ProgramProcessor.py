@@ -52,14 +52,10 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, logTypeCount)
-
-            logTypeCount = injector.maxLtCount
+            injector = LogInjector(currAst)
 
             fileTree[currRelPath] = {
-                "source": source,
-                "minLt": injector.minLtCount,
-                "maxLt": injector.maxLtCount
+                "source": source
             }
 
             fileOutputInfo.append({
@@ -70,11 +66,6 @@ class ProgramProcessor:
 
         # Write files to output folder
         for fileInfo in fileOutputInfo:     
-            if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {"fileTree": fileTree, "ltMap": ltMap}
-                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
-            else:
-                currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
