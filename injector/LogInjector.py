@@ -64,7 +64,7 @@ class LogInjector(ast.NodeTransformer):
 
     def visit_Assign(self, node):
         '''
-            Visit assign statement.
+            Visit assign statement and extract variables.
         '''
         logStmt = self.getLogStmt(node, "child")
 
@@ -77,3 +77,26 @@ class LogInjector(ast.NodeTransformer):
             allPostLogs.extend(postLog)
 
         return allPreLogs + [logStmt]+ [node] + allPostLogs
+    
+    def visit_AugAssign(self, node):
+        '''
+            Visit AugAssign statement and extract variables.
+        '''
+        logStmt = self.getLogStmt(node, "child")
+        varInfo = CollectVariableInfo(node.target).variables
+        preLog, postLog = self.generateStmts(varInfo)
+
+        return preLog + [logStmt]+ [node] + postLog
+    
+    def visit_AnnAssign(self, node):
+        '''
+            Visit AnnAssign statement and extract variables if it has a value.
+        '''
+        logStmt = self.getLogStmt(node, "child")
+
+        if node.value:
+            varInfo = CollectVariableInfo(node.target).variables
+            preLog, postLog = self.generateStmts(varInfo)
+            return preLog + [logStmt]+ [node] + postLog
+        else:
+            return [logStmt, node]
