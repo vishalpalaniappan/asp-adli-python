@@ -76,10 +76,4 @@ class LogInjector(ast.NodeTransformer):
             allPreLogs.extend(preLog)
             allPostLogs.extend(postLog)
 
-        updatedNodes = []
-        updatedNodes.extend(allPreLogs)
-        updatedNodes.append(logStmt)
-        updatedNodes.append(node)
-        updatedNodes.extend(allPostLogs)
-
-        return updatedNodes
+        return allPreLogs + [logStmt]+ [node] + allPostLogs
