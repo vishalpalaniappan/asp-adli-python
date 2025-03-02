@@ -28,6 +28,12 @@ class LogInjector(ast.NodeTransformer):
         return getLtLogStmt(self.logTypeCount)
     
     def generateStmts(self, varInfo):
+        '''
+            This function generates logging statements for all the variables.
+            An assign statement is created for temporary variables before logging
+            their value. Temporary variables are saved in preLog and the target
+            variable is saved in post log.
+        '''
         preLog = []
         postLog = []  
         for variable in varInfo:
