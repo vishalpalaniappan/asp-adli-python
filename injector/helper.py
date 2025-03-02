@@ -104,6 +104,16 @@ def getVarLogStmt(name, varId):
         )
     )
 
+
+def getAssignStmt(name, value):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=value
+    ))
+
 def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
@@ -178,10 +188,3 @@ def injectLoggingSetup(tree):
         loggingFunction.body,
         tree.body
     ], type_ignores=[])
-
-
-def getAssignStmt(name, value):
-    return ast.fix_missing_locations(ast.Assign(
-        targets=[ast.Name(id=name, ctx=ast.Store)],
-        value=value
-    ))
