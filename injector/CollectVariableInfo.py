@@ -1,6 +1,5 @@
 import ast
 import uuid
-from injector.helper import getVariableLogStatement
 
 VAR_COUNT = 0
 
@@ -9,31 +8,36 @@ class CollectVariableInfo(ast.NodeTransformer):
     def __init__(self, node):
         self.node = node
         self.keys = []
+        self.variables = []
+        self.logstmts = []
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
 
+        name = self.keys.pop(0)["value"]
+        self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
+        
     def getVariableName(self):
         return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
-    
-    def getVariableInfo(self):
-        if (len(self.keys) == 0):
-            return None
         
+    def getVarInfo(self, name, keys, syntax, node):
         global VAR_COUNT
         VAR_COUNT += 1
-        var = {
+        self.variables.append({
             "varId": VAR_COUNT,
-            "name": self.keys.pop(0)["value"],
-            "keys": self.keys,
-            "syntax": ast.unparse(self.node),
-        }
-        return var
+            "name": name,
+            "keys": keys,
+            "syntax": syntax,
+            "node": node,
+            "isTemp": node != None
+        })
 
     def visit_Subscript(self, node):
         if not isinstance(node.slice, (ast.Constant, ast.Name)):
             self.generic_visit(ast.Module(body=[node.value], type_ignores=[]))
 
             varName = self.getVariableName()
-            self.keys.append({"type": "temp_variable", "value": varName, "node": node.slice})
+            self.keys.append({"type": "temp_variable", "value": varName})
+            self.getVarInfo(varName, [], varName, node.slice)
+
             node.slice = ast.Name(id= varName, ctx=ast.Load)
         else:
             self.generic_visit(node)

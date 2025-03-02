@@ -34,6 +34,7 @@ class ProgramProcessor:
             3. Write injected log tree into output folder
         '''
         ltMap = {}
+        varMap = {}
         fileTree = {}
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
@@ -52,7 +53,7 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, logTypeCount)
+            injector = LogInjector(currAst, ltMap, varMap, logTypeCount)
 
             logTypeCount = injector.logTypeCount
 
@@ -71,7 +72,7 @@ class ProgramProcessor:
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {"fileTree": fileTree, "ltMap": ltMap}
+                header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap}
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])  
@@ -81,4 +82,4 @@ class ProgramProcessor:
 
         if SAVE_LT_MAP:
             with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
-                f.write(json.dumps(ltMap))
+                f.write(json.dumps({"ltMap":ltMap,"varMap":varMap}))

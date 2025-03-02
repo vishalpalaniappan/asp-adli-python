@@ -1,9 +1,12 @@
 import ast
 from injector.CollectVariableInfo import CollectVariableInfo
+from injector.helper import getVarLogStmt
+from injector.helper import getAssignStmt
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, ltMap, logTypeCount):
+    def __init__(self, node, ltMap, varMap, logTypeCount):
         self.ltMap = ltMap
+        self.varMap = varMap
         self.logTypeCount = logTypeCount
         self.funcId = 0
         self.minLogTypeCount = self.logTypeCount
@@ -24,6 +27,20 @@ class LogInjector(ast.NodeTransformer):
             "type": type,
         }
         return ast.parse(f"logger.info({self.logTypeCount})").body[0]
+    
+    def generateStmts(self, varInfo):
+        preLog = []
+        postLog = []  
+        for variable in varInfo:
+            if variable["node"] == None:
+                postLog.append(getVarLogStmt(variable["name"], variable["varId"]))
+            else:
+                preLog.append(getAssignStmt(variable["name"], variable["node"]))
+                preLog.append(getVarLogStmt(variable["name"], variable["varId"]))
+            del variable["node"]
+            self.varMap[variable["varId"]] = variable
+
+        return [preLog, postLog]
     
     def visit_FunctionDef(self, node):
         '''
@@ -46,6 +63,11 @@ class LogInjector(ast.NodeTransformer):
         '''
         logStmt = self.getLogStmt(node, "child")
 
+        updatedNodes = [logStmt, node]
         for target in node.targets:
-            CollectVariableInfo(target).getVariableInfo()
-        return [logStmt, node]
+            varInfo = CollectVariableInfo(target).variables
+            [preLog, postLog] = self.generateStmts(varInfo)
+            updatedNodes.insert(0, preLog)            
+            updatedNodes.append(postLog)            
+
+        return updatedNodes

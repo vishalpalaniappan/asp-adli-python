@@ -72,16 +72,11 @@ def getLoggingStatement(logStr):
         )
     )
 
-def getVariableLogStatement(name, varId):
+def getVarLogStmt(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    tryStmt = f"""try:
-    aspAdliLog({name}, {varId})
-except Exception as e:
-    print("Failed to log variable named {name} with id {varId}")
-    """
-    return ast.parse(tryStmt)
+    return ast.parse(f"aspAdliLog({name}, {varId})")
 
 def getEmptyRootNode(astNode):
     '''
@@ -157,3 +152,10 @@ def injectLoggingSetup(tree):
         loggingFunction.body,
         tree.body
     ], type_ignores=[])
+
+
+def getAssignStmt(name, value):
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=value
+    ))
