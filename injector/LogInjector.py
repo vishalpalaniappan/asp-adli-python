@@ -1,7 +1,6 @@
 import ast
 from injector.CollectVariableInfo import CollectVariableInfo
-from injector.helper import getVarLogStmt
-from injector.helper import getAssignStmt
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, varMap, logTypeCount):
@@ -26,7 +25,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
         }
-        return ast.parse(f"logger.info({self.logTypeCount})").body[0]
+        return getLtLogStmt(self.logTypeCount)
     
     def generateStmts(self, varInfo):
         preLog = []

@@ -72,6 +72,23 @@ def getLoggingStatement(logStr):
         )
     )
 
+def getLtLogStmt(logTypeId):
+    '''
+        This function returns a logger.info statement with the 
+        provided logtype id.
+    '''
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='logger', ctx=ast.Load()),
+                attr='info',
+                ctx=ast.Load()
+            ),
+            args=[ast.Constant(value=logTypeId)],
+            keywords=[]
+        )
+    )
+
 def getVarLogStmt(name, varId):
     '''
         Returns exception handler object for given logtypeid.
