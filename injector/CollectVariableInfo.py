@@ -1,15 +1,17 @@
 import ast
 import uuid
+from injector.helper import getVarLogStmt, getAssignStmt
 
 VAR_COUNT = 0
 
 class CollectAssignVarInfo(ast.NodeVisitor):
 
-    def __init__(self, node):
+    def __init__(self, node, logTypeId, funcId):
         self.node = node
+        self.logTypeId = logTypeId
+        self.funcId = funcId
         self.keys = []
         self.variables = []
-        self.logstmts = []
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
 
         name = self.keys.pop(0)["value"]
@@ -27,6 +29,8 @@ class CollectAssignVarInfo(ast.NodeVisitor):
             "keys": keys,
             "syntax": syntax,
             "assignValue": node,
+            "logType": self.logTypeId,
+            "funcId": self.funcId,
             "isTemp": node is not None
         })
 
@@ -61,8 +65,10 @@ class CollectAssignVarInfo(ast.NodeVisitor):
 
 class CollectFunctionArgInfo(ast.NodeVisitor):
 
-    def __init__(self, node):
+    def __init__(self, node, logTypeId, funcId):
         self.variables = []
+        self.logTypeId = logTypeId
+        self.funcId = funcId
         self.generic_visit(node)
 
     def getVarInfo(self, name, keys, syntax, node):
@@ -74,6 +80,8 @@ class CollectFunctionArgInfo(ast.NodeVisitor):
             "keys": keys,
             "syntax": syntax,
             "assignValue": node,
+            "logType": self.logTypeId,
+            "funcId": self.funcId,
             "isTemp": node is not None
         })
     

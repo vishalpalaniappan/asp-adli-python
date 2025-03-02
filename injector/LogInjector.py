@@ -1,6 +1,6 @@
 import ast
 from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, varMap, logTypeCount):
@@ -8,11 +8,16 @@ class LogInjector(ast.NodeTransformer):
         self.varMap = varMap
         self.logTypeCount = logTypeCount
         self.funcId = 0
+
+        self.globalsInFunc = []
+        self.globalDisabledVariables = []
+        self.disabledVariables = []
+
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(node)
         self.maxLogTypeCount = self.logTypeCount
 
-    def getLogStmt(self, node, type):
+    def generateLtLogStmts(self, node, type):
         '''
             This function adds the node to the logtype map and 
             it returns a logging statement to inject.
@@ -27,7 +32,7 @@ class LogInjector(ast.NodeTransformer):
         }
         return getLtLogStmt(self.logTypeCount)
     
-    def generateStmts(self, varInfo):
+    def generateVarLogStmts(self, varInfo):
         '''
             This function generates logging statements for all the variables.
             An assign statement is created for temporary variables before logging
@@ -37,12 +42,22 @@ class LogInjector(ast.NodeTransformer):
         preLog = []
         postLog = []  
         for variable in varInfo:
+            variable["global"] = variable["name"] in self.globalsInFunc
+
+            if variable["global"] == True and variable["name"] in self.globalDisabledVariables:
+                continue 
+
+            if variable["global"] == False and variable["name"] in self.disabledVariables:
+                continue 
+
             if variable["assignValue"] is None:
-                postLog.append(getVarLogStmt(variable["name"], variable["varId"]))
-            else:
+                postLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+            else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
-                preLog.append(getVarLogStmt(variable["name"], variable["varId"]))
+                preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+
             del variable["assignValue"]
+            del variable["syntax"]
             self.varMap[variable["varId"]] = variable
 
         return preLog, postLog
@@ -53,33 +68,36 @@ class LogInjector(ast.NodeTransformer):
             It sets a function id before visiting child nodes and
             resets it back to global scope(0).
         '''
-        logStmt = self.getLogStmt(node, "function")
-
-        # Add log statements for arguments. This will be obsolete once support
-        # is added for extracting arguments from the place func was called.
-        variables = CollectFunctionArgInfo(node).variables
-        preLog, postLog = self.generateStmts(variables)
-        if len(preLog) > 0:
-            node.body.insert(0, preLog)
-        node.body.insert(0, logStmt)
+        logStmt = self.generateLtLogStmts(node, "function")
 
         self.funcId = self.logTypeCount
+        self.globalsInFunc = []
+
+        # Add log statements for arguments. This is temporary and will be replced.
+        variables = CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(variables)
+        node.body.insert(0, postLog)
+        node.body.insert(0, logStmt)
+
         self.generic_visit(node)
         self.funcId = 0
         
         return node
+    
+    def visit_AsyncFunctionDef(self, node):
+        return self.visit_FunctionDef(node)
 
     def visit_Assign(self, node):
         '''
             Visit assign statement and extract variables.
         '''
-        logStmt = self.getLogStmt(node, "child")
+        logStmt = self.generateLtLogStmts(node, "child")
 
         allPreLogs = []
         allPostLogs = []
         for target in node.targets:
-            varInfo = CollectAssignVarInfo(target).variables
-            preLog, postLog = self.generateStmts(varInfo)
+            varInfo = CollectAssignVarInfo(target, self.logTypeCount, self.funcId).variables
+            preLog, postLog = self.generateVarLogStmts(varInfo)
             allPreLogs.extend(preLog)
             allPostLogs.extend(postLog)
 
@@ -89,9 +107,10 @@ class LogInjector(ast.NodeTransformer):
         '''
             Visit AugAssign statement and extract variables.
         '''
-        logStmt = self.getLogStmt(node, "child")
-        varInfo = CollectAssignVarInfo(node.target).variables
-        preLog, postLog = self.generateStmts(varInfo)
+        logStmt = self.generateLtLogStmts(node, "child")
+
+        varInfo = CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(varInfo)
 
         return preLog + [logStmt]+ [node] + postLog
     
@@ -99,11 +118,29 @@ class LogInjector(ast.NodeTransformer):
         '''
             Visit AnnAssign statement and extract variables if it has a value.
         '''
-        logStmt = self.getLogStmt(node, "child")
+        logStmt = self.generateLtLogStmts(node, "child")
 
         if node.value:
-            varInfo = CollectAssignVarInfo(node.target).variables
-            preLog, postLog = self.generateStmts(varInfo)
+            varInfo = CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
+            preLog, postLog = self.generateVarLogStmts(varInfo)
             return preLog + [logStmt]+ [node] + postLog
         else:
             return [logStmt, node]
+
+    def visit_Global(self, node):
+        '''
+            Visit global statement and save global variables.
+        '''
+        self.globalsInFunc += node.names
+        logStmt = self.generateLtLogStmts(node, "child")
+        return [logStmt, node]
+
+    def visit_Expr(self, node):
+        '''
+            Visit expression statement and check for disabled variables.
+        '''
+        if (self.funcId == 0):
+            self.globalDisabledVariables += getDisabledVariables(node)
+        else:
+            self.disabledVariables += getDisabledVariables(node)
+        return node
