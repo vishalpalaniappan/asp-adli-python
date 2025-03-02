@@ -27,7 +27,7 @@ class CollectVariableInfo(ast.NodeTransformer):
             "keys": keys,
             "syntax": syntax,
             "node": node,
-            "isTemp": node != None
+            "isTemp": node is not None
         })
 
     def visit_Subscript(self, node):
