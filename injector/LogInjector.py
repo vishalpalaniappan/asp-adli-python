@@ -32,7 +32,7 @@ class LogInjector(ast.NodeTransformer):
         preLog = []
         postLog = []  
         for variable in varInfo:
-            if variable["node"] == None:
+            if variable["node"] is None:
                 postLog.append(getVarLogStmt(variable["name"], variable["varId"]))
             else:
                 preLog.append(getAssignStmt(variable["name"], variable["node"]))
