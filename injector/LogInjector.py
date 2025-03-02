@@ -1,5 +1,5 @@
 import ast
-from injector.CollectVariableInfo import CollectVariableInfo
+from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
 
 class LogInjector(ast.NodeTransformer):
@@ -37,12 +37,12 @@ class LogInjector(ast.NodeTransformer):
         preLog = []
         postLog = []  
         for variable in varInfo:
-            if variable["node"] is None:
+            if variable["assignValue"] is None:
                 postLog.append(getVarLogStmt(variable["name"], variable["varId"]))
             else:
-                preLog.append(getAssignStmt(variable["name"], variable["node"]))
+                preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["name"], variable["varId"]))
-            del variable["node"]
+            del variable["assignValue"]
             self.varMap[variable["varId"]] = variable
 
         return preLog, postLog
@@ -54,6 +54,13 @@ class LogInjector(ast.NodeTransformer):
             resets it back to global scope(0).
         '''
         logStmt = self.getLogStmt(node, "function")
+
+        # Add log statements for arguments. This will be obsolete once support
+        # is added for extracting arguments from the place func was called.
+        variables = CollectFunctionArgInfo(node).variables
+        preLog, postLog = self.generateStmts(variables)
+        if len(preLog) > 0:
+            node.body.insert(0, preLog)
         node.body.insert(0, logStmt)
 
         self.funcId = self.logTypeCount
@@ -71,7 +78,7 @@ class LogInjector(ast.NodeTransformer):
         allPreLogs = []
         allPostLogs = []
         for target in node.targets:
-            varInfo = CollectVariableInfo(target).variables
+            varInfo = CollectAssignVarInfo(target).variables
             preLog, postLog = self.generateStmts(varInfo)
             allPreLogs.extend(preLog)
             allPostLogs.extend(postLog)
@@ -83,7 +90,7 @@ class LogInjector(ast.NodeTransformer):
             Visit AugAssign statement and extract variables.
         '''
         logStmt = self.getLogStmt(node, "child")
-        varInfo = CollectVariableInfo(node.target).variables
+        varInfo = CollectAssignVarInfo(node.target).variables
         preLog, postLog = self.generateStmts(varInfo)
 
         return preLog + [logStmt]+ [node] + postLog
@@ -95,7 +102,7 @@ class LogInjector(ast.NodeTransformer):
         logStmt = self.getLogStmt(node, "child")
 
         if node.value:
-            varInfo = CollectVariableInfo(node.target).variables
+            varInfo = CollectAssignVarInfo(node.target).variables
             preLog, postLog = self.generateStmts(varInfo)
             return preLog + [logStmt]+ [node] + postLog
         else:

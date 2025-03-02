@@ -3,7 +3,7 @@ import uuid
 
 VAR_COUNT = 0
 
-class CollectVariableInfo(ast.NodeTransformer):
+class CollectAssignVarInfo(ast.NodeVisitor):
 
     def __init__(self, node):
         self.node = node
@@ -26,7 +26,7 @@ class CollectVariableInfo(ast.NodeTransformer):
             "name": name,
             "keys": keys,
             "syntax": syntax,
-            "node": node,
+            "assignValue": node,
             "isTemp": node is not None
         })
 
@@ -57,3 +57,27 @@ class CollectVariableInfo(ast.NodeTransformer):
         self.generic_visit(node)
         self.keys.append({"type":"key", "value":node.value})
         return node
+    
+
+class CollectFunctionArgInfo(ast.NodeVisitor):
+
+    def __init__(self, node):
+        self.variables = []
+        self.generic_visit(node)
+
+    def getVarInfo(self, name, keys, syntax, node):
+        global VAR_COUNT
+        VAR_COUNT += 1
+        self.variables.append({
+            "varId": VAR_COUNT,
+            "name": name,
+            "keys": keys,
+            "syntax": syntax,
+            "assignValue": node,
+            "isTemp": node is not None
+        })
+    
+    def visit_arg(self, node):
+        self.getVarInfo(node.arg, [], node.arg, None)
+
+    
