@@ -93,7 +93,16 @@ def getVarLogStmt(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    return ast.parse(f"aspAdliLog({name}, {varId})")
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
+            args=[
+                ast.Name(id=name, ctx=ast.Load()),
+                ast.Constant(value=varId)
+            ],
+            keywords=[]
+        )
+    )
 
 def getEmptyRootNode(astNode):
     '''
