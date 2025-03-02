@@ -40,7 +40,7 @@ class LogInjector(ast.NodeTransformer):
             del variable["node"]
             self.varMap[variable["varId"]] = variable
 
-        return [preLog, postLog]
+        return preLog, postLog
     
     def visit_FunctionDef(self, node):
         '''
@@ -63,11 +63,18 @@ class LogInjector(ast.NodeTransformer):
         '''
         logStmt = self.getLogStmt(node, "child")
 
-        updatedNodes = [logStmt, node]
+        allPreLogs = []
+        allPostLogs = []
         for target in node.targets:
             varInfo = CollectVariableInfo(target).variables
-            [preLog, postLog] = self.generateStmts(varInfo)
-            updatedNodes.insert(0, preLog)            
-            updatedNodes.append(postLog)            
+            preLog, postLog = self.generateStmts(varInfo)
+            allPreLogs.extend(preLog)
+            allPostLogs.extend(postLog)
+
+        updatedNodes = []
+        updatedNodes.extend(allPreLogs)
+        updatedNodes.append(logStmt)
+        updatedNodes.append(node)
+        updatedNodes.extend(allPostLogs)
 
         return updatedNodes
