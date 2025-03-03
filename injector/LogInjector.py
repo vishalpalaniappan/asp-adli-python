@@ -76,8 +76,7 @@ class LogInjector(ast.NodeTransformer):
         # Add log statements for arguments. This is temporary and will be replced.
         variables = CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         preLog, postLog = self.generateVarLogStmts(variables)
-        node.body.insert(0, postLog)
-        node.body.insert(0, logStmt)
+        node.body = [logStmt] + postLog + node.body
 
         self.generic_visit(node)
         self.funcId = 0
