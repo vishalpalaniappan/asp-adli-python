@@ -1,5 +1,5 @@
 import ast
-from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo
+from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo, CollectVariableDefault
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
 
 class LogInjector(ast.NodeTransformer):
@@ -138,8 +138,20 @@ class LogInjector(ast.NodeTransformer):
         '''
             Visit expression statement and check for disabled variables.
         '''
+        self.generic_visit(node)
         if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
             self.disabledVariables += getDisabledVariables(node)
         return node
+    
+    def visit_With(self, node):
+        logStmt = self.generateLtLogStmts(node, "child")
+        self.generic_visit(node)
+        varInfo = CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(varInfo)
+        node.body = postLog + node.body
+        return [logStmt, node]
+    
+    def visit_AsyncWith(self, node):
+        self.visit_With(node)
