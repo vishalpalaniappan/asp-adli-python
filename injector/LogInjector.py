@@ -42,12 +42,12 @@ class LogInjector(ast.NodeTransformer):
         preLog = []
         postLog = []  
         for variable in varInfo:
-            variable["global"] = variable["name"] in self.globalsInFunc
+            variable["global"] = variable["name"] in self.globalsInFunc or variable["funcId"] == 0
 
-            if variable["global"] == True and variable["name"] in self.globalDisabledVariables:
+            if variable["global"] and variable["name"] in self.globalDisabledVariables:
                 continue 
 
-            if variable["global"] == False and variable["name"] in self.disabledVariables:
+            if not variable["global"] and variable["name"] in self.disabledVariables:
                 continue 
 
             if variable["assignValue"] is None:
@@ -73,12 +73,13 @@ class LogInjector(ast.NodeTransformer):
         self.funcId = self.logTypeCount
         self.globalsInFunc = []
 
+        self.generic_visit(node)
+
         # Add log statements for arguments. This is temporary and will be replced.
         variables = CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         preLog, postLog = self.generateVarLogStmts(variables)
         node.body = [logStmt] + postLog + node.body
-
-        self.generic_visit(node)
+        
         self.funcId = 0
         
         return node
@@ -148,9 +149,11 @@ class LogInjector(ast.NodeTransformer):
     def visit_With(self, node):
         logStmt = self.generateLtLogStmts(node, "child")
         self.generic_visit(node)
+
         varInfo = CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         preLog, postLog = self.generateVarLogStmts(varInfo)
         node.body = postLog + node.body
+        
         return [logStmt, node]
     
     def visit_AsyncWith(self, node):
