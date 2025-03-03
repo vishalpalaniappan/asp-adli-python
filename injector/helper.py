@@ -37,29 +37,29 @@ def getRootLoggingSetup(logFileName):
         Args:
             logFileName: Name of the generated CDL log file.
     """
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import traceback"))
-    module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("import json"))
-    module.body.append(ast.parse("import sys"))
-    module.body.append(ast.parse("from pathlib import Path"))
-    module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
+    nodes = []
+    nodes.append(ast.parse("import traceback").body[0])
+    nodes.append(ast.parse("import logging").body[0])
+    nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("import sys").body[0])
+    nodes.append(ast.parse("from pathlib import Path").body[0])
+    nodes.append(ast.parse("from clp_logging.handlers import CLPFileHandler").body[0])
     s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
-    module.body.append(ast.parse(s))
-    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
-    module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
-    module.body.append(ast.parse("logger.addHandler(clp_handler)"))
-    return module
+    nodes.append(ast.parse(s).body[0])
+    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
+    nodes.append(ast.parse("logger.setLevel(logging.INFO)").body[0])
+    nodes.append(ast.parse("logger.addHandler(clp_handler)").body[0])
+    return nodes
 
 def getLoggingSetup():
     """
         Returns the logging setup for any imported files.
     """
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("import json"))
-    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
-    return module
+    nodes = []
+    nodes.append(ast.parse("import logging").body[0])
+    nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
+    return nodes
 
 def getLoggingStatement(logStr):
     """
@@ -148,7 +148,7 @@ def getLoggingFunction():
             pass
         logger.info(f"# {varid} {val}")
     '''
-    )
+    ).body
 
 def injectRootLoggingSetup(tree, header, fileName):
     '''
@@ -170,13 +170,13 @@ def injectRootLoggingSetup(tree, header, fileName):
         orelse=[],
         finalbody=[]
     )
-    
-    return ast.Module(body=[
-        getRootLoggingSetup(fileName).body,
-        getLoggingFunction().body,
-        getLoggingStatement(json.dumps(header)),
-        mainTry
-    ], type_ignores=[])
+    rootLoggingSetup = getRootLoggingSetup(fileName)
+    loggingFunction = getLoggingFunction()
+    header = getLoggingStatement(json.dumps(header))
+
+    mod = ast.Module(body=[], type_ignores=[])
+    mod.body = rootLoggingSetup + loggingFunction + [header] + [mainTry]
+    return mod
 
 def injectLoggingSetup(tree):
     '''
@@ -184,11 +184,9 @@ def injectLoggingSetup(tree):
     '''
     loggingSetup = getLoggingSetup()
     loggingFunction = getLoggingFunction()
-    return ast.Module( body=[
-        loggingSetup.body,
-        loggingFunction.body,
-        tree.body
-    ], type_ignores=[])
+    mod = ast.Module(body=[], type_ignores=[])
+    mod.body = loggingSetup + loggingFunction + tree.body
+    return mod
 
 
 def getDisabledVariables(node):
