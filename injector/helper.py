@@ -2,6 +2,7 @@ import ast
 import os
 import copy
 import json
+import re
 
 def checkImport(rootDir, node):
     """
@@ -72,16 +73,47 @@ def getLoggingStatement(logStr):
         )
     )
 
-def getVariableLogStatement(name, varId):
+def getLtLogStmt(logTypeId):
+    '''
+        This function returns a logger.info statement with the 
+        provided logtype id.
+    '''
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='logger', ctx=ast.Load()),
+                attr='info',
+                ctx=ast.Load()
+            ),
+            args=[ast.Constant(value=logTypeId)],
+            keywords=[]
+        )
+    )
+
+def getVarLogStmt(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    tryStmt = f"""try:
-    aspAdliLog({name}, {varId})
-except Exception as e:
-    print("Failed to log variable named {name} with id {varId}")
-    """
-    return ast.parse(tryStmt)
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
+            args=[
+                ast.Name(id=name, ctx=ast.Load()),
+                ast.Constant(value=varId)
+            ],
+            keywords=[]
+        )
+    )
+
+
+def getAssignStmt(name, value):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=value
+    ))
 
 def getEmptyRootNode(astNode):
     '''
@@ -157,3 +189,25 @@ def injectLoggingSetup(tree):
         loggingFunction.body,
         tree.body
     ], type_ignores=[])
+
+
+def getDisabledVariables(node):
+    """
+        This function parses the variable disable comments and returns
+        a list with the disabled variables. 
+
+        It parses triple quote comments. 
+        Example:
+        '''adli-variable-disable value variables'''
+    """
+    
+    disabledVariables = []
+    if "value" in node._fields and isinstance(node.value, ast.Constant):
+
+        value = node.value.value
+        variables = re.findall("adli-disable-variable (.*)", value)
+
+        if len(variables) > 0:
+            disabledVariables = variables[0].split()
+        
+    return disabledVariables

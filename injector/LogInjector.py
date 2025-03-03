@@ -1,200 +1,160 @@
 import ast
-from injector.CheckDisabledVariable import getDisabledVariables
-from injector.NodeExtractor import NodeExtractor
+from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo, CollectVariableDefault
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, ltMap, logTypeCount):
+    def __init__(self, node, ltMap, varMap, logTypeCount):
+        self.ltMap = ltMap
+        self.varMap = varMap
         self.logTypeCount = logTypeCount
-        self.minLtCount = self.logTypeCount
-        self.funcLogType = 0
-        self.ltmap = ltMap
+        self.funcId = 0
+
         self.globalsInFunc = []
         self.globalDisabledVariables = []
         self.disabledVariables = []
 
+        self.minLogTypeCount = self.logTypeCount
         self.generic_visit(node)
+        self.maxLogTypeCount = self.logTypeCount
 
-        self.maxLtCount = self.logTypeCount
-
-    def processNode(self, node):
+    def generateLtLogStmts(self, node, type):
         '''
-            This function is called on every visit.
-            It passes the node to the node extractor,
-            adds to the ltMap and returns the node
-            with the extracted data for injecting logs.
+            This function adds the node to the logtype map and 
+            it returns a logging statement to inject.
         '''
         self.logTypeCount += 1
-        _node = NodeExtractor(
-            node,
-            self.logTypeCount,
-            self.funcLogType,
-            self.globalsInFunc,
-            self.globalDisabledVariables,
-            self.disabledVariables
-        )
-        self.ltmap[self.logTypeCount] = _node.ltMap
-        return _node
+        self.ltMap[self.logTypeCount] = {
+            "id": self.logTypeCount,
+            "funcid": self.funcId,
+            "lineno": node.lineno,
+            "end_lineno": node.end_lineno,
+            "type": type,
+        }
+        return getLtLogStmt(self.logTypeCount)
+    
+    def generateVarLogStmts(self, varInfo):
+        '''
+            This function generates logging statements for all the variables.
+            An assign statement is created for temporary variables before logging
+            their value. Temporary variables are saved in preLog and the target
+            variable is saved in post log.
+        '''
+        preLog = []
+        postLog = []  
+        for variable in varInfo:
+            variable["global"] = variable["name"] in self.globalsInFunc or variable["funcId"] == 0
+
+            if variable["global"] and variable["name"] in self.globalDisabledVariables:
+                continue 
+
+            if not variable["global"] and variable["name"] in self.disabledVariables:
+                continue 
+
+            if variable["assignValue"] is None:
+                postLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+            else:                
+                preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
+                preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+
+            del variable["assignValue"]
+            del variable["syntax"]
+            self.varMap[variable["varId"]] = variable
+
+        return preLog, postLog
     
     def visit_FunctionDef(self, node):
         '''
-            When visiting functions, set the function id so 
-            that when we continue visiting nodes, we can use it
-            to set the function id of child nodes. Reset the
-            function id to 0 (global scope) after visiting children.
+            This function adds a log statement to function body.
+            It sets a function id before visiting child nodes and
+            resets it back to global scope(0).
         '''
-        self.funcLogType = self.logTypeCount + 1
-        _node = self.processNode(node)
-        
-        self.generic_visit(node)
+        logStmt = self.generateLtLogStmts(node, "function")
 
-        # Reset function specific variables
-        self.disabledVariables = []
+        self.funcId = self.logTypeCount
         self.globalsInFunc = []
 
-        # Reset function to global scope        
-        self.funcLogType = 0
+        self.generic_visit(node)
 
-        return _node.injectLogsTypeD()
-
+        # Add log statements for arguments. This is temporary and will be replced.
+        variables = CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(variables)
+        node.body = [logStmt] + postLog + node.body
+        
+        self.funcId = 0
+        
+        return node
+    
     def visit_AsyncFunctionDef(self, node):
         return self.visit_FunctionDef(node)
-    
-    '''
-        INJECT LOGS TYPE A
-        Example:
-            logger.info(<logtype_id>)
-            <original_ast_node>
 
-        INJECT LOGS TYPE B
-        Example:
-            logger.info(<logtype_id>)
-            <original_ast_node>
-            logger.info(<var_id_1>)
-            ...
-            logger.info(<var_id_n>)
-    '''
     def visit_Assign(self, node):
-        return self.processNode(node).injectLogsTypeB()
+        '''
+            Visit assign statement and extract variables.
+        '''
+        logStmt = self.generateLtLogStmts(node, "child")
+
+        allPreLogs = []
+        allPostLogs = []
+        for target in node.targets:
+            varInfo = CollectAssignVarInfo(target, self.logTypeCount, self.funcId).variables
+            preLog, postLog = self.generateVarLogStmts(varInfo)
+            allPreLogs.extend(preLog)
+            allPostLogs.extend(postLog)
+
+        return allPreLogs + [logStmt]+ [node] + allPostLogs
     
-    def visit_Pass(self, node):
-        return self.processNode(node).injectLogsTypeB()
+    def visit_AugAssign(self, node):
+        '''
+            Visit AugAssign statement and extract variables.
+        '''
+        logStmt = self.generateLtLogStmts(node, "child")
+
+        varInfo = CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(varInfo)
+
+        return preLog + [logStmt]+ [node] + postLog
     
+    def visit_AnnAssign(self, node):
+        '''
+            Visit AnnAssign statement and extract variables if it has a value.
+        '''
+        logStmt = self.generateLtLogStmts(node, "child")
+
+        if node.value:
+            varInfo = CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
+            preLog, postLog = self.generateVarLogStmts(varInfo)
+            return preLog + [logStmt]+ [node] + postLog
+        else:
+            return [logStmt, node]
+
     def visit_Global(self, node):
+        '''
+            Visit global statement and save global variables.
+        '''
         self.globalsInFunc += node.names
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Delete(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Nonlocal(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Break(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Continue(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Assert(self, node):
-        return self.processNode(node).injectLogsTypeB()
-
-    def visit_Raise(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_Return(self, node):
-        return self.processNode(node).injectLogsTypeB()
-
-    def visit_Import(self, node):
-        return self.processNode(node).injectLogsTypeB()
-    
-    def visit_ImportFrom(self, node):
-        return self.processNode(node).injectLogsTypeB()
+        logStmt = self.generateLtLogStmts(node, "child")
+        return [logStmt, node]
 
     def visit_Expr(self, node):
-        if (self.funcLogType == 0):
+        '''
+            Visit expression statement and check for disabled variables.
+        '''
+        self.generic_visit(node)
+        if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
             self.disabledVariables += getDisabledVariables(node)
-
-        return self.processNode(node).injectLogsTypeB()
-
-    def visit_AugAssign(self, node):
-        return self.processNode(node).injectLogsTypeB()
+        return node
     
-    def visit_AnnAssign(self, node):
-        if "value" in node._fields and node.value == None:
-            return self.processNode(node).injectLogsTypeA()
-        else:
-            return self.processNode(node).injectLogsTypeB()
-
-    '''
-        INJECT LOGS TYPE C
-        Example:
-            logger.info(<logtype_id>)
-            if <expression>:
-                logger.info(<var_id_1>)
-                ...
-                logger.info(<var_id_n>)
-    '''
     def visit_With(self, node):
+        logStmt = self.generateLtLogStmts(node, "child")
         self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
+
+        varInfo = CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
+        preLog, postLog = self.generateVarLogStmts(varInfo)
+        node.body = postLog + node.body
+        
+        return [logStmt, node]
     
     def visit_AsyncWith(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
-
-    def visit_If(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeC()
-    
-    '''
-        INJECT LOGS TYPE D
-        Example
-            def func_1():
-                logger.info(<logtype_id>)
-                ...
-                logger.info(<var_id_1>)
-                logger.info(<var_id_n>):
-    '''
-    def visit_ClassDef(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
-    
-    def visit_Try(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
-
-    def visit_TryFinally(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
-
-    def visit_TryExcept(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
-
-    def visit_ExceptHandler(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeD()
-    
-    '''
-        INJECT LOGS TYPE E
-        Example:
-            logger.info(<logtype_id>)
-            for <expression>:
-                logger.info(<var_id_1>)
-                logger.info(<var_id_n>)
-                ...
-                logger.info(<logtype_id>)
-    '''    
-    def visit_For(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeE()
-    
-    def visit_AsyncFor(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeE()
-    
-    def visit_While(self, node):
-        self.generic_visit(node)
-        return self.processNode(node).injectLogsTypeE()
+        self.visit_With(node)
