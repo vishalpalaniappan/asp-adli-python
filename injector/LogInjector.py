@@ -23,6 +23,7 @@ class LogInjector(ast.NodeTransformer):
             it returns a logging statement to inject.
         '''
         self.logTypeCount += 1
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "funcid": self.funcId,
@@ -30,6 +31,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
         }
+
         return getLtLogStmt(self.logTypeCount)
     
     def generateVarLogStmts(self, varInfo):
@@ -71,6 +73,9 @@ class LogInjector(ast.NodeTransformer):
         logStmt = self.generateLtLogStmts(node, "function")
 
         self.funcId = self.logTypeCount
+        self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
+        self.ltMap[self.logTypeCount]["name"] = node.name
+
         self.globalsInFunc = []
 
         self.generic_visit(node)
