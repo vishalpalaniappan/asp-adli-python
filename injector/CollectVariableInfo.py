@@ -14,8 +14,9 @@ class CollectAssignVarInfo(ast.NodeVisitor):
         self.variables = []
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
 
-        name = self.keys.pop(0)["value"]
-        self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
+        if len(self.keys) > 0:
+            name = self.keys.pop(0)["value"]
+            self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
         
     def getVariableName(self):
         return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
