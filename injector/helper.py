@@ -4,32 +4,6 @@ import copy
 import json
 import re
 
-def checkImport(rootDir, node):
-    """
-        Given an import statement, this function tests if
-        it is a local import and returns the path.
-    """
-    pathsToCheck = []
-    if isinstance(node, ast.Import):
-        name = node.names[0].name.replace('.','/')
-        path = os.path.join(rootDir, name + '.py')
-        pathsToCheck.append(path)
-    elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(rootDir, node.module.replace('.','/'))
-        name = os.path.join(node.names[0].name.replace('.','/'))
-        pathsToCheck.append(f"{module}/{name}.py")
-        pathsToCheck.append(f"{module}.py")
-    
-    validPaths = []
-    for path in pathsToCheck:
-        try:
-            open(path)
-            validPaths.append(path)
-        except Exception as e:
-            pass
-
-    return validPaths
-
 def getRootLoggingSetup(logFileName):
     """
         Returns the root logging setup for the program. 
@@ -104,7 +78,6 @@ def getVarLogStmt(name, varId):
             keywords=[]
         )
     )
-
 
 def getAssignStmt(name, value):
     '''
@@ -187,7 +160,6 @@ def injectLoggingSetup(tree):
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = loggingSetup + loggingFunction + tree.body
     return mod
-
 
 def getDisabledVariables(node):
     """
