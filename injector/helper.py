@@ -168,7 +168,7 @@ def getDisabledVariables(node):
 
         It parses triple quote comments. 
         Example:
-        '''adli-variable-disable value variables'''
+        '''adli-disable-variable value variables'''
     """
     
     disabledVariables = []
