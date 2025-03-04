@@ -218,7 +218,7 @@ class LogInjector(ast.NodeTransformer):
     
 
     '''
-        INJECT LOGS TYPE D
+        INJECT LOGS TYPE C
         Example
             def func_1():
                 logger.info(<logtype_id>)
