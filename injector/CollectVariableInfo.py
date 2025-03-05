@@ -1,6 +1,6 @@
 import ast
 import uuid
-from injector.helper import getVarLogStmt, getAssignStmt, getEmptyRootNode
+from injector.helper import getEmptyRootNode
 
 class VariableCollectorBase:
     '''
