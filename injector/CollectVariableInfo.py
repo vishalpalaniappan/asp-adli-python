@@ -2,30 +2,24 @@ import ast
 import uuid
 from injector.helper import getVarLogStmt, getAssignStmt, getEmptyRootNode
 
-VAR_COUNT = 0
-
-class CollectAssignVarInfo(ast.NodeVisitor):
-
-    def __init__(self, node, logTypeId, funcId):
-        self.node = node
+class VariableCollectorBase:
+    '''
+        Base class for collecting var info and generation var info object.
+    '''
+    var_count = 0
+    
+    def __init__(self, logTypeId, funcId):
+        self.variables = []
         self.logTypeId = logTypeId
         self.funcId = funcId
-        self.keys = []
-        self.variables = []
-        self.generic_visit(ast.Module(body=[node], type_ignores=[]))
-
-        if len(self.keys) > 0:
-            name = self.keys.pop(0)["value"]
-            self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
-        
-    def getVariableName(self):
-        return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
-        
+    
     def getVarInfo(self, name, keys, syntax, node):
-        global VAR_COUNT
-        VAR_COUNT += 1
+        '''
+            Appends varinfo object to the variables list.
+        '''
+        VariableCollectorBase.var_count += 1
         self.variables.append({
-            "varId": VAR_COUNT,
+            "varId": VariableCollectorBase.var_count,
             "name": name,
             "keys": keys,
             "syntax": syntax,
@@ -35,7 +29,36 @@ class CollectAssignVarInfo(ast.NodeVisitor):
             "isTemp": node is not None
         })
 
+class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
+    '''
+        Collects variable info from assign node targets. It also 
+        extracts the keys of the target node.
+    '''
+
+    def __init__(self, node, logTypeId, funcId):
+        VariableCollectorBase.__init__(self, logTypeId, funcId)
+        self.node = node
+        self.keys = []
+        self.variables = []
+        self.generic_visit(ast.Module(body=[node], type_ignores=[]))
+
+        if len(self.keys) > 0:
+            name = self.keys.pop(0)["value"]
+            self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
+        
+    def getVariableName(self):
+        '''
+            Generates a remporary variable name using the uuid module. This
+            variable will be hidden from the user in the diagnostic log viewer.
+        '''
+        return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
+
     def visit_Subscript(self, node):
+        '''
+            If any of the subscript nodes are an expression that need 
+            to be evaluated, then create a temporary variable and replace
+            the subscript with the name of the temporary variable. 
+        '''
         if not isinstance(node.slice, (ast.Constant, ast.Name)):
             self.generic_visit(ast.Module(body=[node.value], type_ignores=[]))
 
@@ -64,59 +87,41 @@ class CollectAssignVarInfo(ast.NodeVisitor):
         return node
     
 
-class CollectFunctionArgInfo(ast.NodeVisitor):
+class CollectFunctionArgInfo(ast.NodeVisitor, VariableCollectorBase):
+    '''
+        Collects the variable info for arguments to the function. 
+        TODO: Remove this class once the feature to extract the
+        arguments from call location are implemented.
+    '''
 
     def __init__(self, node, logTypeId, funcId):
+        VariableCollectorBase.__init__(self, logTypeId, funcId)
         self.variables = []
-        self.logTypeId = logTypeId
-        self.funcId = funcId
         self.generic_visit(node)
-
-    def getVarInfo(self, name, keys, syntax, node):
-        global VAR_COUNT
-        VAR_COUNT += 1
-        self.variables.append({
-            "varId": VAR_COUNT,
-            "name": name,
-            "keys": keys,
-            "syntax": syntax,
-            "assignValue": node,
-            "logType": self.logTypeId,
-            "funcId": self.funcId,
-            "isTemp": node is not None
-        })
     
     def visit_arg(self, node):
         self.getVarInfo(node.arg, [], node.arg, None)
         self.generic_visit(node)
     
 
-class CollectVariableDefault(ast.NodeVisitor):
+class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
+    '''
+        This class collects any name nodes in the provided node. For
+        nodes with a body, it removes the children before finding 
+        the valid names. For example, in the case of a for loop,
+        this would log the variable info for the current element in
+        the loop.
+    '''
 
     def __init__(self, node, logTypeId, funcId):
+        VariableCollectorBase.__init__(self, logTypeId, funcId)
         self.variables = []
-        self.logTypeId = logTypeId
-        self.funcId = funcId
 
         if 'body' in node._fields:
             emptyNode = getEmptyRootNode(node)
             self.generic_visit(emptyNode)
         else:
             self.generic_visit(node)
-
-    def getVarInfo(self, name, keys, syntax, node):
-        global VAR_COUNT
-        VAR_COUNT += 1
-        self.variables.append({
-            "varId": VAR_COUNT,
-            "name": name,
-            "keys": keys,
-            "syntax": syntax,
-            "assignValue": node,
-            "logType": self.logTypeId,
-            "funcId": self.funcId,
-            "isTemp": node is not None
-        })
     
     def visit_Name(self, node):
         if isinstance(node.ctx, ast.Store):
