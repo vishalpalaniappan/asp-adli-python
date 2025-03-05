@@ -88,6 +88,7 @@ class CollectFunctionArgInfo(ast.NodeVisitor):
     
     def visit_arg(self, node):
         self.getVarInfo(node.arg, [], node.arg, None)
+        self.generic_visit(node)
     
 
 class CollectVariableDefault(ast.NodeVisitor):

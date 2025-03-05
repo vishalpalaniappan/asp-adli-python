@@ -27,11 +27,7 @@ class ProgramProcessor:
 
     def run(self):
         '''
-            Processes the program by doing the following:
-            ----------------------------------------------
-            1. Find all locally imported files in the program
-            2. Inject logs into each source file
-            3. Write injected log tree into output folder
+            Runs the injector.
         '''
         ltMap = {}
         varMap = {}
