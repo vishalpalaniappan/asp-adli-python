@@ -79,6 +79,8 @@ class LogInjector(ast.NodeTransformer):
         self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
         self.ltMap[self.logTypeCount]["name"] = node.name
 
+        # Reset function specific variables before visiting children.
+        self.disabledVariables = []
         self.globalsInFunc = []
 
         self.generic_visit(node)
@@ -97,7 +99,7 @@ class LogInjector(ast.NodeTransformer):
 
     def visit_Assign(self, node):
         '''
-            Visit assign statement and extract variables.
+            Visit assign statement and extract variables from the target nodes.
         '''
         logStmt = self.generateLtLogStmts(node, "child")
 
@@ -113,7 +115,7 @@ class LogInjector(ast.NodeTransformer):
     
     def visit_AugAssign(self, node):
         '''
-            Visit AugAssign statement and extract variables.
+            Visit AugAssign statement and extract variables from the target node.
         '''
         logStmt = self.generateLtLogStmts(node, "child")
 
@@ -124,7 +126,8 @@ class LogInjector(ast.NodeTransformer):
     
     def visit_AnnAssign(self, node):
         '''
-            Visit AnnAssign statement and extract variables if it has a value.
+            Visit AnnAssign statement and extract variables from target node
+            if it has a value.
         '''
         logStmt = self.generateLtLogStmts(node, "child")
 
