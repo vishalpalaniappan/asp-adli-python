@@ -22,6 +22,9 @@ class LogInjector(ast.NodeTransformer):
             This function adds the node to the logtype map and 
             it returns a logging statement to inject.
         '''
+        if not hasattr(node, 'lineno') or not hasattr(node, 'end_lineno'):
+            raise ValueError(f"AST node of type {type(node).__name__} missing required line number information")
+
         self.logTypeCount += 1
 
         self.ltMap[self.logTypeCount] = {
