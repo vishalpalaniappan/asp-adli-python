@@ -40,9 +40,18 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
         self.node = node
         self.keys = []
         self.variables = []
+        self.containsSlice = False
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
-
-        if len(self.keys) > 0:
+        
+        if self.containsSlice:
+            '''
+            There isn't support for creating keys from slice nodes.
+            So for now, we remove the keys and log the whole variable. 
+            There will be further support added for this in the future.
+            '''
+            name = self.keys.pop(0)["value"]
+            self.getVarInfo(name, [], name, None)
+        elif len(self.keys) > 0:
             name = self.keys.pop(0)["value"]
             self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
         
@@ -59,14 +68,16 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
             to be evaluated, then create a temporary variable and replace
             the subscript with the name of the temporary variable. 
         '''
-        if not isinstance(node.slice, (ast.Constant, ast.Name)):
+        if isinstance(node.slice, ast.Slice):
+            self.generic_visit(node)
+            self.containsSlice = True
+
+        elif not isinstance(node.slice, (ast.Constant, ast.Name)):
             self.generic_visit(ast.Module(body=[node.value], type_ignores=[]))
 
             varName = self.getVariableName()
             self.keys.append({"type": "temp_variable", "value": varName})
             self.getVarInfo(varName, [], varName, node.slice)
-
-            node.slice = ast.Name(id= varName, ctx=ast.Load())
         else:
             self.generic_visit(node)
         return node
