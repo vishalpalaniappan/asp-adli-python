@@ -7,7 +7,7 @@ from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 
-SAVE_LT_MAP = False
+SAVE_LT_MAP = True
 
 class ProgramProcessor:
     '''
@@ -27,13 +27,10 @@ class ProgramProcessor:
 
     def run(self):
         '''
-            Processes the program by doing the following:
-            ----------------------------------------------
-            1. Find all locally imported files in the program
-            2. Inject logs into each source file
-            3. Write injected log tree into output folder
+            Runs the injector.
         '''
         ltMap = {}
+        varMap = {}
         fileTree = {}
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
@@ -52,14 +49,14 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, logTypeCount)
+            injector = LogInjector(currAst, ltMap, varMap, logTypeCount)
 
-            logTypeCount = injector.maxLtCount
+            logTypeCount = injector.logTypeCount
 
             fileTree[currRelPath] = {
                 "source": source,
-                "minLt": injector.minLtCount,
-                "maxLt": injector.maxLtCount
+                "minLt": injector.minLogTypeCount,
+                "maxLt": injector.maxLogTypeCount
             }
 
             fileOutputInfo.append({
@@ -69,16 +66,16 @@ class ProgramProcessor:
             })
 
         # Write files to output folder
-        for fileInfo in fileOutputInfo:     
+        for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {"fileTree": fileTree, "ltMap": ltMap}
+                header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap}
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
-                currAst = helper.injectLoggingSetup(fileInfo["ast"])
+                currAst = helper.injectLoggingSetup(fileInfo["ast"])  
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
         if SAVE_LT_MAP:
             with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
-                f.write(json.dumps(ltMap))
+                f.write(json.dumps({"ltMap":ltMap,"varMap":varMap}))

@@ -2,32 +2,7 @@ import ast
 import os
 import copy
 import json
-
-def checkImport(rootDir, node):
-    """
-        Given an import statement, this function tests if
-        it is a local import and returns the path.
-    """
-    pathsToCheck = []
-    if isinstance(node, ast.Import):
-        name = node.names[0].name.replace('.','/')
-        path = os.path.join(rootDir, name + '.py')
-        pathsToCheck.append(path)
-    elif isinstance(node, ast.ImportFrom):
-        module = os.path.join(rootDir, node.module.replace('.','/'))
-        name = os.path.join(node.names[0].name.replace('.','/'))
-        pathsToCheck.append(f"{module}/{name}.py")
-        pathsToCheck.append(f"{module}.py")
-    
-    validPaths = []
-    for path in pathsToCheck:
-        try:
-            open(path)
-            validPaths.append(path)
-        except Exception as e:
-            pass
-
-    return validPaths
+import re
 
 def getRootLoggingSetup(logFileName):
     """
@@ -36,29 +11,29 @@ def getRootLoggingSetup(logFileName):
         Args:
             logFileName: Name of the generated CDL log file.
     """
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import traceback"))
-    module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("import json"))
-    module.body.append(ast.parse("import sys"))
-    module.body.append(ast.parse("from pathlib import Path"))
-    module.body.append(ast.parse("from clp_logging.handlers import CLPFileHandler"))
+    nodes = []
+    nodes.append(ast.parse("import traceback").body[0])
+    nodes.append(ast.parse("import logging").body[0])
+    nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("import sys").body[0])
+    nodes.append(ast.parse("from pathlib import Path").body[0])
+    nodes.append(ast.parse("from clp_logging.handlers import CLPFileHandler").body[0])
     s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
-    module.body.append(ast.parse(s))
-    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
-    module.body.append(ast.parse("logger.setLevel(logging.INFO)"))
-    module.body.append(ast.parse("logger.addHandler(clp_handler)"))
-    return module
+    nodes.append(ast.parse(s).body[0])
+    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
+    nodes.append(ast.parse("logger.setLevel(logging.INFO)").body[0])
+    nodes.append(ast.parse("logger.addHandler(clp_handler)").body[0])
+    return nodes
 
 def getLoggingSetup():
     """
         Returns the logging setup for any imported files.
     """
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.append(ast.parse("import logging"))
-    module.body.append(ast.parse("import json"))
-    module.body.append(ast.parse("logger = logging.getLogger('adli')"))
-    return module
+    nodes = []
+    nodes.append(ast.parse("import logging").body[0])
+    nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
+    return nodes
 
 def getLoggingStatement(logStr):
     """
@@ -72,16 +47,46 @@ def getLoggingStatement(logStr):
         )
     )
 
-def getVariableLogStatement(name, varId):
+def getLtLogStmt(logTypeId):
+    '''
+        This function returns a logger.info statement with the 
+        provided logtype id.
+    '''
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='logger', ctx=ast.Load()),
+                attr='info',
+                ctx=ast.Load()
+            ),
+            args=[ast.Constant(value=logTypeId)],
+            keywords=[]
+        )
+    )
+
+def getVarLogStmt(name, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
-    tryStmt = f"""try:
-    aspAdliLog({name}, {varId})
-except Exception as e:
-    print("Failed to log variable named {name} with id {varId}")
-    """
-    return ast.parse(tryStmt)
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
+            args=[
+                ast.Name(id=name, ctx=ast.Load()),
+                ast.Constant(value=varId)
+            ],
+            keywords=[]
+        )
+    )
+
+def getAssignStmt(name, value):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=value
+    ))
 
 def getEmptyRootNode(astNode):
     '''
@@ -116,7 +121,7 @@ def getLoggingFunction():
             pass
         logger.info(f"# {varid} {val}")
     '''
-    )
+    ).body
 
 def injectRootLoggingSetup(tree, header, fileName):
     '''
@@ -138,13 +143,13 @@ def injectRootLoggingSetup(tree, header, fileName):
         orelse=[],
         finalbody=[]
     )
-    
-    return ast.Module(body=[
-        getRootLoggingSetup(fileName).body,
-        getLoggingFunction().body,
-        getLoggingStatement(json.dumps(header)),
-        mainTry
-    ], type_ignores=[])
+    rootLoggingSetup = getRootLoggingSetup(fileName)
+    loggingFunction = getLoggingFunction()
+    header = getLoggingStatement(json.dumps(header))
+
+    mod = ast.Module(body=[], type_ignores=[])
+    mod.body = rootLoggingSetup + loggingFunction + [header] + [mainTry]
+    return mod
 
 def injectLoggingSetup(tree):
     '''
@@ -152,8 +157,27 @@ def injectLoggingSetup(tree):
     '''
     loggingSetup = getLoggingSetup()
     loggingFunction = getLoggingFunction()
-    return ast.Module( body=[
-        loggingSetup.body,
-        loggingFunction.body,
-        tree.body
-    ], type_ignores=[])
+    mod = ast.Module(body=[], type_ignores=[])
+    mod.body = loggingSetup + loggingFunction + tree.body
+    return mod
+
+def getDisabledVariables(node):
+    """
+        This function parses the variable disable comments and returns
+        a list with the disabled variables. 
+
+        It parses triple quote comments. 
+        Example:
+        '''adli-disable-variable value variables'''
+    """
+    
+    disabledVariables = []
+    if "value" in node._fields and isinstance(node.value, ast.Constant):
+
+        value = node.value.value
+        variables = re.findall("adli-disable-variable (.*)", value)
+
+        if len(variables) > 0:
+            disabledVariables = variables[0].split()
+        
+    return disabledVariables
