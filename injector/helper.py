@@ -119,7 +119,13 @@ def getLoggingFunction():
             val = json.dumps(val, default=lambda o: o.__dict__ )
         except:
             pass
-        logger.info(f"# {varid} {id(val)} {val}")
+def aspAdliLog(val, varid):
+    val_id = id(val)
+    try:
+        val = json.dumps(val, default=lambda o: o.__dict__)
+    except:
+        pass
+    logger.info(f"# {varid} {val_id} {val}")
     '''
     ).body
 
