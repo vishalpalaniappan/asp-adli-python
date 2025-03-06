@@ -56,10 +56,10 @@ class LogInjector(ast.NodeTransformer):
                 continue 
 
             if variable["assignValue"] is None:
-                postLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+                postLog.append(getVarLogStmt(variable["name"], variable["syntax"], variable["varId"]))
             else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
-                preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+                preLog.append(getVarLogStmt(variable["name"], variable["syntax"], variable["varId"]))
 
             del variable["assignValue"]
             del variable["syntax"]
