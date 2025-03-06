@@ -106,7 +106,6 @@ class CollectFunctionArgInfo(ast.NodeVisitor, VariableCollectorBase):
 
     def __init__(self, node, logTypeId, funcId):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
-        self.variables = []
         self.generic_visit(node)
     
     def visit_arg(self, node):
@@ -125,7 +124,6 @@ class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
 
     def __init__(self, node, logTypeId, funcId):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
-        self.variables = []
 
         if 'body' in node._fields:
             emptyNode = getEmptyRootNode(node)
