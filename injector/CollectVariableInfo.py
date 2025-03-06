@@ -68,7 +68,7 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
             to be evaluated, then create a temporary variable and replace
             the subscript with the name of the temporary variable. 
         '''
-        if isinstance(node.slice, ast.Slice):
+        if isinstance(node.slice, (ast.Slice, ast.Tuple)):
             self.generic_visit(node)
             self.containsSlice = True
 
