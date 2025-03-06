@@ -39,7 +39,6 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
         self.node = node
         self.keys = []
-        self.variables = []
         self.containsSlice = False
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
         
