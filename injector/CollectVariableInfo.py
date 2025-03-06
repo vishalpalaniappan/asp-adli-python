@@ -77,6 +77,8 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
             varName = self.getVariableName()
             self.keys.append({"type": "temp_variable", "value": varName})
             self.getVarInfo(varName, [], varName, node.slice)
+
+            node.slice = ast.Name(id= varName, ctx=ast.Load())
         else:
             self.generic_visit(node)
         return node
