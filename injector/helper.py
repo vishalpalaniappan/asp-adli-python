@@ -64,15 +64,21 @@ def getLtLogStmt(logTypeId):
         )
     )
 
-def getVarLogStmt(name, varId):
+def getVarLogStmt(name, syntax, varId):
     '''
         Returns exception handler object for given logtypeid.
     '''
+    call = ast.Call(
+        func=ast.Name(id='id', ctx=ast.Load()),
+        args=[ast.Name(id=name, ctx=ast.Load())],
+        keywords=[]
+    )
     return ast.Expr(
         value=ast.Call(
             func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
             args=[
-                ast.Name(id=name, ctx=ast.Load()),
+                call,
+                ast.Name(id=syntax, ctx=ast.Load()),
                 ast.Constant(value=varId)
             ],
             keywords=[]
@@ -114,8 +120,7 @@ def getLoggingFunction():
     '''
 
     return ast.parse(
-    '''def aspAdliLog(val, varid):
-    val_id = id(val)
+    '''def aspAdliLog(val_id, val, varid):
     try:
         val = json.dumps(val, default=lambda o: o.__dict__)
     except:
