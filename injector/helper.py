@@ -119,7 +119,7 @@ def getLoggingFunction():
             val = json.dumps(val, default=lambda o: o.__dict__ )
         except:
             pass
-        logger.info(f"# {varid} {val}")
+        logger.info(f"# {varid} {id(val)} {val}")
     '''
     ).body
 
