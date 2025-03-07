@@ -7,11 +7,20 @@ class VariableCollectorBase:
         Base class for collecting var info and generation var info object.
     '''
     var_count = 0
+    temp_var_count = 0
     
     def __init__(self, logTypeId, funcId):
         self.variables = []
         self.logTypeId = logTypeId
         self.funcId = funcId
+        
+    def getVariableName(self):
+        '''
+            Generates a remporary variable name using the uuid module. This
+            variable will be hidden from the user in the diagnostic log viewer.
+        '''
+        VariableCollectorBase.var_count += 1
+        return "asp_temp_var_" + str(VariableCollectorBase.var_count)
     
     def getVarInfo(self, name, keys, syntax, node):
         '''
@@ -53,13 +62,6 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
         elif len(self.keys) > 0:
             name = self.keys.pop(0)["value"]
             self.getVarInfo(name, self.keys, ast.unparse(self.node), None)
-        
-    def getVariableName(self):
-        '''
-            Generates a remporary variable name using the uuid module. This
-            variable will be hidden from the user in the diagnostic log viewer.
-        '''
-        return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
 
     def visit_Subscript(self, node):
         '''
@@ -137,5 +139,41 @@ class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
         if isinstance(node.ctx, ast.Store):
             self.getVarInfo(node.id, [], node.id, None)
         self.generic_visit(node)
+
+
+        
+    
+
+class CollectCalls(ast.NodeVisitor, VariableCollectorBase):
+    '''
+        This class collects any name nodes in the provided node. For
+        nodes with a body, it removes the children before finding 
+        the valid names. For example, in the case of a for loop,
+        this would log the variable info for the current element in
+        the loop.
+    '''
+
+    def __init__(self, node, logTypeId, funcId):
+        VariableCollectorBase.__init__(self, logTypeId, funcId)
+
+        if 'body' in node._fields:
+            emptyNode = getEmptyRootNode(node)
+            self.generic_visit(emptyNode)
+        else:
+            self.generic_visit(node)
+    
+    def visit_Call(self, node):
+        args = []
+        for arg in node.args:
+            if not isinstance(arg, (ast.Name)):
+                varName = self.getVariableName()
+                self.getVarInfo(varName, [], varName, arg)
+                args.append(ast.Name(id= varName, ctx=ast.Load()))
+            else:
+                args.append(arg)
+
+        node.args = args
+        return node
+
 
     
