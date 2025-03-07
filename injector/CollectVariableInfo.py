@@ -19,8 +19,8 @@ class VariableCollectorBase:
             Generates a remporary variable name using the uuid module. This
             variable will be hidden from the user in the diagnostic log viewer.
         '''
-        VariableCollectorBase.var_count += 1
-        return "asp_temp_var_" + str(VariableCollectorBase.var_count)
+        VariableCollectorBase.temp_var_count += 1
+        return "asp_temp_var_" + str(VariableCollectorBase.temp_var_count)
     
     def getVarInfo(self, name, keys, syntax, node):
         '''
