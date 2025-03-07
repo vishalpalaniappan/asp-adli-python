@@ -27,16 +27,13 @@ ProgramProcessor:
 
 LogInjector:
 * Uses the NodeTransformer class to visit nodes in the tree and inject diagnostic logs.
-* Maintains a log type map for each id and also track which function each log type is part of. 
-
-NodeExtractor:
-* Used to extract metadata from AST nodes (variables etc.) and to generate the logging statements (variable and logtype).
-* Log injection is standardized into types.
+* Maintains a log type and variable map for each id and also track which function each log type and variable are part of. 
 
 CollectVariableNames:
 * Used to collect variable names from a given node by visiting child nodes.
 * Generates a unique varid for each variable.
 * Saves the varid and variable metadata (name, column etc..).
+* For assign statements, it extracts the specific key that is being updated.
 
 The logging setup is added to the injected AST's and they are unparsed and placed in the output folder while preserving the original program's folder structure. At this point, the injected source code can be run and it will generate a log file which can be viewed using the [Diagnostic Log Viewer][dlv].
 
