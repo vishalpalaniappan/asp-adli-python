@@ -146,11 +146,10 @@ class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
 
 class CollectCalls(ast.NodeVisitor, VariableCollectorBase):
     '''
-        This class collects any name nodes in the provided node. For
-        nodes with a body, it removes the children before finding 
-        the valid names. For example, in the case of a for loop,
-        this would log the variable info for the current element in
-        the loop.
+        This class processes function call nodes and creates temporary
+        variables for any arguments that aren't simple name nodes.
+        This allows for tracking and logging of complex expressions
+        passed as arguments to functions.
     '''
 
     def __init__(self, node, logTypeId, funcId):
