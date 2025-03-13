@@ -26,7 +26,7 @@ class UpdateVariableInfo(ast.NodeTransformer):
             Replaces variable with its value at the "value" key
         '''
         if node.id in self.varNames and isinstance(node.ctx, ast.Load):
-            node = ast.Attribute(
+            node = ast.Subscript(
                 value = node.id,
                 slice = ast.Constant(
                     value= "value"
