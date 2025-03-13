@@ -23,8 +23,20 @@ class UpdateVariableInfo(ast.NodeTransformer):
 
     def visit_Name(self, node):
         '''
-            Replaces variable with its value at the "value" key
+        Replaces variable with its value at the "value" key
+        
+        Parameters:
+        -----------
+        node : ast.Name
+            The AST node representing a variable name
+            
+        Returns:
+        --------
+        ast.Node
+            Either the original node or a new ast.Subscript node
+            if the variable name exists in self.varNames and is being loaded'
         '''
+        
         if node.id in self.varNames and isinstance(node.ctx, ast.Load):
             node = ast.Subscript(
                 value = node.id,
