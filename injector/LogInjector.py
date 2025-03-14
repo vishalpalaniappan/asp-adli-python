@@ -238,11 +238,11 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         varInfo = CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         preLog, postLog = self.generateVarLogStmts(varInfo)
+        InjectClassUid(node)
         node.body = [logStmt] + postLog + node.body
         return [node]
 
     def visit_ClassDef(self, node):
-        InjectClassUid(node)
         return self.injectLogTypesC(node)
     
     def visit_Try(self, node):

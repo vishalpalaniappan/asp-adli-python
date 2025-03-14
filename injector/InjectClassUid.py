@@ -8,8 +8,11 @@ class InjectClassUid(ast.NodeTransformer):
     '''
     
     def __init__(self, node):
-        self.functions = []
-        self.generic_visit(node)
+
+        if isinstance(node, ast.ClassDef):
+            self.uuid = str(uuid.uuid4())
+            self.functions = []
+            self.generic_visit(node)
             
 
     def visit_FunctionDef(self, node):
@@ -22,9 +25,28 @@ class InjectClassUid(ast.NodeTransformer):
                     value= ast.Name(id="self", ctx=ast.Store),
                     attr= "asp_uid", 
                 )],
-                value = ast.Constant(value= str(uuid.uuid4()))                
+                value = ast.Constant(value = self.uuid)                
             ))
             node.body.insert(0, assign)
+        else:
+            logStmt = ast.Expr(
+                ast.Call(
+                    func=ast.Name(id='logger.info', ctx=ast.Load()),
+                    args=[ast.JoinedStr(
+                        values= [
+                            ast.Constant(value= "@ "),
+                            ast.FormattedValue(
+                                value = ast.Attribute(
+                                    value= ast.Name(id="self", ctx=ast.Store),
+                                    attr= "asp_uid", 
+                                ),
+                                conversion = -1
+                            )
+                        ]
+                    )],
+                    keywords=[]
+                )
+            )
+            node.body.insert(0, logStmt)
 
-        self.functions.append(node.name)
         return node
