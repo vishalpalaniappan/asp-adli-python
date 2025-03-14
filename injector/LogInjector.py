@@ -1,6 +1,7 @@
 import ast
 from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo, CollectVariableDefault
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
+from injector.InjectClassUid import InjectClassUid
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, varMap, logTypeCount):
@@ -241,6 +242,7 @@ class LogInjector(ast.NodeTransformer):
         return [node]
 
     def visit_ClassDef(self, node):
+        InjectClassUid(node)
         return self.injectLogTypesC(node)
     
     def visit_Try(self, node):
