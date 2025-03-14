@@ -14,64 +14,84 @@ class InjectClassUid(ast.NodeTransformer):
 
         # If the class doesn't have an __init__ method, add one
         if isinstance(node, ast.ClassDef) and not self.has_init:
-            init_method = ast.FunctionDef(
-                name='__init__',
-                args=ast.arguments(
-                    posonlyargs=[],
-                    args=[ast.arg(arg='self', annotation=None)],
-                    kwonlyargs=[],
-                    kw_defaults=[],
-                    defaults=[]
-                ),
-                body=[
-                    ast.Assign(
-                        targets=[ast.Attribute(
-                            value=ast.Name(id='self', ctx=ast.Load),
-                            attr='asp_uid',
-                        )],
-                        value=ast.Constant(value=self.uuid)
-                    )
-                ],
-                decorator_list=[],
-                returns=None
+            self.add_init_method(node)
+
+    def add_assign_stmt(self, node):
+        '''
+            Add assign statement which sets the value of asp_uid.
+        '''            
+        assign = ast.Assign(
+            targets = [ast.Attribute(
+                value= ast.Name(id="self", ctx=ast.Store),
+                attr= "asp_uid", 
+            )],
+            value = ast.Constant(value = self.uuid)                
+        )
+        node.body.insert(0, ast.fix_missing_locations(assign))
+
+    def add_log_uid_stmt(self,node):
+        '''
+            Adds a statement which logs the unique id at the
+            start of the function.
+        '''
+        logStmt = ast.Expr(
+            ast.Call(
+                func=ast.Name(id='logger.info', ctx=ast.Load()),
+                args=[ast.JoinedStr(
+                    values= [
+                        ast.Constant(value= "@ "),
+                        ast.FormattedValue(
+                            value = ast.Attribute(
+                                value= ast.Name(id="self", ctx=ast.Load),
+                                attr= "asp_uid", 
+                            ),
+                            conversion = -1
+                        )
+                    ]
+                )],
+                keywords=[]
             )
-            init_method = ast.fix_missing_locations(init_method)
-            node.body.insert(0, init_method)
-            
+        )
+        node.body.insert(0, ast.fix_missing_locations(logStmt))
+
+    def add_init_method(self, node):
+        '''
+            Adds an initialization function if it doesn't exist
+            in the class.
+        '''
+        init_method = ast.FunctionDef(
+            name='__init__',
+            args=ast.arguments(
+                posonlyargs=[],
+                args=[ast.arg(arg='self', annotation=None)],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]
+            ),
+            body=[
+                ast.Assign(
+                    targets=[ast.Attribute(
+                        value=ast.Name(id='self', ctx=ast.Load),
+                        attr='asp_uid',
+                    )],
+                    value=ast.Constant(value=self.uuid)
+                )
+            ],
+            decorator_list=[],
+            returns=None
+        )
+        init_method = ast.fix_missing_locations(init_method)
+        node.body.insert(0, init_method)
+        
 
     def visit_FunctionDef(self, node):
         '''
-            Initializes uuid value in __init__ function
+            Add init function or log statement.
         '''
         if (node.name == "__init__"):
             self.has_init = True
-            assign = ast.Assign(
-                targets = [ast.Attribute(
-                    value= ast.Name(id="self", ctx=ast.Store),
-                    attr= "asp_uid", 
-                )],
-                value = ast.Constant(value = self.uuid)                
-            )
-            node.body.insert(0, ast.fix_missing_locations(assign))
+            self.add_assign_stmt(node)
         else:
-            logStmt = ast.Expr(
-                ast.Call(
-                    func=ast.Name(id='logger.info', ctx=ast.Load()),
-                    args=[ast.JoinedStr(
-                        values= [
-                            ast.Constant(value= "@ "),
-                            ast.FormattedValue(
-                                value = ast.Attribute(
-                                    value= ast.Name(id="self", ctx=ast.Load),
-                                    attr= "asp_uid", 
-                                ),
-                                conversion = -1
-                            )
-                        ]
-                    )],
-                    keywords=[]
-                )
-            )
-            node.body.insert(0, ast.fix_missing_locations(logStmt))
+            self.add_log_uid_stmt(node)
 
         return node
