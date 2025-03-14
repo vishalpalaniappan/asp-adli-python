@@ -42,7 +42,7 @@ class InjectClassUid(ast.NodeTransformer):
                         ast.Constant(value= "@ "),
                         ast.FormattedValue(
                             value = ast.Attribute(
-                                value= ast.Name(id="self", ctx=ast.Load),
+                                value= ast.Name(id="self", ctx=ast.Load()),
                                 attr= "asp_uid", 
                             ),
                             conversion = -1
