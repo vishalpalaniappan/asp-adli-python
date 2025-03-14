@@ -21,7 +21,7 @@ class InjectClassUid(ast.NodeTransformer):
             Add assign statement which sets the value of asp_uid.
         '''
         # TODO: Reimplement this with proper ast construction.
-        if_stmt = ast.parse('''if (\"asp_uid\" not in self):
+        if_stmt = ast.parse('''if not hasattr(self, "asp_uid"):
     pass''').body[0]
         
         assign = ast.Assign(
