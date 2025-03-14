@@ -45,14 +45,14 @@ class InjectClassUid(ast.NodeTransformer):
         '''
         if (node.name == "__init__"):
             self.has_init = True
-            assign = ast.fix_missing_locations(ast.Assign(
+            assign = ast.Assign(
                 targets = [ast.Attribute(
                     value= ast.Name(id="self", ctx=ast.Store),
                     attr= "asp_uid", 
                 )],
                 value = ast.Constant(value = self.uuid)                
-            ))
-            node.body.insert(0, assign)
+            )
+            node.body.insert(0, ast.fix_missing_locations(assign))
         else:
             logStmt = ast.Expr(
                 ast.Call(
@@ -72,6 +72,6 @@ class InjectClassUid(ast.NodeTransformer):
                     keywords=[]
                 )
             )
-            node.body.insert(0, logStmt)
+            node.body.insert(0, ast.fix_missing_locations(logStmt))
 
         return node
