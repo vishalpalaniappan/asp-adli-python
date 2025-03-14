@@ -19,7 +19,11 @@ class InjectClassUid(ast.NodeTransformer):
     def add_assign_stmt(self, node):
         '''
             Add assign statement which sets the value of asp_uid.
-        '''            
+        '''
+        # TODO: Reimplement this with proper ast construction.
+        if_stmt = ast.parse('''if (\"asp_uid\" not in self):
+    pass''').body[0]
+        
         assign = ast.Assign(
             targets = [ast.Attribute(
                 value= ast.Name(id="self", ctx=ast.Store),
@@ -27,7 +31,9 @@ class InjectClassUid(ast.NodeTransformer):
             )],
             value = ast.Constant(value = self.uuid)                
         )
-        node.body.insert(0, ast.fix_missing_locations(assign))
+
+        if_stmt.body[0] = assign
+        node.body.insert(0, ast.fix_missing_locations(if_stmt))
 
     def add_log_uid_stmt(self,node):
         '''
@@ -68,18 +74,12 @@ class InjectClassUid(ast.NodeTransformer):
                 kw_defaults=[],
                 defaults=[]
             ),
-            body=[
-                ast.Assign(
-                    targets=[ast.Attribute(
-                        value=ast.Name(id='self', ctx=ast.Load),
-                        attr='asp_uid',
-                    )],
-                    value=ast.Constant(value=self.uuid)
-                )
-            ],
+            body=[],
             decorator_list=[],
             returns=None
         )
+        self.add_assign_stmt(init_method)
+
         init_method = ast.fix_missing_locations(init_method)
         node.body.insert(0, init_method)
         
