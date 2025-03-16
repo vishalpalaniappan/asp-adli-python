@@ -49,7 +49,11 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, varMap, logTypeCount)
+            injector = LogInjector(currAst, ltMap, logTypeCount)
+
+            # Copy variables from injector into global varMap
+            for varInfo in injector.varMap:
+                varMap[varInfo] = injector.varMap[varInfo]
 
             logTypeCount = injector.logTypeCount
 
