@@ -1,5 +1,4 @@
 import ast
-from injector.CollectVariableInfo import CollectAssignVarInfo, CollectFunctionArgInfo, CollectVariableDefault
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
 from injector.CollectVariables import CollectVariables
 
