@@ -173,8 +173,7 @@ class LogInjector(ast.NodeTransformer):
         return self.injectLogTypesA(node)
     
     def visit_ImportFrom(self, node):
-        return self.injectLogTypesA(node)
-    
+        return self.injectLogTypesA(node)    
 
     '''
         INJECT LOGS TYPE B

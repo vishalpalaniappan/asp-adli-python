@@ -3,7 +3,7 @@ from injector.helper import getEmptyRootNode
 
 class CollectVariables(ast.NodeVisitor):
     '''
-        Base class for collecting var info and generation var info object.
+        Class for collecting variable info and adding to variable list.
     '''
     var_count = 0
 
@@ -32,18 +32,28 @@ class CollectVariables(ast.NodeVisitor):
         self.variables.append(info)
 
     def isValidVariable(self, name):
+        '''
+            Check if the variable making call is a variable
+            that we are tracking.
+        '''
         for key in self.existingVars:
             if self.existingVars[key]["name"] == name:
                 return True
         return False
 
     def visit_Name(self, node):
+        '''
+            Save name nodes which are written to.
+        '''
         if isinstance(node.ctx, ast.Store):
             self.getVarInfo(node.id)
         self.generic_visit(node)
 
 
     def visit_FunctionDef(self, node):
+        '''
+            Save all function arguments as variables.
+        '''
         for childNode in ast.walk(node):
             if isinstance(childNode,ast.arg):
                 self.getVarInfo(childNode.arg)
@@ -51,6 +61,9 @@ class CollectVariables(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Call(self,node):
+        '''
+            Save variables which make function calls as variables.
+        '''
         for childNode in ast.walk(node):
             if isinstance(childNode,ast.Name) and self.isValidVariable(childNode.id):
                 self.getVarInfo(childNode.id)
