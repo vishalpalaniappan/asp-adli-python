@@ -189,7 +189,7 @@ class LogInjector(ast.NodeTransformer):
         logStmt = self.generateLtLogStmts(node, "child")
         self.generic_visit(node)
         varLogStmt = self.generateVarLogStmts(node)
-        node.body.insert(0, varLogStmt)
+        node.body = varLogStmt + node.body
         return [logStmt, node]
 
     def visit_With(self, node):
