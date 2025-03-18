@@ -103,14 +103,14 @@ def getEmptyRootNode(astNode):
 def getLoggingFunction():
     ''' 
        Returns a funtion used to log values based on their type as an AST node
-       containing the aspAdliLog function definition.
+       containing the aspAdliVarLog function definition.
        
-       The aspAdliLog function logs values with special handling for objects:
+       The aspAdliVarLog function logs values with special handling for objects:
        - For objects with __dict__, it logs their dictionary representation
        - For other values, it logs their string representation
        
        Returns:
-          ast.Module: AST node containing the aspAdliLog function definition
+          ast.Module: AST node containing the aspAdliVarLog function definition
     '''
 
     return ast.parse(
