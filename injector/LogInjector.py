@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables, getTraceId, getTraceIdLogStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -172,7 +172,12 @@ class LogInjector(ast.NodeTransformer):
         if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
-            self.localDisabledVariables += getDisabledVariables(node)
+            self.disabledVariables += getDisabledVariables(node)
+
+        traceVar = getTraceId(node)
+        if (traceVar):
+            return getTraceIdLogStmt(traceVar["type"], traceVar["variable"])
+
         return self.injectLogTypesA(node)
 
     def visit_Pass(self, node):

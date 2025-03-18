@@ -88,6 +88,21 @@ def getAssignStmt(name, value):
         value=value
     ))
 
+def getTraceIdLogStmt(traceType, variable):
+    '''
+        Returns a log statement for trace ids.
+    '''
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Name(id='aspTraceLog', ctx=ast.Load()),
+            args=[
+                ast.Constant(value=traceType),
+                ast.Name(id=variable, ctx=ast.Load()),
+            ],
+            keywords=[]
+        )
+    )
+
 def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
@@ -123,6 +138,25 @@ def getLoggingFunction():
     '''
     ).body
 
+def getTraceLoggingFunction():
+    ''' 
+       Returns a funtion used to log trace start and end locations
+
+       Ex:
+       logger.info("@ start <var_value>")
+       runJob(jobInfo)
+       logger.info("@ end <var_value>")
+    '''
+    return ast.parse(
+    '''def aspTraceLog(traceType, value):
+        try:
+            value = json.dumps(value, default=lambda o: o.__dict__ )
+        except:
+            pass
+        logger.info(f"@ {traceType} {value}")
+    '''
+    ).body
+
 def injectRootLoggingSetup(tree, header, fileName):
     '''
         Injects try except structure around the given tree.
@@ -145,10 +179,11 @@ def injectRootLoggingSetup(tree, header, fileName):
     )
     rootLoggingSetup = getRootLoggingSetup(fileName)
     loggingFunction = getLoggingFunction()
+    traceLoggingFunction = getTraceLoggingFunction()
     header = getLoggingStatement(json.dumps(header))
 
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = rootLoggingSetup + loggingFunction + [header] + [mainTry]
+    mod.body = rootLoggingSetup + loggingFunction + traceLoggingFunction + [header] + [mainTry]
     return mod
 
 def injectLoggingSetup(tree):
@@ -157,8 +192,9 @@ def injectLoggingSetup(tree):
     '''
     loggingSetup = getLoggingSetup()
     loggingFunction = getLoggingFunction()
+    traceLoggingFunction = getTraceLoggingFunction()
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = loggingSetup + loggingFunction + tree.body
+    mod.body = loggingSetup + loggingFunction + traceLoggingFunction + tree.body
     return mod
 
 def getDisabledVariables(node):
@@ -199,10 +235,16 @@ def getTraceId(node):
         
         variables = re.findall("adli-trace-id-start (.*)", value)
         if len(variables) > 0:
-            return ["start", variables[0]]
+            return {
+                "type": "start",
+                "variable": variables[0]
+            }
         
         variables = re.findall("adli-trace-id-end (.*)", value)
         if len(variables) > 0:
-            return ["end", variables[0]]
+            return {
+                "type": "end",
+                "variable": variables[0]
+            }
         
     return traceVariable
