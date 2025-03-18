@@ -49,9 +49,12 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, varMap, logTypeCount)
+            injector = LogInjector(currAst, ltMap, logTypeCount)
 
             logTypeCount = injector.logTypeCount
+
+            for key in injector.varMap:
+                varMap[key] = injector.varMap[key]
 
             fileTree[currRelPath] = {
                 "source": source,
