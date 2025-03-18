@@ -44,18 +44,22 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
             - The syntax will be a["b"]["c"].append, so we need to remove everything 
               to the right of the final dot.
         '''
+        if len(self.keys) <= 1:
+            return
+        
         name = self.keys.pop(0)["value"]
         self.keys.pop()
 
         if self.containsSlice:
             self.getVarInfo(name, [], name, None)
+            return
 
-        elif len(self.keys) > 0:
-            if self.isValidVariableName(name):
-                syntax = ast.unparse(childNode)
-                if ("." in syntax):
-                    syntax = ''.join(syntax.rpartition('.')[:-2])
-                self.getVarInfo(name, self.keys, syntax, None)
+        if self.isValidVariableName(name):
+            syntax = ast.unparse(childNode)
+            if ("." in syntax):
+                syntax = ''.join(syntax.rpartition('.')[:-2])
+            self.getVarInfo(name, self.keys, syntax, None)
+            return
 
     def isValidVariableName(self, name):
         '''
