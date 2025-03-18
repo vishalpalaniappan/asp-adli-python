@@ -1,33 +1,6 @@
 import ast
 import uuid
-from injector.helper import getEmptyRootNode
-
-class VariableCollectorBase:
-    '''
-        Base class for collecting var info and generation var info object.
-    '''
-    var_count = 0
-    
-    def __init__(self, logTypeId, funcId):
-        self.variables = []
-        self.logTypeId = logTypeId
-        self.funcId = funcId
-    
-    def getVarInfo(self, name, keys, syntax, node):
-        '''
-            Appends varinfo object to the variables list.
-        '''
-        VariableCollectorBase.var_count += 1
-        self.variables.append({
-            "varId": VariableCollectorBase.var_count,
-            "name": name,
-            "keys": keys,
-            "syntax": syntax,
-            "assignValue": node,
-            "logType": self.logTypeId,
-            "funcId": self.funcId,
-            "isTemp": node is not None
-        })
+from injector.VariableCollectors.BaseVariableCollector import VariableCollectorBase
 
 class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
     '''
@@ -97,45 +70,3 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
         self.generic_visit(node)
         self.keys.append({"type":"key", "value":node.value})
         return node
-    
-
-class CollectFunctionArgInfo(ast.NodeVisitor, VariableCollectorBase):
-    '''
-        Collects the variable info for arguments to the function. 
-        TODO: Remove this class once the feature to extract the
-        arguments from call location are implemented.
-    '''
-
-    def __init__(self, node, logTypeId, funcId):
-        VariableCollectorBase.__init__(self, logTypeId, funcId)
-        self.generic_visit(node)
-    
-    def visit_arg(self, node):
-        self.getVarInfo(node.arg, [], node.arg, None)
-        self.generic_visit(node)
-    
-
-class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
-    '''
-        This class collects any name nodes in the provided node. For
-        nodes with a body, it removes the children before finding 
-        the valid names. For example, in the case of a for loop,
-        this would log the variable info for the current element in
-        the loop.
-    '''
-
-    def __init__(self, node, logTypeId, funcId):
-        VariableCollectorBase.__init__(self, logTypeId, funcId)
-
-        if 'body' in node._fields:
-            emptyNode = getEmptyRootNode(node)
-            self.generic_visit(emptyNode)
-        else:
-            self.generic_visit(node)
-    
-    def visit_Name(self, node):
-        if isinstance(node.ctx, ast.Store):
-            self.getVarInfo(node.id, [], node.id, None)
-        self.generic_visit(node)
-
-    

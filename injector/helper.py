@@ -70,7 +70,7 @@ def getVarLogStmt(name, varId):
     '''
     return ast.Expr(
         value=ast.Call(
-            func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
+            func=ast.Name(id='aspAdliVarLog', ctx=ast.Load()),
             args=[
                 ast.Name(id=name, ctx=ast.Load()),
                 ast.Constant(value=varId)
@@ -103,18 +103,18 @@ def getEmptyRootNode(astNode):
 def getLoggingFunction():
     ''' 
        Returns a funtion used to log values based on their type as an AST node
-       containing the aspAdliLog function definition.
+       containing the aspAdliVarLog function definition.
        
-       The aspAdliLog function logs values with special handling for objects:
+       The aspAdliVarLog function logs values with special handling for objects:
        - For objects with __dict__, it logs their dictionary representation
        - For other values, it logs their string representation
        
        Returns:
-          ast.Module: AST node containing the aspAdliLog function definition
+          ast.Module: AST node containing the aspAdliVarLog function definition
     '''
 
     return ast.parse(
-    '''def aspAdliLog(val, varid):
+    '''def aspAdliVarLog(val, varid):
         try:
             val = json.dumps(val, default=lambda o: o.__dict__ )
         except:
