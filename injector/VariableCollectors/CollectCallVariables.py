@@ -50,7 +50,8 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
             Check if the variable that was identified exists in the current stack.
         '''
         for varKey in self.existingVars:
-            return name == self.existingVars[varKey]["name"]
+            if name == self.existingVars[varKey]["name"]:
+                return True
         return False
         
     def getVariableName(self):
