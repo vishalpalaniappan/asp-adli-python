@@ -66,7 +66,7 @@ def getLtLogStmt(logTypeId):
 
 def getVarLogStmt(name, varId):
     '''
-        Returns exception handler object for given logtypeid.
+        Returns a function call to log the given variables.
     '''
     return ast.Expr(
         value=ast.Call(
@@ -90,7 +90,7 @@ def getAssignStmt(name, value):
 
 def getTraceIdLogStmt(traceType, variable):
     '''
-        Returns a log statement for trace ids.
+       Returns a log statement for trace ids.
     '''
     return ast.Expr(
         value=ast.Call(
@@ -141,11 +141,6 @@ def getLoggingFunction():
 def getTraceLoggingFunction():
     ''' 
        Returns a funtion used to log trace start and end locations
-
-       Ex:
-       logger.info("@ start <var_value>")
-       runJob(jobInfo)
-       logger.info("@ end <var_value>")
     '''
     return ast.parse(
     '''def aspTraceLog(traceType, value):
