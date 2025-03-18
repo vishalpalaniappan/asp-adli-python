@@ -174,7 +174,7 @@ class LogInjector(ast.NodeTransformer):
         if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
-            self.disabledVariables += getDisabledVariables(node)
+            self.localDisabledVariables += getDisabledVariables(node)
 
         # Replace traceid comments with log statements.
         traceVar = getTraceId(node)
