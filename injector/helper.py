@@ -181,3 +181,28 @@ def getDisabledVariables(node):
             disabledVariables = variables[0].split()
         
     return disabledVariables
+
+def getTraceId(node):
+    """
+        This function parses the asp-adli-trace-id to extract
+        the variable which should be logged to indicate the 
+        start and end of a unique trace.
+
+        It parses triple quote comments. 
+        Example:
+        '''adli-trace-id-start <variable_name>'''
+        '''adli-trace-id-end <variable_name>'''
+    """
+    traceVariable = None
+    if "value" in node._fields and isinstance(node.value, ast.Constant):
+        value = node.value.value
+        
+        variables = re.findall("adli-trace-id-start (.*)", value)
+        if len(variables) > 0:
+            return ["start", variables[0]]
+        
+        variables = re.findall("adli-trace-id-end (.*)", value)
+        if len(variables) > 0:
+            return ["end", variables[0]]
+        
+    return traceVariable
