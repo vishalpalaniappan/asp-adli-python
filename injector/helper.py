@@ -70,7 +70,7 @@ def getVarLogStmt(name, varId):
     '''
     return ast.Expr(
         value=ast.Call(
-            func=ast.Name(id='aspAdliLog', ctx=ast.Load()),
+            func=ast.Name(id='aspAdliVarLog', ctx=ast.Load()),
             args=[
                 ast.Name(id=name, ctx=ast.Load()),
                 ast.Constant(value=varId)
@@ -114,7 +114,7 @@ def getLoggingFunction():
     '''
 
     return ast.parse(
-    '''def aspAdliLog(val, varid):
+    '''def aspAdliVarLog(val, varid):
         try:
             val = json.dumps(val, default=lambda o: o.__dict__ )
         except:
