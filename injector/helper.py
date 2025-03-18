@@ -230,10 +230,16 @@ def getTraceId(node):
         
         variables = re.findall("adli-trace-id-start (.*)", value)
         if len(variables) > 0:
-            return ["start", variables[0]]
+            return {
+                "type": "start",
+                "variable": variables[0]
+            }
         
         variables = re.findall("adli-trace-id-end (.*)", value)
         if len(variables) > 0:
-            return ["end", variables[0]]
+            return {
+                "type": "end",
+                "variable": variables[0]
+            }
         
     return traceVariable
