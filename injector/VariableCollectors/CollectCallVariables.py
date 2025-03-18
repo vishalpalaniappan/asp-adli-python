@@ -22,18 +22,14 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
         for childNode in ast.walk(node):
             if isinstance(childNode, ast.Call):
                 self.generic_visit(childNode.func)
-                self.saveVariableInfo(childNode)
+                self.saveVariableInfo(childNode.func)
 
     def saveVariableInfo(self, childNode):
         '''
-            Save the variable info if the necessary conditions are met.
-            Conditions are:
-            - At least one key was found (first key is the name)
+            Save the variable info if the necessary conditions are met:
+            - At least one key was found (first key is the variable name)
             - The variable exists in the current stack
-
-            If variable containes a slice, log the entire variable
-            
-            Before saving variable info, remove the function call from the syntax.
+            - If the variable containes a slice, log the entire variable
         '''
         if self.containsSlice:
             name = self.keys.pop(0)["value"]
@@ -42,7 +38,10 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
         elif len(self.keys) > 0:
             name = self.keys.pop(0)["value"]
             if self.isValidVariableName(name):
-                syntax = ''.join(ast.unparse(childNode.func).rpartition('.')[:2])[:-1]
+                syntax = ast.unparse(childNode)
+                # Remove function call from syntax
+                if ("." in syntax):
+                    syntax = ''.join(syntax.rpartition('.')[:-2])
                 self.getVarInfo(name, self.keys, syntax, None)
 
     def isValidVariableName(self, name):
