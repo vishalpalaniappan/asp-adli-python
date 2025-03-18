@@ -21,7 +21,7 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
         # Process any child nodes if they are call instances
         for childNode in ast.walk(node):
             if isinstance(childNode, ast.Call):
-                self.generic_visit(childNode.func)
+                self.generic_visit(ast.Module(body=[childNode.func], type_ignores=[]))
                 self.saveVariableInfo(childNode.func)
 
     def saveVariableInfo(self, childNode):
@@ -30,16 +30,29 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
             - At least one key was found (first key is the variable name)
             - The variable exists in the current stack
             - If the variable containes a slice, log the entire variable
+
+            a["b"]["c"].append(1)
+            keys = [
+                {type:"variable",value:a},
+                {type:"key",value:"b"},
+                {type:"key",value:"c"},
+                {type:"key",value:"append"}
+            ]
+
+            - Name is first element in the keys list.
+            - The last element is the function call and it needs to be removed.
+            - The syntax will be a["b"]["c"].append, so we need to remove everything 
+              to the right of the final dot.
         '''
+        name = self.keys.pop(0)["value"]
+        self.keys.pop()
+
         if self.containsSlice:
-            name = self.keys.pop(0)["value"]
             self.getVarInfo(name, [], name, None)
 
         elif len(self.keys) > 0:
-            name = self.keys.pop(0)["value"]
             if self.isValidVariableName(name):
                 syntax = ast.unparse(childNode)
-                # Remove function call from syntax
                 if ("." in syntax):
                     syntax = ''.join(syntax.rpartition('.')[:-2])
                 self.getVarInfo(name, self.keys, syntax, None)
