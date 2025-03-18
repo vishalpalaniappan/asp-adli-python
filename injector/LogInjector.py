@@ -14,7 +14,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.globalsInFunc = []
         self.globalDisabledVariables = []
-        self.disabledVariables = []
+        self.localDisabledVariables = []
         self.nodeVarInfo = []
 
         self.minLogTypeCount = self.logTypeCount
@@ -56,7 +56,7 @@ class LogInjector(ast.NodeTransformer):
             if variable["global"] and variable["name"] in self.globalDisabledVariables:
                 continue 
 
-            if not variable["global"] and variable["name"] in self.disabledVariables:
+            if not variable["global"] and variable["name"] in self.localDisabledVariables:
                 continue 
 
             if variable["assignValue"] is None:
@@ -81,11 +81,13 @@ class LogInjector(ast.NodeTransformer):
         logStmt = self.generateLtLogStmts(node, "function")
 
         self.funcId = self.logTypeCount
+
+        # Update the log type map to add function specific information
         self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
         self.ltMap[self.logTypeCount]["name"] = node.name
 
         # Reset function specific variables before visiting children.
-        self.disabledVariables = []
+        self.localDisabledVariables = []
         self.globalsInFunc = []
 
         self.generic_visit(node)
@@ -115,7 +117,6 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
             
         preLog, postLog = self.generateVarLogStmts()
-
 
         return preLog + [logStmt]+ [node] + postLog
     
@@ -171,7 +172,7 @@ class LogInjector(ast.NodeTransformer):
         if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
-            self.disabledVariables += getDisabledVariables(node)
+            self.localDisabledVariables += getDisabledVariables(node)
         return self.injectLogTypesA(node)
 
     def visit_Pass(self, node):

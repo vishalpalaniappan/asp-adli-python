@@ -6,7 +6,7 @@ from injector.helper import getEmptyRootNode
 class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
     '''
         This class visits all Call nodes and extracts the variable names
-        with keys.
+        as well as the keys.
     '''
 
     def __init__(self, node, logTypeId, funcId, existingVariables):
@@ -47,7 +47,7 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
 
     def isValidVariableName(self, name):
         '''
-            Check if the variable that was identified exists in the current stack.
+            Check if the variable name is in the current stack.
         '''
         for varKey in self.existingVars:
             if name == self.existingVars[varKey]["name"]:
