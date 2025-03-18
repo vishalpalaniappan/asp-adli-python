@@ -170,17 +170,10 @@ class LogInjector(ast.NodeTransformer):
 
     def visit_Expr(self, node):
         # Save disabled variables.
-        # Save disabled variables.
         if (self.funcId == 0):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
             self.localDisabledVariables += getDisabledVariables(node)
-
-        # Replace traceid comments with log statements.
-        traceVar = getTraceId(node)
-        if (traceVar):
-            return getTraceIdLogStmt(traceVar["type"], traceVar["variable"])
-
 
         # Replace traceid comments with log statements.
         traceVar = getTraceId(node)
