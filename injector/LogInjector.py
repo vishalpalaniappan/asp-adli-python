@@ -100,7 +100,7 @@ class LogInjector(ast.NodeTransformer):
         
         self.funcId = 0
         
-        return node
+        return preLog + [node]
     
     def visit_AsyncFunctionDef(self, node):
         return self.visit_FunctionDef(node)
@@ -162,7 +162,7 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo += CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts()
-        return [logStmt] + [node] + postLog
+        return preLog + [logStmt] + [node] + postLog
     
     def visit_Global(self, node):
         self.globalsInFunc += node.names
@@ -229,7 +229,7 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts()
         node.body = postLog + node.body
-        return [logStmt, node]
+        return preLog + [logStmt, node]
 
     def visit_With(self, node):
         return self.injectLogTypesB(node)
@@ -257,7 +257,7 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts()
         node.body = [logStmt] + postLog + node.body
-        return [node]
+        return preLog + [node]
 
     def visit_ClassDef(self, node):
         return self.injectLogTypesC(node)
@@ -291,7 +291,7 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts()
         node.body = postLog + node.body + [logStmt]
-        return [logStmt, node]
+        return preLog + [logStmt, node]
     
     def visit_For(self, node):
         return self.injectLogTypesD(node)
