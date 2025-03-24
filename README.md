@@ -52,7 +52,7 @@ Using Diagnostic Logging, it is possible to build a fully automated log based di
 
 A simplified diagram of the diagnostic solution enabled by diagnostic logging is provided below.
 
-![Simplified ASP System Diagram](docs/Simplified_System_Diagram_ASP.png)
+![image](https://github.com/user-attachments/assets/429c667b-3b51-4171-becf-9bf946d0579f)
 
 # Providing feedback
 
