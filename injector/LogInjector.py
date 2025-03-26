@@ -37,6 +37,7 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
+            "isUnique": False
         }
 
         return getLtLogStmt(self.logTypeCount)
@@ -64,6 +65,9 @@ class LogInjector(ast.NodeTransformer):
             else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+
+            if variable["name"] == "asp_uid":
+                self.ltMap[variable["funcId"]]["isUnique"] = True
 
             del variable["assignValue"]
             del variable["syntax"]
