@@ -138,20 +138,6 @@ def getLoggingFunction():
     '''
     ).body
 
-def getTraceLoggingFunction():
-    ''' 
-       Returns a funtion used to log trace start and end locations
-    '''
-    return ast.parse(
-    '''def aspTraceLog(traceType, value):
-        try:
-            value = json.dumps(value, default=lambda o: o.__dict__ )
-        except:
-            pass
-        logger.info(f"@ {traceType} {value}")
-    '''
-    ).body
-
 def injectRootLoggingSetup(tree, header, fileName):
     '''
         Injects try except structure around the given tree.
@@ -174,11 +160,10 @@ def injectRootLoggingSetup(tree, header, fileName):
     )
     rootLoggingSetup = getRootLoggingSetup(fileName)
     loggingFunction = getLoggingFunction()
-    traceLoggingFunction = getTraceLoggingFunction()
     header = getLoggingStatement(json.dumps(header))
 
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = rootLoggingSetup + loggingFunction + traceLoggingFunction + [header] + [mainTry]
+    mod.body = rootLoggingSetup + loggingFunction + [header] + [mainTry]
     return mod
 
 def injectLoggingSetup(tree):
@@ -187,9 +172,8 @@ def injectLoggingSetup(tree):
     '''
     loggingSetup = getLoggingSetup()
     loggingFunction = getLoggingFunction()
-    traceLoggingFunction = getTraceLoggingFunction()
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = loggingSetup + loggingFunction + traceLoggingFunction + tree.body
+    mod.body = loggingSetup + loggingFunction + tree.body
     return mod
 
 def getDisabledVariables(node):
@@ -212,29 +196,3 @@ def getDisabledVariables(node):
             disabledVariables = variables[0].split()
         
     return disabledVariables
-
-def getTraceId(node):
-    """
-        This function parses the asp-adli-trace-id to extract
-        the variable which should be logged to indicate the 
-        start and end of a unique trace.
-    """
-    traceVariable = None
-    if "value" in node._fields and isinstance(node.value, ast.Constant):
-        value = node.value.value
-        
-        variables = re.findall("adli-trace-id-start (.*)", value)
-        if len(variables) > 0:
-            return {
-                "type": "start",
-                "variable": variables[0]
-            }
-        
-        variables = re.findall("adli-trace-id-end (.*)", value)
-        if len(variables) > 0:
-            return {
-                "type": "end",
-                "variable": variables[0]
-            }
-        
-    return traceVariable

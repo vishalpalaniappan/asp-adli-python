@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables, getTraceId, getTraceIdLogStmt
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -37,6 +37,7 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
+            "isUnique": False
         }
 
         return getLtLogStmt(self.logTypeCount)
@@ -64,6 +65,14 @@ class LogInjector(ast.NodeTransformer):
             else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
+
+            ''' 
+            Variables named "asp_uid" mark a function as the start of a unique trace.
+            It is a reserved adli keyword and coming updates will ensure that it is only
+            written to once in a function and will raise an error if this is violated.
+            '''
+            if variable["name"] == "asp_uid":
+                self.ltMap[variable["funcId"]]["isUnique"] = True
 
             del variable["assignValue"]
             del variable["syntax"]
@@ -174,11 +183,6 @@ class LogInjector(ast.NodeTransformer):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
             self.localDisabledVariables += getDisabledVariables(node)
-
-        # Replace traceid comments with log statements.
-        traceVar = getTraceId(node)
-        if (traceVar):
-            return getTraceIdLogStmt(traceVar["type"], traceVar["variable"])
 
         return self.injectLogTypesA(node)
 
