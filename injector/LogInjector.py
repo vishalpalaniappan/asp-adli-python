@@ -66,6 +66,11 @@ class LogInjector(ast.NodeTransformer):
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
 
+            ''' 
+            Variables named "asp_uid" mark a function as the start of a unique trace.
+            It is a reserved adli keyword and coming updates will ensure that it is only
+            written to once in a function and will raise an error if this is violated.
+            '''
             if variable["name"] == "asp_uid":
                 self.ltMap[variable["funcId"]]["isUnique"] = True
 
