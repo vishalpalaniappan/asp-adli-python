@@ -27,22 +27,19 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
     def saveVariableInfo(self, childNode):
         '''
             Save the variable info if the necessary conditions are met:
-            - At least one key was found (first key is the variable name)
+            - At least two keys were found
+                - First key is the name of the variable (a in the example)
+                - Last key is the function call (append in the example), it is removed.
             - The variable exists in the current stack
-            - If the variable containes a slice, log the entire variable
+
+            If the variable containes a slice, log the entire variable
 
             a["b"]["c"].append(1)
             keys = [
                 {type:"variable",value:a},
                 {type:"key",value:"b"},
-                {type:"key",value:"c"},
-                {type:"key",value:"append"}
+                {type:"key",value:"c"} 
             ]
-
-            - Name is first element in the keys list.
-            - The last element is the function call and it needs to be removed.
-            - The syntax will be a["b"]["c"].append, so we need to remove everything 
-              to the right of the final dot.
         '''
         if len(self.keys) <= 1:
             return
@@ -56,6 +53,8 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
 
         if self.isValidVariableName(name):
             syntax = ast.unparse(childNode)
+            # Remove the function name from the syntax
+            # ex: a["b"]["c"].append -> a["b"]["c"]
             if ("." in syntax):
                 syntax = ''.join(syntax.rpartition('.')[:-2])
             self.getVarInfo(name, self.keys, syntax, None)
@@ -72,7 +71,7 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
         
     def getVariableName(self):
         '''
-            Generates a remporary variable name using the uuid module. This
+            Generates a temporary variable name using the uuid module. This
             variable will be hidden from the user in the diagnostic log viewer.
         '''
         return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
