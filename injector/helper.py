@@ -179,11 +179,13 @@ def injectLoggingSetup(tree):
 def getDisabledVariables(node):
     """
         This function parses the variable disable comments and returns
-        a list with the disabled variables. 
+        a list with the disabled variable names.
 
-        It parses triple quote comments. 
+        Currently, the python AST library only supports parsing triple
+        quote comments. 
+
         Example:
-        '''adli-disable-variable value variables'''
+        '''adli-disable-variable varName1 varName2 varNameN'''
     """
     
     disabledVariables = []
