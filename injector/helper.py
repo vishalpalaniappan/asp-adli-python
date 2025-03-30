@@ -185,7 +185,7 @@ def getDisabledVariables(node):
         quote comments. 
 
         Example:
-        '''adli-disable-variable varName1 varName2 varName3'''
+        '''adli-disable-variable varName1 varName2 varNameN'''
     """
     
     disabledVariables = []
