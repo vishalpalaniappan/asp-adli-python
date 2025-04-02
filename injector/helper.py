@@ -1,8 +1,10 @@
 import ast
-import os
+import inspect
 import copy
 import json
 import re
+
+from injector.injectedFunctions import varLog
 
 def getRootLoggingSetup(logFileName):
     """
@@ -16,6 +18,7 @@ def getRootLoggingSetup(logFileName):
     nodes.append(ast.parse("import logging").body[0])
     nodes.append(ast.parse("import json").body[0])
     nodes.append(ast.parse("import sys").body[0])
+    nodes.append(ast.parse("import uuid").body[0])
     nodes.append(ast.parse("from pathlib import Path").body[0])
     nodes.append(ast.parse("from clp_logging.handlers import CLPFileHandler").body[0])
     s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
@@ -32,6 +35,7 @@ def getLoggingSetup():
     nodes = []
     nodes.append(ast.parse("import logging").body[0])
     nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("import uuid").body[0])
     nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
     return nodes
 
@@ -46,6 +50,15 @@ def getLoggingStatement(logStr):
             keywords=[]
         )
     )
+
+def getAssignStmt(name, value):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=value
+    ))
 
 def getLtLogStmt(logTypeId):
     '''
@@ -68,8 +81,7 @@ def getVarLogStmt(name, varId):
     '''
         Returns a function call to log the given variables.
     '''
-    return ast.Expr(
-        value=ast.Call(
+    logFunction = ast.Call(
             func=ast.Name(id='aspAdliVarLog', ctx=ast.Load()),
             args=[
                 ast.Name(id=name, ctx=ast.Load()),
@@ -77,16 +89,8 @@ def getVarLogStmt(name, varId):
             ],
             keywords=[]
         )
-    )
 
-def getAssignStmt(name, value):
-    '''
-        Returns an assign statement with the provided arguments.
-    '''
-    return ast.fix_missing_locations(ast.Assign(
-        targets=[ast.Name(id=name, ctx=ast.Store)],
-        value=value
-    ))
+    return getAssignStmt(name, logFunction)
 
 def getTraceIdLogStmt(traceType, variable):
     '''
@@ -117,26 +121,11 @@ def getEmptyRootNode(astNode):
 
 def getLoggingFunction():
     ''' 
-       Returns a funtion used to log values based on their type as an AST node
-       containing the aspAdliVarLog function definition.
-       
-       The aspAdliVarLog function logs values with special handling for objects:
-       - For objects with __dict__, it logs their dictionary representation
-       - For other values, it logs their string representation
-       
-       Returns:
-          ast.Module: AST node containing the aspAdliVarLog function definition
+       Returns a function used to log variables.
     '''
-
-    return ast.parse(
-    '''def aspAdliVarLog(val, varid):
-        try:
-            val = json.dumps(val, default=lambda o: o.__dict__ )
-        except:
-            pass
-        logger.info(f"# {varid} {val}")
-    '''
-    ).body
+    body = ast.parse(inspect.getsource(varLog)).body
+    body[0].name = "aspAdliVarLog"
+    return body
 
 def injectRootLoggingSetup(tree, header, fileName):
     '''
