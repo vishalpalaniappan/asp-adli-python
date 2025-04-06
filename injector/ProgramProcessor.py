@@ -15,11 +15,14 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
-    def __init__(self, sourceFile, workingDirectory):
+    def __init__(self, sourceFile, workingDirectory, uniqueid, sysinfo):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
         self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
-        self.outputDirectory = os.path.join(workingDirectory, "output")
+        self.outputDirectory = os.path.join(workingDirectory, "output", self.fileName)
+
+        self.sysinfo = sysinfo
+        self.uniqueid = uniqueid
 
         if os.path.exists(self.outputDirectory):
             shutil.rmtree(self.outputDirectory)
@@ -36,10 +39,22 @@ class ProgramProcessor:
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
 
-        # Load the metdata for this program.
+        # Load the metdata for this program and raise an error if the file can't
+        # be read or if it couldn't be parsed.
         config_path = os.path.join(self.sourceFileDirectory, "adli_metadata.json")
-        with open(config_path) as f:
-            metadata = json.load(f)
+        try:
+            with open(config_path) as f:
+                metadata = json.load(f)
+                metadata["uniqueid"] = self.uniqueid
+        except ValueError as e:
+            print("Failed to parse metadata config JSON file.")
+            raise(e)
+        except FileNotFoundError as e:
+            print("Could not find metadata file in source directory.")
+            raise(e)
+        except Exception as e:
+            print("Invalid ADLI metadata config file.")
+            raise(e)
 
         # Process every file found in the program
         for currFilePath in files:
@@ -76,7 +91,13 @@ class ProgramProcessor:
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap, "metadata": metadata}
+                header = {
+                    "fileTree": fileTree,
+                    "ltMap": ltMap,
+                    "varMap": varMap,
+                    "metadata": metadata,
+                    "sysinfo": self.sysinfo
+                }
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
@@ -86,4 +107,9 @@ class ProgramProcessor:
 
         if SAVE_LT_MAP:
             with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
-                f.write(json.dumps({"ltMap":ltMap,"varMap":varMap, "metadata": metadata}))
+                f.write(json.dumps({
+                    "ltMap":ltMap,
+                    "varMap":varMap, 
+                    "metadata": metadata, 
+                    "sysinfo": self.sysinfo
+                }))
