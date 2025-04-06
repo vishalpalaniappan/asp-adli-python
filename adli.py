@@ -22,16 +22,16 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "-sysid",
-        "--sysid",
+        "-sysinfo",
+        "--sysinfo",
         type=str,
-        help="A unique id to identify the system this program belongs to",
+        help="An object containing system relevant information.",
         required=False
     )
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
-    sysid = parsed_args.sysid
+    sysinfo = parsed_args.sysinfo
 
     try:
         open(source)
@@ -40,7 +40,7 @@ def main(argv):
         return -1
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory, sysid)
+    processor = ProgramProcessor(source, workingDirectory, sysinfo)
     processor.run()
 
 if "__main__" == __name__:
