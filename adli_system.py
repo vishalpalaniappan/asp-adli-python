@@ -16,10 +16,10 @@ def run(sys_def_file_path):
             sys_def_file = json.load(f)
     except FileNotFoundError:
         print(f"Error: System definition file '{sys_def_file_path}' not found.")
-        return 1
+        return -1
     except json.JSONDecodeError:
         print(f"Error: '{sys_def_file_path}' contains invalid JSON.")
-        return 1
+        return -1
 
     '''
     Create a unique instance id that is passed to every program in the system.
@@ -28,11 +28,13 @@ def run(sys_def_file_path):
     of the system.
     '''
     instance_uid = str(uuid.uuid4())
+
     for path in sys_def_file["programs"]:
         subprocess.run(
             [
                 "python3",
                 "adli.py",
+                "-source",
                 path,
                 "-sysinfo",
                 sys_def_file_path,
@@ -40,6 +42,8 @@ def run(sys_def_file_path):
                 instance_uid
             ]
         )
+        print(f"Successfully processed {path}")
+        
     return 0
 
 def main(argv):
