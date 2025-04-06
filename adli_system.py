@@ -68,5 +68,5 @@ def main(argv):
     return run(sys_def_file_path)
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     sys.exit(main(sys.argv))
