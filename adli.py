@@ -49,6 +49,7 @@ def main(argv):
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
     
+    # Load the system configuration from path if it was provided
     if (sys_info_path):
         with open(sys_info_path) as f:
             sysinfo = json.load(f) 
