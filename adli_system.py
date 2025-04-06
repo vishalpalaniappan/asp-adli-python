@@ -11,8 +11,15 @@ def run(sys_def_file_path):
     '''
 
     # Load the system definition file using the given path
-    with open(sys_def_file_path) as f:
-        sys_def_file = json.load(f)
+    try:
+        with open(sys_def_file_path) as f:
+            sys_def_file = json.load(f)
+    except FileNotFoundError:
+        print(f"Error: System definition file '{sys_def_file_path}' not found.")
+        return 1
+    except json.JSONDecodeError:
+        print(f"Error: '{sys_def_file_path}' contains invalid JSON.")
+        return 1
 
     '''
     Create a unique instance id that is passed to every program in the system.
