@@ -52,11 +52,20 @@ def main(argv):
     
     # Load the system configuration from path if it was provided
     if (sys_info_path):
-        with open(sys_info_path) as f:
-            sysinfo = json.load(f) 
+        try:
+            with open(sys_info_path) as f:
+                sysinfo = json.load(f)
+        except FileNotFoundError:
+            print(f"System info file not found: {sys_info_path}", file=sys.stderr)
+            return -1
+        except json.JSONDecodeError:
+            print(f"Invalid JSON in system info file: {sys_info_path}", file=sys.stderr)
+            return -1
+        except Exception as e:
+            print(f"Error reading system info file: {str(e)}", file=sys.stderr)
+            return -1
     else:
         sysinfo = None
-
     # If no unique id was provided, generate one
     if (uid == None):
         uid = str(uuid.uuid4())
