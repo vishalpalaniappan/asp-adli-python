@@ -26,29 +26,37 @@ def main(argv):
         "-sysinfo",
         "--sysinfo",
         type=str,
-        help="A JSON object that has been dumped into a string containing system relevant information.",
+        help="A path to a JSON file containing the systems information.",
+        required=False
+    )
+
+    args_parser.add_argument(
+        "-uniqueid",
+        "--uniqueid",
+        type=str,
+        help="A unique id representing this execution of the adli tool",
         required=False
     )
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
-    sysinfo = parsed_args.sysinfo
+    sys_info_path = parsed_args.sysinfo
+    uniqueid = parsed_args.uniqueid
 
     try:
         open(source)
     except Exception as e:
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
-
-    if (sysinfo):
-        try:
-            sysinfo = json.loads(sysinfo)
-        except Exception as e:
-            print(f"Invalid JSON string in sysinfo: {str(e)}", file=sys.stderr)
-            return -1
+    
+    if (sys_info_path):
+        with open(sys_info_path) as f:
+            sysinfo = json.load(f) 
+    else:
+        sysinfo = None
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory, sysinfo)
+    processor = ProgramProcessor(source, workingDirectory, uniqueid, sysinfo)
     processor.run()
 
 if "__main__" == __name__:
