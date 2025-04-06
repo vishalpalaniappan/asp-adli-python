@@ -9,7 +9,7 @@ After creating an `adli_metadata.json` file in the source file directory, run th
   ```shell
   python adli.py <source_file>
   ```
-The ADLI program will generate an output folder which contains the injected source files with the original folder structure.
+In the output folder, the ADLI program will create a folder with the same name as the program, in this folder the injected source code for the program can be found.
 
 Running the program will generate a CDL file that can be viewed in the diagnostic log viewer.
 
@@ -29,9 +29,9 @@ An example of adli_metadata.json:
 
 ## System Log Injection
 
-`adli_system.py` is a helper function which can be used to inject logs into multiple programs in the system. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes absolute paths to a list of programs which need to support log injection. 
+`adli_system.py` is a helper program which can be used to inject logs into multiple programs in the system. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes absolute paths to a list of programs which should be injected with logs. After running the program, in the output folder, each log injected program can be found in a folder with the same name as each program.
 
-Note: This feature will be updated to change the way that systems are defined. It would be more convenient to define the programs in the system using their repos and commit id's. This tool will then have to clone the repos, inject the logs and save them to the output folder. When this process is integrated with a deployment workflow, the injected source will also be deployed.
+Note: This feature will be updated to change the way that systems are defined. It would be more convenient to define the programs in the system using their repos and commit ID's. This tool will then have to clone the repos, inject the logs and save them to the output folder. When this process is integrated with a deployment workflow, the injected source will also be deployed.
 
 ### Usage
 Run the tool using the following command (using Python 3.9+):
@@ -58,7 +58,7 @@ An example of the System Definition File is provided below:
 }
 ```
 
-The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it. 
+The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it.
 
 Using this information, we will be able to uniquely identify every system and its unique deployment to automatically process them.
 
