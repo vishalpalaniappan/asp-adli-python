@@ -23,9 +23,7 @@ An example of adli_metadata.json:
     "name": "ADLI",
     "description": "A tool to inject diagnostic logs into a python program.",
     "version": "0.0",
-    "language": "python",
-    "systemId": 239287482,
-    "systemVersion": "0.0"
+    "language": "python"
 }
 ```
 
