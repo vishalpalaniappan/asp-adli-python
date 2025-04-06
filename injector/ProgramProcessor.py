@@ -15,11 +15,12 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
-    def __init__(self, sourceFile, workingDirectory):
+    def __init__(self, sourceFile, workingDirectory, sysid):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
         self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
         self.outputDirectory = os.path.join(workingDirectory, "output")
+        self.sysid = sysid
 
         if os.path.exists(self.outputDirectory):
             shutil.rmtree(self.outputDirectory)
@@ -40,6 +41,7 @@ class ProgramProcessor:
         config_path = os.path.join(self.sourceFileDirectory, "adli_metadata.json")
         with open(config_path) as f:
             metadata = json.load(f)
+            metadata["sysid"] = self.sysid
 
         # Process every file found in the program
         for currFilePath in files:

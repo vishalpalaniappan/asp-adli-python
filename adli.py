@@ -20,9 +20,18 @@ def main(argv):
         type=str,
         help="Path to source file"
     )
+
+    args_parser.add_argument(
+        "-sysid",
+        "--sysid",
+        type=str,
+        help="A unique id to identify the system this program belongs to",
+        required=False
+    )
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
+    sysid = parsed_args.sysid
 
     try:
         open(source)
@@ -31,7 +40,7 @@ def main(argv):
         return -1
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory)
+    processor = ProgramProcessor(source, workingDirectory, sysid)
     processor.run()
 
 if "__main__" == __name__:
