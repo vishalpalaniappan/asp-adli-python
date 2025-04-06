@@ -71,7 +71,9 @@ class ProgramProcessor:
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap}
+                with open("adli_config.json") as f:
+                    metadata = json.load(f)
+                header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap, "metadata": metadata}
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])  
@@ -81,4 +83,4 @@ class ProgramProcessor:
 
         if SAVE_LT_MAP:
             with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
-                f.write(json.dumps({"ltMap":ltMap,"varMap":varMap}))
+                f.write(json.dumps({"ltMap":ltMap,"varMap":varMap, "metadata": metadata}))
