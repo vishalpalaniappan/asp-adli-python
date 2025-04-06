@@ -18,31 +18,31 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "source",
+        "-source",
         type=str,
-        help="Path to source file"
+        help="Path to source file",
+        required=True
     )
 
     args_parser.add_argument(
         "-sysinfo",
-        "--sysinfo",
         type=str,
         help="A path to a JSON file containing the systems information.",
         required=False
     )
 
     args_parser.add_argument(
-        "-uniqueid",
-        "--uniqueid",
+        "-uid",
         type=str,
         help="A unique id representing this execution of the adli tool",
         required=False
     )
+
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
     sys_info_path = parsed_args.sysinfo
-    uniqueid = parsed_args.uniqueid
+    uid = parsed_args.uid
 
     try:
         open(source)
@@ -58,11 +58,11 @@ def main(argv):
         sysinfo = None
 
     # If no unique id was provided, generate one
-    if (uniqueid == None):
-        uniqueid = str(uuid.uuid4())
+    if (uid == None):
+        uid = str(uuid.uuid4())
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory, uniqueid, sysinfo)
+    processor = ProgramProcessor(source, workingDirectory, uid, sysinfo)
     processor.run()
 
 if "__main__" == __name__:
