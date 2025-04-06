@@ -45,6 +45,7 @@ class ProgramProcessor:
         try:
             with open(config_path) as f:
                 metadata = json.load(f)
+                metadata["uniqueid"] = self.uniqueid
         except ValueError as e:
             print("Failed to parse metadata config JSON file.")
             raise(e)

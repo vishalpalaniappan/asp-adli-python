@@ -3,6 +3,7 @@ import ast
 import os
 import json
 import argparse
+import uuid
 from injector.ProgramProcessor import ProgramProcessor
 
 def verify_python_compatibility():
@@ -55,6 +56,10 @@ def main(argv):
             sysinfo = json.load(f) 
     else:
         sysinfo = None
+
+    # If no unique id was provided, generate one
+    if (uniqueid == None):
+        uniqueid = str(uuid.uuid4())
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
     processor = ProgramProcessor(source, workingDirectory, uniqueid, sysinfo)
