@@ -36,6 +36,11 @@ class ProgramProcessor:
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
 
+        # Load the metdata for this program.
+        config_path = os.path.join(self.sourceFileDirectory, "adli_config.json")
+        with open(config_path) as f:
+            metadata = json.load(f)
+
         # Process every file found in the program
         for currFilePath in files:
             currRelPath = os.path.relpath(currFilePath, self.sourceFileDirectory)
@@ -71,12 +76,10 @@ class ProgramProcessor:
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                with open("adli_config.json") as f:
-                    metadata = json.load(f)
                 header = {"fileTree": fileTree, "ltMap": ltMap, "varMap": varMap, "metadata": metadata}
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
-                currAst = helper.injectLoggingSetup(fileInfo["ast"])  
+                currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
