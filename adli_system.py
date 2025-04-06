@@ -50,7 +50,7 @@ def main(argv):
     parsed_args = args_parser.parse_args(argv[1:])
     sys_def_file_path = parsed_args.adli_system_paths
 
-    run(sys_def_file_path)
+    return run(sys_def_file_path)
 
 
 if "__main__" == __name__:
