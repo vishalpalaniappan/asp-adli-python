@@ -37,7 +37,7 @@ class ProgramProcessor:
         logTypeCount = 0
 
         # Load the metdata for this program.
-        config_path = os.path.join(self.sourceFileDirectory, "adli_config.json")
+        config_path = os.path.join(os.getcwd(), "adli_config.json")
         with open(config_path) as f:
             metadata = json.load(f)
 
