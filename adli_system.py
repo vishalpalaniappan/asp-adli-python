@@ -2,12 +2,37 @@ import sys
 import json
 import argparse
 import subprocess
+import uuid
 
-def run(systemid, adli_system_paths):
-    print(systemid, adli_system_paths)
+def run(sys_def_file_path):
+    '''
+        This program parses the system definition file and 
+        injects logs into every program in the system.
+    '''
 
-    for path in adli_system_paths["programs"]:
-        subprocess.run(["python3", "adli.py", path, "-sysid", systemid])
+    # Load the system definition file using the given path
+    with open(sys_def_file_path) as f:
+        sys_def_file = json.load(f)
+
+    '''
+    Create a unique instance id that is passed to every program in the system.
+    The system definition file contains systemId and systemVersion which allow us
+    to identify the system. This unique id will be used to identify every deployment
+    of the system.
+    '''
+    instance_uid = str(uuid.uuid4())
+    for path in sys_def_file["programs"]:
+        subprocess.run(
+            [
+                "python3",
+                "adli.py",
+                path,
+                "-sysinfo",
+                sys_def_file_path,
+                "-uniqueid",
+                instance_uid
+            ]
+        )
     
 
 def main(argv):
@@ -19,23 +44,13 @@ def main(argv):
     args_parser.add_argument(
         "adli_system_paths",
         type=str,
-        help="Path to system configuration file which contains paths to the programs."
-    )
-
-    args_parser.add_argument(
-        "systemid",
-        type=str,
-        help="System ID"
+        help="Path to the system definition file."
     )
     
     parsed_args = args_parser.parse_args(argv[1:])
-    adli_system_paths = parsed_args.adli_system_paths
-    systemid = parsed_args.systemid
+    sys_def_file_path = parsed_args.adli_system_paths
 
-    with open(adli_system_paths) as f:
-        adli_system_paths = json.load(f)
-
-    run(systemid, adli_system_paths)
+    run(sys_def_file_path)
 
 
 if "__main__" == __name__:

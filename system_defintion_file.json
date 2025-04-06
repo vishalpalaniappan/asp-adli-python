@@ -1,8 +1,10 @@
 {
-    "name": "Distributed Sorting System",
-    "description": "This system accepts sorting jobs form clients over a webksocket and assigns them to distributed works. It returns the sorted list.",
-    "systemVersion": "0.0",
-    "systemId" : "1234",
+    "metadata": {
+        "name": "Distributed Sorting System",
+        "description": "This system accepts sorting jobs form clients over a webksocket and assigns them to distributed works. It returns the sorted list.",
+        "systemVersion": "0.0",
+        "systemId" : "1234"
+    },
     "programs": [
         "/home/dev/repo/sample-system/simulatedClient/simulatedClient.py",
         "/home/dev/repo/sample-system/workers/radixSort/radixSortWorker.py",
