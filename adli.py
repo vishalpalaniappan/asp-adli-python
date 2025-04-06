@@ -1,6 +1,7 @@
 import sys
 import ast
 import os
+import json
 import argparse
 from injector.ProgramProcessor import ProgramProcessor
 
@@ -25,7 +26,7 @@ def main(argv):
         "-sysinfo",
         "--sysinfo",
         type=str,
-        help="An object containing system relevant information.",
+        help="A JSON object that has been dumped into a string containing system relevant information.",
         required=False
     )
     
@@ -38,6 +39,13 @@ def main(argv):
     except Exception as e:
         print(f"Invalid arguments: {str(e)}", file=sys.stderr)
         return -1
+
+    if (sysinfo):
+        try:
+            sysinfo = json.loads(sysinfo)
+        except Exception as e:
+            print(f"Invalid JSON string in sysinfo: {str(e)}", file=sys.stderr)
+            return -1
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
     processor = ProgramProcessor(source, workingDirectory, sysinfo)
