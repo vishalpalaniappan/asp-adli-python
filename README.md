@@ -29,7 +29,44 @@ An example of adli_metadata.json:
 }
 ```
 
+## System Log Injection
+
+`adli_system.py` is a helper function which can be used to inject logs into multiple programs in the system. A System Definition File (SDF) is used to define the system by providing an id, version and description. It also includes absolute paths to a list of programs which need to support log injection. 
+
+### Usage
+Run the tool using the following command (using Python 3.9+):
+  ```shell
+  python adli_system.py <path_to_SDF_file>
+  ```
+
+An example of the System Definition File is provided below:
+```
+{
+    "metadata": {
+        "name": "Distributed Sorting System",
+        "description": "This system accepts sorting jobs form clients over a webksocket and assigns them to distributed works. It returns the sorted list.",
+        "systemVersion": "0.0",
+        "systemId" : "1234"
+    },
+    "programs": [
+        "/home/dev/repo/sample-system/simulatedClient/simulatedClient.py",
+        "/home/dev/repo/sample-system/workers/radixSort/radixSortWorker.py",
+        "/home/dev/repo/sample-system/workers/mergeSort/mergeSortWorker.py",
+        "/home/dev/repo/sample-system/workers/bubbleSort/bubbleSortWorker.py",
+        "/home/dev/repo/sample-system/jobHandler/jobHandler.py"
+    ]
+}
+```
+
+The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it. 
+
+Using this information, we will be able to uniquely identify every system and its unique deployment.
+
+Note: This feature will be updated to change the way that systems are defined. It would be more convenient to define the programs in the system using their repos and commit id. This tool will then have to clone the repos, inject the logs and save them to the output folder. When this process is integrated with a deployment workflow, the injected source will also be deployed.
+
 # How does it work? 
+
+Note: Parts of this section are outdated and some features are not explored. It will be updated in a coming update.
 
 The ADLI tool is designed to inject diagnostic logs into a python program. It uses the official python abstract syntax
 tree library to parse the code and inject the logs.
