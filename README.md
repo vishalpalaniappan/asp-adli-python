@@ -15,7 +15,7 @@ Running the program will generate a CDL file that can be viewed in the diagnosti
 
 ## Config File
 
-A config file named adli_config.json must be included in the source file directory. This information will be included in the header of the CDL file and will be used to assemble systems from log files and to provide access to the metadata in the various viewers. 
+A config file named adli_config.json must be included in the source file directory. This information will be included in the header of the CDL file and will be used to assemble systems from log files and to provide access to the metadata in the various log viewers. 
 
 An example of adli_config.json:
 ```
