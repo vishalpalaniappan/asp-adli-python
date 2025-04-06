@@ -33,7 +33,7 @@ def run(sys_def_file_path):
                 instance_uid
             ]
         )
-    
+    return 0
 
 def main(argv):
 
