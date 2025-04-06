@@ -29,7 +29,7 @@ def run(sys_def_file_path):
                 path,
                 "-sysinfo",
                 sys_def_file_path,
-                "-uniqueid",
+                "-uid",
                 instance_uid
             ]
         )
