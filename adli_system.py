@@ -31,7 +31,7 @@ def run(sys_def_file_path):
     instance_uid = str(uuid.uuid4())
 
     for path in sys_def_file["programs"]:
-        subprocess.run(
+        output = subprocess.run(
             [
                 "python3",
                 "adli.py",
@@ -41,7 +41,10 @@ def run(sys_def_file_path):
                 sys_def_file_path,
                 "-uid",
                 instance_uid
-            ]
+            ],
+            check=True,
+            capture_output=True,
+            text=True
         )
         print(f"Successfully processed {path}")
         
