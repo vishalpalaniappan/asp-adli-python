@@ -7,7 +7,8 @@ import uuid
 def run(sys_def_file_path):
     '''
         This program parses the system definition file and 
-        injects logs into every program in the system.
+        injects logs into every program in the system along
+        with a unique id.
     '''
 
     # Load the system definition file using the given path
