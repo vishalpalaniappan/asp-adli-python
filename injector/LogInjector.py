@@ -5,6 +5,8 @@ from injector.VariableCollectors.CollectVariableDefault import CollectVariableDe
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
+from injector.VariableInjectors.ValueKeyInjector import ValueKeyInjector
+
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
         self.ltMap = ltMap
@@ -42,7 +44,7 @@ class LogInjector(ast.NodeTransformer):
 
         return getLtLogStmt(self.logTypeCount)
     
-    def generateVarLogStmts(self):
+    def generateVarLogStmts(self, node):
         '''
             This function generates logging statements for all the variables.
             An assign statement is created for temporary variables before logging
@@ -62,7 +64,7 @@ class LogInjector(ast.NodeTransformer):
 
             if variable["assignValue"] is None:
                 postLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
-            else:                
+            else:             
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
 
@@ -78,6 +80,7 @@ class LogInjector(ast.NodeTransformer):
             del variable["syntax"]
             self.varMap[variable["varId"]] = variable
 
+        inj = ValueKeyInjector(node, self.varMap, self.funcId)
         self.nodeVarInfo= []
         return preLog, postLog
     
@@ -99,12 +102,12 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.globalsInFunc = []
 
-        self.generic_visit(node)
-
         # Add log statements for arguments. This is temporary and will be replaced.
         self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
+        
+        self.generic_visit(node)
         node.body = [logStmt] + postLog + node.body
         
         self.funcId = 0
@@ -125,7 +128,7 @@ class LogInjector(ast.NodeTransformer):
         
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
             
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
 
         return preLog + [logStmt]+ [node] + postLog
     
@@ -137,7 +140,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.nodeVarInfo += CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
 
         return preLog + [logStmt]+ [node] + postLog
     
@@ -151,7 +154,7 @@ class LogInjector(ast.NodeTransformer):
         if node.value:
             self.nodeVarInfo += CollectAssignVarInfo(node.target, self.logTypeCount, self.funcId).variables
             self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-            preLog, postLog = self.generateVarLogStmts()
+            preLog, postLog = self.generateVarLogStmts(node)
             return preLog + [logStmt]+ [node] + postLog
         else:
             return [logStmt, node]
@@ -170,7 +173,7 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         self.nodeVarInfo += CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
         return preLog + [logStmt] + [node] + postLog
     
     def visit_Global(self, node):
@@ -231,7 +234,7 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         self.nodeVarInfo += CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
         node.body = postLog + node.body
         return preLog + [logStmt, node]
 
@@ -259,7 +262,7 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         self.nodeVarInfo += CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
         node.body = [logStmt] + postLog + node.body
         return preLog + [node]
 
@@ -293,7 +296,7 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         self.nodeVarInfo += CollectVariableDefault(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
-        preLog, postLog = self.generateVarLogStmts()
+        preLog, postLog = self.generateVarLogStmts(node)
         node.body = postLog + node.body + [logStmt]
         return preLog + [logStmt, node]
     
