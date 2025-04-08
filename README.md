@@ -36,14 +36,10 @@ An example of the adli metadata comment:
 
 ### Arguments
 
-#### Required
-
-- `-source` : This argument represents the path to the source file to inject logs into.
-
 #### Optional
 - `-sysinfo` : A path to the System Definition File (SDF). 
   - This information is used when injecting logs into all programs in a system. 
-  - If no path is provided, then the sysinfo key in the header of the CDL file will be empty.
+  - If no path is provided, then the sysinfo key in the header of the CDL file will be an empty object.
 
 - `-uid` : A unique id representing this execution of the ADLI tool. 
   - When injecting system logs using `adli_system.py`, this uid is passed to all programs in the system.
