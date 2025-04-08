@@ -23,12 +23,14 @@ The optional metadata information for the program can be included in the program
 
 An example of the comments:
 ```
+'''
 {
     "name": "ADLI",
     "description": "A tool to inject diagnostic logs into a python program.",
     "version": "0.0",
     "language": "python"
 }
+'''
 ```
 
 ### Arguments
