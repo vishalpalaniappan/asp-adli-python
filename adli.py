@@ -6,6 +6,16 @@ import argparse
 import uuid
 from injector.ProgramProcessor import ProgramProcessor
 
+'''
+{
+    "type": "adli_metadata",
+    "name": "ADLI",
+    "description": "A tool to inject diagnostic logs into a python program.",
+    "version": "0.0",
+    "language": "python"
+}
+'''
+
 def verify_python_compatibility():
     if not hasattr(ast, 'unparse'):
         raise RuntimeError("This program requires Python 3.9+ (ast.unparse not available)")
@@ -18,10 +28,9 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "-source",
+        "source",
         type=str,
-        help="Path to source file",
-        required=True
+        help="Path to source file"
     )
 
     args_parser.add_argument(
@@ -37,7 +46,6 @@ def main(argv):
         help="A unique id representing this execution of the adli tool",
         required=False
     )
-
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
@@ -65,7 +73,8 @@ def main(argv):
             print(f"Error reading system info file: {str(e)}", file=sys.stderr)
             return -1
     else:
-        sysinfo = None
+        sysinfo = {}
+
     # If no unique id was provided, generate one
     if (uid == None):
         uid = str(uuid.uuid4())

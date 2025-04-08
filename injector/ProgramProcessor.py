@@ -38,23 +38,7 @@ class ProgramProcessor:
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
-
-        # Load the metdata for this program and raise an error if the file can't
-        # be read or if it couldn't be parsed.
-        config_path = os.path.join(self.sourceFileDirectory, "adli_metadata.json")
-        try:
-            with open(config_path) as f:
-                metadata = json.load(f)
-                metadata["uniqueid"] = self.uniqueid
-        except ValueError as e:
-            print("Failed to parse metadata config JSON file.")
-            raise(e)
-        except FileNotFoundError as e:
-            print("Could not find metadata file in source directory.")
-            raise(e)
-        except Exception as e:
-            print("Invalid ADLI metadata config file.")
-            raise(e)
+        metadata = {}
 
         # Process every file found in the program
         for currFilePath in files:
@@ -70,6 +54,9 @@ class ProgramProcessor:
 
             currAst = ast.parse(source)
             injector = LogInjector(currAst, ltMap, logTypeCount)
+
+            if(injector.metadata):
+                metadata = injector.metadata
 
             logTypeCount = injector.logTypeCount
 
@@ -106,7 +93,7 @@ class ProgramProcessor:
                 f.write(ast.unparse(currAst))
 
         if SAVE_LT_MAP:
-            with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
+            with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
                 f.write(json.dumps({
                     "ltMap":ltMap,
                     "varMap":varMap, 
