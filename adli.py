@@ -28,10 +28,9 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "-source",
+        "source",
         type=str,
-        help="Path to source file",
-        required=True
+        help="Path to source file"
     )
 
     args_parser.add_argument(
@@ -47,7 +46,6 @@ def main(argv):
         help="A unique id representing this execution of the adli tool",
         required=False
     )
-
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
