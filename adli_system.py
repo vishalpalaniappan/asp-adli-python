@@ -50,7 +50,7 @@ def validateSDF(sdfJsonStr):
 
 def cloneRepo(url):
     '''
-        Clone the given repo and load the system definition file.
+        Clone the given repo and load/validate the system definition file.
     '''
     if os.path.exists(TEMP_DIRECTORY):
         shutil.rmtree(TEMP_DIRECTORY)
