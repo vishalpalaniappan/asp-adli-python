@@ -4,6 +4,7 @@ import shutil
 import argparse
 import subprocess
 import json
+from pathlib import Path
 
 TEMP_DIRECTORY = "./temp"
 
@@ -12,9 +13,12 @@ def injectSystemLogs(sdf):
         Inject logs into the system.
     '''
     programs = sdf["programs"] 
+    sdfPath = os.path.join(TEMP_DIRECTORY, "system_defintion_file.json")
 
     for program in programs:
-        print("Program:", program)
+        path = Path(TEMP_DIRECTORY) / program
+        result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-uid', "1212234" ])
+        print(result)
 
 def validateSDF(sdfJsonStr):
     '''
@@ -48,12 +52,10 @@ def cloneRepo(url):
     '''
         Clone the given repo and load the system definition file.
     '''
-    # Clear temporary directory
     if os.path.exists(TEMP_DIRECTORY):
         shutil.rmtree(TEMP_DIRECTORY)
     os.makedirs(TEMP_DIRECTORY)
     
-    # Clone the repo into the temporary directory
     subprocess.run(['git', 'clone', url, TEMP_DIRECTORY])
 
     # If sdf file exists, validate it and return it.
