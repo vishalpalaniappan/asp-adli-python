@@ -19,7 +19,7 @@ Running the program will generate a CDL file that can be viewed in the diagnosti
 
 ### Optional Metadata File
 
-The optional metadata information for the program can be included in the program using comments. An example is provided below and can be found in adli.py in this repo. The metadata will be included in the header of the CDL file. If no metadata is provided, the metadata key in the header of the CDL file will be an empty object.
+The optional metadata information for the program can be included in the program using comments. An example is provided below and can also be found in adli.py in this repo. This metadata will be included in the header of the CDL file. If no metadata is provided, the metadata key in the header of the CDL file will be an empty object.
 
 An example of the adli metadata comment:
 ```
@@ -30,7 +30,7 @@ An example of the adli metadata comment:
     "description": "A tool to inject diagnostic logs into a python program.",
     "version": "0.0",
     "language": "python"
-}
+} 
 '''
 ```
 
