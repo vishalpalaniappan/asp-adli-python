@@ -1,12 +1,16 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getDisabledVariables
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
+from injector.CommentCollectors.getDisabledVariable import getDisabledVariables
+from injector.CommentCollectors.getMetadata import getMetadata
+
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
+        self.metadata = None
         self.ltMap = ltMap
         self.varMap = {}
         self.logTypeCount = logTypeCount
@@ -183,6 +187,11 @@ class LogInjector(ast.NodeTransformer):
             self.globalDisabledVariables += getDisabledVariables(node)
         else:
             self.localDisabledVariables += getDisabledVariables(node)
+
+        # Save the metadata
+        obj = getMetadata(node)
+        if (obj and obj["type"] == "adli_metadata"):
+            self.metadata = obj
 
         return self.injectLogTypesA(node)
 
