@@ -93,7 +93,7 @@ class ProgramProcessor:
                 f.write(ast.unparse(currAst))
 
         if SAVE_LT_MAP:
-            with open(os.path.join(self.outputDirectory, "ltMap.json"), "w+") as f:
+            with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
                 f.write(json.dumps({
                     "ltMap":ltMap,
                     "varMap":varMap, 
