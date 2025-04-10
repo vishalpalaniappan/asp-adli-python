@@ -47,9 +47,9 @@ An example of the adli metadata comment:
 
 ## System Log Injection
 
-`adli_system.py` is a helper program which can be used to inject logs into multiple programs in the system. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes absolute paths to a list of programs which should be injected with logs. After running the program, in the output folder, each log injected program can be found in a folder with the same name as each program.
+`adli_system.py` is a helper program which can be used to inject logs into a system given a repo. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes relative paths to a list of programs in the repository which should be injected with logs. After injecting the logs, in the output folder, each log injected program can be found in a folder with the same name as each program.
 
-Note: This feature will be updated to change the way that systems are defined. It would be more convenient to define the programs in the system using their repos and commit ID's. This tool will then have to clone the repos, inject the logs and save them to the output folder. When this process is integrated with a deployment workflow, the injected source will also be deployed.
+A valid system_definition_file.json must be found in the repo for the tool to work. See this [repo][sample-system] for an example of how it is used. More detailed specifications will be added as the documentation is developed.
 
 ### Usage
 Run the tool using the following command (using Python 3.9+):
@@ -149,3 +149,4 @@ You can use GitHub issues to [report a bug][bug-report] or [request a feature][f
 [bug-report]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=bug_report.md
 [feature-req]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=feature_request.md
 [dlv]: https://github.com/vishalpalaniappan/diagnostic-log-viewer
+[sample-system]: https://github.com/vishalpalaniappan/sample-system
