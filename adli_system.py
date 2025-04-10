@@ -24,7 +24,7 @@ def injectSystemLogs(sdf):
         result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-uid', uid ])
 
     print("Finished injecting logs into the system.")
-    return 1
+    return 0
 
 def validateSDF(sdfJsonStr):
     '''
@@ -72,6 +72,13 @@ def cloneRepo(url):
     else:
         return None
         
+def cleanTempDirectory():
+    '''
+        Clear the temporary directory.
+    '''
+    if os.path.exists(TEMP_DIRECTORY):
+        shutil.rmtree(TEMP_DIRECTORY)
+    print("Cleared temporary directory.")
 
 def main(argv):
     args_parser = argparse.ArgumentParser(
@@ -92,9 +99,12 @@ def main(argv):
 
     if (sdf):
         print("SDF file found in repository.")
-        return injectSystemLogs(sdf)
+        result = injectSystemLogs(sdf)
+        cleanTempDirectory()
+        return result        
     else:
         print("No system definition file was found")
+        cleanTempDirectory()
         return -1
 
 
