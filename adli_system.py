@@ -14,7 +14,7 @@ def injectSystemLogs(sdf):
         Inject logs into the system.
     '''
     programs = sdf["programs"] 
-    sdfPath = os.path.join(TEMP_DIRECTORY, "system_defintion_file.json")
+    sdfPath = os.path.join(TEMP_DIRECTORY, "system_definition_file.json")
 
     uid = str(uuid.uuid4())
 
@@ -65,9 +65,9 @@ def cloneRepo(url):
     subprocess.run(['git', 'clone', url, TEMP_DIRECTORY])
 
     # If sdf file exists, validate it and return it.
-    sdfPath = os.path.join(TEMP_DIRECTORY, "system_defintion_file.json")
+    sdfPath = os.path.join(TEMP_DIRECTORY, "system_definition_file.json")
     if os.path.exists(sdfPath):
-        with open(os.path.join(TEMP_DIRECTORY, "system_defintion_file.json")) as f:
+        with open(os.path.join(TEMP_DIRECTORY, "system_definition_file.json")) as f:
             return validateSDF(f.read())
     else:
         return None
