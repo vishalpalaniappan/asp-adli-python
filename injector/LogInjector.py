@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAssignFuncUidStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -103,13 +103,16 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.globalsInFunc = []
 
+        # Log uid in function
+        funcUidLogStmt = getAssignFuncUidStmt()
+
         self.generic_visit(node)
 
         # Add log statements for arguments. This is temporary and will be replaced.
         self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts()
-        node.body = [logStmt] + postLog + node.body
+        node.body = [logStmt] + postLog + [funcUidLogStmt] + node.body
         
         self.funcId = 0
         

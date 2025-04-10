@@ -13,6 +13,7 @@ def getRootLoggingSetup(logFileName):
     nodes.append(ast.parse("import traceback").body[0])
     nodes.append(ast.parse("import logging").body[0])
     nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("import uuid").body[0])
     nodes.append(ast.parse("import sys").body[0])
     nodes.append(ast.parse("from pathlib import Path").body[0])
     nodes.append(ast.parse("from clp_logging.handlers import CLPFileHandler").body[0])
@@ -30,6 +31,7 @@ def getLoggingSetup():
     nodes = []
     nodes.append(ast.parse("import logging").body[0])
     nodes.append(ast.parse("import json").body[0])
+    nodes.append(ast.parse("import uuid").body[0])
     nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
     return nodes
 
@@ -61,6 +63,13 @@ def getLtLogStmt(logTypeId):
             keywords=[]
         )
     )
+
+def getAssignFuncUidStmt():
+    '''
+        Generates an assign statement to generate a function uid.
+    '''
+    assignStmt = "asp_func_uid = str(uuid.uuid4())"
+    return ast.parse(assignStmt).body[0]
 
 def getVarLogStmt(name, varId):
     '''
