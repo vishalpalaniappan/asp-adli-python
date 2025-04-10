@@ -54,10 +54,29 @@ Note: This feature will be updated to change the way that systems are defined. I
 ### Usage
 Run the tool using the following command (using Python 3.9+):
   ```shell
-  python adli_system.py <path_to_SDF_file>
+  python3 adli_system.py <repo_url>
   ```
 
-An example of the System Definition File is provided below:
+#### Example:
+  ```shell
+  python3 adli_system.py https://github.com/vishalpalaniappan/sample-system.git
+  ```
+
+After running this program, each log injected program in the system can be found in the output directory in its own folder. 
+
+To run this sample system, navigate to the output folder and run:
+  ```shell
+  python3 start_system/start_system.py
+  ```
+
+To stop this sample system:
+  ```shell
+  python3 stop_system/stop_system.py
+  ```
+  
+This will generate CDL files for each program in the system. These files can be processed by ASP to extract system level diagnostic insight.
+
+An example of the System Definition File is provided below. Please see 
 ```
 {
     "metadata": {
@@ -67,18 +86,20 @@ An example of the System Definition File is provided below:
         "systemId" : "1234"
     },
     "programs": [
-        "/home/dev/repo/sample-system/simulatedClient/simulatedClient.py",
-        "/home/dev/repo/sample-system/workers/radixSort/radixSortWorker.py",
-        "/home/dev/repo/sample-system/workers/mergeSort/mergeSortWorker.py",
-        "/home/dev/repo/sample-system/workers/bubbleSort/bubbleSortWorker.py",
-        "/home/dev/repo/sample-system/jobHandler/jobHandler.py"
+        "simulatedClient/simulatedClient.py",
+        "radixSortWorker/radixSortWorker.py",
+        "mergeSortWorker/mergeSortWorker.py",
+        "bubbleSortWorker/bubbleSortWorker.py",
+        "jobHandler/jobHandler.py",
+        "utils/start_system.py",
+        "utils/stop_system.py"
     ]
 }
 ```
 
-The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool using command line arguments. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it.
+The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it.
 
-Using this information, we will be able to uniquely identify every system and its unique deployment to automatically process them.
+Using this information, we will be able to uniquely identify every system and its unique deployment.
 
 # How does it work? 
 
