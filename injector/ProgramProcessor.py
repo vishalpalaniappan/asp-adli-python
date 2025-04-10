@@ -75,16 +75,20 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
+        # Create header object
+        header = {
+            "fileTree": fileTree,
+            "ltMap": ltMap,
+            "varMap": varMap,
+            "metadata": metadata,
+            "sysinfo": self.sysinfo,
+            "uid": self.uniqueid
+        }
+        
+
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                header = {
-                    "fileTree": fileTree,
-                    "ltMap": ltMap,
-                    "varMap": varMap,
-                    "metadata": metadata,
-                    "sysinfo": self.sysinfo
-                }
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
@@ -94,9 +98,4 @@ class ProgramProcessor:
 
         if SAVE_LT_MAP:
             with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
-                f.write(json.dumps({
-                    "ltMap":ltMap,
-                    "varMap":varMap, 
-                    "metadata": metadata, 
-                    "sysinfo": self.sysinfo
-                }))
+                f.write(json.dumps(header))

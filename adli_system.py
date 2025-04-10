@@ -4,6 +4,7 @@ import shutil
 import argparse
 import subprocess
 import json
+import uuid
 from pathlib import Path
 
 TEMP_DIRECTORY = "./temp"
@@ -15,10 +16,15 @@ def injectSystemLogs(sdf):
     programs = sdf["programs"] 
     sdfPath = os.path.join(TEMP_DIRECTORY, "system_defintion_file.json")
 
+    uid = str(uuid.uuid4())
+
     for program in programs:
+        print(f"Processing program: {program}")
         path = Path(TEMP_DIRECTORY) / program
-        result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-uid', "1212234" ])
-        print(result)
+        result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-uid', uid ])
+
+    print("Finished injecting logs into the system.")
+    return 1
 
 def validateSDF(sdfJsonStr):
     '''
