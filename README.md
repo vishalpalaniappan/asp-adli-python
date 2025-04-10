@@ -47,17 +47,36 @@ An example of the adli metadata comment:
 
 ## System Log Injection
 
-`adli_system.py` is a helper program which can be used to inject logs into multiple programs in the system. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes absolute paths to a list of programs which should be injected with logs. After running the program, in the output folder, each log injected program can be found in a folder with the same name as each program.
+`adli_system.py` is a helper program which can be used to inject logs into a system given a repo. A System Definition File (SDF) is used to define the system by providing a name, id, version and description. It also includes relative paths to a list of programs in the repository which should be injected with logs. After injecting the logs, in the output folder, each log injected program can be found in a folder with the same name as each program.
 
-Note: This feature will be updated to change the way that systems are defined. It would be more convenient to define the programs in the system using their repos and commit ID's. This tool will then have to clone the repos, inject the logs and save them to the output folder. When this process is integrated with a deployment workflow, the injected source will also be deployed.
+A valid system_definition_file.json must be found in the repo for the tool to work. See this [repo][sample-system] for an example of how it is used. More detailed specifications will be added as the documentation is developed.
 
 ### Usage
 Run the tool using the following command (using Python 3.9+):
   ```shell
-  python adli_system.py <path_to_SDF_file>
+  python3 adli_system.py <repo_url>
   ```
 
-An example of the System Definition File is provided below:
+#### Example:
+  ```shell
+  python3 adli_system.py https://github.com/vishalpalaniappan/sample-system.git
+  ```
+
+After running this program, each log injected program in the system can be found in the output directory in its own folder. 
+
+To run this sample system, navigate to the output folder and run:
+  ```shell
+  python3 start_system/start_system.py
+  ```
+
+To stop this sample system:
+  ```shell
+  python3 stop_system/stop_system.py
+  ```
+  
+This will generate CDL files for each program in the system. These files can be processed by ASP to extract system level diagnostic insight.
+
+An example of the System Definition File is provided below. Please see 
 ```
 {
     "metadata": {
@@ -67,18 +86,20 @@ An example of the System Definition File is provided below:
         "systemId" : "1234"
     },
     "programs": [
-        "/home/dev/repo/sample-system/simulatedClient/simulatedClient.py",
-        "/home/dev/repo/sample-system/workers/radixSort/radixSortWorker.py",
-        "/home/dev/repo/sample-system/workers/mergeSort/mergeSortWorker.py",
-        "/home/dev/repo/sample-system/workers/bubbleSort/bubbleSortWorker.py",
-        "/home/dev/repo/sample-system/jobHandler/jobHandler.py"
+        "simulatedClient/simulatedClient.py",
+        "radixSortWorker/radixSortWorker.py",
+        "mergeSortWorker/mergeSortWorker.py",
+        "bubbleSortWorker/bubbleSortWorker.py",
+        "jobHandler/jobHandler.py",
+        "utils/start_system.py",
+        "utils/stop_system.py"
     ]
 }
 ```
 
-The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool using command line arguments. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it.
+The system definition file and a unique id associated with this deployment of the system are passed into the ADLI tool. This information is included in the header of the CDL file and is used by ASP to automatically assemble the system and process it.
 
-Using this information, we will be able to uniquely identify every system and its unique deployment to automatically process them.
+Using this information, we will be able to uniquely identify every system and its unique deployment.
 
 # How does it work? 
 
@@ -128,3 +149,4 @@ You can use GitHub issues to [report a bug][bug-report] or [request a feature][f
 [bug-report]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=bug_report.md
 [feature-req]: https://github.com/vishalpalaniappan/asp-adli-python/issues/new?template=feature_request.md
 [dlv]: https://github.com/vishalpalaniappan/diagnostic-log-viewer
+[sample-system]: https://github.com/vishalpalaniappan/sample-system
