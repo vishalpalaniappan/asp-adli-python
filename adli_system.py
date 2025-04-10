@@ -1,71 +1,111 @@
 import sys
-import json
+import os
+import shutil
 import argparse
 import subprocess
+import json
 import uuid
+from pathlib import Path
 
-def run(sys_def_file_path):
-    '''
-        This program parses the system definition file and 
-        injects logs into every program in the system along
-        with a unique id.
-    '''
+TEMP_DIRECTORY = "./temp"
 
-    # Load the system definition file using the given path
-    try:
-        with open(sys_def_file_path) as f:
-            sys_def_file = json.load(f)
-    except FileNotFoundError:
-        print(f"Error: System definition file '{sys_def_file_path}' not found.")
-        return -1
-    except json.JSONDecodeError:
-        print(f"Error: '{sys_def_file_path}' contains invalid JSON.")
-        return -1
-
+def injectSystemLogs(sdf):
     '''
-    Create a unique instance id that is passed to every program in the system.
-    The system definition file contains systemId and systemVersion which allow us
-    to identify the system. This unique id will be used to identify every deployment
-    of the system.
+        Inject logs into the system.
     '''
-    instance_uid = str(uuid.uuid4())
+    programs = sdf["programs"] 
+    sdfPath = os.path.join(TEMP_DIRECTORY, "system_definition_file.json")
 
-    for path in sys_def_file["programs"]:
-        output = subprocess.run(
-            [
-                "python3",
-                "adli.py",
-                "-source",
-                path,
-                "-sysinfo",
-                sys_def_file_path,
-                "-uid",
-                instance_uid
-            ],
-            check=True,
-            capture_output=True,
-            text=True
-        )
-        print(f"Successfully processed {path}")
-        
+    uid = str(uuid.uuid4())
+
+    for program in programs:
+        print(f"Processing program: {program}")
+        path = Path(TEMP_DIRECTORY) / program
+        result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-uid', uid ])
+
+    print("Finished injecting logs into the system.")
     return 0
 
-def main(argv):
+def validateSDF(sdfJsonStr):
+    '''
+        Given the contents of an SDF file, this function
+        parses it into an object and validates that the
+        necessary keys are present.
+    '''
+    sdf = json.loads(sdfJsonStr)
 
+    if not isinstance(sdf, dict):
+        raise Exception("SDF file is not a valid dictionary.")
+
+    if not sdf.get("metadata"):
+        raise Exception("SDF file is missing the metadata.")
+
+    if not sdf["metadata"].get("name"):
+        raise Exception("SDF metadata is missing the name property.")
+    
+    if not sdf["metadata"].get("description"):
+        raise Exception("SDF metadata is missing the description property.")    
+    
+    if not sdf["metadata"].get("systemVersion"):
+        raise Exception("SDF metadata is missing the systemVersion property.")
+    
+    if not sdf["metadata"].get("systemId"):
+        raise Exception("SDF metadata is missing the systemId property.")
+    
+    return sdf
+
+def cloneRepo(url):
+    '''
+        Clone the given repo and load/validate the system definition file.
+    '''
+    if os.path.exists(TEMP_DIRECTORY):
+        shutil.rmtree(TEMP_DIRECTORY)
+    os.makedirs(TEMP_DIRECTORY)
+    
+    subprocess.run(['git', 'clone', url, TEMP_DIRECTORY])
+
+    # If sdf file exists, validate it and return it.
+    sdfPath = os.path.join(TEMP_DIRECTORY, "system_definition_file.json")
+    if os.path.exists(sdfPath):
+        with open(os.path.join(TEMP_DIRECTORY, "system_definition_file.json")) as f:
+            return validateSDF(f.read())
+    else:
+        return None
+        
+def cleanTempDirectory():
+    '''
+        Clear the temporary directory.
+    '''
+    if os.path.exists(TEMP_DIRECTORY):
+        shutil.rmtree(TEMP_DIRECTORY)
+    print("Cleared temporary directory.")
+
+def main(argv):
     args_parser = argparse.ArgumentParser(
-        description="Injects diagnostic logs into multiple programs with the same system id."
+        description="This program injects diagnostic logs into all programs in the system given a repository URL." \
+        "The repo must have a system definition file."
     )
 
     args_parser.add_argument(
-        "adli_system_paths",
+        "repo_url",
         type=str,
-        help="Path to the system definition file."
+        help="URL of the repository containing the system to inject logs into.",
     )
     
     parsed_args = args_parser.parse_args(argv[1:])
-    sys_def_file_path = parsed_args.adli_system_paths
+    url = parsed_args.repo_url
 
-    return run(sys_def_file_path)
+    sdf = cloneRepo(url)
+
+    if (sdf):
+        print("SDF file found in repository.")
+        result = injectSystemLogs(sdf)
+        cleanTempDirectory()
+        return result        
+    else:
+        print("No system definition file was found")
+        cleanTempDirectory()
+        return -1
 
 
 if __name__ == "__main__":
