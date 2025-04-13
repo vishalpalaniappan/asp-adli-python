@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getJsonComment
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -179,7 +179,7 @@ class LogInjector(ast.NodeTransformer):
         return self.injectLogTypesA(node)
 
     def visit_Expr(self, node):
-        parsed = getJsonComment(node)
+        parsed = getAdliConfiguration(node)
 
         if (parsed and parsed["type"] == "adli_disable_variable"):
             # TODO: Add validation for the values.

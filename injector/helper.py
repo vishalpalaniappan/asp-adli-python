@@ -125,7 +125,7 @@ def injectLoggingSetup(tree):
     mod.body = [loggerInstance] + tree.body
     return mod
 
-def getJsonComment(node):
+def getAdliConfiguration(node):
     """
         Checks to see if the node contains valid ADLI configuration info.
         Return configuration if it is valid and return None if isn't.    
