@@ -74,6 +74,7 @@ def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
         extract the variables without visiting the child nodes.
+        For example, with a for loop like: `for i in range(n)`
     '''
     node = copy.copy(astNode)
     keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
@@ -85,7 +86,7 @@ def getEmptyRootNode(astNode):
 def injectRootLoggingSetup(tree, header, fileName):
     '''
         Injects try except structure around the given tree.
-        Injects root logging setup and function the given tree.
+        Injects header into file and imports adli logger instance.
     '''
     handler = ast.ExceptHandler(
         type=ast.Name(id='Exception', ctx=ast.Load()),
