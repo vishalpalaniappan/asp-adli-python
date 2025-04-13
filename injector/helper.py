@@ -2,45 +2,31 @@ import ast
 import copy
 import json
 
-def getRootLoggingSetup(logFileName):
-    """
-        Returns the root logging setup for the program. 
 
-        Args:
-            logFileName: Name of the generated CDL log file.
+def getAdliLoggerInstance():
     """
-    nodes = []
-    nodes.append(ast.parse("import traceback").body[0])
-    nodes.append(ast.parse("import logging").body[0])
-    nodes.append(ast.parse("import json").body[0])
-    nodes.append(ast.parse("import sys").body[0])
-    nodes.append(ast.parse("from pathlib import Path").body[0])
-    nodes.append(ast.parse("from clp_logging.handlers import CLPFileHandler").body[0])
-    s = "clp_handler = CLPFileHandler(Path('{f}'))".format(f='./' + logFileName + '.clp.zst')
-    nodes.append(ast.parse(s).body[0])
-    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
-    nodes.append(ast.parse("logger.setLevel(logging.INFO)").body[0])
-    nodes.append(ast.parse("logger.addHandler(clp_handler)").body[0])
-    return nodes
+        Imports the adliLogger instance
+    """
+    return ast.ImportFrom(
+        module="AdliLogger",
+        names = [
+            ast.alias(name="adli")
+        ],
+        level=0
+    )
 
-def getLoggingSetup():
-    """
-        Returns the logging setup for any imported files.
-    """
-    nodes = []
-    nodes.append(ast.parse("import logging").body[0])
-    nodes.append(ast.parse("import json").body[0])
-    nodes.append(ast.parse("logger = logging.getLogger('adli')").body[0])
-    return nodes
-
-def getLoggingStatement(logStr):
+def getHeaderLogStmt(header):
     """
         Returns a logging statement as an AST node.
     """
     return ast.Expr(
-        ast.Call(
-            func=ast.Name(id='logger.info', ctx=ast.Load()),
-            args=[ast.Constant(value=logStr)],
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='logHeader',
+                ctx=ast.Load()
+            ),
+            args=[ast.Constant(value=header)],
             keywords=[]
         )
     )
@@ -53,8 +39,8 @@ def getLtLogStmt(logTypeId):
     return ast.Expr(
         value=ast.Call(
             func=ast.Attribute(
-                value=ast.Name(id='logger', ctx=ast.Load()),
-                attr='info',
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='logStmt',
                 ctx=ast.Load()
             ),
             args=[ast.Constant(value=logTypeId)],
@@ -68,10 +54,14 @@ def getVarLogStmt(name, varId):
     '''
     return ast.Expr(
         value=ast.Call(
-            func=ast.Name(id='aspAdliVarLog', ctx=ast.Load()),
+            func=ast.Attribute(
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='logVariable',
+                ctx=ast.Load()
+            ),
             args=[
-                ast.Name(id=name, ctx=ast.Load()),
-                ast.Constant(value=varId)
+                ast.Constant(value=varId),
+                ast.Name(id=name, ctx=ast.Load())
             ],
             keywords=[]
         )
@@ -86,25 +76,11 @@ def getAssignStmt(name, value):
         value=value
     ))
 
-def getTraceIdLogStmt(traceType, variable):
-    '''
-       Returns a log statement for trace ids.
-    '''
-    return ast.Expr(
-        value=ast.Call(
-            func=ast.Name(id='aspTraceLog', ctx=ast.Load()),
-            args=[
-                ast.Constant(value=traceType),
-                ast.Name(id=variable, ctx=ast.Load()),
-            ],
-            keywords=[]
-        )
-    )
-
 def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
         extract the variables without visiting the child nodes.
+        For example, with a for loop like: `for i in range(n)`
     '''
     node = copy.copy(astNode)
     keysToEmpty = ["body", "orelse","else","handlers","finalbody"]
@@ -113,39 +89,16 @@ def getEmptyRootNode(astNode):
             setattr(node, key, [])
     return node
 
-def getLoggingFunction():
-    ''' 
-       Returns a funtion used to log values based on their type as an AST node
-       containing the aspAdliVarLog function definition.
-       
-       The aspAdliVarLog function logs values with special handling for objects:
-       - For objects with __dict__, it logs their dictionary representation
-       - For other values, it logs their string representation
-       
-       Returns:
-          ast.Module: AST node containing the aspAdliVarLog function definition
-    '''
-
-    return ast.parse(
-    '''def aspAdliVarLog(val, varid):
-        try:
-            val = json.dumps(val, default=lambda o: o.__dict__ )
-        except:
-            pass
-        logger.info(f"# {varid} {val}")
-    '''
-    ).body
-
 def injectRootLoggingSetup(tree, header, fileName):
     '''
         Injects try except structure around the given tree.
-        Injects root logging setup and function the given tree.
+        Injects header into file and imports adli logger instance.
     '''
     handler = ast.ExceptHandler(
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("logger.error(f\"? {traceback.format_exc()}\")"),
+            ast.parse("adli.logException()"),
             ast.parse("raise"),
         ]
     )
@@ -156,20 +109,18 @@ def injectRootLoggingSetup(tree, header, fileName):
         orelse=[],
         finalbody=[]
     )
-    rootLoggingSetup = getRootLoggingSetup(fileName)
-    loggingFunction = getLoggingFunction()
-    header = getLoggingStatement(json.dumps(header))
+    loggerInstance = getAdliLoggerInstance()
+    header = getHeaderLogStmt(json.dumps(header))
 
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = rootLoggingSetup + loggingFunction + [header] + [mainTry]
+    mod.body = [loggerInstance] + [header] + [mainTry]
     return mod
 
 def injectLoggingSetup(tree):
     '''
         Injects logging setup and function into the provided tree.
     '''
-    loggingSetup = getLoggingSetup()
-    loggingFunction = getLoggingFunction()
+    loggerInstance = getAdliLoggerInstance()
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = loggingSetup + loggingFunction + tree.body
+    mod.body = [loggerInstance] + tree.body
     return mod
