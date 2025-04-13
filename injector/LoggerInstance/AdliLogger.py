@@ -56,7 +56,7 @@ class AdliLogger:
         '''
         self.count += 1
         self.exceptionLogCount += 1
-        logger.error(traceback.format_exc())
+        logger.error(f"? {traceback.format_exc()}")
 
     def logHeader(self, header):
         '''
