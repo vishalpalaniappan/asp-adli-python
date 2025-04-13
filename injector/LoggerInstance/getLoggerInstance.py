@@ -28,7 +28,7 @@ def getLoggerInstanceWithUid(uniqueid):
     with open(path, "r") as f:
         source = f.read()
         tree = ast.parse(source)
-        SetUniqueId("TEST").visit(tree)
+        SetUniqueId(uniqueid).visit(tree)
         return ast.unparse(tree)
 
 

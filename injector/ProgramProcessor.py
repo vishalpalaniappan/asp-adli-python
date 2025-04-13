@@ -6,6 +6,7 @@ from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
+from injector.LoggerInstance.getLoggerInstance import getLoggerInstanceWithUid
 
 SAVE_LT_MAP = True
 
@@ -84,6 +85,11 @@ class ProgramProcessor:
             "sysinfo": self.sysinfo,
             "uid": self.uniqueid
         }
+
+        # Add AdliLogger.py to output directory
+        source = getLoggerInstanceWithUid(self.uniqueid)
+        with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
+            f.write(source)
         
 
         # Write files to output folder
