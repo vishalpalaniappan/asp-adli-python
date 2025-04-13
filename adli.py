@@ -3,7 +3,6 @@ import ast
 import os
 import json
 import argparse
-import uuid
 from injector.ProgramProcessor import ProgramProcessor
 
 '''
@@ -44,16 +43,16 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "-uid",
+        "-sysuid",
         type=str,
-        help="A unique id representing this execution of the adli tool",
+        help="A unique id representing the system this program belongs to.",
         required=False
     )
     
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
     sys_info_path = parsed_args.sysinfo
-    uid = parsed_args.uid
+    sysuid = parsed_args.sysuid
 
     try:
         open(source)
@@ -76,14 +75,10 @@ def main(argv):
             print(f"Error reading system info file: {str(e)}", file=sys.stderr)
             return -1
     else:
-        sysinfo = {}
-
-    # If no unique id was provided, generate one
-    if (uid == None):
-        uid = str(uuid.uuid4())
+        sysinfo = None
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory, uid, sysinfo)
+    processor = ProgramProcessor(source, workingDirectory, sysuid, sysinfo)
     processor.run()
 
 if "__main__" == __name__:
