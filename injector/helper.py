@@ -7,7 +7,13 @@ def getAdliLoggerInstance():
     """
         Imports the adliLogger instance
     """
-    return ast.parse("from AdliLogger import adli").body[0]
+    return ast.ImportFrom(
+        module="AdliLogger",
+        names = [
+            ast.alias(name="adli")
+        ],
+        level=0
+    )
 
 def getHeaderLogStmt(header):
     """
