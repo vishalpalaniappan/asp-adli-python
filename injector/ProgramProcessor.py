@@ -3,6 +3,7 @@ import os
 import ast
 import uuid
 import json
+import time
 from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
@@ -24,7 +25,11 @@ class ProgramProcessor:
         self.outputDirectory = os.path.join(workingDirectory, "output", self.fileName)
 
         self.sysinfo = sysinfo
-        self.adliExecUid = str(uuid.uuid4())
+        # Create header object
+        self.adliInfo = {
+            "adliExecutionId": str(uuid.uuid4()),
+            "timestamp": str(time.time())
+        }
 
         if os.path.exists(self.outputDirectory):
             shutil.rmtree(self.outputDirectory)
@@ -77,14 +82,14 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-        # Create header object
-        programMetadata["adliId"] = self.adliExecUid
+        
         header = {
             "fileTree": fileTree,
             "ltMap": ltMap,
             "varMap": varMap,
             "programInfo": programMetadata,
-            "sysinfo": self.sysinfo
+            "sysInfo": self.sysinfo,
+            "adliInfo": self.adliInfo
         }
 
         # Add AdliLogger.py to output directory

@@ -65,7 +65,7 @@ def main(argv):
         try:
             with open(sys_info_path) as f:
                 sysinfo = json.load(f)
-                sysinfo["adliSystemId"] = sysuid
+                sysinfo["adliSystemExecutionId"] = sysuid
         except FileNotFoundError:
             print(f"System info file not found: {sys_info_path}", file=sys.stderr)
             return -1

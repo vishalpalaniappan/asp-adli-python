@@ -64,12 +64,10 @@ class AdliLogger:
             Logs the header, 
         '''
         self.count += 1
-        # header.executionId = ADLI_EXECUTION_ID
-        obj = {
-            "executionId": ADLI_EXECUTION_ID,
+        header["execInfo"] = {
+            "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
         }
-        header["execInfo"] = obj
         logger.info(json.dumps(header))
 
 adli = AdliLogger()
