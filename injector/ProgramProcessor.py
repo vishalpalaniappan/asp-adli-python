@@ -40,7 +40,7 @@ class ProgramProcessor:
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
-        metadata = {}
+        programMetadata = {}
 
         # Process every file found in the program
         for currFilePath in files:
@@ -58,7 +58,7 @@ class ProgramProcessor:
             injector = LogInjector(currAst, ltMap, logTypeCount)
 
             if(injector.metadata):
-                metadata = injector.metadata
+                programMetadata = injector.metadata
 
             logTypeCount = injector.logTypeCount
 
@@ -77,13 +77,13 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-        metadata["adliUid"] = self.adliExecUid
         # Create header object
+        programMetadata["adliId"] = self.adliExecUid
         header = {
             "fileTree": fileTree,
             "ltMap": ltMap,
             "varMap": varMap,
-            "programInfo": metadata,
+            "programInfo": programMetadata,
             "sysinfo": self.sysinfo
         }
 
