@@ -21,7 +21,7 @@ def injectSystemLogs(sdf):
     for program in programs:
         print(f"Processing program: {program}")
         path = Path(TEMP_DIRECTORY) / program
-        result = subprocess.run(['python3', 'adli.py', path, '-sysInfo', sdfPath, '-adliSysUid', uid ])
+        result = subprocess.run(['python3', 'adli.py', path, '-sysinfo', sdfPath, '-adlisysuid', uid ])
 
     print("Finished injecting logs into the system.")
     return 0

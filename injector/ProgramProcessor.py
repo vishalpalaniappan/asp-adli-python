@@ -7,9 +7,9 @@ from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
-from injector.LoggerInstance.getLoggerInstance import getLoggerInstanceWithUid
+from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
 
-SAVE_LT_MAP = True
+SAVE_HEADER = True
 
 class ProgramProcessor:
     '''
@@ -24,7 +24,7 @@ class ProgramProcessor:
         self.outputDirectory = os.path.join(workingDirectory, "output", self.fileName)
 
         self.sysinfo = sysinfo
-        self.uniqueid = str(uuid.uuid4())
+        self.adliExecUid = str(uuid.uuid4())
 
         if os.path.exists(self.outputDirectory):
             shutil.rmtree(self.outputDirectory)
@@ -77,18 +77,18 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
+        metadata["adliUid"] = self.adliExecUid
         # Create header object
         header = {
             "fileTree": fileTree,
             "ltMap": ltMap,
             "varMap": varMap,
-            "metadata": metadata,
-            "sysinfo": self.sysinfo,
-            "uid": self.uniqueid
+            "programInfo": metadata,
+            "sysinfo": self.sysinfo
         }
 
         # Add AdliLogger.py to output directory
-        source = getLoggerInstanceWithUid(self.uniqueid)
+        source = getLoggerInstance()
         with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
             f.write(source)
         
@@ -103,6 +103,6 @@ class ProgramProcessor:
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
-        if SAVE_LT_MAP:
+        if SAVE_HEADER:
             with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
                 f.write(json.dumps(header))

@@ -6,10 +6,11 @@ import traceback
 import json
 import time
 import os
+import uuid
 
-ADLI_UNIQUE_ID = str(int(time.time()))
+ADLI_EXECUTION_ID = str(uuid.uuid4())
 
-path = Path(os.path.dirname(__file__)) / f"./{ADLI_UNIQUE_ID}.clp.zst"
+path = Path(os.path.dirname(__file__)) / f"{ADLI_EXECUTION_ID}.clp.zst"
 clp_handler = CLPFileHandler(path)
 logger = logging.getLogger("adli")
 logger.setLevel(logging.INFO)
@@ -63,6 +64,12 @@ class AdliLogger:
             Logs the header, 
         '''
         self.count += 1
-        logger.info(header)
+        # header.executionId = ADLI_EXECUTION_ID
+        obj = {
+            "executionId": ADLI_EXECUTION_ID,
+            "timestamp": str(time.time()),
+        }
+        header["execInfo"] = obj
+        logger.info(json.dumps(header))
 
 adli = AdliLogger()
