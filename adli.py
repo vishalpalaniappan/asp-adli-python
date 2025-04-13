@@ -43,7 +43,7 @@ def main(argv):
     )
 
     args_parser.add_argument(
-        "-sysuid",
+        "-adlisysuid",
         type=str,
         help="A unique id representing the system this program belongs to.",
         required=False
@@ -52,7 +52,7 @@ def main(argv):
     parsed_args = args_parser.parse_args(argv[1:])
     source = parsed_args.source
     sys_info_path = parsed_args.sysinfo
-    sysuid = parsed_args.sysuid
+    sysuid = parsed_args.adlisysuid
 
     try:
         open(source)
@@ -65,6 +65,7 @@ def main(argv):
         try:
             with open(sys_info_path) as f:
                 sysinfo = json.load(f)
+                sysinfo["adliSystemUid"] = sysuid
         except FileNotFoundError:
             print(f"System info file not found: {sys_info_path}", file=sys.stderr)
             return -1
@@ -78,7 +79,7 @@ def main(argv):
         sysinfo = None
 
     workingDirectory = os.path.dirname(os.path.abspath(__file__))
-    processor = ProgramProcessor(source, workingDirectory, sysuid, sysinfo)
+    processor = ProgramProcessor(source, workingDirectory, sysinfo)
     processor.run()
 
 if "__main__" == __name__:

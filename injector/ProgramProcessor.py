@@ -17,14 +17,13 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
-    def __init__(self, sourceFile, workingDirectory, sysuid, sysinfo):
+    def __init__(self, sourceFile, workingDirectory, sysinfo):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
         self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
         self.outputDirectory = os.path.join(workingDirectory, "output", self.fileName)
 
         self.sysinfo = sysinfo
-        self.sysuid = sysuid
         self.uniqueid = str(uuid.uuid4())
 
         if os.path.exists(self.outputDirectory):
@@ -84,7 +83,6 @@ class ProgramProcessor:
             "ltMap": ltMap,
             "varMap": varMap,
             "metadata": metadata,
-            "sysuid": self.sysuid,
             "sysinfo": self.sysinfo,
             "uid": self.uniqueid
         }
