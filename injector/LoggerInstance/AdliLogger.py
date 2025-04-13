@@ -25,9 +25,9 @@ class AdliLogger:
 
     def __init__(self):
         self.count = 0
-        self.variableLog = 0
-        self.stmtLog = 0
-        self.exceptionLog = 0
+        self.variableLogCount = 0
+        self.stmtLogCount = 0
+        self.exceptionLogCount = 0
         pass
 
     def logVariable(self, varid, value):
@@ -35,7 +35,7 @@ class AdliLogger:
             Logs the given varid and value.         
         '''
         self.count += 1
-        self.variableLog += 1
+        self.variableLogCount += 1
         try:
             value = json.dumps(value, default=lambda o: o.__dict__ )
             logger.info(f"# {varid} {value}")
@@ -47,7 +47,7 @@ class AdliLogger:
             Logs the mapped stmtId.
         '''
         self.count += 1
-        self.stmtLog += 1
+        self.stmtLogCount += 1
         logger.info(stmtId)
 
     def logException(self):
@@ -55,7 +55,7 @@ class AdliLogger:
             Logs the exception using the traceback.
         '''
         self.count += 1
-        self.exceptionLog += 1
+        self.exceptionLogCount += 1
         logger.error(traceback.format_exc())
 
     def logHeader(self, header):
