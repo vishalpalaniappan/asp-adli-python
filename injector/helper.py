@@ -70,21 +70,6 @@ def getAssignStmt(name, value):
         value=value
     ))
 
-def getTraceIdLogStmt(traceType, variable):
-    '''
-       Returns a log statement for trace ids.
-    '''
-    return ast.Expr(
-        value=ast.Call(
-            func=ast.Name(id='aspTraceLog', ctx=ast.Load()),
-            args=[
-                ast.Constant(value=traceType),
-                ast.Name(id=variable, ctx=ast.Load()),
-            ],
-            keywords=[]
-        )
-    )
-
 def getEmptyRootNode(astNode):
     '''
         Removes all child nodes from astnode. This is used to 
