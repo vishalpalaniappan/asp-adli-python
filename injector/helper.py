@@ -124,3 +124,47 @@ def injectLoggingSetup(tree):
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = [loggerInstance] + tree.body
     return mod
+
+def getJsonComment(node):
+    """
+        Checks to see if the node contains valid ADLI configuration info.
+        Return configuration if it is valid and return None if isn't.    
+
+        Example:
+        '''
+        {
+            "type":"adli_disable_variable",
+            "value":["parsed_args", "uid"]
+        }
+        '''
+        '''
+            {
+                "type": "adli_metadata",
+                "value": {
+                    "name": "ADLI",
+                    "description": "A tool to inject diagnostic logs into a python program.",
+                    "version": "0.0",
+                    "language": "python"
+                
+                }
+            }
+        '''
+    """
+
+    validCommentTypes = ["adli_disable_variable","adli_metadata"]   
+
+    if "value" in node._fields and isinstance(node.value, ast.Constant):     
+        comment = node.value.value
+        try:
+            obj = json.loads(comment)
+        except:
+            return None
+
+        hasType = "type" in obj 
+        hasValue = "value" in obj
+
+        # check if the object has valid type, value and comment type
+        if (hasType and hasValue and obj["type"] in validCommentTypes): 
+            return obj
+            
+        return None
