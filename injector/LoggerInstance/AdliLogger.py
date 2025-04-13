@@ -65,15 +65,4 @@ class AdliLogger:
         self.count += 1
         logger.info(header)
 
-    def encodeOutput(self, variable):
-        '''
-            This function will encode any output with the uniqueid
-            of this log file and the current execution position.
-        '''
-        pass
-
-    def decodeInput(self, variable):
-        pass
-
-
 adli = AdliLogger()
