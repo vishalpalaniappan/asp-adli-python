@@ -1,12 +1,9 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
-
-from injector.CommentCollectors.getDisabledVariable import getDisabledVariables
-from injector.CommentCollectors.getMetadata import getMetadata
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
@@ -182,16 +179,16 @@ class LogInjector(ast.NodeTransformer):
         return self.injectLogTypesA(node)
 
     def visit_Expr(self, node):
-        # Save disabled variables.
-        if (self.funcId == 0):
-            self.globalDisabledVariables += getDisabledVariables(node)
-        else:
-            self.localDisabledVariables += getDisabledVariables(node)
+        parsed = getAdliConfiguration(node)
 
-        # Save the metadata
-        obj = getMetadata(node)
-        if (obj and obj["type"] == "adli_metadata"):
-            self.metadata = obj
+        if (parsed and parsed["type"] == "adli_disable_variable"):
+            # TODO: Add validation for the values.
+            if (self.funcId == 0):
+                self.globalDisabledVariables += parsed["value"]
+            else:
+                self.localDisabledVariables += parsed["value"]
+        elif (parsed and parsed["type"] == "adli_metadata"):
+            self.metadata = parsed["value"]
 
         return self.injectLogTypesA(node)
 

@@ -7,13 +7,16 @@ import uuid
 from injector.ProgramProcessor import ProgramProcessor
 
 '''
-{
-    "type": "adli_metadata",
-    "name": "ADLI",
-    "description": "A tool to inject diagnostic logs into a python program.",
-    "version": "0.0",
-    "language": "python"
-}
+    {
+        "type": "adli_metadata",
+        "value": {
+            "name": "ADLI",
+            "description": "A tool to inject diagnostic logs into a python program.",
+            "version": "0.0",
+            "language": "python"
+        
+        }
+    }
 '''
 
 def verify_python_compatibility():
