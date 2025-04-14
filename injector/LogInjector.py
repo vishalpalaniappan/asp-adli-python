@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -189,6 +189,9 @@ class LogInjector(ast.NodeTransformer):
                 self.localDisabledVariables += parsed["value"]
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
+        elif (parsed and parsed["type"] == "adli_encode_output"):
+            encodedStmt = getEncodedOutputStmt(parsed["value"][0])
+            return encodedStmt
 
         return self.injectLogTypesA(node)
 
