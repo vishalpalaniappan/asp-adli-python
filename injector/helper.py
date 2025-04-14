@@ -138,6 +138,7 @@ def getEncodedOutputStmt(name):
                 ctx=ast.Load()
             ),
             args=[
+                ast.Constant(value=name),
                 ast.Name(id=name, ctx=ast.Load())
             ],
             keywords=[]

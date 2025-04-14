@@ -70,14 +70,15 @@ class AdliLogger:
         }
         logger.info(json.dumps(header))
 
-    def encodeOutput(self, variable):
+    def encodeOutput(self, variableName, value):
         '''
             Encodes the output with the execution id and position.
         '''
+        logger.info(f"* output {variableName}")
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliPosition": self.count + 1,
-            "adliValue": variable
+            "adliValue": variableName
         }
 
 adli = AdliLogger()
