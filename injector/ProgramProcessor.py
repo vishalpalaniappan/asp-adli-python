@@ -1,14 +1,16 @@
 import shutil
 import os
 import ast
+import uuid
 import json
+import time
 from pathlib import Path
 from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
-from injector.LoggerInstance.getLoggerInstance import getLoggerInstanceWithUid
+from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
 
-SAVE_LT_MAP = True
+SAVE_HEADER = True
 
 class ProgramProcessor:
     '''
@@ -16,14 +18,18 @@ class ProgramProcessor:
         imports found using the log injector. It then writes the injected
         source files to the output directory.
     '''
-    def __init__(self, sourceFile, workingDirectory, uniqueid, sysinfo):
+    def __init__(self, sourceFile, workingDirectory, sysinfo):
         self.sourceFile = os.path.abspath(sourceFile)
         self.fileName = Path(self.sourceFile).stem
         self.sourceFileDirectory = os.path.dirname(self.sourceFile)                
         self.outputDirectory = os.path.join(workingDirectory, "output", self.fileName)
 
         self.sysinfo = sysinfo
-        self.uniqueid = uniqueid
+        # Create header object
+        self.adliInfo = {
+            "adliExecutionId": str(uuid.uuid4()),
+            "timestamp": str(time.time())
+        }
 
         if os.path.exists(self.outputDirectory):
             shutil.rmtree(self.outputDirectory)
@@ -39,7 +45,7 @@ class ProgramProcessor:
         fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
-        metadata = {}
+        programMetadata = {}
 
         # Process every file found in the program
         for currFilePath in files:
@@ -57,7 +63,7 @@ class ProgramProcessor:
             injector = LogInjector(currAst, ltMap, logTypeCount)
 
             if(injector.metadata):
-                metadata = injector.metadata
+                programMetadata = injector.metadata
 
             logTypeCount = injector.logTypeCount
 
@@ -76,18 +82,18 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-        # Create header object
+        
         header = {
             "fileTree": fileTree,
             "ltMap": ltMap,
             "varMap": varMap,
-            "metadata": metadata,
-            "sysinfo": self.sysinfo,
-            "uid": self.uniqueid
+            "programInfo": programMetadata,
+            "sysInfo": self.sysinfo,
+            "adliInfo": self.adliInfo
         }
 
         # Add AdliLogger.py to output directory
-        source = getLoggerInstanceWithUid(self.uniqueid)
+        source = getLoggerInstance()
         with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
             f.write(source)
         
@@ -102,6 +108,6 @@ class ProgramProcessor:
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
 
-        if SAVE_LT_MAP:
+        if SAVE_HEADER:
             with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
                 f.write(json.dumps(header))

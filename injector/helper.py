@@ -110,7 +110,7 @@ def injectRootLoggingSetup(tree, header, fileName):
         finalbody=[]
     )
     loggerInstance = getAdliLoggerInstance()
-    header = getHeaderLogStmt(json.dumps(header))
+    header = getHeaderLogStmt(header)
 
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = [loggerInstance] + [header] + [mainTry]
