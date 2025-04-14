@@ -78,7 +78,7 @@ class AdliLogger:
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliPosition": self.count + 1,
-            "adliValue": variableName
+            "adliValue": value
         }
 
 adli = AdliLogger()
