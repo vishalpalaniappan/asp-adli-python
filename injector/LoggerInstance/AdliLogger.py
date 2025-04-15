@@ -108,7 +108,7 @@ class AdliLogger:
 
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
-            "adliPosition": self.count + 1,
+            "adliExecutionIndex": self.count + 1,
             "adliValue": value
         }
     
@@ -120,7 +120,7 @@ class AdliLogger:
 
             :param value: Value of the variable being inspected. 
         '''
-        if isinstance(value, dict) and "adliExecutionId" in value and "adliPosition" in value:
+        if isinstance(value, dict) and "adliExecutionId" in value and "adliExecutionIndex" in value:
             self.count += 1
             self.inputCount += 1
 
