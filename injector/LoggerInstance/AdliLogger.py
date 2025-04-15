@@ -29,6 +29,8 @@ class AdliLogger:
         self.variableLogCount = 0
         self.stmtLogCount = 0
         self.exceptionLogCount = 0
+        self.inputCount = 0
+        self.outputCount = 0
         pass
 
     def logVariable(self, varid, value):
@@ -38,10 +40,12 @@ class AdliLogger:
         self.count += 1
         self.variableLogCount += 1
         try:
-            value = json.dumps(value, default=lambda o: o.__dict__ )
-            logger.info(f"# {varid} {value}")
+            dumpedValue = json.dumps(value, default=lambda o: o.__dict__ )
+            logger.info(f"# {varid} {dumpedValue}")
         except:
             logger.info(f"# {varid} {value}")
+
+        return self.decodeInput(value)
 
     def logStmt(self, stmtId):
         '''
@@ -74,11 +78,23 @@ class AdliLogger:
         '''
             Encodes the output with the execution id and position.
         '''
-        logger.info(f"* output {variableName}")
+        self.count += 1
+        self.outputCount += 1
+        logger.info(f"* output {ADLI_EXECUTION_ID} {self.count + 1}")
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliPosition": self.count + 1,
             "adliValue": value
         }
+    
+    def decodeInput(self, value):
+        if isinstance(value, dict) and "adliExecutionId" in value and "adliPosition" in value:
+            self.count += 1
+            self.inputCount += 1
+            logger.info(f"* input {value['adliExecutionId']} {value['adliPosition']}")
+            return value["adliValue"]
+        
+        return value
+
 
 adli = AdliLogger()

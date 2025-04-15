@@ -52,20 +52,20 @@ def getVarLogStmt(name, varId):
     '''
         Returns a function call to log the given variables.
     '''
-    return ast.Expr(
-        value=ast.Call(
-            func=ast.Attribute(
-                value=ast.Name(id='adli', ctx=ast.Load()),
-                attr='logVariable',
-                ctx=ast.Load()
-            ),
-            args=[
-                ast.Constant(value=varId),
-                ast.Name(id=name, ctx=ast.Load())
-            ],
-            keywords=[]
-        )
+    logVariableCall = ast.Call(
+        func=ast.Attribute(
+            value=ast.Name(id='adli', ctx=ast.Load()),
+            attr='logVariable',
+            ctx=ast.Load()
+        ),
+        args=[
+            ast.Constant(value=varId),
+            ast.Name(id=name, ctx=ast.Load())
+        ],
+        keywords=[]
     )
+
+    return getAssignStmt(name, logVariableCall)
 
 def getAssignStmt(name, value):
     '''
@@ -73,7 +73,7 @@ def getAssignStmt(name, value):
     '''
     return ast.fix_missing_locations(ast.Assign(
         targets=[ast.Name(id=name, ctx=ast.Store)],
-        value=value
+        value= value
     ))
 
 def getEmptyRootNode(astNode):
