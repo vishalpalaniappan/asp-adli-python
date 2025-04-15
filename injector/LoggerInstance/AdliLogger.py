@@ -31,11 +31,13 @@ class AdliLogger:
         self.exceptionLogCount = 0
         self.inputCount = 0
         self.outputCount = 0
-        pass
 
     def logVariable(self, varid, value):
         '''
-            Logs the given varid and value.         
+            Logs the given varid and value.     
+
+            :param int varid: A number representing the mapped variable index in varMap.   
+            :param value: Value of the variable being encoded.
         '''
         self.count += 1
         self.variableLogCount += 1
@@ -50,6 +52,8 @@ class AdliLogger:
     def logStmt(self, stmtId):
         '''
             Logs the mapped stmtId.
+
+            :param int stmtId: A number representing the mapped statement index in ltMap.
         '''
         self.count += 1
         self.stmtLogCount += 1
@@ -65,9 +69,13 @@ class AdliLogger:
 
     def logHeader(self, header):
         '''
-            Logs the header, 
+            Log the header of the CDL file.
+
+            :param dict header: Dictionary representing the header of the CDL file.
         '''
         self.count += 1
+
+        # Add execution infomration to header
         header["execInfo"] = {
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
@@ -82,14 +90,18 @@ class AdliLogger:
     def encodeOutput(self, variableName, value):
         '''
             Encodes the output with the execution id and position.
+
+            :param str variableName: Name of the variable being encoded.
+            :param value: Value of the variable being encoded.
         '''
         self.count += 1
         self.outputCount += 1
 
         logInfo = {
             "type": "adli_output",
-            "execution_id": ADLI_EXECUTION_ID,
-            "execution_index": self.count + 1
+            "outputName": variableName,
+            "adliExecutionId": ADLI_EXECUTION_ID,
+            "adliExecutionIndex": self.count + 1
         }
         
         logger.info(json.dumps(logInfo))
@@ -101,14 +113,21 @@ class AdliLogger:
         }
     
     def decodeInput(self, value):
+        '''
+            This function is to identify if the variable value is an encoded input.
+            - If it is, log the input metadata and return the raw value of the variable. 
+            - If it isn't, it returns the value.
+
+            :param value: Value of the variable being inspected. 
+        '''
         if isinstance(value, dict) and "adliExecutionId" in value and "adliPosition" in value:
             self.count += 1
             self.inputCount += 1
 
             logInfo = {
                 "type": "adli_input",
-                "execution_id": ADLI_EXECUTION_ID,
-                "execution_index": self.count + 1
+                "adliExecutionId": value["adliExecutionId"],
+                "adliExecutionIndex": value["adliExecutionIndex"]
             }
 
             logger.info(json.dumps(logInfo))
