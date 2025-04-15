@@ -72,7 +72,12 @@ class AdliLogger:
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
         }
-        logger.info(json.dumps(header))
+
+        logInfo = {
+            "type": "adli_header",
+            "header": header
+        }
+        logger.info(json.dumps(logInfo))
 
     def encodeOutput(self, variableName, value):
         '''
@@ -80,7 +85,15 @@ class AdliLogger:
         '''
         self.count += 1
         self.outputCount += 1
-        logger.info(f"* output {ADLI_EXECUTION_ID} {self.count + 1}")
+
+        logInfo = {
+            "type": "adli_output",
+            "execution_id": ADLI_EXECUTION_ID,
+            "execution_index": self.count + 1
+        }
+        
+        logger.info(json.dumps(logInfo))
+
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliPosition": self.count + 1,
@@ -91,7 +104,15 @@ class AdliLogger:
         if isinstance(value, dict) and "adliExecutionId" in value and "adliPosition" in value:
             self.count += 1
             self.inputCount += 1
-            logger.info(f"* input {value['adliExecutionId']} {value['adliPosition']}")
+
+            logInfo = {
+                "type": "adli_input",
+                "execution_id": ADLI_EXECUTION_ID,
+                "execution_index": self.count + 1
+            }
+
+            logger.info(json.dumps(logInfo))
+
             return value["adliValue"]
         
         return value
