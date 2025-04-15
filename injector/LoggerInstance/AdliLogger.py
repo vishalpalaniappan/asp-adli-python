@@ -34,7 +34,8 @@ class AdliLogger:
 
     def logVariable(self, varid, value):
         '''
-            Logs the given varid and value.     
+            Logs the given varid and value. It also checks to see if the variable
+            value was encoded by the ADLI tool and returns the decoded variable value.
 
             :param int varid: A number representing the mapped variable index in varMap.   
             :param value: Value of the variable being encoded.
@@ -51,7 +52,8 @@ class AdliLogger:
 
     def logStmt(self, stmtId):
         '''
-            Logs the mapped stmtId.
+            Logs the statement id. This corresponds to a statement in the source
+            code. For example: a = 1 is mapped to stmtId 4.
 
             :param int stmtId: A number representing the mapped statement index in ltMap.
         '''
@@ -114,7 +116,7 @@ class AdliLogger:
     
     def decodeInput(self, value):
         '''
-            This function is to identify if the variable value is an encoded input.
+            This function identifies if the variable value is an encoded input.
             - If it is, log the input metadata and return the raw value of the variable. 
             - If it isn't, it returns the value.
 
