@@ -52,20 +52,20 @@ def getVarLogStmt(name, varId):
     '''
         Returns a function call to log the given variables.
     '''
-    return ast.Expr(
-        value=ast.Call(
-            func=ast.Attribute(
-                value=ast.Name(id='adli', ctx=ast.Load()),
-                attr='logVariable',
-                ctx=ast.Load()
-            ),
-            args=[
-                ast.Constant(value=varId),
-                ast.Name(id=name, ctx=ast.Load())
-            ],
-            keywords=[]
-        )
+    logVariableCall = ast.Call(
+        func=ast.Attribute(
+            value=ast.Name(id='adli', ctx=ast.Load()),
+            attr='logVariable',
+            ctx=ast.Load()
+        ),
+        args=[
+            ast.Constant(value=varId),
+            ast.Name(id=name, ctx=ast.Load())
+        ],
+        keywords=[]
     )
+
+    return getAssignStmt(name, logVariableCall)
 
 def getAssignStmt(name, value):
     '''
@@ -73,7 +73,7 @@ def getAssignStmt(name, value):
     '''
     return ast.fix_missing_locations(ast.Assign(
         targets=[ast.Name(id=name, ctx=ast.Store)],
-        value=value
+        value= value
     ))
 
 def getEmptyRootNode(astNode):
@@ -125,6 +125,26 @@ def injectLoggingSetup(tree):
     mod.body = [loggerInstance] + tree.body
     return mod
 
+def getEncodedOutputStmt(name):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='encodeOutput',
+                ctx=ast.Load()
+            ),
+            args=[
+                ast.Constant(value=name),
+                ast.Name(id=name, ctx=ast.Load())
+            ],
+            keywords=[]
+        )
+    ))
+
 def getAdliConfiguration(node):
     """
         Checks to see if the node contains valid ADLI configuration info.
@@ -151,7 +171,7 @@ def getAdliConfiguration(node):
         '''
     """
 
-    validCommentTypes = ["adli_disable_variable","adli_metadata"]   
+    validCommentTypes = ["adli_disable_variable","adli_metadata","adli_encode_output"]   
 
     if "value" in node._fields and isinstance(node.value, ast.Constant):     
         comment = node.value.value
