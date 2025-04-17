@@ -65,7 +65,22 @@ def getVarLogStmt(name, varId):
         keywords=[]
     )
 
-    return getAssignStmt(name, logVariableCall)
+    handler = ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse(f"adli.logRuntimeError(\"Failed to log variable named {name} with varid {varId})\")")
+        ]
+    )
+
+    mainTry = ast.Try(
+        body=getAssignStmt(name, logVariableCall),
+        handlers=[handler],
+        orelse=[],
+        finalbody=[]
+    )
+
+    return mainTry
 
 def getAssignStmt(name, value):
     '''
