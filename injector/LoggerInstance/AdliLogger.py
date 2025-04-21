@@ -103,7 +103,8 @@ class AdliLogger:
             "type": "adli_output",
             "outputName": variableName,
             "adliExecutionId": ADLI_EXECUTION_ID,
-            "adliExecutionIndex": self.count + 1
+            "adliExecutionIndex": self.count + 1,
+            "adliValue": value
         }
         
         logger.info(json.dumps(logInfo))
@@ -129,7 +130,8 @@ class AdliLogger:
             logInfo = {
                 "type": "adli_input",
                 "adliExecutionId": value["adliExecutionId"],
-                "adliExecutionIndex": value["adliExecutionIndex"]
+                "adliExecutionIndex": value["adliExecutionIndex"],
+                "adliValue": value["adliValue"]
             }
 
             logger.info(json.dumps(logInfo))
