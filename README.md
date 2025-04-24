@@ -17,7 +17,7 @@ In the output folder, this tool will create a folder with the same name as the s
 
 Running the program will generate a CDL file that can be viewed in the diagnostic log viewer.
 
-### Optional Metadata File
+### Optional Metadata
 
 The optional metadata information for the program can be included in the program using comments. An example is provided below and can also be found in adli.py in this repo. This metadata will be included in the header of the CDL file. If no metadata is provided, the metadata key in the header of the CDL file will be an empty object.
 
