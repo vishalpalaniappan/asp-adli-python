@@ -59,7 +59,7 @@ Run the tool using the following command (using Python 3.9+):
 
 #### Example:
   ```shell
-  python3 adli_system.py https://github.com/vishalpalaniappan/sample-system.git
+  python3 adli_system.py https://github.com/vishalpalaniappan/distributed-sorting-system.git
   ```
 
 After running this program, each log injected program in the system can be found in the output directory in its own folder. 
