@@ -32,6 +32,28 @@ class AdliLogger:
         self.inputCount = 0
         self.outputCount = 0
 
+    def variableToJson(self, obj, max_depth=5):
+
+        def processLevel(o, depth):
+            if isinstance(o, (str, int, float, bool)) or o is None:
+                return o
+            
+            # If we have reached the max depth, stop processing.
+            if depth > max_depth:
+                return "<Max Depth Reached>"
+
+            if isinstance(o, dict):
+                return {str(k): processLevel(v, depth + 1) for k, v in o.items()}
+            elif isinstance(o, (list, tuple, set)):
+                return [processLevel(item, depth + 1) for item in o]
+            elif hasattr(o, '__dict__'):
+                return {k: processLevel(v, depth + 1) for k, v in vars(o).items()}
+            else:
+                return str(o)
+        
+        result = processLevel(obj, 0)
+        return json.dumps(result)
+
     def logVariable(self, varid, value):
         '''
             Logs the given varid and value. It also checks to see if the variable
@@ -42,11 +64,13 @@ class AdliLogger:
         '''
         self.count += 1
         self.variableLogCount += 1
-        try:
-            dumpedValue = json.dumps(value, default=lambda o: o.__dict__ )
-            logger.info(f"# {varid} {dumpedValue}")
-        except:
-            logger.info(f"# {varid} {value}")
+        adliValue = self.variableToJson(value)
+        varObj = {
+            "type": "adli_variable",
+            "varid": varid,
+            "value": adliValue
+        }
+        logger.info(json.dumps(varObj))
 
         return self.decodeInput(value)
 
