@@ -47,8 +47,7 @@ class AdliLogger:
             return str(o)
 
     def variableToJson(self, obj, max_depth=5):
-        result = self.processLevel(obj, 0, max_depth)
-        return json.dumps(result)
+        return self.processLevel(obj, 0, max_depth)
 
     def logVariable(self, varid, value):
         '''
