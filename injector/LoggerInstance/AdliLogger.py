@@ -38,11 +38,11 @@ class AdliLogger:
         if depth > max_depth:
             return '<Max Depth Reached>'
         if isinstance(o, dict):
-            return {str(k): self.processLevel(v, depth + 1) for (k, v) in o.items()}
+            return {str(k): self.processLevel(v, depth + 1, max_depth) for (k, v) in o.items()}
         elif isinstance(o, (list, tuple, set)):
-            return [self.processLevel(item, depth + 1) for item in o]
+            return [self.processLevel(item, depth + 1, max_depth) for item in o]
         elif hasattr(o, '__dict__'):
-            return {k: self.processLevel(v, depth + 1) for (k, v) in vars(o).items()}
+            return {k: self.processLevel(v, depth + 1, max_depth) for (k, v) in vars(o).items()}
         else:
             return str(o)
 
