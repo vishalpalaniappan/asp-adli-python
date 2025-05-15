@@ -73,13 +73,17 @@ class AdliLogger:
     def logStmt(self, stmtId):
         '''
             Logs the statement id. This corresponds to a statement in the source
-            code. For example: a = 1 is mapped to stmtId 4.
+            code. For example: a = 1 can be mapped to stmtId 4.
 
             :param int stmtId: A number representing the mapped statement index in ltMap.
         '''
         self.count += 1
         self.stmtLogCount += 1
-        logger.info(stmtId)
+        stmtObj = {
+            "type": "adli_execution",
+            "value": stmtId
+        }
+        logger.info(json.dumps(stmtObj))
 
     def logException(self):
         '''
@@ -87,7 +91,11 @@ class AdliLogger:
         '''
         self.count += 1
         self.exceptionLogCount += 1
-        logger.error(f"? {traceback.format_exc()}")
+        exceptionObj = {
+            "type": "adli_exception",
+            "value": traceback.format_exc()
+        }
+        logger.info(json.dumps(exceptionObj))
 
     def logHeader(self, header):
         '''
@@ -97,7 +105,7 @@ class AdliLogger:
         '''
         self.count += 1
 
-        # Add execution infomration to header
+        # Add execution information to header
         header["execInfo"] = {
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
