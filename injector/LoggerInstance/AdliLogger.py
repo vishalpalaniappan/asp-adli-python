@@ -59,13 +59,24 @@ class AdliLogger:
         '''
         self.count += 1
         self.variableLogCount += 1
-        adliValue = self.variableToJson(value)
-        varObj = {
-            "type": "adli_variable",
-            "varid": varid,
-            "value": adliValue
-        }
-        logger.info(json.dumps(varObj))
+        try:
+            # Try to serialize the variable
+            adliValue = self.variableToJson(value)
+            varObj = {
+                "type": "adli_variable",
+                "varid": varid,
+                "value": adliValue
+            }
+            logger.info(json.dumps(varObj))
+        except Exception as e:
+            # Fallback to string if serialization fails.
+            varObj = {
+                "type": "adli_variable",
+                "varid": varid,
+                "value": str(value),
+                "serialization_error": str(e)
+            }
+            logger.info(json.dumps(varObj))
 
         return self.decodeInput(value)
 
