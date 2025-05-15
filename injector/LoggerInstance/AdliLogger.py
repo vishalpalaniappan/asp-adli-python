@@ -32,6 +32,31 @@ class AdliLogger:
         self.inputCount = 0
         self.outputCount = 0
 
+    def processLevel(self, o, depth, max_depth):
+        if isinstance(o, (str, int, float, bool)) or o is None:
+            return o
+        
+        obj_id = id(o)
+        if obj_id in self.visited:
+            return "<Circular Reference Detected>"
+        self.visited.add(obj_id)
+
+        if depth > max_depth:
+            return '<Max Depth Reached>'
+        
+        if isinstance(o, dict):
+            return {str(k): self.processLevel(v, depth + 1, max_depth) for (k, v) in o.items()}
+        elif isinstance(o, (list, tuple, set)):
+            return [self.processLevel(item, depth + 1, max_depth) for item in o]
+        elif hasattr(o, '__dict__'):
+            return {k: self.processLevel(v, depth + 1, max_depth) for (k, v) in vars(o).items()}
+        else:
+            return str(o)
+
+    def variableToJson(self, obj, max_depth=30):
+        self.visited = set()
+        return self.processLevel(obj, 0, max_depth)
+
     def logVariable(self, varid, value):
         '''
             Logs the given varid and value. It also checks to see if the variable
@@ -43,23 +68,40 @@ class AdliLogger:
         self.count += 1
         self.variableLogCount += 1
         try:
-            dumpedValue = json.dumps(value, default=lambda o: o.__dict__ )
-            logger.info(f"# {varid} {dumpedValue}")
-        except:
-            logger.info(f"# {varid} {value}")
+            # Try to serialize the variable
+            adliValue = self.variableToJson(value)
+            varObj = {
+                "type": "adli_variable",
+                "varid": varid,
+                "value": adliValue
+            }
+            logger.info(json.dumps(varObj))
+        except Exception as e:
+            # Fallback to string if serialization fails.
+            varObj = {
+                "type": "adli_variable",
+                "varid": varid,
+                "value": str(value),
+                "serialization_error": str(e)
+            }
+            logger.info(json.dumps(varObj))
 
         return self.decodeInput(value)
 
     def logStmt(self, stmtId):
         '''
             Logs the statement id. This corresponds to a statement in the source
-            code. For example: a = 1 is mapped to stmtId 4.
+            code. For example: a = 1 can be mapped to stmtId 4.
 
             :param int stmtId: A number representing the mapped statement index in ltMap.
         '''
         self.count += 1
         self.stmtLogCount += 1
-        logger.info(stmtId)
+        stmtObj = {
+            "type": "adli_execution",
+            "value": stmtId
+        }
+        logger.info(json.dumps(stmtObj))
 
     def logException(self):
         '''
@@ -67,7 +109,11 @@ class AdliLogger:
         '''
         self.count += 1
         self.exceptionLogCount += 1
-        logger.error(f"? {traceback.format_exc()}")
+        exceptionObj = {
+            "type": "adli_exception",
+            "value": traceback.format_exc()
+        }
+        logger.info(json.dumps(exceptionObj))
 
     def logHeader(self, header):
         '''
@@ -77,7 +123,7 @@ class AdliLogger:
         '''
         self.count += 1
 
-        # Add execution infomration to header
+        # Add execution information to header
         header["execInfo"] = {
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
