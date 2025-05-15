@@ -35,8 +35,15 @@ class AdliLogger:
     def processLevel(self, o, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
             return o
+        
+        obj_id = id(o)
+        if obj_id in self.visited:
+            return "<Circular Reference Detected>"
+        self.visited.add(obj_id)
+
         if depth > max_depth:
             return '<Max Depth Reached>'
+        
         if isinstance(o, dict):
             return {str(k): self.processLevel(v, depth + 1, max_depth) for (k, v) in o.items()}
         elif isinstance(o, (list, tuple, set)):
@@ -46,7 +53,8 @@ class AdliLogger:
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=5):
+    def variableToJson(self, obj, max_depth=30):
+        self.visited = set()
         return self.processLevel(obj, 0, max_depth)
 
     def logVariable(self, varid, value):
