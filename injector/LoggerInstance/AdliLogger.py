@@ -32,26 +32,22 @@ class AdliLogger:
         self.inputCount = 0
         self.outputCount = 0
 
+    def processLevel(self, o, depth, max_depth):
+        if isinstance(o, (str, int, float, bool)) or o is None:
+            return o
+        if depth > max_depth:
+            return '<Max Depth Reached>'
+        if isinstance(o, dict):
+            return {str(k): self.processLevel(v, depth + 1) for (k, v) in o.items()}
+        elif isinstance(o, (list, tuple, set)):
+            return [self.processLevel(item, depth + 1) for item in o]
+        elif hasattr(o, '__dict__'):
+            return {k: self.processLevel(v, depth + 1) for (k, v) in vars(o).items()}
+        else:
+            return str(o)
+
     def variableToJson(self, obj, max_depth=5):
-
-        def processLevel(o, depth):
-            if isinstance(o, (str, int, float, bool)) or o is None:
-                return o
-            
-            # If we have reached the max depth, stop processing.
-            if depth > max_depth:
-                return "<Max Depth Reached>"
-
-            if isinstance(o, dict):
-                return {str(k): processLevel(v, depth + 1) for k, v in o.items()}
-            elif isinstance(o, (list, tuple, set)):
-                return [processLevel(item, depth + 1) for item in o]
-            elif hasattr(o, '__dict__'):
-                return {k: processLevel(v, depth + 1) for k, v in vars(o).items()}
-            else:
-                return str(o)
-        
-        result = processLevel(obj, 0)
+        result = self.processLevel(obj, 0, max_depth)
         return json.dumps(result)
 
     def logVariable(self, varid, value):
