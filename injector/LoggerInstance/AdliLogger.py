@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from clp_logging.handlers import CLPFileHandler
+from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
 import json
@@ -11,7 +11,7 @@ import uuid
 ADLI_EXECUTION_ID = str(uuid.uuid4())
 
 path = Path(os.path.dirname(__file__)) / f"{ADLI_EXECUTION_ID}.clp.zst"
-clp_handler = CLPFileHandler(path)
+clp_handler = ClpKeyValuePairStreamHandler(open(path, "wb"))
 logger = logging.getLogger("adli")
 logger.setLevel(logging.INFO)
 logger.addHandler(clp_handler)
@@ -32,30 +32,31 @@ class AdliLogger:
         self.inputCount = 0
         self.outputCount = 0
 
-    def processLevel(self, o, depth, max_depth):
+    def processLevel(self, o, k, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
             return o
         
-        obj_id = id(o)
-        if obj_id in self.visited:
-            return "<Circular Reference Detected>"
-        self.visited.add(obj_id)
+        # obj_id = id(o)
+        # if obj_id in self.visited and not k.startswith("_"):
+        #     return "<Circular Reference Detected>"
+    
+        # self.visited.add(obj_id)
 
         if depth > max_depth:
             return '<Max Depth Reached>'
         
         if isinstance(o, dict):
-            return {str(k): self.processLevel(v, depth + 1, max_depth) for (k, v) in o.items()}
+            return {str(k): self.processLevel(v, str(k), depth + 1, max_depth) for (k, v) in o.items()}
         elif isinstance(o, (list, tuple, set)):
-            return [self.processLevel(item, depth + 1, max_depth) for item in o]
+            return [self.processLevel(item, str(k), depth + 1, max_depth) for item in o]
         elif hasattr(o, '__dict__'):
-            return {k: self.processLevel(v, depth + 1, max_depth) for (k, v) in vars(o).items()}
+            return {k: self.processLevel(v, str(k), depth + 1, max_depth) for (k, v) in vars(o).items()}
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=30):
+    def variableToJson(self, obj, max_depth=5):
         self.visited = set()
-        return self.processLevel(obj, 0, max_depth)
+        return self.processLevel(obj, "", 0, max_depth)
 
     def logVariable(self, varid, value):
         '''
@@ -75,7 +76,7 @@ class AdliLogger:
                 "varid": varid,
                 "value": adliValue
             }
-            logger.info(json.dumps(varObj))
+            logger.info(varObj)
         except Exception as e:
             # Fallback to string if serialization fails.
             varObj = {
@@ -84,7 +85,7 @@ class AdliLogger:
                 "value": str(value),
                 "serialization_error": str(e)
             }
-            logger.info(json.dumps(varObj))
+            logger.info(varObj)
 
         return self.decodeInput(value)
 
@@ -101,7 +102,7 @@ class AdliLogger:
             "type": "adli_execution",
             "value": stmtId
         }
-        logger.info(json.dumps(stmtObj))
+        logger.info(stmtObj)
 
     def logException(self):
         '''
@@ -113,7 +114,7 @@ class AdliLogger:
             "type": "adli_exception",
             "value": traceback.format_exc()
         }
-        logger.info(json.dumps(exceptionObj))
+        logger.info(exceptionObj)
 
     def logHeader(self, header):
         '''
@@ -133,7 +134,7 @@ class AdliLogger:
             "type": "adli_header",
             "header": header
         }
-        logger.info(json.dumps(logInfo))
+        logger.info(logInfo)
 
     def encodeOutput(self, variableName, value):
         '''
@@ -153,7 +154,7 @@ class AdliLogger:
             "adliValue": value
         }
         
-        logger.info(json.dumps(logInfo))
+        logger.info(logInfo)
 
         return {
             "adliExecutionId": ADLI_EXECUTION_ID,
@@ -180,7 +181,7 @@ class AdliLogger:
                 "adliValue": value["adliValue"]
             }
 
-            logger.info(json.dumps(logInfo))
+            logger.info(logInfo)
 
             return value["adliValue"]
         
