@@ -130,9 +130,11 @@ class AdliLogger:
             "timestamp": str(time.time()),
         }
 
+        # TODO: Debug why logging the header directly causes
+        # an error.
         logInfo = {
             "type": "adli_header",
-            "header": header
+            "header": json.dumps(header)
         }
         logger.info(logInfo)
 
