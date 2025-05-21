@@ -36,10 +36,10 @@ class AdliLogger:
         if isinstance(o, (str, int, float, bool)) or o is None:
             return o
         
+        # TODO: Improve identifying circular references so we can remove max depth check.
         # obj_id = id(o)
-        # if obj_id in self.visited and not k.startswith("_"):
+        # if obj_id in self.visited:
         #     return "<Circular Reference Detected>"
-    
         # self.visited.add(obj_id)
 
         if depth > max_depth:
@@ -54,7 +54,7 @@ class AdliLogger:
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=5):
+    def variableToJson(self, obj, max_depth=10):
         self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
