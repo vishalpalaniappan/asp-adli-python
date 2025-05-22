@@ -54,7 +54,7 @@ class AdliLogger:
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=10):
+    def variableToJson(self, obj, max_depth=8):
         self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
