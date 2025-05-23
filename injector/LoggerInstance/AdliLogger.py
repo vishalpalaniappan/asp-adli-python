@@ -3,6 +3,8 @@ from pathlib import Path
 from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
+import threading
+import asyncio
 import json
 import time
 import os
@@ -31,6 +33,14 @@ class AdliLogger:
         self.exceptionLogCount = 0
         self.inputCount = 0
         self.outputCount = 0
+
+
+    def getCoroutineId(self):
+        try:
+            asyncio.get_running_loop()
+            return asyncio.current_task().get_name()
+        except RuntimeError:
+            return None
 
     def processLevel(self, o, k, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
@@ -68,12 +78,15 @@ class AdliLogger:
         '''
         self.count += 1
         self.variableLogCount += 1
+
         try:
             # Try to serialize the variable
             adliValue = self.variableToJson(value)
             varObj = {
                 "type": "adli_variable",
                 "varid": varid,
+                "thread": threading.get_ident(),
+                "coroutine": self.getCoroutineId(),
                 "value": adliValue
             }
             logger.info(varObj)
@@ -82,6 +95,8 @@ class AdliLogger:
             varObj = {
                 "type": "adli_variable",
                 "varid": varid,
+                "thread": threading.get_ident(),
+                "coroutine": self.getCoroutineId(),
                 "value": str(value),
                 "serialization_error": str(e)
             }
@@ -100,6 +115,8 @@ class AdliLogger:
         self.stmtLogCount += 1
         stmtObj = {
             "type": "adli_execution",
+            "thread": threading.get_ident(),
+            "coroutine": self.getCoroutineId(),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -112,6 +129,8 @@ class AdliLogger:
         self.exceptionLogCount += 1
         exceptionObj = {
             "type": "adli_exception",
+            "thread": threading.get_ident(),
+            "coroutine": self.getCoroutineId(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -134,6 +153,8 @@ class AdliLogger:
         # an error.
         logInfo = {
             "type": "adli_header",
+            "thread": threading.get_ident(),
+            "coroutine": self.getCoroutineId(),
             "header": json.dumps(header)
         }
         logger.info(logInfo)
@@ -151,6 +172,8 @@ class AdliLogger:
         logInfo = {
             "type": "adli_output",
             "outputName": variableName,
+            "thread": threading.get_ident(),
+            "coroutine": self.getCoroutineId(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
@@ -178,6 +201,8 @@ class AdliLogger:
 
             logInfo = {
                 "type": "adli_input",
+                "thread": threading.get_ident(),
+                "coroutine": self.getCoroutineId(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
