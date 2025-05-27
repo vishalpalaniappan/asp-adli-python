@@ -3,6 +3,7 @@ from pathlib import Path
 from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
+import threading
 import json
 import time
 import os
@@ -68,12 +69,14 @@ class AdliLogger:
         '''
         self.count += 1
         self.variableLogCount += 1
+
         try:
             # Try to serialize the variable
             adliValue = self.variableToJson(value)
             varObj = {
                 "type": "adli_variable",
                 "varid": varid,
+                "thread": threading.get_ident(),
                 "value": adliValue
             }
             logger.info(varObj)
@@ -82,6 +85,7 @@ class AdliLogger:
             varObj = {
                 "type": "adli_variable",
                 "varid": varid,
+                "thread": threading.get_ident(),
                 "value": str(value),
                 "serialization_error": str(e)
             }
@@ -100,6 +104,7 @@ class AdliLogger:
         self.stmtLogCount += 1
         stmtObj = {
             "type": "adli_execution",
+            "thread": threading.get_ident(),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -112,6 +117,7 @@ class AdliLogger:
         self.exceptionLogCount += 1
         exceptionObj = {
             "type": "adli_exception",
+            "thread": threading.get_ident(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -134,6 +140,7 @@ class AdliLogger:
         # an error.
         logInfo = {
             "type": "adli_header",
+            "thread": threading.get_ident(),
             "header": json.dumps(header)
         }
         logger.info(logInfo)
@@ -151,6 +158,7 @@ class AdliLogger:
         logInfo = {
             "type": "adli_output",
             "outputName": variableName,
+            "thread": threading.get_ident(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
@@ -178,6 +186,7 @@ class AdliLogger:
 
             logInfo = {
                 "type": "adli_input",
+                "thread": threading.get_ident(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
