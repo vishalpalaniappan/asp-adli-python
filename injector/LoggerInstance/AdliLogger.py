@@ -106,7 +106,7 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "coroutine": coroutine_id.get(),
-                "task":getTaskId(),
+                "task": getTaskId(),
                 "value": adliValue
             }
             logger.info(varObj)
@@ -117,7 +117,7 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "coroutine": coroutine_id.get(),
-                "task":getTaskId(),
+                "task": getTaskId(),
                 "value": str(value),
                 "serialization_error": str(e)
             }
@@ -138,7 +138,7 @@ class AdliLogger:
             "type": "adli_execution",
             "thread": threading.get_ident(),
             "coroutine": coroutine_id.get(),
-            "task":getTaskId(),
+            "task": getTaskId(),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -153,7 +153,7 @@ class AdliLogger:
             "type": "adli_exception",
             "thread": threading.get_ident(),
             "coroutine": coroutine_id.get(),
-            "task":getTaskId(),
+            "task": getTaskId(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -178,7 +178,7 @@ class AdliLogger:
             "type": "adli_header",
             "thread": threading.get_ident(),
             "coroutine": coroutine_id.get(),
-            "task":getTaskId(),
+            "task": getTaskId(),
             "header": json.dumps(header)
         }
         logger.info(logInfo)
@@ -198,7 +198,7 @@ class AdliLogger:
             "outputName": variableName,
             "thread": threading.get_ident(),
             "coroutine": coroutine_id.get(),
-            "task":getTaskId(),
+            "task": getTaskId(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
@@ -228,7 +228,7 @@ class AdliLogger:
                 "type": "adli_input",
                 "thread": threading.get_ident(),
                 "coroutine": coroutine_id.get(),
-                "task":getTaskId(),
+                "task": getTaskId(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
