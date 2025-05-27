@@ -38,7 +38,8 @@ class AdliLogger:
     def getCoroutineId(self):
         try:
             asyncio.get_running_loop()
-            return asyncio.current_task().get_name()
+            current_task = asyncio.current_task()
+            return current_task.get_name() if current_task else None
         except RuntimeError:
             return None
 
