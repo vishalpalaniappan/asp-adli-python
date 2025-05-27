@@ -114,6 +114,8 @@ class LogInjector(ast.NodeTransformer):
         return preLog + [node]
     
     def visit_AsyncFunctionDef(self, node):
+        decorator = ast.Name(id="track_coroutine", ctx=ast.Load())
+        node.decorator_list.insert(0, decorator)
         return self.visit_FunctionDef(node)
 
     def visit_Assign(self, node):

@@ -10,7 +10,9 @@ def getAdliLoggerInstance():
     return ast.ImportFrom(
         module="AdliLogger",
         names = [
-            ast.alias(name="adli")
+            ast.alias(name="adli"),
+            ast.alias(name="coroutine_id"),
+            ast.alias(name="track_coroutine")
         ],
         level=0
     )
