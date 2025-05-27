@@ -35,7 +35,7 @@ class AdliLogger:
         self.outputCount = 0
 
 
-    def getCoroutineId(self):
+    def getTaskId(self):
         try:
             asyncio.get_running_loop()
             current_task = asyncio.current_task()
@@ -87,7 +87,7 @@ class AdliLogger:
                 "type": "adli_variable",
                 "varid": varid,
                 "thread": threading.get_ident(),
-                "coroutine": self.getCoroutineId(),
+                "coroutine": self.getTaskId(),
                 "value": adliValue
             }
             logger.info(varObj)
@@ -97,7 +97,7 @@ class AdliLogger:
                 "type": "adli_variable",
                 "varid": varid,
                 "thread": threading.get_ident(),
-                "coroutine": self.getCoroutineId(),
+                "coroutine": self.getTaskId(),
                 "value": str(value),
                 "serialization_error": str(e)
             }
@@ -117,7 +117,7 @@ class AdliLogger:
         stmtObj = {
             "type": "adli_execution",
             "thread": threading.get_ident(),
-            "coroutine": self.getCoroutineId(),
+            "coroutine": self.getTaskId(),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -131,7 +131,7 @@ class AdliLogger:
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "coroutine": self.getCoroutineId(),
+            "coroutine": self.getTaskId(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -155,7 +155,7 @@ class AdliLogger:
         logInfo = {
             "type": "adli_header",
             "thread": threading.get_ident(),
-            "coroutine": self.getCoroutineId(),
+            "coroutine": self.getTaskId(),
             "header": json.dumps(header)
         }
         logger.info(logInfo)
@@ -174,7 +174,7 @@ class AdliLogger:
             "type": "adli_output",
             "outputName": variableName,
             "thread": threading.get_ident(),
-            "coroutine": self.getCoroutineId(),
+            "coroutine": self.getTaskId(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
@@ -203,7 +203,7 @@ class AdliLogger:
             logInfo = {
                 "type": "adli_input",
                 "thread": threading.get_ident(),
-                "coroutine": self.getCoroutineId(),
+                "coroutine": self.getTaskId(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
