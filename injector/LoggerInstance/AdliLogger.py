@@ -23,6 +23,12 @@ logger.addHandler(clp_handler)
 coroutine_id = contextvars.ContextVar("coroutine_id", default=None) 
 
 def track_coroutine(fn):
+    '''
+        This function wraps coroutines using a decorator and assigns
+        a UID to each coroutine. When a coroutine makes a function call,
+        the uid is preserved in the function that is called, allowing
+        us to chain function calls made by coroutines.
+    '''
     @wraps(fn)
     async def wrapper(*args, **kwargs):
         token = None
@@ -37,13 +43,16 @@ def track_coroutine(fn):
     return wrapper
 
 def getTaskId():
+    '''
+        This function returns the name of the task that is
+        currently being executed (if there is one).
+    '''
     try:
         asyncio.get_running_loop()
         current_task = asyncio.current_task()
         return current_task.get_name() if current_task else None
     except RuntimeError:
         return None
-
 
 class AdliLogger:
     '''
