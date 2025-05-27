@@ -4,7 +4,6 @@ from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
 import threading
-import asyncio
 import json
 import time
 import os
