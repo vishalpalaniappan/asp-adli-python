@@ -8,6 +8,8 @@ import json
 import time
 import os
 import uuid
+from functools import wraps
+import contextvars
 
 ADLI_EXECUTION_ID = str(uuid.uuid4())
 
@@ -16,6 +18,23 @@ clp_handler = ClpKeyValuePairStreamHandler(open(path, "wb"))
 logger = logging.getLogger("adli")
 logger.setLevel(logging.INFO)
 logger.addHandler(clp_handler)
+
+coroutine_id = contextvars.ContextVar("coroutine_id", default=None) 
+
+def track_coroutine(fn):
+    @wraps(fn)
+    async def wrapper(*args, **kwargs):
+        token = None
+        if coroutine_id.get() is None:
+            uid = str(uuid.uuid4())
+            token = coroutine_id.set(uid)
+        try:
+            return await fn(*args, **kwargs)
+        finally:
+            if token:
+                coroutine_id.reset(token)
+    return wrapper
+
 
 class AdliLogger:
     '''
