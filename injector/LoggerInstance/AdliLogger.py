@@ -53,6 +53,20 @@ def getTaskId():
         return current_task.get_name() if current_task else None
     except RuntimeError:
         return None
+    
+def adli_function(func):
+    '''
+        A uniqueid is injected into all adli functions using
+        this decorator.
+    '''
+    unique_id = uuid.uuid4()
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    wrapper.unique_id = unique_id
+    return wrapper
 
 class AdliLogger:
     '''
