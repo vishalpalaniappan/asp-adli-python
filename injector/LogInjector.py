@@ -111,6 +111,9 @@ class LogInjector(ast.NodeTransformer):
         
         self.funcId = 0
         
+        decorator = ast.Name(id="adli_function", ctx=ast.Load())
+        node.decorator_list.insert(0, decorator)
+        
         return preLog + [node]
     
     def visit_AsyncFunctionDef(self, node):

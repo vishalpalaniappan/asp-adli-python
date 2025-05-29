@@ -12,7 +12,8 @@ def getAdliLoggerInstance():
         names = [
             ast.alias(name="adli"),
             ast.alias(name="coroutine_id"),
-            ast.alias(name="track_coroutine")
+            ast.alias(name="track_coroutine"),
+            ast.alias(name="adli_function")
         ],
         level=0
     )
