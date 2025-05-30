@@ -65,6 +65,7 @@ def adli_function(func):
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
+    func.unique_id = unique_id
     wrapper.unique_id = unique_id
     return wrapper
 
