@@ -190,3 +190,27 @@ def getAdliConfiguration(node):
             return obj
             
         return None
+    
+
+def getUniqueIdAssignStmt():
+    '''
+        This function returns an assign statement generates a unique
+        and saves it in a variable named asp_uid.
+
+        asp_uid = uuid.uuid4()
+    '''
+
+    getUidCall = ast.Call(
+        func=ast.Attribute(
+            value=ast.Name(id='adli', ctx=ast.Load()),
+            attr='getUniqueId',
+            ctx=ast.Load()
+        ),
+        args=[],
+        keywords=[]
+    )
+    
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id='asp_uid', ctx=ast.Store())],
+        value=getUidCall
+    ))

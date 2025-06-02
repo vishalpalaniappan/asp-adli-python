@@ -1,5 +1,5 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -20,6 +20,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(node)
+        node.body.insert(0, getUniqueIdAssignStmt())
         self.maxLogTypeCount = self.logTypeCount
 
     def generateLtLogStmts(self, node, type):
@@ -110,6 +111,8 @@ class LogInjector(ast.NodeTransformer):
         node.body = [logStmt] + postLog + node.body
         
         self.funcId = 0
+
+        node.body.insert(0, getUniqueIdAssignStmt())
         
         return preLog + [node]
     
