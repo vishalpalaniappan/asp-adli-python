@@ -34,6 +34,8 @@ class LogInjector(ast.NodeTransformer):
 
         self.logTypeCount += 1
 
+        callCollector = FunctionCallCollector(node)
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "funcid": self.funcId,
@@ -41,7 +43,8 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "isUnique": False,
-            "calls": FunctionCallCollector(node).funcNames,
+            "calls": callCollector.calls,
+            "awaitedCalls": callCollector.async_calls,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
