@@ -56,7 +56,7 @@ class AdliLogger:
             return str(o)
 
     def variableToJson(self, obj, max_depth=8):
-        self.visited = set()
+        # self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
     def logVariable(self, varid, value):
@@ -197,6 +197,12 @@ class AdliLogger:
             return value["adliValue"]
         
         return value
+    
+    def getUniqueId():
+        '''
+            Returns a unique id during runtime.
+        '''
+        return uuid.uuid4()
 
 
 adli = AdliLogger()
