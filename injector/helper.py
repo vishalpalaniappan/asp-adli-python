@@ -45,7 +45,7 @@ def getLtLogStmt(logTypeId):
             ),
             args=[
                 ast.Constant(value=logTypeId),
-                ast.Name(id="asp_uid", ctx=ast.Load()),
+                ast.Name(id="adli_uid", ctx=ast.Load()),
             ],
             keywords=[]
         )
@@ -64,7 +64,7 @@ def getVarLogStmt(name, varId):
         args=[
             ast.Constant(value=varId),
             ast.Name(id=name, ctx=ast.Load()),
-            ast.Name(id="asp_uid", ctx=ast.Load()),
+            ast.Name(id="adli_uid", ctx=ast.Load()),
         ],
         keywords=[]
     )
@@ -199,7 +199,7 @@ def getUniqueIdAssignStmt():
         This function returns an assign statement generates a unique
         and saves it in a variable named asp_uid.
 
-        asp_uid = uuid.uuid4()
+        adli_uid = uuid.uuid4()
     '''
 
     getUidCall = ast.Call(
@@ -213,6 +213,6 @@ def getUniqueIdAssignStmt():
     )
     
     return ast.fix_missing_locations(ast.Assign(
-        targets=[ast.Name(id='asp_uid', ctx=ast.Store())],
+        targets=[ast.Name(id='adli_uid', ctx=ast.Store())],
         value=getUidCall
     ))
