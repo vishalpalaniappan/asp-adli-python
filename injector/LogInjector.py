@@ -4,6 +4,7 @@ from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInf
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
+from injector.CallCollectors.CallCollector import FunctionCallCollector
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
@@ -40,6 +41,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "isUnique": False,
+            "calls": FunctionCallCollector(node).funcNames,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
