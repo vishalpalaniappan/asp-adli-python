@@ -59,7 +59,7 @@ class AdliLogger:
         # self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
-    def logVariable(self, varid, value):
+    def logVariable(self, varid, value, scope_uid):
         '''
             Logs the given varid and value. It also checks to see if the variable
             value was encoded by the ADLI tool and returns the decoded variable value.
@@ -77,7 +77,8 @@ class AdliLogger:
                 "type": "adli_variable",
                 "varid": varid,
                 "thread": threading.get_ident(),
-                "value": adliValue
+                "value": adliValue,
+                "scope_uid": str(scope_uid),
             }
             logger.info(varObj)
         except Exception as e:
@@ -87,13 +88,14 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "value": str(value),
+                "scope_uid": str(scope_uid),
                 "serialization_error": str(e)
             }
             logger.info(varObj)
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId):
+    def logStmt(self, stmtId, scope_uid):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -105,6 +107,7 @@ class AdliLogger:
         stmtObj = {
             "type": "adli_execution",
             "thread": threading.get_ident(),
+            "scope_uid": str(scope_uid),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -198,7 +201,7 @@ class AdliLogger:
         
         return value
     
-    def getUniqueId():
+    def getUniqueId(self):
         '''
             Returns a unique id during runtime.
         '''

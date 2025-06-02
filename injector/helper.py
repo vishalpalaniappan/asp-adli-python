@@ -10,9 +10,7 @@ def getAdliLoggerInstance():
     return ast.ImportFrom(
         module="AdliLogger",
         names = [
-            ast.alias(name="adli"),
-            ast.alias(name="coroutine_id"),
-            ast.alias(name="track_coroutine")
+            ast.alias(name="adli")
         ],
         level=0
     )
@@ -45,7 +43,10 @@ def getLtLogStmt(logTypeId):
                 attr='logStmt',
                 ctx=ast.Load()
             ),
-            args=[ast.Constant(value=logTypeId)],
+            args=[
+                ast.Constant(value=logTypeId),
+                ast.Name(id="asp_uid", ctx=ast.Load()),
+            ],
             keywords=[]
         )
     )
@@ -62,7 +63,8 @@ def getVarLogStmt(name, varId):
         ),
         args=[
             ast.Constant(value=varId),
-            ast.Name(id=name, ctx=ast.Load())
+            ast.Name(id=name, ctx=ast.Load()),
+            ast.Name(id="asp_uid", ctx=ast.Load()),
         ],
         keywords=[]
     )
