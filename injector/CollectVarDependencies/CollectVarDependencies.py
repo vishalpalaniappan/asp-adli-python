@@ -36,7 +36,7 @@ class CollectVarDependencies(ast.NodeVisitor):
 
     def _collect_dependencies(self, value):
         '''
-            Collect all the variables that are loaded.
+            Collect all the dependencies.
         '''
         deps = []
         for node in ast.walk(value):
