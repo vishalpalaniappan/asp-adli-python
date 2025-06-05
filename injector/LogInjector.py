@@ -6,6 +6,7 @@ from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInf
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
+from injector.CollectVarDependencies.CollectVarDependencies import CollectVarDependencies
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, tree, logTypeCount, file, isRoot):
@@ -64,7 +65,7 @@ class LogInjector(ast.NodeTransformer):
         if not hasattr(node, 'lineno') or not hasattr(node, 'end_lineno'):
             raise ValueError(f"AST node of type {type(node).__name__} missing required line number information")
 
-        self.logTypeCount += 1
+        self.logTypeCount += 1       
 
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
@@ -76,6 +77,8 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
+            "isUnique": False,
+            "varDependencies": CollectVarDependencies(node).var_dependencies,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 

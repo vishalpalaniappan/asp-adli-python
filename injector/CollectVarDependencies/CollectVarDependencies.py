@@ -1,9 +1,15 @@
 import ast
+from injector.helper import getEmptyRootNode
 
 class CollectVarDependencies(ast.NodeVisitor):
     def __init__(self, node):
         self.var_dependencies = {}
-        self.generic_visit(node)
+
+        if 'body' in node._fields:
+            emptyNode = getEmptyRootNode(node)
+            self.generic_visit(ast.Module(body=[emptyNode], type_ignores=[]))
+        else:
+            self.generic_visit(ast.Module(body=[node], type_ignores=[]))
 
     def visit_Assign(self, node):
         '''
@@ -13,7 +19,8 @@ class CollectVarDependencies(ast.NodeVisitor):
             if isinstance(target, ast.Name):
                 var_name = target.id
                 deps = self._collect_dependencies(node.value)
-                self.var_dependencies[var_name] = deps
+                if deps:
+                    self.var_dependencies[var_name] = deps
         self.generic_visit(node)
 
     def visit_AugAssign(self, node):
@@ -31,10 +38,10 @@ class CollectVarDependencies(ast.NodeVisitor):
         '''
             Collect all the variables that are loaded.
         '''
-        deps = set()
+        deps = []
         for node in ast.walk(value):
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                deps.add(node.id)
+                deps.append(node.id)
         return deps
 
 if __name__ == "__main__":
