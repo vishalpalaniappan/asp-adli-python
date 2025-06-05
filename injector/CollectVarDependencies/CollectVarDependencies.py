@@ -1,6 +1,6 @@
 import ast
 
-class VarDependencyCollector(ast.NodeVisitor):
+class CollectVarDependencies(ast.NodeVisitor):
     def __init__(self, node):
         self.var_dependencies = {}
         self.generic_visit(node)
@@ -44,5 +44,5 @@ for i in [1,2,3,4]:
     b = p + c
         '''
     )
-    a = VarDependencyCollector(n)
+    a = CollectVarDependencies(n)
     print(a.var_dependencies)
