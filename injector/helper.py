@@ -216,3 +216,12 @@ def getUniqueIdAssignStmt():
         targets=[ast.Name(id='adli_uid', ctx=ast.Store())],
         value=getUidCall
     ))
+
+def getRootUidAssign():
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id='adli_uid', ctx=ast.Store())],
+        value= ast.Constant("global")
+    ))
