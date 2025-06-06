@@ -1,9 +1,10 @@
 import ast
-from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode
+from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
+from injector.CallCollectors.CallCollector import FunctionCallCollector
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, node, ltMap, logTypeCount):
@@ -20,6 +21,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(node)
+        node.body.insert(0, getRootUidAssign())
         self.maxLogTypeCount = self.logTypeCount
 
     def generateLtLogStmts(self, node, type):
@@ -32,6 +34,8 @@ class LogInjector(ast.NodeTransformer):
 
         self.logTypeCount += 1
 
+        callCollector = FunctionCallCollector(node)
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "funcid": self.funcId,
@@ -39,6 +43,8 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "isUnique": False,
+            "calls": callCollector.calls,
+            "awaitedCalls": callCollector.async_calls,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
@@ -82,8 +88,8 @@ class LogInjector(ast.NodeTransformer):
 
         self.nodeVarInfo= []
         return preLog, postLog
-    
-    def visit_FunctionDef(self, node):
+
+    def processFunctionNode(self, node, isAsync):
         '''
             This function adds a log statement to function body.
             It sets a function id before visiting child nodes and
@@ -96,6 +102,7 @@ class LogInjector(ast.NodeTransformer):
         # Update the log type map to add function specific information
         self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
         self.ltMap[self.logTypeCount]["name"] = node.name
+        self.ltMap[self.logTypeCount]["isAsync"] = isAsync
 
         # Reset function specific variables before visiting children.
         self.localDisabledVariables = []
@@ -110,13 +117,17 @@ class LogInjector(ast.NodeTransformer):
         node.body = [logStmt] + postLog + node.body
         
         self.funcId = 0
+
+        node.body.insert(0, getUniqueIdAssignStmt())
         
         return preLog + [node]
+
     
+    def visit_FunctionDef(self, node):
+        return self.processFunctionNode(node, isAsync= False)  
+      
     def visit_AsyncFunctionDef(self, node):
-        decorator = ast.Name(id="track_coroutine", ctx=ast.Load())
-        node.decorator_list.insert(0, decorator)
-        return self.visit_FunctionDef(node)
+        return self.processFunctionNode(node, isAsync= True)
 
     def visit_Assign(self, node):
         '''

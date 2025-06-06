@@ -1,6 +1,5 @@
 import logging
 from pathlib import Path
-from functools import wraps
 from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
@@ -9,8 +8,6 @@ import json
 import time
 import os
 import uuid
-import contextvars
-import asyncio
 
 ADLI_EXECUTION_ID = str(uuid.uuid4())
 
@@ -19,40 +16,6 @@ clp_handler = ClpKeyValuePairStreamHandler(open(path, "wb"))
 logger = logging.getLogger("adli")
 logger.setLevel(logging.INFO)
 logger.addHandler(clp_handler)
-
-coroutine_id = contextvars.ContextVar("coroutine_id", default=None) 
-
-def track_coroutine(fn):
-    '''
-        This function wraps coroutines using a decorator and assigns
-        a UID to each coroutine. When a coroutine makes a function call,
-        the uid is preserved in the function that is called, allowing
-        us to chain function calls made by coroutines.
-    '''
-    @wraps(fn)
-    async def wrapper(*args, **kwargs):
-        token = None
-        if coroutine_id.get() is None:
-            uid = str(uuid.uuid4())
-            token = coroutine_id.set(uid)
-        try:
-            return await fn(*args, **kwargs)
-        finally:
-            if token:
-                coroutine_id.reset(token)
-    return wrapper
-
-def getTaskId():
-    '''
-        This function returns the name of the task that is
-        currently being executed (if there is one).
-    '''
-    try:
-        asyncio.get_running_loop()
-        current_task = asyncio.current_task()
-        return current_task.get_name() if current_task else None
-    except RuntimeError:
-        return None
 
 class AdliLogger:
     '''
@@ -93,10 +56,10 @@ class AdliLogger:
             return str(o)
 
     def variableToJson(self, obj, max_depth=8):
-        self.visited = set()
+        # self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
-    def logVariable(self, varid, value):
+    def logVariable(self, varid, value, scope_uid):
         '''
             Logs the given varid and value. It also checks to see if the variable
             value was encoded by the ADLI tool and returns the decoded variable value.
@@ -114,9 +77,8 @@ class AdliLogger:
                 "type": "adli_variable",
                 "varid": varid,
                 "thread": threading.get_ident(),
-                "coroutine": coroutine_id.get(),
-                "task": getTaskId(),
-                "value": adliValue
+                "value": adliValue,
+                "scope_uid": str(scope_uid),
             }
             logger.info(varObj)
         except Exception as e:
@@ -125,16 +87,15 @@ class AdliLogger:
                 "type": "adli_variable",
                 "varid": varid,
                 "thread": threading.get_ident(),
-                "coroutine": coroutine_id.get(),
-                "task": getTaskId(),
                 "value": str(value),
+                "scope_uid": str(scope_uid),
                 "serialization_error": str(e)
             }
             logger.info(varObj)
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId):
+    def logStmt(self, stmtId, scope_uid):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -146,8 +107,7 @@ class AdliLogger:
         stmtObj = {
             "type": "adli_execution",
             "thread": threading.get_ident(),
-            "coroutine": coroutine_id.get(),
-            "task": getTaskId(),
+            "scope_uid": str(scope_uid),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -161,8 +121,6 @@ class AdliLogger:
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "coroutine": coroutine_id.get(),
-            "task": getTaskId(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -186,8 +144,6 @@ class AdliLogger:
         logInfo = {
             "type": "adli_header",
             "thread": threading.get_ident(),
-            "coroutine": coroutine_id.get(),
-            "task": getTaskId(),
             "header": json.dumps(header)
         }
         logger.info(logInfo)
@@ -206,8 +162,6 @@ class AdliLogger:
             "type": "adli_output",
             "outputName": variableName,
             "thread": threading.get_ident(),
-            "coroutine": coroutine_id.get(),
-            "task": getTaskId(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
@@ -236,8 +190,6 @@ class AdliLogger:
             logInfo = {
                 "type": "adli_input",
                 "thread": threading.get_ident(),
-                "coroutine": coroutine_id.get(),
-                "task": getTaskId(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
@@ -248,6 +200,12 @@ class AdliLogger:
             return value["adliValue"]
         
         return value
+    
+    def getUniqueId(self):
+        '''
+            Returns a unique id during runtime.
+        '''
+        return uuid.uuid4()
 
 
 adli = AdliLogger()
