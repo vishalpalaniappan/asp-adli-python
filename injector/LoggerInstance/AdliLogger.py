@@ -176,7 +176,7 @@ class AdliLogger:
         logInfo = {
             "type": "adli_header",
             "thread": threading.get_ident(),
-            "header": json.dumps(header)
+            "header": header
         }
         logger.info(logInfo)
 
