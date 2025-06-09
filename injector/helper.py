@@ -14,9 +14,6 @@ def getInjectedImports():
                 ast.alias(name="adli")
             ],
             level=0
-        ),
-        ast.Import(
-            names=[ast.alias(name='traceback', asname=None)]
         )
     ]
 
@@ -53,7 +50,11 @@ def getLtLogStmt(logTypeId):
                 ast.Name(id="adli_uid", ctx=ast.Load()),
                 ast.Call(
                     func=ast.Attribute(
-                        value=ast.Name(id='traceback', ctx=ast.Load()),
+                        value= ast.Attribute(
+                            value=ast.Name(id='adli', ctx=ast.Load()),
+                            attr='traceback',
+                            ctx=ast.Load()
+                        ),
                         attr='extract_stack',
                         ctx=ast.Load()
                     ),
