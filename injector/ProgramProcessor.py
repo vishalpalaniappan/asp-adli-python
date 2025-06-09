@@ -41,25 +41,20 @@ class ProgramProcessor:
             source to the injected source.
         '''
         # Save the position of the original code 
-        count = 0
         mapped = {}
-        for node in ast.walk(tree):
+        for count, node in enumerate(ast.walk(tree)):
             if hasattr(node, "logTypeCount") and hasattr(node, "lineno"):
-                mapped[str(count)] = getattr(node, "logTypeCount")
-            count += 1
+                mapped[str(count)] = node.logTypeCount
 
         # Reparse the nodes so that the line metadata is updated
         parsed = ast.unparse(tree)
         tree = ast.parse(parsed)
 
         # Save the line number in log injected source to the log type map
-        count = 0
-        for node in ast.walk(tree):
+        for count, node in enumerate(ast.walk(tree)):
             if str(count) in mapped and hasattr(node, "lineno"):
                 ltInfo = self.ltMap[mapped[str(count)]]
-                ltInfo["injectedLineno"] = getattr(node, "lineno")
-            count += 1
-
+                ltInfo["injectedLineno"] = node.lineno
 
     def run(self):
         '''
