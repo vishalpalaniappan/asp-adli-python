@@ -60,7 +60,7 @@ class AdliLogger:
         return self.processLevel(obj, "", 0, max_depth)
 
 
-    def getStack(self):
+    def getStack(self, fullStack):
         '''
             Get the current stack. Only include functions
             that are in the local directory.
@@ -71,7 +71,7 @@ class AdliLogger:
         stack = {}
         base_path = os.getcwd()
         stackCount = 0
-        for frame in traceback.extract_stack()[:-2]:
+        for frame in fullStack:
             if frame.filename.startswith(base_path):
                 stack[str(stackCount)] = {
                     "name": frame.name,
@@ -101,7 +101,6 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "value": adliValue,
-                "stack": self.getStack(),
                 "scope_uid": str(scope_uid),
             }
             logger.info(varObj)
@@ -112,7 +111,6 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "value": str(value),
-                "stack": self.getStack(),
                 "scope_uid": str(scope_uid),
                 "serialization_error": str(e)
             }
@@ -120,7 +118,7 @@ class AdliLogger:
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId, scope_uid):
+    def logStmt(self, stmtId, scope_uid, fullStack):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -133,7 +131,7 @@ class AdliLogger:
             "type": "adli_execution",
             "thread": threading.get_ident(),
             "scope_uid": str(scope_uid),
-            "stack": self.getStack(),
+            "stack": self.getStack(fullStack),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -147,7 +145,6 @@ class AdliLogger:
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "stack": self.getStack(),
             "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
@@ -196,7 +193,6 @@ class AdliLogger:
             "thread": threading.get_ident(),
             "adliExecutionId": ADLI_EXECUTION_ID,
             "adliExecutionIndex": self.count + 1,
-            "stack": self.getStack(),
             "adliValue": value
         }
         
@@ -223,7 +219,6 @@ class AdliLogger:
             logInfo = {
                 "type": "adli_input",
                 "thread": threading.get_ident(),
-                "stack": self.getStack(),
                 "adliExecutionId": value["adliExecutionId"],
                 "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]

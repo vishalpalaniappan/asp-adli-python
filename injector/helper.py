@@ -7,13 +7,18 @@ def getAdliLoggerInstance():
     """
         Imports the adliLogger instance
     """
-    return ast.ImportFrom(
-        module="AdliLogger",
-        names = [
-            ast.alias(name="adli")
-        ],
-        level=0
-    )
+    return [
+        ast.ImportFrom(
+            module="AdliLogger",
+            names = [
+                ast.alias(name="adli")
+            ],
+            level=0
+        ),
+        ast.Import(
+            names=[ast.alias(name='traceback', asname=None)]
+        )
+    ]
 
 def getHeaderLogStmt():
     """
@@ -46,6 +51,15 @@ def getLtLogStmt(logTypeId):
             args=[
                 ast.Constant(value=logTypeId),
                 ast.Name(id="adli_uid", ctx=ast.Load()),
+                ast.Call(
+                    func=ast.Attribute(
+                        value=ast.Name(id='traceback', ctx=ast.Load()),
+                        attr='extract_stack',
+                        ctx=ast.Load()
+                    ),
+                    args=[],
+                    keywords=[]
+                )
             ],
             keywords=[]
         )
