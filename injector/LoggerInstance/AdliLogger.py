@@ -32,6 +32,7 @@ class AdliLogger:
         self.exceptionLogCount = 0
         self.inputCount = 0
         self.outputCount = 0
+        self.traceback = traceback
 
     def processLevel(self, o, k, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
