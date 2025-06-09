@@ -3,7 +3,7 @@ import copy
 import json
 
 
-def getAdliLoggerInstance():
+def getInjectedImports():
     """
         Imports the adliLogger instance
     """
@@ -127,18 +127,18 @@ def injectRootLoggingSetup(tree, fileName):
         orelse=[],
         finalbody=[]
     )
-    loggerInstance = getAdliLoggerInstance()
+    loggerInstance = getInjectedImports()
     header = getHeaderLogStmt()
 
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = [loggerInstance] + [header] + [mainTry]
+    mod.body = loggerInstance + [header] + [mainTry]
     return mod
 
 def injectLoggingSetup(tree):
     '''
         Injects logging setup and function into the provided tree.
     '''
-    loggerInstance = getAdliLoggerInstance()
+    loggerInstance = getInjectedImports()
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = [loggerInstance] + tree.body
     return mod
