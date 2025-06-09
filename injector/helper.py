@@ -15,7 +15,7 @@ def getAdliLoggerInstance():
         level=0
     )
 
-def getHeaderLogStmt(header):
+def getHeaderLogStmt():
     """
         Returns a logging statement as an AST node.
     """
@@ -26,7 +26,7 @@ def getHeaderLogStmt(header):
                 attr='logHeader',
                 ctx=ast.Load()
             ),
-            args=[ast.Constant(value=header)],
+            args=[],
             keywords=[]
         )
     )
@@ -114,7 +114,7 @@ def injectRootLoggingSetup(tree, header, fileName):
         finalbody=[]
     )
     loggerInstance = getAdliLoggerInstance()
-    header = getHeaderLogStmt(header)
+    header = getHeaderLogStmt()
 
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = [loggerInstance] + [header] + [mainTry]

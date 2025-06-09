@@ -7,12 +7,13 @@ from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionAr
 from injector.CallCollectors.CallCollector import FunctionCallCollector
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, ltMap, logTypeCount):
+    def __init__(self, node, ltMap, logTypeCount, file):
         self.metadata = None
         self.ltMap = ltMap
         self.varMap = {}
         self.logTypeCount = logTypeCount
         self.funcId = 0
+        self.file = file
 
         self.globalsInFunc = []
         self.globalDisabledVariables = []
@@ -23,6 +24,7 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         node.body.insert(0, getRootUidAssign())
         self.maxLogTypeCount = self.logTypeCount
+
 
     def generateLtLogStmts(self, node, type):
         '''
@@ -36,8 +38,11 @@ class LogInjector(ast.NodeTransformer):
 
         callCollector = FunctionCallCollector(node)
 
+        node.logTypeCount = self.logTypeCount
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
+            "file": self.file,
             "funcid": self.funcId,
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,

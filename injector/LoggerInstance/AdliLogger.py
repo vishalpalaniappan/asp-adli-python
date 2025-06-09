@@ -72,10 +72,10 @@ class AdliLogger:
         base_path = os.getcwd()
         stackCount = 0
         for frame in traceback.extract_stack()[:-2]:
-            if os.path.abspath(frame.filename).startswith(base_path):
+            if frame.filename.startswith(base_path):
                 stack[str(stackCount)] = {
                     "name": frame.name,
-                    "filename": frame.filename,
+                    "filename": os.path.relpath(frame.filename, base_path),
                     "lineno": frame.lineno
                 }
                 stackCount += 1
@@ -152,7 +152,7 @@ class AdliLogger:
         }
         logger.info(exceptionObj)
 
-    def logHeader(self, header):
+    def logHeader(self):
         '''
             Log the header of the CDL file.
 
@@ -160,11 +160,16 @@ class AdliLogger:
         '''
         self.count += 1
 
+        with open("header.json", "r") as f:
+            header = json.loads(f.read())
+
         # Add execution information to header
         header["execInfo"] = {
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
         }
+
+        header["basePath"] = os.getcwd()
 
         # TODO: Debug why logging the header directly causes
         # an error.

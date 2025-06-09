@@ -35,11 +35,35 @@ class ProgramProcessor:
             shutil.rmtree(self.outputDirectory)
         os.makedirs(self.outputDirectory)
 
+
+    def mapInjectedSource(self, tree):
+        '''
+            This function maps the lineno from the original
+            source to the injected source.
+        '''
+        count = 0
+        mapped = {}
+        for node in ast.walk(tree):
+            if hasattr(node, "logTypeCount"):
+                mapped[str(count)] = getattr(node, "logTypeCount")
+            count += 1
+
+        parsed = ast.unparse(tree)
+        tree = ast.parse(parsed)
+
+        count = 0
+        for node in ast.walk(tree):
+            if str(count) in mapped:
+                ltInfo = self.ltMap[mapped[str(count)]]
+                ltInfo["injectedLineno"] = getattr(node, "lineno")
+            count += 1
+
+
     def run(self):
         '''
             Runs the injector.
         '''
-        ltMap = {}
+        self.ltMap = {}
         varMap = {}
         fileTree = {}
         fileOutputInfo = []
@@ -60,7 +84,7 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, logTypeCount)
+            injector = LogInjector(currAst, self.ltMap, logTypeCount, currRelPath)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -85,11 +109,11 @@ class ProgramProcessor:
         
         header = {
             "fileTree": fileTree,
-            "ltMap": ltMap,
+            "ltMap": self.ltMap,
             "varMap": varMap,
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
-            "adliInfo": self.adliInfo
+            "adliInfo": self.adliInfo,
         }
 
         # Add AdliLogger.py to output directory
@@ -104,6 +128,8 @@ class ProgramProcessor:
                 currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
+
+            self.mapInjectedSource(currAst)
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
