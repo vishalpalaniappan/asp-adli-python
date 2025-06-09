@@ -1,14 +1,15 @@
 import ast
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
+from injector.helper import injectRootLoggingSetup, injectLoggingSetup
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, ltMap, logTypeCount, file):
+    def __init__(self, node, logTypeCount, file, isRoot):
         self.metadata = None
-        self.ltMap = ltMap
+        self.ltMap = {}
         self.varMap = {}
         self.logTypeCount = logTypeCount
         self.funcId = 0
@@ -23,6 +24,11 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
         node.body.insert(0, getRootUidAssign())
         self.maxLogTypeCount = self.logTypeCount
+
+        if (isRoot):
+            currAst = injectRootLoggingSetup(node)
+        else:
+            currAst = injectLoggingSetup(node)
 
 
     def generateLtLogStmts(self, node, type):

@@ -108,7 +108,7 @@ def getEmptyRootNode(astNode):
             setattr(node, key, [])
     return node
 
-def injectRootLoggingSetup(tree, fileName):
+def injectRootLoggingSetup(tree):
     '''
         Injects try except structure around the given tree.
         Injects header into file and imports adli logger instance.

@@ -34,33 +34,11 @@ class ProgramProcessor:
             shutil.rmtree(self.outputDirectory)
         os.makedirs(self.outputDirectory)
 
-
-    def mapInjectedSourceLineno(self, tree):
-        '''
-            This function maps the lineno from the original
-            source to the injected source.
-        '''
-        # Save the position of the original code 
-        mapped = {}
-        for count, node in enumerate(ast.walk(tree)):
-            if hasattr(node, "logTypeCount") and hasattr(node, "lineno"):
-                mapped[str(count)] = node.logTypeCount
-
-        # Reparse the nodes so that the line metadata is updated
-        parsed = ast.unparse(tree)
-        tree = ast.parse(parsed)
-
-        # Save the line number in log injected source to the log type map
-        for count, node in enumerate(ast.walk(tree)):
-            if str(count) in mapped and hasattr(node, "lineno"):
-                ltInfo = self.ltMap[mapped[str(count)]]
-                ltInfo["injectedLineno"] = node.lineno
-
     def run(self):
         '''
             Runs the injector.
         '''
-        self.ltMap = {}
+        ltMap = {}
         varMap = {}
         fileTree = {}
         fileOutputInfo = []
@@ -81,7 +59,8 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, self.ltMap, logTypeCount, currRelPath)
+            isRoot = (self.sourceFile == currFilePath)
+            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -90,6 +69,9 @@ class ProgramProcessor:
 
             for key in injector.varMap:
                 varMap[key] = injector.varMap[key]
+
+            for key in injector.ltMap:
+                ltMap[key] = injector.ltMap[key]
 
             fileTree[currRelPath] = {
                 "source": source,
@@ -110,21 +92,13 @@ class ProgramProcessor:
 
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
-            if (fileInfo["currFilePath"] == self.sourceFile):
-                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], self.fileName)
-            else:
-                currAst = helper.injectLoggingSetup(fileInfo["ast"])
-
-            # Map the line number in the original source to the line number in the injected source
-            self.mapInjectedSourceLineno(currAst)
-
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
         
         # Save header to output folder
         header = {
             "fileTree": fileTree,
-            "ltMap": self.ltMap,
+            "ltMap": ltMap,
             "varMap": varMap,
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
