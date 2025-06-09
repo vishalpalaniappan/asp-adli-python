@@ -40,6 +40,7 @@ class ProgramProcessor:
             This function maps the lineno from the original
             source to the injected source.
         '''
+        # Save the position of the original code 
         count = 0
         mapped = {}
         for node in ast.walk(tree):
@@ -47,9 +48,11 @@ class ProgramProcessor:
                 mapped[str(count)] = getattr(node, "logTypeCount")
             count += 1
 
+        # Reparse the nodes so that the line metadata is updated
         parsed = ast.unparse(tree)
         tree = ast.parse(parsed)
 
+        # Save the line number in log injected source to the log type map
         count = 0
         for node in ast.walk(tree):
             if str(count) in mapped and hasattr(node, "lineno"):
@@ -117,6 +120,7 @@ class ProgramProcessor:
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
+            # Map the line number in the original source to the line number in the injected source
             self.mapInjectedSourceLineno(currAst)
 
             with open(fileInfo["outputFilePath"], 'w+') as f:

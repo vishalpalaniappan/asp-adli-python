@@ -35,6 +35,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.logTypeCount += 1
 
+        # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
         self.ltMap[self.logTypeCount] = {
