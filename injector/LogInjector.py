@@ -7,7 +7,7 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, node, logTypeCount, file, isRoot):
+    def __init__(self, tree, logTypeCount, file, isRoot):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
@@ -21,14 +21,11 @@ class LogInjector(ast.NodeTransformer):
         self.nodeVarInfo = []
 
         self.minLogTypeCount = self.logTypeCount
-        self.generic_visit(node)
-        node.body.insert(0, getRootUidAssign())
+        self.generic_visit(tree)
+        tree.body.insert(0, getRootUidAssign())
         self.maxLogTypeCount = self.logTypeCount
 
-        if (isRoot):
-            currAst = injectRootLoggingSetup(node)
-        else:
-            currAst = injectLoggingSetup(node)
+        self.tree = injectRootLoggingSetup(tree) if isRoot else injectLoggingSetup(tree)
 
 
     def generateLtLogStmts(self, node, type):

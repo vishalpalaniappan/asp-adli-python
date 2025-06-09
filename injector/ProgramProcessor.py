@@ -80,7 +80,7 @@ class ProgramProcessor:
             }
 
             with open(outputFilePath, 'w+') as f:
-                f.write(ast.unparse(currAst))
+                f.write(ast.unparse(injector.tree))
 
         # Add AdliLogger.py to output directory
         source = getLoggerInstance()
