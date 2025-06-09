@@ -44,7 +44,7 @@ class ProgramProcessor:
         count = 0
         mapped = {}
         for node in ast.walk(tree):
-            if hasattr(node, "logTypeCount"):
+            if hasattr(node, "logTypeCount") and hasattr(node, "lineno"):
                 mapped[str(count)] = getattr(node, "logTypeCount")
             count += 1
 
@@ -53,9 +53,10 @@ class ProgramProcessor:
 
         count = 0
         for node in ast.walk(tree):
-            if str(count) in mapped:
+            if str(count) in mapped and hasattr(node, "lineno"):
                 ltInfo = self.ltMap[mapped[str(count)]]
-                print("NODE:", ltInfo.statement)
+                print(node)
+                print("NODE:", ltInfo["statement"])
                 ltInfo["injectedLineno"] = getattr(node, "lineno")
             count += 1
 
