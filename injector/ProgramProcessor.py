@@ -79,21 +79,13 @@ class ProgramProcessor:
                 "maxLt": injector.maxLogTypeCount
             }
 
-            fileOutputInfo.append({
-                "outputFilePath": outputFilePath,
-                "currFilePath": currFilePath,
-                "ast": currAst                
-            })
+            with open(outputFilePath, 'w+') as f:
+                f.write(ast.unparse(currAst))
 
         # Add AdliLogger.py to output directory
         source = getLoggerInstance()
         with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
-            f.write(source)        
-
-        # Write files to output folder
-        for fileInfo in fileOutputInfo:   
-            with open(fileInfo["outputFilePath"], 'w+') as f:
-                f.write(ast.unparse(currAst))
+            f.write(source)     
         
         # Save header to output folder
         header = {
