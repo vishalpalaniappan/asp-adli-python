@@ -136,5 +136,9 @@ class ProgramProcessor:
             "adliInfo": self.adliInfo,
         }
 
-        with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
-            f.write(json.dumps(header))
+        try:
+            header_path = os.path.join(self.outputDirectory, "header.json")
+            with open(header_path, "w+") as f:
+                f.write(json.dumps(header, indent=2))
+        except IOError as e:
+            raise RuntimeError(f"Failed to write header.json: {e}")
