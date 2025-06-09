@@ -55,6 +55,7 @@ class ProgramProcessor:
         for node in ast.walk(tree):
             if str(count) in mapped:
                 ltInfo = self.ltMap[mapped[str(count)]]
+                print("NODE:", ltInfo.statement)
                 ltInfo["injectedLineno"] = getattr(node, "lineno")
             count += 1
 
@@ -106,21 +107,10 @@ class ProgramProcessor:
                 "ast": currAst                
             })
 
-        
-        header = {
-            "fileTree": fileTree,
-            "ltMap": self.ltMap,
-            "varMap": varMap,
-            "programInfo": programMetadata,
-            "sysInfo": self.sysinfo,
-            "adliInfo": self.adliInfo,
-        }
-
         # Add AdliLogger.py to output directory
         source = getLoggerInstance()
         with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
-            f.write(source)
-        
+            f.write(source)        
 
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
@@ -133,7 +123,16 @@ class ProgramProcessor:
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
+        
+        # Save header to output folder
+        header = {
+            "fileTree": fileTree,
+            "ltMap": self.ltMap,
+            "varMap": varMap,
+            "programInfo": programMetadata,
+            "sysInfo": self.sysinfo,
+            "adliInfo": self.adliInfo,
+        }
 
-        if SAVE_HEADER:
-            with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
-                f.write(json.dumps(header))
+        with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
+            f.write(json.dumps(header))
