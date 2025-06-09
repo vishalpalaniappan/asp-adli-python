@@ -115,7 +115,7 @@ class ProgramProcessor:
         # Write files to output folder
         for fileInfo in fileOutputInfo:   
             if (fileInfo["currFilePath"] == self.sourceFile):
-                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
+                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], self.fileName)
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
