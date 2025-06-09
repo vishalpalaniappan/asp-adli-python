@@ -35,7 +35,7 @@ class ProgramProcessor:
         os.makedirs(self.outputDirectory)
 
 
-    def mapInjectedSource(self, tree):
+    def mapInjectedSourceLineno(self, tree):
         '''
             This function maps the lineno from the original
             source to the injected source.
@@ -117,7 +117,7 @@ class ProgramProcessor:
             else:
                 currAst = helper.injectLoggingSetup(fileInfo["ast"])
 
-            self.mapInjectedSource(currAst)
+            self.mapInjectedSourceLineno(currAst)
 
             with open(fileInfo["outputFilePath"], 'w+') as f:
                 f.write(ast.unparse(currAst))
