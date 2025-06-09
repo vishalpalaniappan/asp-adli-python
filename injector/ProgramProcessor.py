@@ -10,7 +10,6 @@ from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
 
-SAVE_HEADER = True
 
 class ProgramProcessor:
     '''
