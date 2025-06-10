@@ -17,6 +17,31 @@ def getInjectedImports():
         )
     ]
 
+def getTag(logtype, direction):
+    """
+        Returns a string literal to tag logtypes.
+
+        This is used to get the new lineno of the
+        logtypes after injecting the logs. 
+
+        Note: A better way to do this is to track
+        the injected logs and update the line number
+        while injecting the logs.
+
+        ::param int logtype The logtype id.
+        ::param string direction Indicates if we should add or subtract line number.
+    """
+    obj = {
+        "type": "adli_tag",
+        "lt": logtype,
+        "dir":direction
+    }
+    return ast.Expr(
+        value=ast.Constant(
+            value=json.dumps(obj)
+        )
+    )
+
 def getHeaderLogStmt():
     """
         Returns a logging statement as an AST node.
