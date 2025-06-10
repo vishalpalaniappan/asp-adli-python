@@ -66,9 +66,12 @@ class LogInjector(ast.NodeTransformer):
             raise ValueError(f"AST node of type {type(node).__name__} missing required line number information")
 
         self.logTypeCount += 1       
+<<<<<<< HEAD
 
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
+=======
+>>>>>>> da7ac6af31012e10adf0c8b812789545e1af95b2
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
