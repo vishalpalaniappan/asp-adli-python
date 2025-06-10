@@ -66,12 +66,6 @@ class LogInjector(ast.NodeTransformer):
             raise ValueError(f"AST node of type {type(node).__name__} missing required line number information")
 
         self.logTypeCount += 1       
-<<<<<<< HEAD
-
-        # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
-        node.logTypeCount = self.logTypeCount
-=======
->>>>>>> da7ac6af31012e10adf0c8b812789545e1af95b2
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -80,7 +74,6 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
-            "isUnique": False,
             "varDependencies": CollectVarDependencies(node).var_dependencies,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
@@ -110,14 +103,6 @@ class LogInjector(ast.NodeTransformer):
             else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
-
-            ''' 
-            Variables named "asp_uid" mark a function as the start of a unique trace.
-            It is a reserved adli keyword and coming updates will ensure that it is only
-            written to once in a function and will raise an error if this is violated.
-            '''
-            if variable["name"] == "asp_uid":
-                self.ltMap[variable["funcId"]]["isUnique"] = True
 
             del variable["assignValue"]
             del variable["syntax"]
