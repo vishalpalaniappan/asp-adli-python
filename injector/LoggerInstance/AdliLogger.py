@@ -32,6 +32,7 @@ class AdliLogger:
         self.exceptionLogCount = 0
         self.inputCount = 0
         self.outputCount = 0
+        self.traceback = traceback
 
     def processLevel(self, o, k, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
@@ -58,6 +59,29 @@ class AdliLogger:
     def variableToJson(self, obj, max_depth=8):
         # self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
+
+
+    def getStack(self, fullStack):
+        '''
+            Get the current stack. Only include functions
+            that are in the local directory.
+
+            Remove the last two functions from the stack because
+            they are used to generate the runtime log.        
+        '''
+        stack = {}
+        base_path = os.getcwd()
+        stackCount = 0
+        for frame in fullStack:
+            if frame.filename.startswith(base_path):
+                stack[str(stackCount)] = {
+                    "name": frame.name,
+                    "filename": os.path.relpath(frame.filename, base_path),
+                    "lineno": frame.lineno
+                }
+                stackCount += 1
+
+        return stack
 
     def logVariable(self, varid, value, scope_uid):
         '''
@@ -95,7 +119,7 @@ class AdliLogger:
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId, scope_uid):
+    def logStmt(self, stmtId, scope_uid, fullStack):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -108,6 +132,7 @@ class AdliLogger:
             "type": "adli_execution",
             "thread": threading.get_ident(),
             "scope_uid": str(scope_uid),
+            "stack": self.getStack(fullStack),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -125,7 +150,7 @@ class AdliLogger:
         }
         logger.info(exceptionObj)
 
-    def logHeader(self, header):
+    def logHeader(self):
         '''
             Log the header of the CDL file.
 
@@ -133,18 +158,23 @@ class AdliLogger:
         '''
         self.count += 1
 
+        with open("header.json", "r") as f:
+            header = json.loads(f.read())
+
         # Add execution information to header
         header["execInfo"] = {
             "programExecutionId": ADLI_EXECUTION_ID,
             "timestamp": str(time.time()),
         }
 
+        header["basePath"] = os.getcwd()
+
         # TODO: Debug why logging the header directly causes
         # an error.
         logInfo = {
             "type": "adli_header",
             "thread": threading.get_ident(),
-            "header": json.dumps(header)
+            "header": header
         }
         logger.info(logInfo)
 

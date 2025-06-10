@@ -3,19 +3,46 @@ import copy
 import json
 
 
-def getAdliLoggerInstance():
+def getInjectedImports():
     """
         Imports the adliLogger instance
     """
-    return ast.ImportFrom(
-        module="AdliLogger",
-        names = [
-            ast.alias(name="adli")
-        ],
-        level=0
+    return [
+        ast.ImportFrom(
+            module="AdliLogger",
+            names = [
+                ast.alias(name="adli")
+            ],
+            level=0
+        )
+    ]
+
+def getTag(logtype, direction):
+    """
+        Returns a string literal to tag logtypes.
+
+        This is used to get the new lineno of the
+        logtypes after injecting the logs. 
+
+        Note: A better way to do this is to track
+        the injected logs and update the line number
+        while injecting the logs.
+
+        ::param int logtype The logtype id.
+        ::param string direction Indicates if we should add or subtract line number.
+    """
+    obj = {
+        "type": "adli_tag",
+        "lt": logtype,
+        "dir":direction
+    }
+    return ast.Expr(
+        value=ast.Constant(
+            value=json.dumps(obj)
+        )
     )
 
-def getHeaderLogStmt(header):
+def getHeaderLogStmt():
     """
         Returns a logging statement as an AST node.
     """
@@ -26,7 +53,7 @@ def getHeaderLogStmt(header):
                 attr='logHeader',
                 ctx=ast.Load()
             ),
-            args=[ast.Constant(value=header)],
+            args=[],
             keywords=[]
         )
     )
@@ -46,6 +73,19 @@ def getLtLogStmt(logTypeId):
             args=[
                 ast.Constant(value=logTypeId),
                 ast.Name(id="adli_uid", ctx=ast.Load()),
+                ast.Call(
+                    func=ast.Attribute(
+                        value= ast.Attribute(
+                            value=ast.Name(id='adli', ctx=ast.Load()),
+                            attr='traceback',
+                            ctx=ast.Load()
+                        ),
+                        attr='extract_stack',
+                        ctx=ast.Load()
+                    ),
+                    args=[],
+                    keywords=[]
+                )
             ],
             keywords=[]
         )
@@ -93,7 +133,7 @@ def getEmptyRootNode(astNode):
             setattr(node, key, [])
     return node
 
-def injectRootLoggingSetup(tree, header, fileName):
+def injectRootLoggingSetup(tree):
     '''
         Injects try except structure around the given tree.
         Injects header into file and imports adli logger instance.
@@ -113,18 +153,18 @@ def injectRootLoggingSetup(tree, header, fileName):
         orelse=[],
         finalbody=[]
     )
-    loggerInstance = getAdliLoggerInstance()
-    header = getHeaderLogStmt(header)
+    loggerInstance = getInjectedImports()
+    header = getHeaderLogStmt()
 
     mod = ast.Module(body=[], type_ignores=[])
-    mod.body = [loggerInstance] + [header] + [mainTry]
+    mod.body = loggerInstance + [header] + [mainTry]
     return mod
 
 def injectLoggingSetup(tree):
     '''
         Injects logging setup and function into the provided tree.
     '''
-    loggerInstance = getAdliLoggerInstance()
+    loggerInstance = getInjectedImports()
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = [loggerInstance] + tree.body
     return mod

@@ -10,7 +10,6 @@ from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
 
-SAVE_HEADER = True
 
 class ProgramProcessor:
     '''
@@ -60,7 +59,8 @@ class ProgramProcessor:
                 source = f.read()
 
             currAst = ast.parse(source)
-            injector = LogInjector(currAst, ltMap, logTypeCount)
+            isRoot = (self.sourceFile == currFilePath)
+            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -70,44 +70,36 @@ class ProgramProcessor:
             for key in injector.varMap:
                 varMap[key] = injector.varMap[key]
 
+            for key in injector.ltMap:
+                ltMap[key] = injector.ltMap[key]
+
             fileTree[currRelPath] = {
                 "source": source,
                 "minLt": injector.minLogTypeCount,
                 "maxLt": injector.maxLogTypeCount
             }
 
-            fileOutputInfo.append({
-                "outputFilePath": outputFilePath,
-                "currFilePath": currFilePath,
-                "ast": currAst                
-            })
+            with open(outputFilePath, 'w+') as f:
+                f.write(ast.unparse(injector.tree))
 
+        # Add AdliLogger.py to output directory
+        source = getLoggerInstance()
+        with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
+            f.write(source)     
         
+        # Save header to output folder
         header = {
             "fileTree": fileTree,
             "ltMap": ltMap,
             "varMap": varMap,
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
-            "adliInfo": self.adliInfo
+            "adliInfo": self.adliInfo,
         }
 
-        # Add AdliLogger.py to output directory
-        source = getLoggerInstance()
-        with open(Path(self.outputDirectory) / "AdliLogger.py", "w+") as f:
-            f.write(source)
-        
-
-        # Write files to output folder
-        for fileInfo in fileOutputInfo:   
-            if (fileInfo["currFilePath"] == self.sourceFile):
-                currAst = helper.injectRootLoggingSetup(fileInfo["ast"], header, self.fileName)
-            else:
-                currAst = helper.injectLoggingSetup(fileInfo["ast"])
-
-            with open(fileInfo["outputFilePath"], 'w+') as f:
-                f.write(ast.unparse(currAst))
-
-        if SAVE_HEADER:
-            with open(os.path.join(self.outputDirectory, "header.json"), "w+") as f:
-                f.write(json.dumps(header))
+        try:
+            header_path = os.path.join(self.outputDirectory, "header.json")
+            with open(header_path, "w+") as f:
+                f.write(json.dumps(header, indent=2))
+        except IOError as e:
+            raise RuntimeError(f"Failed to write header.json: {e}")
