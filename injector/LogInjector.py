@@ -67,6 +67,8 @@ class LogInjector(ast.NodeTransformer):
 
         self.logTypeCount += 1       
 
+        varCollector = CollectVarDependencies(node)
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "file": self.file,
@@ -74,7 +76,8 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
-            "varDependencies": CollectVarDependencies(node).var_dependencies,
+            "vars": varCollector.vars,
+            "deps": varCollector.deps,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
