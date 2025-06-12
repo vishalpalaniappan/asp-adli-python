@@ -95,6 +95,14 @@ def getVarLogStmt(name, varId):
     '''
         Returns a function call to log the given variables.
     '''
+    handler = ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse("adli.logAdliError(e)")
+        ]
+    )
+
     logVariableCall = ast.Call(
         func=ast.Attribute(
             value=ast.Name(id='adli', ctx=ast.Load()),
@@ -109,7 +117,14 @@ def getVarLogStmt(name, varId):
         keywords=[]
     )
 
-    return getAssignStmt(name, logVariableCall)
+    assignStmt = getAssignStmt(name, logVariableCall)
+
+    return ast.Try(
+        body=assignStmt,
+        handlers=[handler],
+        orelse=[],
+        finalbody=[]
+    )
 
 def getAssignStmt(name, value):
     '''

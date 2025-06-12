@@ -150,6 +150,18 @@ class AdliLogger:
         }
         logger.info(exceptionObj)
 
+    def logAdliError(self, e):
+        '''
+            Logs the exception using the traceback.
+        '''
+        self.count += 1
+        adliErrorLog = {
+            "type": "adli_runtime_error",
+            "thread": threading.get_ident(),
+            "error": e
+        }
+        logger.info(adliErrorLog)
+
     def logHeader(self):
         '''
             Log the header of the CDL file.
