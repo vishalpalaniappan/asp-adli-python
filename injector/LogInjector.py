@@ -46,14 +46,18 @@ class LogInjector(ast.NodeTransformer):
 
                     if val["type"] == "adli_tag":
                         ltInfo = self.ltMap[val["lt"]]
+                        newLineno = None
+
                         if val["dir"] == "prev":
                             newLineno = node.lineno - 1
                         elif val["dir"] == "next":    
                             newLineno = node.lineno + 1
 
-                        ltInfo["injectedLineno"] = newLineno
-                except:
-                    pass               
+                        if newLineno is not None:
+                            ltInfo["injectedLineno"] = newLineno
+
+                except (json.JSONDecodeError, KeyError, TypeError):
+                    pass            
 
 
     def generateLtLogStmts(self, node, type):
@@ -104,14 +108,6 @@ class LogInjector(ast.NodeTransformer):
             else:                
                 preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
                 preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
-
-            ''' 
-            Variables named "asp_uid" mark a function as the start of a unique trace.
-            It is a reserved adli keyword and coming updates will ensure that it is only
-            written to once in a function and will raise an error if this is violated.
-            '''
-            if variable["name"] == "asp_uid":
-                self.ltMap[variable["funcId"]]["isUnique"] = True
 
             del variable["assignValue"]
             del variable["syntax"]
