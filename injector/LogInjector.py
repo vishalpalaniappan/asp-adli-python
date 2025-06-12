@@ -44,17 +44,21 @@ class LogInjector(ast.NodeTransformer):
             if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant):
                 try:
                     val = json.loads(node.value.value)
-
+                    newLineno = None
                     if val["type"] == "adli_tag":
                         ltInfo = self.ltMap[val["lt"]]
                         if val["dir"] == "prev":
                             newLineno = node.lineno - 1
                         elif val["dir"] == "next":    
                             newLineno = node.lineno + 1
+                        else:
+                            continue  
 
+                    if newLineno is not None:
                         ltInfo["injectedLineno"] = newLineno
-                except:
-                    pass               
+                except (json.JSONDecodeError, KeyError, TypeError):
+                    # Skip nodes that aren't valid JSON tags or missing expected fields
+                    continue     
 
 
     def generateLtLogStmts(self, node, type):
@@ -67,7 +71,7 @@ class LogInjector(ast.NodeTransformer):
 
         self.logTypeCount += 1       
 
-        varCollector = CollectVarDependencies(node)
+        # varCollector = CollectVarDependencies(node)
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -76,8 +80,8 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
-            "vars": varCollector.vars,
-            "deps": varCollector.deps,
+            # "vars": varCollector.targets,
+            # "deps": varCollector.dependencies,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
