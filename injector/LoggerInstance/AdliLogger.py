@@ -56,7 +56,7 @@ class AdliLogger:
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=8):
+    def variableToJson(self, obj, max_depth=6):
         # self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
@@ -102,7 +102,8 @@ class AdliLogger:
                 "varid": varid,
                 "thread": threading.get_ident(),
                 "value": adliValue,
-                "scope_uid": str(scope_uid),
+                "scope_uid": str(scope_uid), 
+                "memid": id(value)
             }
             logger.info(varObj)
         except Exception as e:
@@ -113,7 +114,8 @@ class AdliLogger:
                 "thread": threading.get_ident(),
                 "value": str(value),
                 "scope_uid": str(scope_uid),
-                "serialization_error": str(e)
+                "serialization_error": str(e),
+                "memid": id(value)
             }
             logger.info(varObj)
 
@@ -158,7 +160,8 @@ class AdliLogger:
         '''
         self.count += 1
 
-        with open("header.json", "r") as f:
+        path = os.path.dirname(os.path.abspath(__file__)) + "/" + "header.json"
+        with open(path, "r") as f:
             header = json.loads(f.read())
 
         # Add execution information to header
