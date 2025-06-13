@@ -72,6 +72,7 @@ class LogInjector(ast.NodeTransformer):
         self.logTypeCount += 1  
 
         node.logTypeCount = self.logTypeCount
+        varCollector = CollectVarDependencies(node)
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -80,6 +81,8 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
+            "vars": varCollector.vars,
+            "deps": varCollector.deps,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
         }
 
@@ -112,11 +115,6 @@ class LogInjector(ast.NodeTransformer):
             del variable["assignValue"]
             del variable["syntax"]
             self.varMap[variable["varId"]] = variable
-            
-        # For the statement, extract variable dependencies and save it to log type map
-        varCollector = CollectVarDependencies(node, self.varMap)
-        self.ltMap[node.logTypeCount]["vars"] = varCollector.vars
-        self.ltMap[node.logTypeCount]["deps"] = varCollector.deps
 
         self.nodeVarInfo= []
         return preLog, postLog

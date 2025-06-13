@@ -5,40 +5,29 @@ from injector.helper import getEmptyRootNode
 class CollectVarDependencies():
     '''
         Given a statement, this class will extract 
-        all the variables and its corresponding dependencies. 
+        all the variables and the dependencies. 
 
         TODO: Currently, there isn't support for tuple assignments
         where for example: (a,b) = (c,d). This will result in 
         vars = [a,b] and deps = [c,d] but this isn't correct.
     '''
-    def __init__(self, node, existingVars):
+    def __init__(self, node):
         self.vars = []
         self.deps = []
         self.visitedNodes = []
-        self.existingVars = existingVars
 
         node = getEmptyRootNode(node) if 'body' in node._fields else node
         self.processStatement(node)
-
-    def isValidVariableName(self, name):
-        '''
-            Check if the variable name is in the current stack.
-        '''
-        for varKey in self.existingVars:
-            if name == self.existingVars[varKey]["name"]:
-                return True
-        return False
 
     def saveVarInfo(self, node, name, keys):
         '''
             Saves the variabe info if the variable name
             is valid.
         '''
-        if self.isValidVariableName(name):
-            if isinstance(node.ctx, ast.Store):
-                self.vars.append([name, keys])
-            elif isinstance(node.ctx, ast.Load):
-                self.deps.append([name, keys])
+        if isinstance(node.ctx, ast.Store):
+            self.vars.append([name, keys])
+        elif isinstance(node.ctx, ast.Load):
+            self.deps.append([name, keys])
 
 
     def processStatement(self, node):
