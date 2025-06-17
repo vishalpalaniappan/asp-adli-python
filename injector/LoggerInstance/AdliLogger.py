@@ -119,7 +119,7 @@ class AdliLogger:
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId, scope_uid, fullStack):
+    def logStmt(self, stmtId, scope_uid, fullStack, locals, globals):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -133,6 +133,8 @@ class AdliLogger:
             "thread": threading.get_ident(),
             "scope_uid": str(scope_uid),
             "stack": self.getStack(fullStack),
+            "locals": list(locals.keys()),
+            "globals": list(globals.keys()),
             "value": stmtId
         }
         logger.info(stmtObj)

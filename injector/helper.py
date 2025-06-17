@@ -85,6 +85,16 @@ def getLtLogStmt(logTypeId):
                     ),
                     args=[],
                     keywords=[]
+                ),
+                ast.Call(
+                    func=ast.Name(id='locals', ctx=ast.Load()),
+                    args=[],
+                    keywords=[]
+                ),
+                ast.Call(
+                    func=ast.Name(id='globals', ctx=ast.Load()),
+                    args=[],
+                    keywords=[]
                 )
             ],
             keywords=[]
@@ -104,7 +114,7 @@ def getVarLogStmt(name, varId):
         args=[
             ast.Constant(value=varId),
             ast.Name(id=name, ctx=ast.Load()),
-            ast.Name(id="adli_uid", ctx=ast.Load()),
+            ast.Name(id="adli_uid", ctx=ast.Load())
         ],
         keywords=[]
     )
