@@ -24,6 +24,12 @@ class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
             self.generic_visit(emptyNode)
         else:
             self.generic_visit(node)
+
+    def visit_GeneratorExp(self, node):
+        pass
+
+    def visit_Lambda(self, node):
+        pass
     
     def visit_Name(self, node):
         if isinstance(node.ctx, ast.Store):
