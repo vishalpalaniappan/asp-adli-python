@@ -58,6 +58,53 @@ def getHeaderLogStmt():
         )
     )
 
+def getLocalVarsLogStmt():
+    """
+        Returns a logging statement as an AST node.
+    """
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='logLocalVars',
+                ctx=ast.Load()
+            ),
+            args=[
+                ast.Name(id="adli_uid", ctx=ast.Load()),
+                ast.Call(
+                    func=ast.Name(id='locals', ctx=ast.Load()),
+                    args=[],
+                    keywords=[]
+                )
+            ],
+            keywords=[]
+        )
+    )
+
+
+def getGlobalVarsLogStmt():
+    """
+        Returns a logging statement as an AST node.
+    """
+    return ast.Expr(
+        value=ast.Call(
+            func=ast.Attribute(
+                value=ast.Name(id='adli', ctx=ast.Load()),
+                attr='logGlobalVars',
+                ctx=ast.Load()
+            ),
+            args=[
+                ast.Name(id="adli_uid", ctx=ast.Load()),
+                ast.Call(
+                    func=ast.Name(id='globals', ctx=ast.Load()),
+                    args=[],
+                    keywords=[]
+                )
+            ],
+            keywords=[]
+        )
+    )
+    
 def getLtLogStmt(logTypeId):
     '''
         This function returns a logger.info statement with the 
@@ -266,6 +313,29 @@ def getUniqueIdAssignStmt():
         targets=[ast.Name(id='adli_uid', ctx=ast.Store())],
         value=getUidCall
     ))
+
+def getUniqueIdNamedAssignStmt():
+    '''
+        This function returns an assign statement generates a unique
+        and saves it in a variable named asp_uid.
+
+        adli_uid := uuid.uuid4()
+    '''
+
+    getUidCall = ast.Call(
+        func=ast.Attribute(
+            value=ast.Name(id='adli', ctx=ast.Load()),
+            attr='getUniqueId',
+            ctx=ast.Load()
+        ),
+        args=[],
+        keywords=[]
+    )
+    
+    return ast.NamedExpr(
+        target=ast.Name(id='adli_uid', ctx=ast.Store()),
+        value=getUidCall
+    )
 
 def getRootUidAssign():
     '''
