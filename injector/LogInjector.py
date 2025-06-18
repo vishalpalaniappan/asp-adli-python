@@ -1,7 +1,7 @@
 import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
-from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag
+from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, getGlobalVarsLogStmt, getLocalVarsLogStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
@@ -149,12 +149,13 @@ class LogInjector(ast.NodeTransformer):
         self.generic_visit(node)
 
         # Add log statements for arguments. This is temporary and will be replaced.
-        self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
+        # self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts(node)
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign, logStmt] + postLog + node.body
+        localVarsStmt = getLocalVarsLogStmt()
+        node.body = [meta_tag, uidAssign, localVarsStmt, logStmt] + postLog + node.body
         
         self.funcId = 0
         
