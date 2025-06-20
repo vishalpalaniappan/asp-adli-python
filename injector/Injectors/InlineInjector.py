@@ -19,7 +19,8 @@ class InlineInjector(ast.NodeTransformer):
         self.generic_visit(node)
         
 
-    def visit_GeneratorExp(self, node):        
+    def visit_GeneratorExp(self, node): 
+        self.generic_visit(node)       
         variables = CollectVariableDefault(node, self.logTypeId, self.funcId).variables
         self.variables += variables
         
@@ -42,7 +43,8 @@ class InlineInjector(ast.NodeTransformer):
 
         return node
     
-    def visit_Lambda(self, node):    
+    def visit_Lambda(self, node): 
+        self.generic_visit(node)   
         variables = CollectVariableDefault(node, self.logTypeId, self.funcId).variables
         self.variables += variables
 
