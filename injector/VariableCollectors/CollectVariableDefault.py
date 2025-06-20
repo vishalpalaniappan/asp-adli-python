@@ -20,16 +20,9 @@ class CollectVariableDefault(ast.NodeVisitor, VariableCollectorBase):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
 
         if 'body' in node._fields:
-            emptyNode = getEmptyRootNode(node)
-            self.generic_visit(emptyNode)
-        else:
-            self.generic_visit(node)
-
-    def visit_GeneratorExp(self, node):
-        pass
-
-    def visit_Lambda(self, node):
-        pass
+            node = getEmptyRootNode(node)
+           
+        self.generic_visit(node)
     
     def visit_Name(self, node):
         if isinstance(node.ctx, ast.Store):
