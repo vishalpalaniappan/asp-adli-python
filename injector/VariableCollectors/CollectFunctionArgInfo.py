@@ -1,5 +1,6 @@
 import ast
 from injector.VariableCollectors.BaseVariableCollector import VariableCollectorBase
+from injector.helper import getEmptyRootNode
 
 class CollectFunctionArgInfo(ast.NodeVisitor, VariableCollectorBase):
     '''
@@ -10,6 +11,10 @@ class CollectFunctionArgInfo(ast.NodeVisitor, VariableCollectorBase):
 
     def __init__(self, node, logTypeId, funcId):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
+
+        if 'body' in node._fields:
+            node = getEmptyRootNode(node)
+
         self.generic_visit(node)
     
     def visit_arg(self, node):
