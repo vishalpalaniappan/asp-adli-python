@@ -34,6 +34,10 @@ class LogInjector(ast.NodeTransformer):
     def updateLineNumbers(self):
         '''
             Save the line number of the log type in the injected source.
+
+            TODO: This is a temporary solution and I will replace it
+            in the rewrite. The updated line numbers in the injected source
+            should be tracked while injecting the logs.
         '''
         # Reparse the tree to update the line numbers
         parsed = ast.unparse(self.tree)
