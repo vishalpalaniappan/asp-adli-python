@@ -5,7 +5,6 @@ from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, 
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
-from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 from injector.Injectors.InlineInjector import InlineInjector
 
 class LogInjector(ast.NodeTransformer):
@@ -152,8 +151,6 @@ class LogInjector(ast.NodeTransformer):
 
         self.generic_visit(node)
 
-        # Add log statements for arguments. This is temporary and will be replaced.
-        # self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
         preLog, postLog = self.generateVarLogStmts(node)
 
