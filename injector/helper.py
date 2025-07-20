@@ -316,8 +316,8 @@ def getUniqueIdAssignStmt():
 
 def getUniqueIdNamedAssignStmt():
     '''
-        This function returns an assign statement generates a unique
-        and saves it in a variable named asp_uid.
+        This function returns a named expression that generates a unique ID
+        and saves it in a variable named adli_uid.
 
         adli_uid := uuid.uuid4()
     '''

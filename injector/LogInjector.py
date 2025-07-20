@@ -1,7 +1,7 @@
 import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
-from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, getGlobalVarsLogStmt, getLocalVarsLogStmt
+from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, getLocalVarsLogStmt
 from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.VariableCollectors.CollectCallVariables import CollectCallVariables

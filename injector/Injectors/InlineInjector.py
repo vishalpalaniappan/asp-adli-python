@@ -2,7 +2,7 @@ import ast
 from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
 from injector.helper import getEmptyRootNode
 
-from injector.helper import getVarLogStmt, getLtLogStmt, getUniqueIdNamedAssignStmt, getLocalVarsLogStmt
+from injector.helper import getLtLogStmt, getUniqueIdNamedAssignStmt, getLocalVarsLogStmt
 
 class InlineInjector(ast.NodeTransformer):
     
