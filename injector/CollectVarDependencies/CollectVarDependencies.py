@@ -19,14 +19,30 @@ class CollectVarDependencies():
         node = getEmptyRootNode(node) if 'body' in node._fields else node
         self.processStatement(node)
 
+    def doesVarExist(self, type, name, keys):
+        '''
+            Checks if a variable/dependency already exists.
+        '''
+        arr = self.deps if type == 'dep' else self.vars
+        for item in arr:
+            if item[0] == name and item[1] == keys:
+                item[2] += 1
+                return True
+        return False
+
     def saveVarInfo(self, node, name, keys):
         '''
             Saves the variabe info.
+
+            Format:
+            [Var Name, Var Keys, Number of times accessed or assigned]
         '''
         if isinstance(node.ctx, ast.Store):
-            self.vars.append([name, keys])
+            if not self.doesVarExist('var', name, keys):
+                self.vars.append([name, keys, 1])
         elif isinstance(node.ctx, ast.Load):
-            self.deps.append([name, keys])
+            if not self.doesVarExist('dep', name, keys):
+                self.deps.append([name, keys, 1])
 
 
     def processStatement(self, node):
