@@ -21,8 +21,7 @@ class CollectVarDependencies():
 
     def saveVarInfo(self, node, name, keys):
         '''
-            Saves the variabe info if the variable name
-            is valid.
+            Saves the variabe info.
         '''
         if isinstance(node.ctx, ast.Store):
             self.vars.append([name, keys])
