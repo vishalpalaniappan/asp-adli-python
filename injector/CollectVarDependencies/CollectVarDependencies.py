@@ -25,12 +25,12 @@ class CollectVarDependencies():
         '''
         arr = self.deps if type == 'dep' else self.vars
         for item in arr:
-            if item[0] == name and item[1] == keys:
-                item[2] += 1
+            if item["name"] == name and item["keys"] == keys:
+                item["count"] += 1
                 return True
         return False
 
-    def saveVarInfo(self, node, name, keys):
+    def saveVarInfo(self, node, name, keys, isFunc=False):
         '''
             Saves the variabe info.
 
@@ -39,10 +39,20 @@ class CollectVarDependencies():
         '''
         if isinstance(node.ctx, ast.Store):
             if not self.doesVarExist('var', name, keys):
-                self.vars.append([name, keys, 1])
+                self.vars.append({
+                    "name": name,
+                    "keys": keys,
+                    "isFunc": isFunc,
+                    "count": 1
+                })
         elif isinstance(node.ctx, ast.Load):
             if not self.doesVarExist('dep', name, keys):
-                self.deps.append([name, keys, 1])
+                self.deps.append({
+                    "name": name,
+                    "keys": keys,
+                    "isFunc": isFunc,
+                    "count": 1
+                })
 
 
     def processStatement(self, node):
@@ -59,16 +69,16 @@ class CollectVarDependencies():
                 continue
 
             if isinstance(node, ast.Attribute):
-                [name, keys] = self.extractKeys(node)
-                self.saveVarInfo(node, name, keys)
+                [name, keys, isFunc] = self.extractKeys(node)
+                self.saveVarInfo(node, name, keys, isFunc)
 
             elif isinstance(node, ast.Subscript):
-                [name, keys] = self.extractKeys(node)
-                self.saveVarInfo(node, name, keys)
+                [name, keys, isFunc] = self.extractKeys(node)
+                self.saveVarInfo(node, name, keys, isFunc)
 
             elif isinstance(node, ast.Name):
-                [name, keys] = self.extractKeys(node)
-                self.saveVarInfo(node, name, keys)
+                [name, keys, isFunc] = self.extractKeys(node)
+                self.saveVarInfo(node, name, keys, isFunc)
 
 
     def extractKeys(self, node):
@@ -97,9 +107,11 @@ class CollectVarDependencies():
                 keys.insert(0, key)
                 node = node.value
             elif isinstance(node, ast.Name):
-                return node.id, keys
+                return node.id, keys, False
+            elif isinstance(node, ast.Call):
+                return node.func.id, keys, True
             else:
-                return None, []
+                return None, [], False
 
     def getSubscriptKey(self, slice_node):
         '''
