@@ -202,6 +202,10 @@ def getAdliConfiguration(node):
         }
         '''
         '''
+            '''{"type":"adli_abstraction","value":{"intent":"define the output directory"}}'''
+            output_dir = "output_logs"
+        '''
+        '''
             {
                 "type": "adli_metadata",
                 "value": {
