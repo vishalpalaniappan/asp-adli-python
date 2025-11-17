@@ -21,6 +21,8 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.nodeVarInfo = []
 
+        self.abstraction_meta_stack = []
+
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(tree)
         tree.body.insert(0, getRootUidAssign())
@@ -69,6 +71,13 @@ class LogInjector(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
+        # TODO: Currently, this relies on proper instrumentation of each abstraction with the meta data. In the future, 
+        # I plan to validate that each abstraction is properly instrumented instea of assuming it is correct. 
+        if (len(self.abstraction_meta_stack) > 0):
+            abstraction_meta = self.abstraction_meta_stack.pop()
+        else:
+            abstraction_meta = None
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "file": self.file,
@@ -76,7 +85,8 @@ class LogInjector(ast.NodeTransformer):
             "lineno": node.lineno,
             "end_lineno": node.end_lineno,
             "type": type,
-            "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node)
+            "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node),
+            "abstraction_meta": abstraction_meta
         }
 
         return getLtLogStmt(self.logTypeCount)
@@ -239,6 +249,11 @@ class LogInjector(ast.NodeTransformer):
                 self.localDisabledVariables += parsed["value"]
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
+        elif (parsed and parsed["type"] == "adli_abstraction"):
+            # Save abstraction meta to stack and return None, we don't
+            # need to keep this node.
+            self.abstraction_meta_stack.append(parsed["value"])
+            return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
             encodedStmt = getEncodedOutputStmt(parsed["value"][0])
             return encodedStmt

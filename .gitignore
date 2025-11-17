@@ -1,6 +1,6 @@
-sample
 __pycache__
 .vscode
 output
 example_logs
+sample_local
 *.clp.zst
