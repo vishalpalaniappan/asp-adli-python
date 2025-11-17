@@ -23,6 +23,10 @@ import sys
                 "type":"string",
                 "non_empty":true
             }
+        },
+        "dependencies":{
+            "name":"string",
+            "genre":"string"
         }
     }
 }
@@ -32,7 +36,11 @@ def sort_book(name, genre):
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Prints the accepted book details."
+                "intent":"Prints the accepted book details.",
+                "dependencies":{
+                    "name":"string",
+                    "genre":"string"
+                }
             }
         }
         '''
@@ -107,6 +115,11 @@ def accept_books():
                         "type":"string",
                         "non_empty":true
                     }
+                },
+                "dependencies":{
+                    "sort_book":"function"
+                    "name":"string",
+                    "genre":"string"
                 }
             }
         }
@@ -158,7 +171,10 @@ def accept_books():
 {
     "type":"adli_abstraction",
     "value":{
-        "intent":"Entry point for the script."
+        "intent":"Entry point for the script.",
+        "dependencies":{
+            "__name__":"constant",
+        }
     }
 }
 '''
@@ -167,7 +183,11 @@ if __name__ == "__main__":
     {
         "type":"adli_abstraction",
         "value":{
-            "intent":"Call the function to accept books from user."
+            "intent":"Call the function to accept books from user.",
+            "dependencies":{
+                "accept_books":"function"
+                "sys":"module"
+            }
         }
     }
     '''
