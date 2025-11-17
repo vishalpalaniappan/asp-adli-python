@@ -8,6 +8,16 @@
 '''
 import sys
 
+'''
+    {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Dictionary to group books by the first letter of their name."
+        }
+    }
+'''
+books_grouped_by_first_letter = {}
+
 
 '''
 {
@@ -43,8 +53,86 @@ def sort_book(name, genre):
                 }
             }
         }
-        '''
+    '''
     print(f"Accepted book: {name} (Genre: {genre})")
+
+    '''
+        {
+            "type":"adli_abstraction",
+            "value":{
+                "intent":"Get the first letter of the book name to group books.",
+                "dependencies":{
+                    "name":"string"
+                }
+            }
+        }
+    '''
+    firstLetter = name[0].upper()
+
+    '''
+        {
+            "type":"adli_abstraction",
+            "value":{
+                "intent":"Get the dictionary to group books by first letter.",
+            }
+        }
+    '''   
+    global books_grouped_by_first_letter
+
+    '''
+        {
+            "type":"adli_abstraction",
+            "value":{
+                "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
+                "dependencies":{
+                    "firstLetter":"string",
+                    "books_grouped_by_first_letter":"dictionary"
+                },
+                "constraints":{
+                    "firstLetter":{
+                        "type":"string",
+                        "non_empty":true
+                    },
+                    "books_grouped_by_first_letter":{
+                        "type":"dictionary" 
+                    }
+                }
+            }
+        }
+    '''
+    if (firstLetter not in books_grouped_by_first_letter):
+
+        '''
+            {
+                "type":"adli_abstraction",
+                "value":{
+                    "intent":"Initialize the list for the first letter key in the dictionary."
+                    "dependencies":{
+                        "firstLetter":"string",
+                        "books_grouped_by_first_letter":"dictionary"
+                    }
+                }
+            }
+        '''   
+        books_grouped_by_first_letter[firstLetter] = []
+
+
+    '''
+        {
+            "type":"adli_abstraction",
+            "value":{
+                "intent":"Append the book name to the corresponding first letter group in the dictionary."
+                "dependencies":{
+                    "firstLetter":"string",
+                    "books_grouped_by_first_letter":"dictionary",
+                    "name":"string"
+                }
+            }
+        }
+    '''   
+    books_grouped_by_first_letter[firstLetter].append(name)
+
+
 
 
 '''
@@ -130,16 +218,18 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Ask user if they want to add another book."
+                "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process."
                 "constraint":{
                     "more": {
-                        "type":"string"
+                        "type":"string",
+                        "trueBranch":"y|Y",
+                        "falseBranch":""
                     }
                 }
             }
         }
         '''
-        more = input("Add another book? (y/n): ").lower()
+        more = input("Add another book? (y): ").lower()
         
         '''
         {
