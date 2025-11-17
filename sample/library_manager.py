@@ -63,6 +63,13 @@ def sort_book(name, genre):
                 "intent":"Get the first letter of the book name to group books.",
                 "dependencies":{
                     "name":"string"
+                },
+                "constraints":{
+                    "name":{
+                        "type":"string",
+                        "min_length":1,
+                        "non_empty":true
+                    }
                 }
             }
         }
@@ -169,6 +176,7 @@ def accept_books():
                 "intent":"Request book name from user."
                 "constraint":{
                     "type":"string",
+                    "min_length":1,
                     "non_empty":true
                 }                
             }
@@ -182,6 +190,7 @@ def accept_books():
                 "intent":"Prompt genre of the book from user."
                 "constraint":{
                     "type":"string",
+                    "min_length":1,
                     "non_empty":true
                 }
             }
