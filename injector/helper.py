@@ -215,7 +215,7 @@ def getAdliConfiguration(node):
         '''
     """
 
-    validCommentTypes = ["adli_disable_variable","adli_metadata","adli_encode_output"]   
+    validCommentTypes = ["adli_disable_variable","adli_metadata","adli_encode_output","adli_abstraction"]   
 
     if "value" in node._fields and isinstance(node.value, ast.Constant):     
         comment = node.value.value
