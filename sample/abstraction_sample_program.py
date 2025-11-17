@@ -1,7 +1,7 @@
 '''{"type":"adli_abstraction","value":{"intent":"import the operating system library"}}'''
 import os
 
-'''{"type":"adli_abstraction","value":{"intent":"create a directory if it does not exist"}}'''
+'''{"type":"adli_abstraction","value":{"intent":"function to create a directory if it does not exist"}}'''
 def create_output_directory(path):
     '''{"type":"adli_abstraction","value":{"intent":"check if the path exists and create it if not"}}'''
     if not os.path.exists(path):
