@@ -2,7 +2,8 @@
 {
     "type":"adli_abstraction",
     "value":{
-        "intent":"Import the operating system library."
+        "intent":"Import the operating system library.",
+        "type":"leaf"
     }
 }
 '''
@@ -12,7 +13,8 @@ import sys
     {
         "type":"adli_abstraction",
         "value":{
-            "intent":"Dictionary to group books by the first letter of their name."
+            "intent":"Dictionary to group books by the first letter of their name.",
+            "type":"leaf"
         }
     }
 '''
@@ -23,7 +25,8 @@ books_grouped_by_first_letter = {}
 {
     "type":"adli_abstraction",
     "value":{
-        "intent":"Function to sort a book based on its name and genre."
+        "intent":"Function to sort a book based on its name and genre.",
+        "type":"root",
         "constraint":{
             "name":{
                 "type":"string",
@@ -47,6 +50,7 @@ def sort_book(name, genre):
             "type":"adli_abstraction",
             "value":{
                 "intent":"Prints the accepted book details.",
+                "type":"leaf",
                 "dependencies":{
                     "name":"string",
                     "genre":"string"
@@ -61,6 +65,7 @@ def sort_book(name, genre):
             "type":"adli_abstraction",
             "value":{
                 "intent":"Get the first letter of the book name to group books.",
+                "type":"leaf",
                 "dependencies":{
                     "name":"string"
                 },
@@ -81,6 +86,7 @@ def sort_book(name, genre):
             "type":"adli_abstraction",
             "value":{
                 "intent":"Get the dictionary to group books by first letter.",
+                "type":"leaf",
             }
         }
     '''   
@@ -91,6 +97,8 @@ def sort_book(name, genre):
             "type":"adli_abstraction",
             "value":{
                 "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
+                "type":"root",
+                "node_type":"conditional",
                 "dependencies":{
                     "firstLetter":"string",
                     "books_grouped_by_first_letter":"dictionary"
@@ -113,7 +121,9 @@ def sort_book(name, genre):
             {
                 "type":"adli_abstraction",
                 "value":{
-                    "intent":"Initialize the list for the first letter key in the dictionary."
+                    "intent":"Initialize the list for the first letter key in the dictionary.",
+                    "node_type":"conditional_branch",
+                    "type":"leaf",
                     "dependencies":{
                         "firstLetter":"string",
                         "books_grouped_by_first_letter":"dictionary"
@@ -128,7 +138,8 @@ def sort_book(name, genre):
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Append the book name to the corresponding first letter group in the dictionary."
+                "intent":"Append the book name to the corresponding first letter group in the dictionary.",
+                "type":"leaf",
                 "dependencies":{
                     "firstLetter":"string",
                     "books_grouped_by_first_letter":"dictionary",
@@ -146,7 +157,8 @@ def sort_book(name, genre):
 {
     "type":"adli_abstraction",
     "value":{
-        "intent":"Accepts book details from user and sorts them."
+        "intent":"Accepts book details from user and sorts them.",
+        "type":"root"
     }
 }
 '''
@@ -155,7 +167,9 @@ def accept_books():
     {
         "type":"adli_abstraction",
         "value":{
-            "intent":"Keep accepting books until the user decides to stop."
+            "intent":"Keep accepting books until the user decides to stop.",
+            "type":"root",
+            "node_type":"while_loop",
         }
     }
     '''
@@ -164,7 +178,8 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Prompt user for book details."
+                "intent":"Prompt user for book details.",
+                "type":"leaf",
             }
         }
         '''
@@ -173,11 +188,14 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Request book name from user."
+                "intent":"Request book name from user.",
+                "type":"leaf",
                 "constraint":{
-                    "type":"string",
-                    "min_length":1,
-                    "non_empty":true
+                    "name": {
+                        "type":"string",
+                        "min_length":1,
+                        "non_empty":true
+                    }
                 }                
             }
         }
@@ -187,11 +205,14 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Prompt genre of the book from user."
+                "intent":"Prompt genre of the book from user.",
+                "type":"leaf",
                 "constraint":{
-                    "type":"string",
-                    "min_length":1,
-                    "non_empty":true
+                    "genre":{
+                        "type":"string",
+                        "min_length":1,
+                        "non_empty":true
+                    }
                 }
             }
         }
@@ -202,7 +223,8 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Call the sort function with the provided book details."
+                "intent":"Call the sort function with the provided book details.",
+                "type":"leaf",
                 "constraint":{
                     "name":{
                         "type":"string",
@@ -227,7 +249,8 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process."
+                "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
+                "type":"leaf",
                 "constraint":{
                     "more": {
                         "type":"string",
@@ -244,7 +267,9 @@ def accept_books():
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Check if the user wants to stop adding books."
+                "intent":"Check if the user wants to stop adding books.",
+                "type":"root",
+                "node_type":"conditional",
                 "constraint":{
                     "more": {
                         "type":"string"
@@ -259,7 +284,8 @@ def accept_books():
             {
                 "type":"adli_abstraction",
                 "value":{
-                    "intent":"Exit the book accepting loop."
+                    "intent":"Exit the book accepting loop.",
+                    "type":"leaf",
                 }
             }
             '''
@@ -271,6 +297,8 @@ def accept_books():
     "type":"adli_abstraction",
     "value":{
         "intent":"Entry point for the script.",
+        "type":"leaf",
+        "node_type":"conditional_branch",
         "dependencies":{
             "__name__":"constant",
         }
@@ -283,6 +311,7 @@ if __name__ == "__main__":
         "type":"adli_abstraction",
         "value":{
             "intent":"Call the function to accept books from user.",
+            "type":"leaf",
             "dependencies":{
                 "accept_books":"function"
                 "sys":"module"
