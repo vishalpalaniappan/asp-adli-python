@@ -9,15 +9,13 @@
 '''
 import sys
 
-
-
-
 '''
 {
     "type":"adli_abstraction",
     "value":{
         "intent":"Function to sort a book based on its name and genre.",
         "type":"root",
+        "node_type":"function_definition",
         "constraint":{
             "name":{
                 "type":"string",
@@ -142,6 +140,7 @@ def sort_book(book_shelf, name, genre):
     "type":"adli_abstraction",
     "value":{
         "intent":"Accepts book details from user and sorts them.",
+        "node_type":"function_definition",
         "type":"root"
     }
 }
