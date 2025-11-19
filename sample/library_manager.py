@@ -10,13 +10,13 @@
 import sys
 
 '''
-    {
-        "type":"adli_abstraction",
-        "value":{
-            "intent":"Dictionary to group books by the first letter of their name.",
-            "type":"leaf"
-        }
+{
+    "type":"adli_abstraction",
+    "value":{
+        "intent":"Dictionary to group books by the first letter of their name.",
+        "type":"leaf"
     }
+}
 '''
 books_grouped_by_first_letter = {}
 
@@ -46,38 +46,38 @@ books_grouped_by_first_letter = {}
 '''
 def sort_book(name, genre):
     '''
-        {
-            "type":"adli_abstraction",
-            "value":{
-                "intent":"Prints the accepted book details.",
-                "type":"leaf",
-                "dependencies":{
-                    "name":"string",
-                    "genre":"string"
-                }
+    {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Prints the accepted book details.",
+            "type":"leaf",
+            "dependencies":{
+                "name":"string",
+                "genre":"string"
             }
         }
+    }
     '''
     print(f"Accepted book: {name} (Genre: {genre})")
 
     '''
-        {
-            "type":"adli_abstraction",
-            "value":{
-                "intent":"Get the first letter of the book name to group books.",
-                "type":"leaf",
-                "dependencies":{
-                    "name":"string"
-                },
-                "constraints":{
-                    "name":{
-                        "type":"string",
-                        "min_length":1,
-                        "non_empty":true
-                    }
+    {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Get the first letter of the book name to group books.",
+            "type":"leaf",
+            "dependencies":{
+                "name":"string"
+            },
+            "constraints":{
+                "name":{
+                    "type":"string",
+                    "min_length":1,
+                    "non_empty":true
                 }
             }
         }
+    }
     '''
     firstLetter = name[0].upper()
 
@@ -86,7 +86,7 @@ def sort_book(name, genre):
             "type":"adli_abstraction",
             "value":{
                 "intent":"Get the dictionary to group books by first letter.",
-                "type":"leaf",
+                "type":"leaf"
             }
         }
     '''   
@@ -169,7 +169,7 @@ def accept_books():
         "value":{
             "intent":"Keep accepting books until the user decides to stop.",
             "type":"root",
-            "node_type":"while_loop",
+            "node_type":"while_loop"
         }
     }
     '''
@@ -179,7 +179,7 @@ def accept_books():
             "type":"adli_abstraction",
             "value":{
                 "intent":"Prompt user for book details.",
-                "type":"leaf",
+                "type":"leaf"
             }
         }
         '''
@@ -236,7 +236,7 @@ def accept_books():
                     }
                 },
                 "dependencies":{
-                    "sort_book":"function"
+                    "sort_book":"function",
                     "name":"string",
                     "genre":"string"
                 }
@@ -285,7 +285,7 @@ def accept_books():
                 "type":"adli_abstraction",
                 "value":{
                     "intent":"Exit the book accepting loop.",
-                    "type":"leaf",
+                    "type":"leaf"
                 }
             }
             '''
@@ -300,7 +300,7 @@ def accept_books():
         "type":"leaf",
         "node_type":"conditional_branch",
         "dependencies":{
-            "__name__":"constant",
+            "__name__":"constant"
         }
     }
 }
@@ -313,7 +313,7 @@ if __name__ == "__main__":
             "intent":"Call the function to accept books from user.",
             "type":"leaf",
             "dependencies":{
-                "accept_books":"function"
+                "accept_books":"function",
                 "sys":"module"
             }
         }
