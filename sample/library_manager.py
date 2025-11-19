@@ -1,58 +1,58 @@
-'''{"type":"abs_id","value":"1"}'''
+'''{"type":"adli_abstraction_id","value":"1"}'''
 import sys
 
-'''{"type":"abs_id","value":"2"}'''
+'''{"type":"adli_abstraction_id","value":"2"}'''
 def sort_book(book_shelf, name, genre):
 
-    '''{"type":"abs_id","value":"3"}'''
+    '''{"type":"adli_abstraction_id","value":"3"}'''
     print(f"Accepted book: {name} (Genre: {genre})")
     
-    '''{"type":"abs_id","value":"4"}'''
+    '''{"type":"adli_abstraction_id","value":"4"}'''
     firstLetter = name[0].upper()
 
-    '''{"type":"abs_id","value":"5"}'''
+    '''{"type":"adli_abstraction_id","value":"5"}'''
     if (firstLetter not in book_shelf):
         
-        '''{"type":"abs_id","value":"6"}'''
+        '''{"type":"adli_abstraction_id","value":"6"}'''
         book_shelf[firstLetter] = []
 
-    '''{"type":"abs_id","value":"7"}'''
+    '''{"type":"adli_abstraction_id","value":"7"}'''
     book_shelf[firstLetter].append(name)
 
 
-'''{"type":"abs_id","value":"8"}'''
+'''{"type":"adli_abstraction_id","value":"8"}'''
 def accept_books():
 
-    '''{"type":"abs_id","value":"9"}'''
+    '''{"type":"adli_abstraction_id","value":"9"}'''
     book_shelf = {}
 
-    '''{"type":"abs_id","value":"10"}'''
+    '''{"type":"adli_abstraction_id","value":"10"}'''
     while True:
 
-        '''{"type":"abs_id","value":"11"}'''
+        '''{"type":"adli_abstraction_id","value":"11"}'''
         print("\nEnter book details:")
         
-        '''{"type":"abs_id","value":"12"}'''
+        '''{"type":"adli_abstraction_id","value":"12"}'''
         name = input("Book name: ")
 
-        '''{"type":"abs_id","value":"13"}'''
+        '''{"type":"adli_abstraction_id","value":"13"}'''
         genre = input("Genre: ")
 
-        '''{"type":"abs_id","value":"14"}'''
+        '''{"type":"adli_abstraction_id","value":"14"}'''
         sort_book(book_shelf, name, genre)
         
-        '''{"type":"abs_id","value":"15"}'''
+        '''{"type":"adli_abstraction_id","value":"15"}'''
         more = input("Add another book? (y): ").lower()
         
-        '''{"type":"abs_id","value":"16"}'''
+        '''{"type":"adli_abstraction_id","value":"16"}'''
         if more != "y":
 
-            '''{"type":"abs_id","value":"17"}'''
+            '''{"type":"adli_abstraction_id","value":"17"}'''
             break
 
-'''{"type":"abs_id","value":"18"}'''
+'''{"type":"adli_abstraction_id","value":"18"}'''
 if __name__ == "__main__":
 
-    '''{"type":"abs_id","value":"19"}'''
+    '''{"type":"adli_abstraction_id","value":"19"}'''
     sys.exit(accept_books())
     
