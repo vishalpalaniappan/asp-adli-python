@@ -66,6 +66,9 @@ def sort_book(name, genre):
         "value":{
             "intent":"Get the first letter of the book name to group books.",
             "type":"leaf",
+            "variables": {
+                "firstLetter": "string"
+            },
             "dependencies":{
                 "name":"string"
             },
@@ -190,6 +193,9 @@ def accept_books():
             "value":{
                 "intent":"Request book name from user.",
                 "type":"leaf",
+                "variables": {
+                    "name": "string"
+                }
                 "constraint":{
                     "name": {
                         "type":"string",
@@ -207,6 +213,9 @@ def accept_books():
             "value":{
                 "intent":"Prompt genre of the book from user.",
                 "type":"leaf",
+                "variables": {
+                    "genre": "string"
+                },
                 "constraint":{
                     "genre":{
                         "type":"string",
@@ -225,6 +234,13 @@ def accept_books():
             "value":{
                 "intent":"Call the sort function with the provided book details.",
                 "type":"leaf",
+                "function_calls": [
+                    "function_name":"sort_book",
+                    "arguments": {
+                        "name":"name",
+                        "genre":"genre"
+                    }
+                ],
                 "constraint":{
                     "name":{
                         "type":"string",
@@ -251,11 +267,12 @@ def accept_books():
             "value":{
                 "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
                 "type":"leaf",
+                "variables": {
+                    "more": "string"
+                },
                 "constraint":{
                     "more": {
-                        "type":"string",
-                        "trueBranch":"y|Y",
-                        "falseBranch":""
+                        "type":"string"
                     }
                 }
             }
@@ -270,6 +287,9 @@ def accept_books():
                 "intent":"Check if the user wants to stop adding books.",
                 "type":"root",
                 "node_type":"conditional",
+                "dependencies":{
+                    "more":"string"
+                },
                 "constraint":{
                     "more": {
                         "type":"string"
