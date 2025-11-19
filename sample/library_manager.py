@@ -9,16 +9,7 @@
 '''
 import sys
 
-'''
-{
-    "type":"adli_abstraction",
-    "value":{
-        "intent":"Dictionary to group books by the first letter of their name.",
-        "type":"leaf"
-    }
-}
-'''
-books_grouped_by_first_letter = {}
+
 
 
 '''
@@ -38,13 +29,14 @@ books_grouped_by_first_letter = {}
             }
         },
         "dependencies":{
+            "book_shelf":"dictionary",
             "name":"string",
             "genre":"string"
         }
     }
 }
 '''
-def sort_book(name, genre):
+def sort_book(book_shelf, name, genre):
     '''
     {
         "type":"adli_abstraction",
@@ -88,37 +80,26 @@ def sort_book(name, genre):
         {
             "type":"adli_abstraction",
             "value":{
-                "intent":"Get the dictionary to group books by first letter.",
-                "type":"leaf"
-            }
-        }
-    '''   
-    global books_grouped_by_first_letter
-
-    '''
-        {
-            "type":"adli_abstraction",
-            "value":{
                 "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
                 "type":"root",
                 "node_type":"conditional",
                 "dependencies":{
                     "firstLetter":"string",
-                    "books_grouped_by_first_letter":"dictionary"
+                    "book_shelf":"dictionary"
                 },
                 "constraints":{
                     "firstLetter":{
                         "type":"string",
                         "non_empty":true
                     },
-                    "books_grouped_by_first_letter":{
+                    "book_shelf":{
                         "type":"dictionary" 
                     }
                 }
             }
         }
     '''
-    if (firstLetter not in books_grouped_by_first_letter):
+    if (firstLetter not in book_shelf):
 
         '''
             {
@@ -129,12 +110,12 @@ def sort_book(name, genre):
                     "type":"leaf",
                     "dependencies":{
                         "firstLetter":"string",
-                        "books_grouped_by_first_letter":"dictionary"
+                        "book_shelf":"dictionary"
                     }
                 }
             }
         '''   
-        books_grouped_by_first_letter[firstLetter] = []
+        book_shelf[firstLetter] = []
 
 
     '''
@@ -145,13 +126,13 @@ def sort_book(name, genre):
                 "type":"leaf",
                 "dependencies":{
                     "firstLetter":"string",
-                    "books_grouped_by_first_letter":"dictionary",
+                    "book_shelf":"dictionary",
                     "name":"string"
                 }
             }
         }
     '''   
-    books_grouped_by_first_letter[firstLetter].append(name)
+    book_shelf[firstLetter].append(name)
 
 
 
@@ -166,6 +147,19 @@ def sort_book(name, genre):
 }
 '''
 def accept_books():
+
+    '''
+    {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Dictionary to group books by the first letter of their name.",
+            "type":"leaf"
+        }
+    }
+    '''
+    book_shelf = {}
+
+
     '''
     {
         "type":"adli_abstraction",
@@ -255,13 +249,14 @@ def accept_books():
                 },
                 "dependencies":{
                     "sort_book":"function",
+                    "book_shelf":"dictionary",
                     "name":"string",
                     "genre":"string"
                 }
             }
         }
         '''
-        sort_book(name, genre)
+        sort_book(book_shelf, name, genre)
 
         '''
         {
