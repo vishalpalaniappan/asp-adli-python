@@ -195,7 +195,7 @@ def accept_books():
                 "type":"leaf",
                 "variables": {
                     "name": "string"
-                }
+                },
                 "constraint":{
                     "name": {
                         "type":"string",
@@ -235,10 +235,12 @@ def accept_books():
                 "intent":"Call the sort function with the provided book details.",
                 "type":"leaf",
                 "function_calls": [
-                    "function_name":"sort_book",
-                    "arguments": {
-                        "name":"name",
-                        "genre":"genre"
+                    {
+                        "function_name":"sort_book",
+                        "arguments": {
+                            "name":"name",
+                            "genre":"genre"
+                        }
                     }
                 ],
                 "constraint":{
