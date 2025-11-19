@@ -8,7 +8,7 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, tree, logTypeCount, file, isRoot):
+    def __init__(self, tree, logTypeCount, file, isRoot, abstraction_info_map):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
@@ -21,6 +21,7 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.nodeVarInfo = []
 
+        self.abstraction_info_map = abstraction_info_map
         self.abstraction_meta_stack = []
 
         self.minLogTypeCount = self.logTypeCount
@@ -249,10 +250,9 @@ class LogInjector(ast.NodeTransformer):
                 self.localDisabledVariables += parsed["value"]
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
-        elif (parsed and parsed["type"] == "adli_abstraction"):
-            # Save abstraction meta to stack and return None, we don't
-            # need to keep this node.
-            self.abstraction_meta_stack.append(parsed["value"])
+        elif (parsed and parsed["type"] == "adli_abstraction_id"):   
+            abstraction_info = self.abstraction_info_map[parsed["value"]] 
+            self.abstraction_meta_stack.append(abstraction_info)
             return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
             encodedStmt = getEncodedOutputStmt(parsed["value"][0])
