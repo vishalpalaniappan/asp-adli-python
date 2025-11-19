@@ -1,0 +1,266 @@
+{
+    "1": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Import the operating system library.",
+            "type":"leaf"
+        }
+    },
+    "2": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Function to sort a book based on its name and genre.",
+            "type":"root",
+            "node_type":"function_definition",
+            "constraint":{
+                "name":{
+                    "type":"string",
+                    "non_empty":true
+                },
+                "genre":{
+                    "type":"string",
+                    "non_empty":true
+                }
+            },
+            "dependencies":{
+                "book_shelf":"dictionary",
+                "name":"string",
+                "genre":"string"
+            }
+        }
+    },
+    "3": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Prints the accepted book details.",
+            "type":"leaf",
+            "dependencies":{
+                "name":"string",
+                "genre":"string"
+            }
+        }
+    },
+    "4": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Get the first letter of the book name to group books.",
+            "type":"leaf",
+            "variables": {
+                "firstLetter": "string"
+            },
+            "dependencies":{
+                "name":"string"
+            },
+            "constraints":{
+                "name":{
+                    "type":"string",
+                    "min_length":1,
+                    "non_empty":true
+                }
+            }
+        }
+    },
+    "5": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
+            "type":"root",
+            "node_type":"conditional",
+            "dependencies":{
+                "firstLetter":"string",
+                "book_shelf":"dictionary"
+            },
+            "constraints":{
+                "firstLetter":{
+                    "type":"string",
+                    "non_empty":true
+                },
+                "book_shelf":{
+                    "type":"dictionary" 
+                }
+            }
+        }
+    },
+    "6": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Initialize the list for the first letter key in the dictionary.",
+            "node_type":"conditional_branch",
+            "type":"leaf",
+            "dependencies":{
+                "firstLetter":"string",
+                "book_shelf":"dictionary"
+            }
+        }
+    },
+    "7": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Append the book name to the corresponding first letter group in the dictionary.",
+            "type":"leaf",
+            "dependencies":{
+                "firstLetter":"string",
+                "book_shelf":"dictionary",
+                "name":"string"
+            }
+        }
+    },
+    "8": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Accepts book details from user and sorts them.",
+            "node_type":"function_definition",
+            "type":"root"
+        }
+    },
+    "9": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Dictionary to group books by the first letter of their name.",
+            "type":"leaf"
+        }
+    },
+    "10": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Keep accepting books until the user decides to stop.",
+            "type":"root",
+            "node_type":"while_loop"
+        }
+    },
+    "11": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Prompt user for book details.",
+            "type":"leaf"
+        }
+    },
+    "12": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Request book name from user.",
+            "type":"leaf",
+            "variables": {
+                "name": "string"
+            },
+            "constraint":{
+                "name": {
+                    "type":"string",
+                    "min_length":1,
+                    "non_empty":true
+                }
+            }                
+        }
+    },
+    "13":{
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Prompt genre of the book from user.",
+            "type":"leaf",
+            "variables": {
+                "genre": "string"
+            },
+            "constraint":{
+                "genre":{
+                    "type":"string",
+                    "min_length":1,
+                    "non_empty":true
+                }
+            }
+        }
+    },
+    "14": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Call the sort function with the provided book details.",
+            "type":"leaf",
+            "function_calls": [
+                {
+                    "function_name":"sort_book",
+                    "arguments": {
+                        "name":"name",
+                        "genre":"genre"
+                    }
+                }
+            ],
+            "constraint":{
+                "name":{
+                    "type":"string",
+                    "non_empty":true
+                },
+                "genre":{
+                    "type":"string",
+                    "non_empty":true
+                }
+            },
+            "dependencies":{
+                "sort_book":"function",
+                "book_shelf":"dictionary",
+                "name":"string",
+                "genre":"string"
+            }
+        }
+    },
+    "15": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
+            "type":"leaf",
+            "variables": {
+                "more": "string"
+            },
+            "constraint":{
+                "more": {
+                    "type":"string"
+                }
+            }
+        }
+    },
+    "16": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Check if the user wants to stop adding books.",
+            "type":"root",
+            "node_type":"conditional",
+            "dependencies":{
+                "more":"string"
+            },
+            "constraint":{
+                "more": {
+                    "type":"string"
+                }
+            }
+        }
+    },
+    "17": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Exit the book accepting loop.",
+            "type":"leaf"
+        }
+    },
+    "18": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Entry point for the script.",
+            "type":"leaf",
+            "node_type":"conditional_branch",
+            "dependencies":{
+                "__name__":"constant"
+            }
+        }
+    },
+    "19": {
+        "type":"adli_abstraction",
+        "value":{
+            "intent":"Call the function to accept books from user.",
+            "type":"leaf",
+            "dependencies":{
+                "accept_books":"function",
+                "sys":"module"
+            }
+        }
+    }
+
+
+}
