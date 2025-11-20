@@ -2,6 +2,7 @@
     "1": {
         "type":"adli_abstraction",
         "value":{
+            "id":"1",
             "intent":"Import the operating system library.",
             "parent":[],
             "type":"leaf"
@@ -10,6 +11,7 @@
     "2": {
         "type":"adli_abstraction",
         "value":{
+            "id":"2",
             "intent":"Enter function to sort a book based on its name and genre.",
             "parent":["14"],
             "type":"root",
@@ -35,6 +37,7 @@
     "3": {
         "type":"adli_abstraction",
         "value":{
+            "id":"3",
             "intent":"Prints the accepted book details.",
             "parent":["14"],
             "type":"leaf",
@@ -50,6 +53,7 @@
     "4": {
         "type":"adli_abstraction",
         "value":{
+            "id":"4",
             "intent":"Get the first letter of the book name to group books.",
             "type":"leaf",
             "variables": {
@@ -73,6 +77,7 @@
     "5": {
         "type":"adli_abstraction",
         "value":{
+            "id":"5",
             "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
             "type":"root",
             "node_type":"conditional",
@@ -97,6 +102,7 @@
     "6": {
         "type":"adli_abstraction",
         "value":{
+            "id":"6",
             "intent":"Initialize the list for the first letter key in the dictionary.",
             "node_type":"conditional_branch",
             "type":"leaf",
@@ -112,6 +118,7 @@
     "7": {
         "type":"adli_abstraction",
         "value":{
+            "id":"7",
             "intent":"Append the book name to the corresponding first letter group in the dictionary.",
             "type":"leaf",
             "dependencies":{
@@ -128,6 +135,7 @@
     "8": {
         "type":"adli_abstraction",
         "value":{
+            "id":"8",
             "intent":"Accepts book details from user and sorts them.",
             "parent":["19"],
             "node_type":"function_definition",
@@ -138,6 +146,7 @@
     "9": {
         "type":"adli_abstraction",
         "value":{
+            "id":"9",
             "intent":"Dictionary to group books by the first letter of their name.",
             "type":"leaf",
             "path": [
@@ -148,6 +157,7 @@
     "10": {
         "type":"adli_abstraction",
         "value":{
+            "id":"10",
             "intent":"Keep accepting books until the user decides to stop.",
             "type":"root",
             "node_type":"while_loop",
@@ -159,6 +169,7 @@
     "11": {
         "type":"adli_abstraction",
         "value":{
+            "id":"11",
             "intent":"Prompt user for book details.",
             "parent":["10"],
             "type":"leaf",
@@ -170,6 +181,7 @@
     "12": {
         "type":"adli_abstraction",
         "value":{
+            "id":"12",
             "intent":"Request book name from user.",
             "type":"leaf",
             "variables": {
@@ -190,6 +202,7 @@
     "13":{
         "type":"adli_abstraction",
         "value":{
+            "id":"13",
             "intent":"Prompt genre of the book from user.",
             "type":"leaf",
             "variables": {
@@ -210,6 +223,7 @@
     "14": {
         "type":"adli_abstraction",
         "value":{
+            "id":"14",
             "intent":"Call the sort function with the provided book details.",
             "type":"leaf",
             "function_calls": [
@@ -245,6 +259,7 @@
     "15": {
         "type":"adli_abstraction",
         "value":{
+            "id":"15",
             "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
             "type":"leaf",
             "variables": {
@@ -263,6 +278,7 @@
     "16": {
         "type":"adli_abstraction",
         "value":{
+            "id":"16",
             "intent":"Check if the user wants to stop adding books.",
             "type":"root",
             "node_type":"conditional",
@@ -282,6 +298,7 @@
     "17": {
         "type":"adli_abstraction",
         "value":{
+            "id":"17",
             "intent":"Exit the book accepting loop.",
             "type":"leaf",
             "dependencies": {
@@ -295,6 +312,7 @@
     "18": {
         "type":"adli_abstraction",
         "value":{
+            "id":"18",
             "intent":"Entry point for the script.",
             "type":"leaf",
             "node_type":"conditional_branch",
@@ -309,6 +327,7 @@
     "19": {
         "type":"adli_abstraction",
         "value":{
+            "id":"19",
             "intent":"Begin accepting books by calling the accept_books function.",
             "type":"leaf",
             "dependencies":{
