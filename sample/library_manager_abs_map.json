@@ -191,31 +191,12 @@
             "id":"14",
             "intent":"Call the sort function with the provided book details.",
             "type":"leaf",
-            "function_calls": [
+            "branches":[
                 {
-                    "function_name":"sort_book",
-                    "arguments": {
-                        "name":"name",
-                        "genre":"genre"
-                    }
+                    "name": "Sort Book Into Shelf", 
+                    "path": [14]
                 }
-            ],
-            "constraint":{
-                "name":{
-                    "type":"string",
-                    "non_empty":true
-                },
-                "genre":{
-                    "type":"string",
-                    "non_empty":true
-                }
-            },
-            "dependencies":{
-                "sort_book":"function",
-                "book_shelf":"dictionary",
-                "name":"string",
-                "genre":"string"
-            }
+            ] 
         }
     },
     "15": {
