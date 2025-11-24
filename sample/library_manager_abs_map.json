@@ -4,7 +4,6 @@
         "value":{
             "id":"1",
             "intent":"Import the operating system library.",
-            "type":"junction",
             "branches":[
                 {
                     "name": "Initialize Path", 
