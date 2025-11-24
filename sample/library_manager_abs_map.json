@@ -6,7 +6,7 @@
             "intent":"Import the operating system library.",
             "branches":[
                 {
-                    "name": "Initialize Path", 
+                    "name": "Initializes the program to accept books.", 
                     "path": [1, 18, 19]
                 }
             ] 
@@ -16,17 +16,29 @@
         "type":"adli_abstraction",
         "value":{
             "id":"2",
-            "intent":"Enter function to sort a book based on its name and genre."
+            "intent":"Enter function to sort a book based on its name and genre into the shelf."
         }
     },
     "3": {
         "type":"adli_abstraction",
         "value":{
             "id":"3",
-            "intent":"Prints the accepted book details.",
+            "intent":"Prints details for book named <name>.",
+            "variables": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                },
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ],
             "branches":[
                 {
-                    "name": "Print Book Details", 
+                    "intent": "Prints details for book named <name>.",
                     "path": [3]
                 }
             ]
@@ -36,10 +48,17 @@
         "type":"adli_abstraction",
         "value":{
             "id":"4",
-            "intent":"Get the first letter of the book name to group books.",
+            "intent":"Get first letter of book named <name> to create slot for book.",
+            "variables": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ],
             "branches":[
                 {
-                    "name": "Get First Letter", 
+                    "name": "Get first letter of book named <name> to create slot for book.",
                     "path": [4]
                 }
             ]
@@ -49,7 +68,14 @@
         "type":"adli_abstraction",
         "value":{
             "id":"5",
-            "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
+            "intent":"Check if the slot for letter <firstLetter> exists in the shelf.",
+            "variables": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ],
             "branches":[
                 {
                     "name": "Place in pre-existing slot on shelf", 
@@ -87,10 +113,17 @@
         "type":"adli_abstraction",
         "value":{
             "id":"9",
-            "intent":"Dictionary to group books by the first letter of their name.",
+            "intent":"Create an empty book shelf.",
+            "variables": [
+                {
+                    "name": "book_shelf",
+                    "placeholder":"<book_shelf>",
+                    "scope": "local"
+                }
+            ],
             "branches":[
                 {
-                    "name": "Create Book Shelf", 
+                    "name": "Create an empty book shelf.", 
                     "path": [9]
                 }
             ] 
@@ -100,12 +133,7 @@
         "type":"adli_abstraction",
         "value":{
             "id":"10",
-            "intent":"Keep accepting books until the user decides to stop.",
-            "loop": true,
-            "type": {
-                "name":"independent_block",
-                "abstractions": [10,11,12,13,14,15,16,17]
-            },
+            "intent":"Begin accepting book details and sort into shelf.",
             "branches":[
                 {
                     "name": "Accept Book", 
@@ -126,7 +154,14 @@
         "type":"adli_abstraction",
         "value":{
             "id":"12",
-            "intent":"Request book name from user.",
+            "intent":"Accepted a book named <name>",
+            "variables": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ],
             "constraint":{
                 "name": {
                     "type":"string",
@@ -140,7 +175,14 @@
         "type":"adli_abstraction",
         "value":{
             "id":"13",
-            "intent":"Prompt genre of the book from user.",
+            "intent":"Accepted a book with genre <genre>.",
+            "variables": [
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ],
             "constraint":{
                 "genre":{
                     "type":"string",
@@ -154,7 +196,7 @@
         "type":"adli_abstraction",
         "value":{
             "id":"14",
-            "intent":"Call the sort function with the provided book details.",
+            "intent":"Sort the book with the given name into the shelf.",
             "branches":[
                 {
                     "name": "Sort Book Into Shelf", 
