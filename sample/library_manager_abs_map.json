@@ -101,6 +101,11 @@
         "value":{
             "id":"10",
             "intent":"Keep accepting books until the user decides to stop.",
+            "loop": true,
+            "type": {
+                "name":"independent_block",
+                "abstractions": [10,11,12,13,14,15,16,17]
+            },
             "branches":[
                 {
                     "name": "Accept Book", 
