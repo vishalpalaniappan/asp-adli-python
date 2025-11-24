@@ -17,13 +17,7 @@
         "type":"adli_abstraction",
         "value":{
             "id":"2",
-            "intent":"Enter function to sort a book based on its name and genre.",
-            "type":"function_definition",
-            "dependencies":{
-                "book_shelf":"dictionary",
-                "name":"string",
-                "genre":"string"
-            }
+            "intent":"Enter function to sort a book based on its name and genre."
         }
     },
     "3": {
@@ -49,13 +43,7 @@
                     "name": "Get First Letter", 
                     "path": [4]
                 }
-            ],
-            "variables": {
-                "firstLetter": "string"
-            },
-            "dependencies":{
-                "name":"string"
-            }
+            ]
         }
     },
     "5": {
@@ -63,11 +51,6 @@
         "value":{
             "id":"5",
             "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
-            "type":"junction",
-            "dependencies":{
-                "firstLetter":"string",
-                "book_shelf":"dictionary"
-            },
             "branches":[
                 {
                     "name": "Place in pre-existing slot on shelf", 
@@ -84,33 +67,21 @@
         "type":"adli_abstraction",
         "value":{
             "id":"6",
-            "intent":"Initialize the list for the first letter key in the dictionary.",
-            "dependencies":{
-                "firstLetter":"string",
-                "book_shelf":"dictionary"
-            }
+            "intent":"Initialize the list for the first letter key in the dictionary."
         }
     },
     "7": {
         "type":"adli_abstraction",
         "value":{
             "id":"7",
-            "intent":"Append the book name to the corresponding first letter group in the dictionary.",
-            "type":"junction",
-            "dependencies":{
-                "firstLetter":"string",
-                "book_shelf":"dictionary",
-                "name":"string"
-            }
+            "intent":"Append the book name to the corresponding first letter group in the dictionary."
         }
     },
     "8": {
         "type":"adli_abstraction",
         "value":{
             "id":"8",
-            "intent":"Accepts book details from user and sorts them.",
-            "parent":["19"],
-            "type":"junction"
+            "intent":"Accepts book details from user and sorts them."
         }
     },
     "9": {
@@ -131,7 +102,6 @@
         "value":{
             "id":"10",
             "intent":"Keep accepting books until the user decides to stop.",
-            "type":"loop_junction",
             "branches":[
                 {
                     "name": "Accept Book", 
@@ -145,8 +115,7 @@
         "value":{
             "id":"11",
             "intent":"Prompt user for book details.",
-            "parent":["10"],
-            "type":"junction"
+            "parent":["10"]
         }
     },
     "12": {
@@ -154,10 +123,6 @@
         "value":{
             "id":"12",
             "intent":"Request book name from user.",
-            "type":"leaf",
-            "variables": {
-                "name": "string"
-            },
             "constraint":{
                 "name": {
                     "type":"string",
@@ -172,10 +137,6 @@
         "value":{
             "id":"13",
             "intent":"Prompt genre of the book from user.",
-            "type":"leaf",
-            "variables": {
-                "genre": "string"
-            },
             "constraint":{
                 "genre":{
                     "type":"string",
@@ -190,7 +151,6 @@
         "value":{
             "id":"14",
             "intent":"Call the sort function with the provided book details.",
-            "type":"leaf",
             "branches":[
                 {
                     "name": "Sort Book Into Shelf", 
@@ -204,15 +164,6 @@
         "value":{
             "id":"15",
             "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
-            "type":"leaf",
-            "variables": {
-                "more": "string"
-            },
-            "constraint":{
-                "more": {
-                    "type":"string"
-                }
-            },
             "branches":[
                 {
                     "name": "Continue Accepting Books", 
@@ -229,52 +180,28 @@
         "type":"adli_abstraction",
         "value":{
             "id":"16",
-            "intent":"Check if the user wants to stop adding books.",
-            "type":"root",
-            "node_type":"conditional",
-            "dependencies":{
-                "more":"string"
-            },
-            "constraint":{
-                "more": {
-                    "type":"string"
-                }
-            }
+            "intent":"Check if the user wants to stop adding books."
         }
     },
     "17": {
         "type":"adli_abstraction",
         "value":{
             "id":"17",
-            "intent":"Exit the book accepting loop.",
-            "type":"leaf",
-            "dependencies": {
-                "more": "string"
-            }
+            "intent":"Exit the book accepting loop."
         }
     },
     "18": {
         "type":"adli_abstraction",
         "value":{
             "id":"18",
-            "intent":"Entry point for the script.",
-            "type":"leaf",
-            "node_type":"conditional_branch",
-            "dependencies":{
-                "__name__":"constant"
-            }
+            "intent":"Entry point for the script."
         }
     },
     "19": {
         "type":"adli_abstraction",
         "value":{
             "id":"19",
-            "intent":"Begin accepting books by calling the accept_books function.",
-            "type":"leaf",
-            "dependencies":{
-                "accept_books":"function",
-                "sys":"module"
-            }
+            "intent":"Begin accepting books by calling the accept_books function."
         }
     }
 }
