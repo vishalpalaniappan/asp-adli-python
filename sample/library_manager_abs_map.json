@@ -4,9 +4,13 @@
         "value":{
             "id":"1",
             "intent":"Import the operating system library.",
-            "parent":[],
-            "path":["1"],
-            "type":"leaf"
+            "type":"junction",
+            "branches":[
+                {
+                    "name": "Initialize Path", 
+                    "path": [1, 18, 19]
+                }
+            ] 
         }
     },
     "2": {
@@ -14,25 +18,12 @@
         "value":{
             "id":"2",
             "intent":"Enter function to sort a book based on its name and genre.",
-            "parent":["14"],
-            "type":"root",
-            "node_type":"function_definition",
-            "constraint":{
-                "name":{
-                    "type":"string",
-                    "non_empty":true
-                },
-                "genre":{
-                    "type":"string",
-                    "non_empty":true
-                }
-            },
+            "type":"function_definition",
             "dependencies":{
                 "book_shelf":"dictionary",
                 "name":"string",
                 "genre":"string"
-            },
-            "path": ["2"]
+            }
         }
     },
     "3": {
@@ -40,14 +31,11 @@
         "value":{
             "id":"3",
             "intent":"Prints the accepted book details.",
-            "parent":["14"],
-            "type":"leaf",
-            "dependencies":{
-                "name":"string",
-                "genre":"string"
-            },
-            "path": [
-                ["2","3"]
+            "branches":[
+                {
+                    "name": "Print Book Details", 
+                    "path": [3]
+                }
             ]
         }
     },
@@ -56,23 +44,18 @@
         "value":{
             "id":"4",
             "intent":"Get the first letter of the book name to group books.",
-            "type":"leaf",
+            "branches":[
+                {
+                    "name": "Get First Letter", 
+                    "path": [4]
+                }
+            ],
             "variables": {
                 "firstLetter": "string"
             },
             "dependencies":{
                 "name":"string"
-            },
-            "constraints":{
-                "name":{
-                    "type":"string",
-                    "min_length":1,
-                    "non_empty":true
-                }
-            },
-            "path": [
-                ["2","3","4"]
-            ]
+            }
         }
     },
     "5": {
@@ -80,24 +63,21 @@
         "value":{
             "id":"5",
             "intent":"Check if the first letter key exists in the dictionary and initialize if not.",
-            "type":"root",
-            "node_type":"conditional",
+            "type":"junction",
             "dependencies":{
                 "firstLetter":"string",
                 "book_shelf":"dictionary"
             },
-            "constraints":{
-                "firstLetter":{
-                    "type":"string",
-                    "non_empty":true
+            "branches":[
+                {
+                    "name": "Place in pre-existing slot on shelf", 
+                    "path": [5, 7]
                 },
-                "book_shelf":{
-                    "type":"dictionary" 
+                {
+                    "name": "Create Slot and Place in Shelf", 
+                    "path": [5, 6, 7]
                 }
-            },
-            "path": [
-                ["2","3","4","5"]
-            ]
+            ] 
         }
     },
     "6": {
@@ -105,15 +85,10 @@
         "value":{
             "id":"6",
             "intent":"Initialize the list for the first letter key in the dictionary.",
-            "node_type":"conditional_branch",
-            "type":"leaf",
             "dependencies":{
                 "firstLetter":"string",
                 "book_shelf":"dictionary"
-            },
-            "path": [
-                ["2","3","4","5","6"]
-            ]
+            }
         }
     },
     "7": {
@@ -121,16 +96,12 @@
         "value":{
             "id":"7",
             "intent":"Append the book name to the corresponding first letter group in the dictionary.",
-            "type":"leaf",
+            "type":"junction",
             "dependencies":{
                 "firstLetter":"string",
                 "book_shelf":"dictionary",
                 "name":"string"
-            },
-            "path": [
-                ["2","3","4","5","7"],
-                ["2","3","4","5","6","7"]
-            ]
+            }
         }
     },
     "8": {
@@ -139,9 +110,7 @@
             "id":"8",
             "intent":"Accepts book details from user and sorts them.",
             "parent":["19"],
-            "node_type":"function_definition",
-            "type":"root",
-            "path": ["8"]
+            "type":"junction"
         }
     },
     "9": {
@@ -149,10 +118,12 @@
         "value":{
             "id":"9",
             "intent":"Dictionary to group books by the first letter of their name.",
-            "type":"leaf",
-            "path": [
-                ["8","9"]                   
-            ]
+            "branches":[
+                {
+                    "name": "Create Book Shelf", 
+                    "path": [9]
+                }
+            ] 
         }
     },
     "10": {
@@ -160,23 +131,22 @@
         "value":{
             "id":"10",
             "intent":"Keep accepting books until the user decides to stop.",
-            "type":"root",
-            "node_type":"while_loop",
-            "path": [
-                ["8","9","10"]                   
-            ]
+            "type":"loop_junction",
+            "branches":[
+                {
+                    "name": "Accept Book", 
+                    "path": [10,11,12,13]
+                }
+            ] 
         }
     },
-    "11": {
+    "11": { 
         "type":"adli_abstraction",
         "value":{
             "id":"11",
             "intent":"Prompt user for book details.",
             "parent":["10"],
-            "type":"leaf",
-            "path": [
-                ["11"]                   
-            ]
+            "type":"junction"
         }
     },
     "12": {
@@ -194,10 +164,7 @@
                     "min_length":1,
                     "non_empty":true
                 }
-            }  ,
-            "path": [
-                ["11","12"]                   
-            ]              
+            }           
         }
     },
     "13":{
@@ -215,10 +182,7 @@
                     "min_length":1,
                     "non_empty":true
                 }
-            },
-            "path": [
-                ["11","12","13"]                   
-            ]
+            }
         }
     },
     "14": {
@@ -251,10 +215,7 @@
                 "book_shelf":"dictionary",
                 "name":"string",
                 "genre":"string"
-            },
-            "path": [
-                ["11","12","13","14"]                   
-            ]
+            }
         }
     },
     "15": {
@@ -271,9 +232,16 @@
                     "type":"string"
                 }
             },
-            "path": [
-                ["11","12","13","14","15"]                   
-            ]
+            "branches":[
+                {
+                    "name": "Continue Accepting Books", 
+                    "path": [15, 16]
+                },
+                {
+                    "name": "Stop Accepting Books", 
+                    "path": [15, 16, 17]
+                }
+            ] 
         }
     },
     "16": {
@@ -290,10 +258,7 @@
                 "more": {
                     "type":"string"
                 }
-            },
-            "path": [
-                ["11","12","13","14","15","16"]                   
-            ]
+            }
         }
     },
     "17": {
@@ -304,10 +269,7 @@
             "type":"leaf",
             "dependencies": {
                 "more": "string"
-            },
-            "path": [
-                ["11","12","13","14","15","16","17"]                   
-            ]
+            }
         }
     },
     "18": {
@@ -319,10 +281,7 @@
             "node_type":"conditional_branch",
             "dependencies":{
                 "__name__":"constant"
-            },
-            "path": [
-                ["1","18"]                   
-            ]
+            }
         }
     },
     "19": {
@@ -334,11 +293,7 @@
             "dependencies":{
                 "accept_books":"function",
                 "sys":"module"
-            },
-            "path": [
-                ["1","18","19"]                   
-            ]
-               
+            }
         }
     }
 }
