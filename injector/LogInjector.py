@@ -159,7 +159,7 @@ class LogInjector(ast.NodeTransformer):
         preLog, postLog = self.generateVarLogStmts()
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign, logStmt] + postLog + node.body
+        node.body = [meta_tag, uidAssign] + postLog + node.body
         
         self.funcId = 0
         
@@ -251,7 +251,7 @@ class LogInjector(ast.NodeTransformer):
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
         elif (parsed and parsed["type"] == "adli_abstraction_id"):   
-            abstraction_info = self.abstraction_info_map[parsed["value"]] 
+            abstraction_info = self.abstraction_info_map["level_1"][parsed["value"]] 
             self.abstraction_meta_stack.append(abstraction_info)
             return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
