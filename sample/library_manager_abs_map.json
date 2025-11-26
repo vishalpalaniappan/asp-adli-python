@@ -38,7 +38,7 @@
             ],
             "branches":[
                 {
-                    "intent": "Prints details for book named <name>.",
+                    "name": "Prints details for book named <name>.",
                     "path": [3]
                 }
             ]
