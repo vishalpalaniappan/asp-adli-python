@@ -1,28 +1,12 @@
 {
-    "1": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"1",
-            "intent":"Import the operating system library.",
-            "branches":[
-                {
-                    "name": "Initializes the program to accept books.", 
-                    "path": [1, 18, 19]
-                }
-            ] 
-        }
-    },
-    "2": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"2",
-            "intent":"Enter function to sort a book based on its name and genre into the shelf."
-        }
-    },
-    "3": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"3",
+    "level_1": {       
+        "1": {
+            "intent":"Import the operating system library."
+        },
+        "2": {
+            "intent":"Enter function to sort a book based on its name and genre into the shelf."            
+        },
+        "3": {
             "intent":"Prints details for book named <name>.",
             "variables": [
                 {
@@ -35,19 +19,9 @@
                     "placeholder":"<genre>",
                     "scope": "local"
                 }
-            ],
-            "branches":[
-                {
-                    "name": "Prints details for book named <name>.",
-                    "path": [3]
-                }
             ]
-        }
-    },
-    "4": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"4",
+        },
+        "4": {
             "intent":"Get first letter of book named <name> to create slot for book.",
             "variables": [
                 {
@@ -55,19 +29,9 @@
                     "placeholder":"<name>",
                     "scope": "local"
                 }
-            ],
-            "branches":[
-                {
-                    "name": "Get first letter of book named <name> to create slot for book.",
-                    "path": [4]
-                }
             ]
-        }
-    },
-    "5": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"5",
+        },
+        "5": {
             "intent":"Check if the slot for letter <firstLetter> exists in the shelf.",
             "variables": [
                 {
@@ -75,44 +39,18 @@
                     "placeholder":"<name>",
                     "scope": "local"
                 }
-            ],
-            "branches":[
-                {
-                    "name": "Place in pre-existing slot on shelf", 
-                    "path": [5, 7]
-                },
-                {
-                    "name": "Create Slot and Place in Shelf", 
-                    "path": [5, 6, 7]
-                }
-            ] 
-        }
-    },
-    "6": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"6",
+            ]
+        },
+        "6": {
             "intent":"Initialize the list for the first letter key in the dictionary."
-        }
-    },
-    "7": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"7",
+        },
+        "7": {
             "intent":"Append the book name to the corresponding first letter group in the dictionary."
-        }
-    },
-    "8": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"8",
+        },
+        "8": {
             "intent":"Accepts book details from user and sorts them."
-        }
-    },
-    "9": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"9",
+        },
+        "9": {
             "intent":"Create an empty book shelf.",
             "variables": [
                 {
@@ -120,40 +58,15 @@
                     "placeholder":"<book_shelf>",
                     "scope": "local"
                 }
-            ],
-            "branches":[
-                {
-                    "name": "Create an empty book shelf.", 
-                    "path": [9]
-                }
-            ] 
-        }
-    },
-    "10": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"10",
-            "intent":"Begin accepting book details and sort into shelf.",
-            "branches":[
-                {
-                    "name": "Accept Book", 
-                    "path": [10,11,12,13]
-                }
-            ] 
-        }
-    },
-    "11": { 
-        "type":"adli_abstraction",
-        "value":{
-            "id":"11",
-            "intent":"Prompt user for book details.",
-            "parent":["10"]
-        }
-    },
-    "12": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"12",
+            ]
+        },
+        "10": {
+            "intent":"Begin accepting book details and sort into shelf."
+        },
+        "11": { 
+            "intent":"Prompt user for book details."
+        },
+        "12": {
             "intent":"Accepted a book named <name>",
             "variables": [
                 {
@@ -168,13 +81,9 @@
                     "min_length":1,
                     "non_empty":true
                 }
-            }           
-        }
-    },
-    "13":{
-        "type":"adli_abstraction",
-        "value":{
-            "id":"13",
+            }  
+        },
+        "13":{
             "intent":"Accepted a book with genre <genre>.",
             "variables": [
                 {
@@ -190,64 +99,80 @@
                     "non_empty":true
                 }
             }
-        }
-    },
-    "14": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"14",
-            "intent":"Sort the book with the given name into the shelf.",
-            "branches":[
-                {
-                    "name": "Sort Book Into Shelf", 
-                    "path": [14]
-                }
-            ] 
-        }
-    },
-    "15": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"15",
-            "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process.",
-            "branches":[
-                {
-                    "name": "Continue Accepting Books", 
-                    "path": [15, 16]
-                },
-                {
-                    "name": "Stop Accepting Books", 
-                    "path": [15, 16, 17]
-                }
-            ] 
-        }
-    },
-    "16": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"16",
+        },
+        "14": {
+            "intent":"Sort the book with the given name into the shelf."
+        },
+        "15": {
+            "intent":"Ask user if they want to add another book by accepting 'y' or 'Y'. Any other input will stop the process."
+        },
+        "16": {
             "intent":"Check if the user wants to stop adding books."
-        }
-    },
-    "17": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"17",
+        },
+        "17": {
             "intent":"Exit the book accepting loop."
-        }
-    },
-    "18": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"18",
+        },
+        "18": {
             "intent":"Entry point for the script."
+        },
+        "19": {
+            "intent":"Begin accepting books by calling the accept_books function."
+        } 
+    },
+    "level_2": {
+        "1": {
+            "intent":"Initializes the program to accept books.", 
+            "path": [1, 18, 19]
+        },
+        "2": {
+            "intent":"Create an empty book shelf.", 
+            "path": [9]
+        },
+        "3": {
+            "intent":"Accept book namd and genre from user.", 
+            "path": [10, 11, 12, 13, 14, 3]
+        },
+        "4": {
+            "intent":"Create slot and add book to shelf.", 
+            "path": [4,5,6,7]
+        },
+        "5": {
+            "intent":"Continue accepting books.", 
+            "path": [15,16]
+        },
+        "6": {
+            "intent":"Add book to existing slot on shelf.", 
+            "path": [4,5,7]
+        },
+        "7": {
+            "intent":"Stop accepting books.", 
+            "path": [16,17]
         }
     },
-    "19": {
-        "type":"adli_abstraction",
-        "value":{
-            "id":"19",
-            "intent":"Begin accepting books by calling the accept_books function."
+    "level_3": {
+        "1": {
+            "intent":"Initializes the program to accept books.", 
+            "path": [1]
+        },
+        "2": {
+            "intent":"Create an empty book shelf.", 
+            "path": [2]
+        },
+        "3": {
+            "intent":"Continue accepting books.", 
+            "path": [5]
+        },
+        "4": {
+            "intent":"Accept book and place it in new slot on shelf.", 
+            "path": [3,4]
+        },
+        "5": {
+            "intent":"Accept book and place it in existing slot on shelf.", 
+            "path": [3,6]
+        },
+        "7": {
+            "intent":"Stop accepting books.", 
+            "path": [7]
         }
     }
 }
