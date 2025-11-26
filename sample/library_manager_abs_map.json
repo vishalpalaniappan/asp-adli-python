@@ -137,16 +137,16 @@
             "path": [4,5,6,7]
         },
         "5": {
-            "intent":"Continue accepting books.", 
-            "path": [15,16]
-        },
-        "6": {
             "intent":"Add book to existing slot on shelf.", 
             "path": [4,5,7]
         },
-        "7": {
+        "6": {
             "intent":"Stop accepting books.", 
-            "path": [16,17]
+            "path": [15,16,17]
+        },
+        "7": {
+            "intent":"Continue accepting books.", 
+            "path": [15,16]
         }
     },
     "level_3": {
@@ -160,7 +160,7 @@
         },
         "3": {
             "intent":"Continue accepting books.", 
-            "path": [5]
+            "path": [7]
         },
         "4": {
             "intent":"Accept book and place it in new slot on shelf.", 
@@ -168,11 +168,18 @@
         },
         "5": {
             "intent":"Accept book and place it in existing slot on shelf.", 
-            "path": [3,6]
+            "path": [3,5]
         },
-        "7": {
+        "6": {
             "intent":"Stop accepting books.", 
-            "path": [7]
+            "path": [6]
         }
+    },
+    "level_4": {
+        "1": {
+            "intent":"Provide service to manage books in a library.", 
+            "world": [1,2,3,4,5,7]
+        }
+    
     }
 }
