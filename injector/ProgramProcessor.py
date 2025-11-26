@@ -108,6 +108,7 @@ class ProgramProcessor:
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
             "adliInfo": self.adliInfo,
+            "abstraction_info_map": abstraction_info_map
         }
 
         try:
