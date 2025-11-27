@@ -78,11 +78,25 @@
         },
         "10": {
             "intent":"Prompt user and accept book name.",
-            "intent_short":"Prompt user and accept book name."
+            "intent_short":"Accepted book named <name>.",
+            "variables": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ]
         },
         "11": {
             "intent":"Prompt user and accept book genre.",
-            "intent_short":"Prompt user and accept book name."
+            "intent_short":"Accepted book of genre <genre>.",
+            "variables": [
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ]
         },
         "12": {
             "intent":"Return the provided book details with name <name> and genre <genre>.",
@@ -117,17 +131,13 @@
             "intent_short":"Accept book details from user."
         },
         "17": {
-            "intent":"Sort the book with the given name into the shelf.",
-            "intent_short":"Sort book named <name> into shelf.",
+            "intent":"Sort the book with the name <name> into the shelf.",
+            "intent_short":"Sort book with name <name> into shelf.",
             "variables": [
                 {
-                    "name": "name",
+                    "name": "book_details",
+                    "key": "name",
                     "placeholder":"<name>",
-                    "scope": "local"
-                },
-                {
-                    "name": "genre",
-                    "placeholder":"<genre>",
                     "scope": "local"
                 }
             ]

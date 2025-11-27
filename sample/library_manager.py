@@ -33,7 +33,7 @@ def accept_book():
     genre = input("Genre: ")
 
     '''{"type":"adli_abstraction_id","value":"12"}'''
-    return name, genre
+    return {"name":name, "genre":genre}
 
 
 '''{"type":"adli_abstraction_id","value":"13"}'''
@@ -46,10 +46,10 @@ def library_manager():
     while True:
 
         '''{"type":"adli_abstraction_id","value":"16"}'''
-        name, genre = accept_book()
+        book_details = accept_book()
 
         '''{"type":"adli_abstraction_id","value":"17"}'''
-        place_book_on_shelf(book_shelf, name, genre)
+        place_book_on_shelf(book_shelf, book_details["name"], book_details["genre"])
         
         '''{"type":"adli_abstraction_id","value":"18"}'''
         more = input("Add another book? (y): ").lower()
