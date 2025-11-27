@@ -191,6 +191,7 @@
             "level1": {
                 "1": {
                     "start": "15",
+                    "intent": "Transaction to receive a book and place it on shelf.",
                     "type": "world_abstraction",
                     "abstractions": [15,16,17,18,19,20]
                 }
