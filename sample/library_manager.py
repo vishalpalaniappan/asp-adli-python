@@ -2,7 +2,7 @@
 import sys
 
 '''{"type":"adli_abstraction_id","value":"2"}'''
-def sort_book(book_shelf, name, genre):
+def place_book_on_shelf(book_shelf, name, genre):
 
     '''{"type":"adli_abstraction_id","value":"3"}'''
     print(f"Accepted book: {name} (Genre: {genre})")
@@ -21,38 +21,49 @@ def sort_book(book_shelf, name, genre):
 
 
 '''{"type":"adli_abstraction_id","value":"8"}'''
-def accept_books():
+def accept_book():
 
     '''{"type":"adli_abstraction_id","value":"9"}'''
+    print("\nEnter book details:")
+        
+    '''{"type":"adli_abstraction_id","value":"10"}'''
+    name = input("Book name: ")
+
+    '''{"type":"adli_abstraction_id","value":"11"}'''
+    genre = input("Genre: ")
+
+    '''{"type":"adli_abstraction_id","value":"12"}'''
+    return name, genre
+
+
+'''{"type":"adli_abstraction_id","value":"13"}'''
+def library_manager():
+
+    '''{"type":"adli_abstraction_id","value":"14"}'''
     book_shelf = {}
 
-    '''{"type":"adli_abstraction_id","value":"10"}'''
+    '''{"type":"adli_abstraction_id","value":"15"}'''
     while True:
 
-        '''{"type":"adli_abstraction_id","value":"11"}'''
-        print("\nEnter book details:")
-        
-        '''{"type":"adli_abstraction_id","value":"12"}'''
-        name = input("Book name: ")
+        '''{"type":"adli_abstraction_id","value":"16"}'''
+        name, genre = accept_book()
 
-        '''{"type":"adli_abstraction_id","value":"13"}'''
-        genre = input("Genre: ")
-
-        '''{"type":"adli_abstraction_id","value":"14"}'''
-        sort_book(book_shelf, name, genre)
+        '''{"type":"adli_abstraction_id","value":"17"}'''
+        place_book_on_shelf(book_shelf, name, genre)
         
-        '''{"type":"adli_abstraction_id","value":"15"}'''
+        '''{"type":"adli_abstraction_id","value":"18"}'''
         more = input("Add another book? (y): ").lower()
         
-        '''{"type":"adli_abstraction_id","value":"16"}'''
+        '''{"type":"adli_abstraction_id","value":"19"}'''
         if more != "y":
 
-            '''{"type":"adli_abstraction_id","value":"17"}'''
+            '''{"type":"adli_abstraction_id","value":"20"}'''
             break
 
-'''{"type":"adli_abstraction_id","value":"18"}'''
+
+'''{"type":"adli_abstraction_id","value":"21"}'''
 if __name__ == "__main__":
 
-    '''{"type":"adli_abstraction_id","value":"19"}'''
-    sys.exit(accept_books())
+    '''{"type":"adli_abstraction_id","value":"22"}'''
+    sys.exit(library_manager())
     
