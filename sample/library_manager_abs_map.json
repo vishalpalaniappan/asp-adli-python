@@ -78,7 +78,7 @@
         },
         "10": {
             "intent":"Prompt user and accept book name.",
-            "intent_short":"Accepted book named <name>.",
+            "intent_short":"Received book.",
             "variables": [
                 {
                     "name": "name",
@@ -89,7 +89,7 @@
         },
         "11": {
             "intent":"Prompt user and accept book genre.",
-            "intent_short":"Accepted book of genre <genre>.",
+            "intent_short":"Received genre.",
             "variables": [
                 {
                     "name": "genre",
@@ -186,7 +186,15 @@
         },
         "library_manager": {
             "source": [22],
-            "intent": "Main function to manage library operations."
+            "abstractions": [13, 14, 15, 16, 17, 18, 19, 20],
+            "intent": "Main function to manage library operations.",
+            "level1": {
+                "1": {
+                    "start": "15",
+                    "type": "world_abstraction",
+                    "abstractions": [15,16,17,18,19,20]
+                }
+            }
         }
     }
 }
