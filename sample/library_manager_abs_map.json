@@ -188,11 +188,11 @@
             "source": [22],
             "abstractions": [13, 14, 15, 16, 17, 18, 19, 20],
             "intent": "Main function to manage library operations.",
-            "level1": {
+            "worlds": {
                 "1": {
-                    "start": "15",
+                    "start": 15,
+                    "end": [19,20],
                     "intent": "Transaction to receive a book and place it on shelf.",
-                    "type": "world_abstraction",
                     "abstractions": [15,16,17,18,19,20]
                 }
             }
