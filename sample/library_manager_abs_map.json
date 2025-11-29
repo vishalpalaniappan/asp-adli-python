@@ -85,6 +85,13 @@
                     "placeholder":"<name>",
                     "scope": "local"
                 }
+            ],
+            "constraint": [
+                {
+                    "name": "name",
+                    "type":"minLength",
+                    "value": 1
+                }
             ]
         },
         "11": {
@@ -128,7 +135,16 @@
         },
         "16": { 
             "intent":"Accept book details from user.",
-            "intent_short":"Accept book details from user."
+            "intent_short":"Accept book details from user.",
+            "constraint": [
+                {
+                    "name": "book_details",
+                    "key":"name",
+                    "scope":"local",
+                    "type":"minLength",
+                    "value": 1
+                }
+            ]
         },
         "17": {
             "intent":"Sort the book with the name <name> into the shelf.",
@@ -166,10 +182,11 @@
     "functions":{
         "<module>": {
             "abstractions": [1, 21, 22],
-            "path_abstractions": {
+            "intent": "Global",
+            "worlds": {
                 "1": {
-                    "intent":"Initializes the program to accept books.", 
-                    "path": [1, 21]
+                    "intent": "Initialize the program and start library manager.",
+                    "abstractions": [1, 21, 22]
                 }
             }
         },
