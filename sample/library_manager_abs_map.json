@@ -182,18 +182,27 @@
         "accept_book": {
             "abstractions": [8,9,10,11,12],
             "source": [19],
-            "intent": "Accept book from user and return details."
+            "intent": "Accept book from user and return details.",
+            "worlds": {
+                "1": {
+                    "intent": "Accept Book and Genre.",
+                    "abstractions": [10,11]
+                }
+            }
         },
-        "library_manager": {
+        "library_manager": {    
             "source": [22],
             "abstractions": [13, 14, 15, 16, 17, 18, 19, 20],
             "intent": "Main function to manage library operations.",
             "worlds": {
                 "1": {
                     "start": 15,
-                    "end": [19,20],
                     "intent": "Transaction to receive a book and place it on shelf.",
-                    "abstractions": [15,16,17,18,19,20]
+                    "abstractions": [15,16,17]
+                },
+                "2": {
+                    "intent": "Find out if the user wants to continue.",
+                    "abstractions": [18,19]
                 }
             }
         }
