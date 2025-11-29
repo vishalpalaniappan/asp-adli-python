@@ -9,20 +9,32 @@ class CollectCallVariables(ast.NodeVisitor, VariableCollectorBase):
         as well as the keys.
     '''
 
-    def __init__(self, node, logTypeId, funcId, existingVariables):
+    def __init__(self, node, logTypeId, funcId, existingVariables, includeInline = False):
         VariableCollectorBase.__init__(self, logTypeId, funcId)
         self.keys = []
         self.existingVars = existingVariables
         self.containsSlice = False
+        self.includeInline = includeInline
 
         if 'body' in node._fields:
             node = getEmptyRootNode(node)
 
+        calls = self.findCalls(node)
+
         # Process any child nodes if they are call instances
-        for childNode in ast.walk(node):
-            if isinstance(childNode, ast.Call):
-                self.generic_visit(ast.Module(body=[childNode.func], type_ignores=[]))
-                self.saveVariableInfo(childNode.func)
+        for childNode in calls:
+            self.generic_visit(ast.Module(body=[childNode.func], type_ignores=[]))
+            self.saveVariableInfo(childNode.func)
+
+    def findCalls(self, node):
+        if isinstance(node, (ast.GeneratorExp, ast.Lambda)) and not self.includeInline:
+            return  # Skip this node and all its children
+
+        if isinstance(node, ast.Call):
+            yield node
+
+        for child in ast.iter_child_nodes(node):
+            yield from self.findCalls(child)
 
     def saveVariableInfo(self, childNode):
         '''

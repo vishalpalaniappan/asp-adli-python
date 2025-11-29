@@ -39,10 +39,10 @@ class AdliLogger:
             return o
         
         # TODO: Improve identifying circular references so we can remove max depth check.
-        # obj_id = id(o)
-        # if obj_id in self.visited:
-        #     return "<Circular Reference Detected>"
-        # self.visited.add(obj_id)
+        obj_id = id(o)
+        if obj_id in self.visited:
+            return str(o)
+        self.visited.add(obj_id)
 
         if depth > max_depth:
             return '<Max Depth Reached>'
@@ -56,8 +56,8 @@ class AdliLogger:
         else:
             return str(o)
 
-    def variableToJson(self, obj, max_depth=8):
-        # self.visited = set()
+    def variableToJson(self, obj, max_depth=5):
+        self.visited = set()
         return self.processLevel(obj, "", 0, max_depth)
 
 
@@ -119,7 +119,7 @@ class AdliLogger:
 
         return self.decodeInput(value)
 
-    def logStmt(self, stmtId, scope_uid, fullStack):
+    def logStmt(self, stmtId, scope_uid, fullStack, locals, globals):
         '''
             Logs the statement id. This corresponds to a statement in the source
             code. For example: a = 1 can be mapped to stmtId 4.
@@ -133,6 +133,8 @@ class AdliLogger:
             "thread": threading.get_ident(),
             "scope_uid": str(scope_uid),
             "stack": self.getStack(fullStack),
+            "locals": list(locals.keys()),
+            "globals": list(globals.keys()),
             "value": stmtId
         }
         logger.info(stmtObj)
@@ -236,6 +238,37 @@ class AdliLogger:
             Returns a unique id during runtime.
         '''
         return uuid.uuid4()
+    
+    def logLocalVars(self, scope_uid, locals):
+        '''
+            Logs the local variables.
+        '''
+        _locals = {}
+        for var in locals:
+            _locals[var] = self.variableToJson(locals[var])
 
+        logInfo = {
+            "type": "adli_local_vars",
+            "thread": threading.get_ident(),
+            "scope_uid": str(scope_uid),
+            "locals": _locals
+        }
+        logger.info(logInfo)
+    
+    def logGlobalVars(self, scope_uid, globals):
+        '''
+            Logs the global variables.
+        '''
+        _globals = {}
+        for var in globals:
+            _globals[var] = self.variableToJson(globals[var])
+
+        logInfo = {
+            "type": "adli_global_vars",
+            "thread": threading.get_ident(),
+            "scope_uid": str(scope_uid),
+            "globals": _globals
+        }
+        logger.info(logInfo)
 
 adli = AdliLogger()
