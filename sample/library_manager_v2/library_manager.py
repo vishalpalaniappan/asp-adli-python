@@ -14,7 +14,6 @@ def place_book_on_shelf(book_shelf, name, genre):
     if (firstLetter not in book_shelf):
         '''{"type":"adli_abstraction_id","value":"6"}'''
         book_shelf[firstLetter] = []
-        '''{"type":"adli_abstraction_id","value":"7"}'''
     else:
         '''{"type":"adli_abstraction_id","value":"8"}'''
         print("Slot for book already exists.")

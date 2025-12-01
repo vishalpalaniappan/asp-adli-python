@@ -251,8 +251,7 @@ class LogInjector(ast.NodeTransformer):
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
         elif (parsed and parsed["type"] == "adli_abstraction_id"):   
-            abstraction_info = self.abstraction_info_map["abstractions"][parsed["value"]] 
-            self.abstraction_meta_stack.append(abstraction_info)
+            self.abstraction_meta_stack.append(parsed["value"])
             return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
             encodedStmt = getEncodedOutputStmt(parsed["value"][0])
