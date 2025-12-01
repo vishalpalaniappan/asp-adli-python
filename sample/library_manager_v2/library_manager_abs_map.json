@@ -66,7 +66,14 @@
                 },
                 {
                     "id": "12",
-                    "intent": "Prompt user for book name"
+                    "intent": "Prompt user for book name",
+                    "constraint": [
+                        {
+                            "name": "name",
+                            "type":"minLength",
+                            "value": 1
+                        }
+                    ]
                 },
                 {
                     "id": "13",
@@ -95,7 +102,16 @@
                             "id": "18",
                             "intent": "Accept book details",
                             "type": "function_call",
-                            "target": "10"
+                            "target": "10",
+                            "constraint": [
+                                {
+                                    "name": "book_details",
+                                    "key":"name",
+                                    "scope":"local",
+                                    "type":"minLength",
+                                    "value": 1
+                                }
+                            ]
                         },
                         {
                             "id": "19",
