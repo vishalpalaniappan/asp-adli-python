@@ -109,7 +109,7 @@
                         },
                         {
                             "id": "21",
-                            "intent": "Check if the user chose to quit.",
+                            "intent": "The user chose to quit.",
                             "type": "conditional",
                             "abstractions": [
                                 {
