@@ -36,21 +36,22 @@
                     "intent": "Get first letter of book named <name> to create slot for book on shelf."},
                 {
                     "id": "5",
-                    "intent": "Check if slot for letter <firstLetter> exists on shelf.",
-                    "type": "conditional",
+                    "intent": "Slot for letter <firstLetter> does not exists on shelf.",
+                    "type": "conditional_branch",
                     "abstractions": [
                         {
                             "id": "6",
                             "intent": "Create slot for book on shelf using first letter <firstLetter>.",
                             "branch": "true"
-                        },
-                        {
-                            "id": "8",
-                            "intent": "Print confirmation that slot already exists.",
-                            "branch": "false"
                         }
                     ]
                 },
+                {
+                    "id": "8",
+                    "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
+                    "branch": "false",
+                    "type": "conditional_branch"
+                },                    
                 {
                     "id": "9",
                     "intent": "Place book named <name> on shelf."
