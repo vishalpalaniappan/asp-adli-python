@@ -10,7 +10,7 @@
                 },
                 {
                     "id": "24",
-                    "intent": "Check if script is being run directly.",
+                    "intent": "Script is being run directly.",
                     "type": "conditional",
                     "abstractions": [
                         {
@@ -41,15 +41,13 @@
                     "abstractions": [
                         {
                             "id": "6",
-                            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
-                            "branch": "true"
+                            "intent": "Create slot for book on shelf using first letter <firstLetter>."
                         }
                     ]
                 },
                 {
                     "id": "8",
                     "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
-                    "branch": "false",
                     "type": "conditional_branch"
                 },                    
                 {
@@ -64,8 +62,7 @@
             "abstractions": [
                 {
                     "id": "11",
-                    "intent": "Request book information.",
-                    "start": true
+                    "intent": "Request book information."
                 },
                 {
                     "id": "12",
@@ -90,8 +87,7 @@
             "abstractions": [
                 {
                     "id": "16",
-                    "intent": "Create book shelf",
-                    "start": true
+                    "intent": "Create book shelf"
                 },
                 {
                     "id": "17",
@@ -101,12 +97,14 @@
                         {
                             "id": "18",
                             "intent": "Accept book details",
-                            "type": "function_call"
+                            "type": "function_call",
+                            "target": "10"
                         },
                         {
                             "id": "19",
                             "intent": "Place book on the shelf",
-                            "type": "function_call"
+                            "type": "function_call",
+                            "target": "2"
                         },
                         {
                             "id": "20",

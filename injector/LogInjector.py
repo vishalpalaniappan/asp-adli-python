@@ -159,7 +159,7 @@ class LogInjector(ast.NodeTransformer):
         preLog, postLog = self.generateVarLogStmts()
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign, logStmt] + postLog + node.body
+        node.body = [meta_tag, uidAssign] + postLog + node.body
         
         self.funcId = 0
         
