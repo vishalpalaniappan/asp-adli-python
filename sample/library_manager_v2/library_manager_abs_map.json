@@ -15,7 +15,7 @@
                     "abstractions": [
                         {
                             "id": "25",
-                            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+                            "intent": "Start the library manager.",
                             "type": "function_call",
                             "target": "15"
                         }
