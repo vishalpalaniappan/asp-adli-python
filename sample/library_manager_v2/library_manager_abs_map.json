@@ -66,18 +66,15 @@
                 },
                 {
                     "id": "12",
-                    "intent": "Prompt user for book name",
-                    "from": "11"
+                    "intent": "Prompt user for book name"
                 },
                 {
                     "id": "13",
-                    "intent": "Prompt user for book genre",
-                    "from": "12"
+                    "intent": "Prompt user for book genre"
                 },
                 {
                     "id": "14",
-                    "intent": "Accept the book and return the name and genre.",
-                    "from": "13"
+                    "intent": "Return the name and genre."
                 }
             ]
         },
