@@ -3,7 +3,7 @@
         "1": {
             "intent": "Global path to initialize the book manager.",
             "start": true,
-            "abstrations": [
+            "abstractions": [
                 {
                     "id": "1",
                     "intent": "Import the operating systems library."
@@ -12,7 +12,7 @@
                     "id": "24",
                     "intent": "Check if script is being run directly.",
                     "type": "conditional",
-                    "branches": [
+                    "abstractions": [
                         {
                             "id": "25",
                             "intent": "Create slot for book on shelf using first letter <firstLetter>.",
@@ -38,7 +38,7 @@
                     "id": "5",
                     "intent": "Check if slot for letter <firstLetter> exists on shelf.",
                     "type": "conditional",
-                    "branches": [
+                    "abstractions": [
                         {
                             "id": "6",
                             "intent": "Create slot for book on shelf using first letter <firstLetter>.",
@@ -96,7 +96,7 @@
                     "id": "17",
                     "intent": "Begin accepting book details and sort into shelf.",
                     "type": "independant_while",
-                    "world": [
+                    "abstractions": [
                         {
                             "id": "18",
                             "intent": "Accept book details",
@@ -115,7 +115,7 @@
                             "id": "32",
                             "intent": "Check if the user chose to quit.",
                             "type": "conditional",
-                            "branches": [
+                            "abstractions": [
                                 {
                                     "id": "22",
                                     "intent": "Terminate program."
