@@ -312,6 +312,9 @@ class LogInjector(ast.NodeTransformer):
     def visit_With(self, node):
         return self.injectLogTypesB(node)
     
+    def visit_If(self, node):
+        return self.injectLogTypesB(node)
+    
     def visit_AsyncWith(self, node):
         return self.injectLogTypesB(node)
     
@@ -336,9 +339,6 @@ class LogInjector(ast.NodeTransformer):
         return preLog + [node]
 
     def visit_ClassDef(self, node):
-        return self.injectLogTypesC(node)
-    
-    def visit_If(self, node):
         return self.injectLogTypesC(node)
     
     def visit_Try(self, node):

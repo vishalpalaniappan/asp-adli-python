@@ -108,11 +108,11 @@
                             "type": "function_call"
                         },
                         {
-                            "id": "30",
+                            "id": "20",
                             "intent": "Ask the user if they want to continue"
                         },
                         {
-                            "id": "32",
+                            "id": "21",
                             "intent": "Check if the user chose to quit.",
                             "type": "conditional",
                             "abstractions": [
@@ -121,6 +121,10 @@
                                     "intent": "Terminate program."
                                 }
                             ]
+                        },
+                        {
+                            "id": "23",
+                            "intent": "Display message confirming exit."
                         }
                     ]
                 }
