@@ -56,7 +56,7 @@
                 },
                 {
                     "id": "5",
-                    "intent": "Slot for letter <firstLetter> does not exists on shelf.",
+                    "intent": "Slot for letter <firstLetter> does not exist on shelf.",
                     "type": "conditional_branch",
                     "variables": [
                         {
