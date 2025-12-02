@@ -211,12 +211,12 @@
                                     "intent": "Terminate program."
                                 }
                             ]
-                        },
-                        {
-                            "id": "23",
-                            "intent": "Display message confirming exit."
                         }
                     ]
+                },
+                {
+                    "id": "23",
+                    "intent": "Display message confirming exit."
                 }
             ]
         }
