@@ -101,6 +101,10 @@
                             "scope": "local"
                         }
                     ]
+                },                    
+                {
+                    "id": "26",
+                    "intent": "Return the updated book shelf."
                 }
             ]
         },

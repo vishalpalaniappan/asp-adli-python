@@ -21,6 +21,9 @@ def place_book_on_shelf(book_shelf, name, genre):
     '''{"type":"adli_abstraction_id","value":"9"}'''
     book_shelf[firstLetter].append(name)
 
+    '''{"type":"adli_abstraction_id","value":"26"}'''
+    return book_shelf
+
 
 '''{"type":"adli_abstraction_id","value":"10"}'''
 def accept_book():
@@ -51,7 +54,7 @@ def library_manager():
         book_details = accept_book()
 
         '''{"type":"adli_abstraction_id","value":"19"}'''
-        place_book_on_shelf(book_shelf, book_details["name"], book_details["genre"])
+        book_shelf = place_book_on_shelf(book_shelf, book_details["name"], book_details["genre"])
         
         '''{"type":"adli_abstraction_id","value":"20"}'''
         more = input("Add another book? (y): ").lower()
