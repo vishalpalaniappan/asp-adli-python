@@ -29,30 +29,78 @@
             "abstractions": [
                 {
                     "id": "3",
-                    "intent": "Prints details for book named <name> with genre <genre>."
+                    "intent": "Prints details for book named <name> with genre <genre>.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        },
+                        {
+                            "name": "genre",
+                            "placeholder":"<genre>",
+                            "scope": "local"
+                        }
+                    ]
                 },
                 {
                     "id": "4",
-                    "intent": "Get first letter of book named <name> to create slot for book on shelf."},
+                    "intent": "Get first letter of book named <name> to create slot for book on shelf.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        }
+                    ]
+                },
                 {
                     "id": "5",
                     "intent": "Slot for letter <firstLetter> does not exists on shelf.",
                     "type": "conditional_branch",
+                    "variables": [
+                        {
+                            "name": "firstLetter",
+                            "placeholder":"<firstLetter>",
+                            "scope": "local"
+                        }
+                    ],
                     "abstractions": [
                         {
                             "id": "6",
-                            "intent": "Create slot for book on shelf using first letter <firstLetter>."
+                            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+                            "variables": [
+                                {
+                                    "name": "firstLetter",
+                                    "placeholder":"<firstLetter>",
+                                    "scope": "local"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
                     "id": "8",
                     "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
-                    "type": "conditional_branch"
+                    "type": "conditional_branch",
+                    "variables": [
+                        {
+                            "name": "firstLetter",
+                            "placeholder":"<firstLetter>",
+                            "scope": "local"
+                        }
+                    ]
                 },                    
                 {
                     "id": "9",
-                    "intent": "Place book named <name> on shelf."
+                    "intent": "Place book named <name> on shelf.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        }
+                    ]
                 }
             ]
         },
@@ -66,7 +114,14 @@
                 },
                 {
                     "id": "12",
-                    "intent": "Prompt user for book name",
+                    "intent": "Prompt and accept book name",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        }
+                    ],
                     "constraint": [
                         {
                             "name": "name",
@@ -77,11 +132,23 @@
                 },
                 {
                     "id": "13",
-                    "intent": "Prompt user for book genre"
+                    "intent": "Prompt and accept for book genre"
                 },
                 {
                     "id": "14",
-                    "intent": "Return the name and genre."
+                    "intent": "Return the name <name> and genre <genre>.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        },
+                        {
+                            "name": "genre",
+                            "placeholder":"<genre>",
+                            "scope": "local"
+                        }
+                    ]
                 }
             ]
         },
@@ -103,6 +170,13 @@
                             "intent": "Accept book details",
                             "type": "function_call",
                             "target": "10",
+                            "variables": [
+                                {
+                                    "name": "name",
+                                    "placeholder":"<name>",
+                                    "scope": "local"
+                                }
+                            ],
                             "constraint": [
                                 {
                                     "name": "book_details",
