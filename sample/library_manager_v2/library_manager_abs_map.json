@@ -174,13 +174,6 @@
                             "intent": "Accept book details",
                             "type": "function_call",
                             "target": "10",
-                            "variables": [
-                                {
-                                    "name": "name",
-                                    "placeholder":"<name>",
-                                    "scope": "local"
-                                }
-                            ],
                             "constraint": [
                                 {
                                     "name": "book_details",
