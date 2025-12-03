@@ -8,7 +8,7 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, tree, logTypeCount, file, isRoot, abstraction_info_map):
+    def __init__(self, tree, logTypeCount, file, isRoot):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
@@ -21,7 +21,6 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.nodeVarInfo = []
 
-        self.abstraction_info_map = abstraction_info_map
         self.abstraction_meta_stack = []
 
         self.minLogTypeCount = self.logTypeCount
