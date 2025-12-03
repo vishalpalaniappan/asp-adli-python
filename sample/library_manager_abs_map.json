@@ -6,7 +6,7 @@
             "abstractions": [
                 {
                     "id": "1",
-                    "intent": "Import the operating systems library."
+                    "intent": "Import the sys library."
                 },
                 {
                     "id": "24",
