@@ -32,7 +32,7 @@ class CollectAssignVarInfo(ast.NodeVisitor, VariableCollectorBase):
             Generates a temporary variable name using the uuid module. This
             variable will be hidden from the user in the diagnostic log viewer.
         '''
-        return "asp_temp_var_" + str(uuid.uuid1()).replace("-", "")
+        return "asp_temp_var_" + str(uuid.uuid4()).replace("-", "")
 
     def visit_Subscript(self, node):
         '''

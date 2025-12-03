@@ -45,6 +45,20 @@ class ProgramProcessor:
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
         programMetadata = {}
+        sdg = {}
+        # Get the semantic dsign graph if it exists
+        no_ext, _ = os.path.splitext(self.sourceFile)
+        sdg_path = no_ext + "_sdg.json"
+
+        try:
+            with open(sdg_path, "r") as f:
+                sdg = json.loads(f.read())
+        except FileNotFoundError:
+            print("Could not find abstraction metadata file for", self.sourceFile)
+            sdg = {}
+        except json.JSONDecodeError:
+            print("Abstraction metadata file is not a valid JSON for", self.sourceFile)
+            sdg = {}
 
         # Process every file found in the program
         for currFilePath in files:
@@ -58,22 +72,9 @@ class ProgramProcessor:
             with open(currFilePath, "r") as f:
                 source = f.read()
 
-            no_ext, _ = os.path.splitext(currFilePath)
-            abstraction_meta_path = no_ext + "_abs_map.json"
-
-            try:
-                with open(abstraction_meta_path, "r") as f:
-                    abstraction_info_map = json.loads(f.read())
-            except FileNotFoundError:
-                print("Could not find abstraction metadata file for", currFilePath)
-                abstraction_info_map = {}
-            except json.JSONDecodeError:
-                print("Abstraction metadata file is not a valid JSON for", currFilePath)
-                abstraction_info_map = {}
-
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot, abstraction_info_map)
+            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -108,7 +109,7 @@ class ProgramProcessor:
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
             "adliInfo": self.adliInfo,
-            "abstraction_info_map": abstraction_info_map
+            "sdg": sdg
         }
 
         try:
