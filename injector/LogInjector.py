@@ -8,7 +8,7 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, tree, logTypeCount, file, isRoot):
+    def __init__(self, tree, logTypeCount, file, isRoot, abstraction_info_map):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
@@ -21,6 +21,7 @@ class LogInjector(ast.NodeTransformer):
         self.localDisabledVariables = []
         self.nodeVarInfo = []
 
+        self.abstraction_info_map = abstraction_info_map
         self.abstraction_meta_stack = []
 
         self.minLogTypeCount = self.logTypeCount
@@ -158,7 +159,7 @@ class LogInjector(ast.NodeTransformer):
         preLog, postLog = self.generateVarLogStmts()
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign, logStmt] + postLog + node.body
+        node.body = [meta_tag, uidAssign] + postLog + node.body
         
         self.funcId = 0
         
@@ -249,9 +250,7 @@ class LogInjector(ast.NodeTransformer):
                 self.localDisabledVariables += parsed["value"]
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
-        elif (parsed and parsed["type"] == "adli_abstraction"):
-            # Save abstraction meta to stack and return None, we don't
-            # need to keep this node.
+        elif (parsed and parsed["type"] == "adli_abstraction_id"):   
             self.abstraction_meta_stack.append(parsed["value"])
             return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
@@ -313,9 +312,6 @@ class LogInjector(ast.NodeTransformer):
     def visit_With(self, node):
         return self.injectLogTypesB(node)
     
-    def visit_If(self, node):
-        return self.injectLogTypesB(node)
-    
     def visit_AsyncWith(self, node):
         return self.injectLogTypesB(node)
     
@@ -340,6 +336,9 @@ class LogInjector(ast.NodeTransformer):
         return preLog + [node]
 
     def visit_ClassDef(self, node):
+        return self.injectLogTypesC(node)
+    
+    def visit_If(self, node):
         return self.injectLogTypesC(node)
     
     def visit_Try(self, node):

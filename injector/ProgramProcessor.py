@@ -58,9 +58,22 @@ class ProgramProcessor:
             with open(currFilePath, "r") as f:
                 source = f.read()
 
+            no_ext, _ = os.path.splitext(currFilePath)
+            abstraction_meta_path = no_ext + "_abs_map.json"
+
+            try:
+                with open(abstraction_meta_path, "r") as f:
+                    abstraction_info_map = json.loads(f.read())
+            except FileNotFoundError:
+                print("Could not find abstraction metadata file for", currFilePath)
+                abstraction_info_map = {}
+            except json.JSONDecodeError:
+                print("Abstraction metadata file is not a valid JSON for", currFilePath)
+                abstraction_info_map = {}
+
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
+            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot, abstraction_info_map)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -95,6 +108,7 @@ class ProgramProcessor:
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
             "adliInfo": self.adliInfo,
+            "abstraction_info_map": abstraction_info_map
         }
 
         try:
