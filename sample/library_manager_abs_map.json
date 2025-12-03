@@ -197,7 +197,7 @@
                         {
                             "id": "21",
                             "intent": "The user chose to quit.",
-                            "type": "conditional",
+                            "type": "conditional_branch",
                             "abstractions": [
                                 {
                                     "id": "22",
