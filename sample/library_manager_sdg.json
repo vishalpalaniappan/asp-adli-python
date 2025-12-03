@@ -129,6 +129,7 @@
                     "constraint": [
                         {
                             "name": "name",
+                            "scope": "local",
                             "type":"minLength",
                             "value": 1
                         }
