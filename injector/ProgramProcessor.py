@@ -59,7 +59,7 @@ class ProgramProcessor:
                 source = f.read()
 
             no_ext, _ = os.path.splitext(currFilePath)
-            abstraction_meta_path = no_ext + "_abs_map.json"
+            abstraction_meta_path = no_ext + "_sdg.json"
 
             try:
                 with open(abstraction_meta_path, "r") as f:
