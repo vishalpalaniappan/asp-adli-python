@@ -167,7 +167,7 @@
                 {
                     "id": "17",
                     "intent": "Begin accepting book details and sort into shelf.",
-                    "type": "independant_while",
+                    "type": "independent_while",
                     "abstractions": [
                         {
                             "id": "18",
