@@ -131,7 +131,8 @@
                             "name": "name",
                             "scope": "local",
                             "type":"minLength",
-                            "value": 1
+                            "value": 1,
+                            "failures": ["4"]
                         }
                     ]
                 },
@@ -163,7 +164,16 @@
             "abstractions": [
                 {
                     "id": "16",
-                    "intent": "Create book shelf"
+                    "intent": "Create book shelf",
+                    "constraint": [
+                        {
+                            "name": "book_shelf",
+                            "scope": "local",
+                            "type":"variable_type",
+                            "value": "object",
+                            "failures": ["6","9"]
+                        }
+                    ]
                 },
                 {
                     "id": "17",
@@ -181,7 +191,8 @@
                                     "key":"name",
                                     "scope":"local",
                                     "type":"minLength",
-                                    "value": 1
+                                    "value": 1,
+                                    "failures": ["4"]
                                 }
                             ]
                         },
