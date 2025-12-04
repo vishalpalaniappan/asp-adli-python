@@ -169,7 +169,7 @@
                         {
                             "name": "book_shelf",
                             "scope": "local",
-                            "type":"variable_type",
+                            "type":"is_object",
                             "value": "object",
                             "failures": ["6","9"]
                         }
@@ -184,17 +184,7 @@
                             "id": "18",
                             "intent": "Accept book details",
                             "type": "function_call",
-                            "target": "10",
-                            "constraint": [
-                                {
-                                    "name": "book_details",
-                                    "key":"name",
-                                    "scope":"local",
-                                    "type":"minLength",
-                                    "value": 1,
-                                    "failures": ["4"]
-                                }
-                            ]
+                            "target": "10"
                         },
                         {
                             "id": "19",
