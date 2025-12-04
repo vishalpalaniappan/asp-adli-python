@@ -30,7 +30,7 @@
                 {
                     "id": "3",
                     "intent":"There are more books in the basket.",
-                    "type": "independent_while",
+                    "type": "while",
                     "abstractions": [
                         {
                             "id": "4",
@@ -108,7 +108,8 @@
                 },
                 {
                     "id": "20",
-                    "intent": "Start Menu",
+                    "intent": "Display Menu",
+                    "type": "while",
                     "abstractions": [
                         {
                             "id": "21",
