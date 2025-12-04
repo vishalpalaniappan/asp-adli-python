@@ -14,7 +14,7 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
         print(f"Accepted book: {book['name']} (Genre: {book['genre']})")
         
         '''{"type":"adli_abstraction_id","value":"6"}'''
-        firstLetter = book['name'][0].upper()
+        firstLetter = book['name'][0]
 
         '''{"type":"adli_abstraction_id","value":"7"}'''
         if (firstLetter not in book_shelf):
@@ -80,47 +80,41 @@ def library_manager():
 
             '''{"type":"adli_abstraction_id","value":"24"}'''
             basket.append(book_details)
-            
-            '''{"type":"adli_abstraction_id","value":"25"}'''
-            print("Book Shelf:", book_shelf)   
       
-            '''{"type":"adli_abstraction_id","value":"26"}'''
+            '''{"type":"adli_abstraction_id","value":"25"}'''
             continue
 
-        '''{"type":"adli_abstraction_id","value":"27"}'''
+        '''{"type":"adli_abstraction_id","value":"26"}'''
         if response == "p":
 
-            '''{"type":"adli_abstraction_id","value":"28"}'''
+            '''{"type":"adli_abstraction_id","value":"27"}'''
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
-            
-            '''{"type":"adli_abstraction_id","value":"29"}'''
-            print("Book Shelf:", book_shelf)
 
-            '''{"type":"adli_abstraction_id","value":"30"}'''
+            '''{"type":"adli_abstraction_id","value":"28"}'''
             continue
 
-        '''{"type":"adli_abstraction_id","value":"31"}'''
+        '''{"type":"adli_abstraction_id","value":"29"}'''
         if response == "d":
 
-            '''{"type":"adli_abstraction_id","value":"32"}'''
+            '''{"type":"adli_abstraction_id","value":"30"}'''
             print("\nBook Shelf:", book_shelf)
 
-            '''{"type":"adli_abstraction_id","value":"33"}'''
+            '''{"type":"adli_abstraction_id","value":"31"}'''
             print("Basket:", basket)
 
-            '''{"type":"adli_abstraction_id","value":"34"}'''
+            '''{"type":"adli_abstraction_id","value":"32"}'''
             continue
     
-        '''{"type":"adli_abstraction_id","value":"35"}'''
+        '''{"type":"adli_abstraction_id","value":"33"}'''
         break
 
-    '''{"type":"adli_abstraction_id","value":"36"}'''
+    '''{"type":"adli_abstraction_id","value":"34"}'''
     print("\nExiting library manager, goodbye.")
 
 
-'''{"type":"adli_abstraction_id","value":"37"}'''
+'''{"type":"adli_abstraction_id","value":"35"}'''
 if __name__ == "__main__":
 
-    '''{"type":"adli_abstraction_id","value":"38"}'''
+    '''{"type":"adli_abstraction_id","value":"36"}'''
     sys.exit(library_manager())
     

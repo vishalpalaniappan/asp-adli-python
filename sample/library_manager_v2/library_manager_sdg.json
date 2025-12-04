@@ -9,208 +9,173 @@
                     "intent": "Import the sys library."
                 },
                 {
-                    "id": "24",
+                    "id": "35",
                     "intent": "Script is being run directly.",
                     "type": "conditional",
                     "abstractions": [
                         {
-                            "id": "25",
+                            "id": "36",
                             "intent": "Start the library manager.",
                             "type": "function_call",
-                            "target": "15"
+                            "target": "17"
                         }
                     ]
                 }
             ]
         },
-        "2" : {
-            "intent": "Places book on shelf.",
-            "source": "18",
-            "abstractions": [
+        "2": {
+            "intent": "Place the books from the basket onto the shelf.",
+            "source": "27",
+            "abstractons": [
                 {
                     "id": "3",
-                    "intent": "Prints details for book named <name> with genre <genre>.",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        },
-                        {
-                            "name": "genre",
-                            "placeholder":"<genre>",
-                            "scope": "local"
-                        }
-                    ]
-                },
-                {
-                    "id": "4",
-                    "intent": "Get first letter of book named <name> to create slot for book on shelf.",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        }
-                    ]
-                },
-                {
-                    "id": "5",
-                    "intent": "Slot for letter <firstLetter> does not exist on shelf.",
-                    "type": "conditional_branch",
-                    "variables": [
-                        {
-                            "name": "firstLetter",
-                            "placeholder":"<firstLetter>",
-                            "scope": "local"
-                        }
-                    ],
-                    "abstractions": [
-                        {
-                            "id": "6",
-                            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
-                            "variables": [
-                                {
-                                    "name": "firstLetter",
-                                    "placeholder":"<firstLetter>",
-                                    "scope": "local"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "8",
-                    "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
-                    "type": "conditional_branch",
-                    "variables": [
-                        {
-                            "name": "firstLetter",
-                            "placeholder":"<firstLetter>",
-                            "scope": "local"
-                        }
-                    ]
-                },                    
-                {
-                    "id": "9",
-                    "intent": "Place book named <name> on shelf.",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        }
-                    ]
-                },                    
-                {
-                    "id": "26",
-                    "intent": "Return the updated book shelf."
-                }
-            ]
-        },
-        "10": {
-            "intent": "Accept the book and return the name and genre.",
-            "source": "18",
-            "abstractions": [
-                {
-                    "id": "11",
-                    "intent": "Request book information."
-                },
-                {
-                    "id": "12",
-                    "intent": "Prompt and accept book name",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        }
-                    ],
-                    "constraint": [
-                        {
-                            "name": "name",
-                            "scope": "local",
-                            "type":"minLength",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "id": "13",
-                    "intent": "Prompt and accept for book genre"
-                },
-                {
-                    "id": "14",
-                    "intent": "Return the name <name> and genre <genre>.",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        },
-                        {
-                            "name": "genre",
-                            "placeholder":"<genre>",
-                            "scope": "local"
-                        }
-                    ]
-                }
-            ]
-        },
-        "15": {
-            "intent": "Provide the library manager.",
-            "source": "25",
-            "abstractions": [
-                {
-                    "id": "16",
-                    "intent": "Create book shelf"
-                },
-                {
-                    "id": "17",
-                    "intent": "Begin accepting book details and sort into shelf.",
+                    "intent":"Place the books form the basket into the shelf",
                     "type": "independent_while",
                     "abstractions": [
                         {
-                            "id": "18",
-                            "intent": "Accept book details",
-                            "type": "function_call",
-                            "target": "10",
-                            "constraint": [
-                                {
-                                    "name": "book_details",
-                                    "key":"name",
-                                    "scope":"local",
-                                    "type":"minLength",
-                                    "value": 1
-                                }
-                            ]
+                            "id": "4",
+                            "intent": "Get a book from the basket"
+                            
                         },
                         {
-                            "id": "19",
-                            "intent": "Place book on the shelf",
-                            "type": "function_call",
-                            "target": "2"
+                            "id": "5",
+                            "intent": "Display the book information"                            
                         },
                         {
-                            "id": "20",
-                            "intent": "Ask the user if they want to continue"
+                            "id": "6",
+                            "intent": "Get the first letter of the book"                            
                         },
                         {
-                            "id": "21",
-                            "intent": "The user chose to quit.",
-                            "type": "conditional_branch",
+                            "id": "7",
+                            "intent": "Get the first letter of the book" ,
                             "abstractions": [
                                 {
-                                    "id": "22",
-                                    "intent": "Terminate program."
+                                    "id":"8",
+                                    "intent":"Create spot for book on shelf"
+                                }
+                            ]                          
+                        },
+                        {
+                            "id": "9",
+                            "intent": "Acknowledge that slot alrady exists"
+                        },
+                        {
+                            "id": "10",
+                            "intent": "Add book to shelf"
+                        },
+                        {
+                            "id": "11",
+                            "intent": "Return book shelf"
+                        }
+                    ]
+                }
+            ]
+        },
+        "12": {
+            "intent": "Accept the book and return the name and genre.",
+            "source": "23",
+            "abstractions": [
+                {
+                    "id": "13",
+                    "intent": "Request book information."
+                },
+                {
+                    "id": "14",
+                    "intent": "Prompt and accept book name"
+                },
+                {
+                    "id": "15",
+                    "intent": "Prompt and accept for book genre"
+                },
+                {
+                    "id": "16",
+                    "intent": "Return the name <name> and genre <genre>."
+                }
+            ]
+        },
+        "17": {
+            "intent": "Start the library manager.",
+            "source": "36",
+            "abstractions": [
+                {
+                    "id": "18",
+                    "intent": "Create the bookshelf."
+                },
+                {
+                    "id": "19",
+                    "intent": "Create the basket."
+                },
+                {
+                    "id": "20",
+                    "intent": "Start Menu",
+                    "abstractions": [
+                        {
+                            "id": "21",
+                            "intent": "Prompt user for choice."
+                        },
+                        {
+                            "id": "22",
+                            "intent": "The user chose to add a book",
+                            "abstractions": [
+                                {
+                                    "id": "23",
+                                    "type": "function_call",
+                                    "target": "12",
+                                    "intent": "Accept a book"
+                                },
+                                {
+                                    "id": "24",
+                                    "intent": "Add book to basket"
+                                },
+                                {
+                                    "id": "25",
+                                    "intent": "Continue to main menu."
                                 }
                             ]
+                        },
+                        {
+                            "id": "26",
+                            "intent": "The user chose place the books on the shelf.",
+                            "abstractions": [
+                                {
+                                    "id": "27",
+                                    "type": "function_call",
+                                    "target": "2",
+                                    "intent": "Place the books in the basket on the shelf."
+                                },
+                                {
+                                    "id": "28",
+                                    "intent": "Continue to main menu."
+                                }
+                            ]
+                        },
+                        {
+                            "id": "29",
+                            "intent": "The user chose to display the shelf and basket.",
+                            "abstractions": [
+                                {
+                                    "id": "30",
+                                    "intent": "Display the shelf"
+                                },
+                                {
+                                    "id": "31",
+                                    "intent": "Display the basket"
+                                },
+                                {
+                                    "id": "32",
+                                    "intent": "Continue to main menu."
+                                }
+                            ]
+                        },
+                        {
+                            "id": "33",
+                            "intent": "The user chose to end the program"
                         }
                     ]
                 },
                 {
-                    "id": "23",
-                    "intent": "Display message confirming exit."
+                    "id":"34",
+                    "intent": "Confirm progarm termination"
                 }
             ]
         }
