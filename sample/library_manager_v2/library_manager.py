@@ -71,7 +71,6 @@ def library_manager():
             "\nResponse:"
         ).lower()
 
-
         '''{"type":"adli_abstraction_id","value":"22"}'''
         if response == "a":
 
@@ -104,17 +103,20 @@ def library_manager():
 
             '''{"type":"adli_abstraction_id","value":"32"}'''
             continue
-    
-        '''{"type":"adli_abstraction_id","value":"33"}'''
-        break
 
-    '''{"type":"adli_abstraction_id","value":"34"}'''
+        '''{"type":"adli_abstraction_id","value":"33"}'''
+        if response != "c" or response != "d" or response != "p":
+        
+            '''{"type":"adli_abstraction_id","value":"34"}'''
+            break
+
+    '''{"type":"adli_abstraction_id","value":"35"}'''
     print("\nExiting library manager, goodbye.")
 
 
-'''{"type":"adli_abstraction_id","value":"35"}'''
+'''{"type":"adli_abstraction_id","value":"36"}'''
 if __name__ == "__main__":
 
-    '''{"type":"adli_abstraction_id","value":"36"}'''
+    '''{"type":"adli_abstraction_id","value":"37"}'''
     sys.exit(library_manager())
-    
+     

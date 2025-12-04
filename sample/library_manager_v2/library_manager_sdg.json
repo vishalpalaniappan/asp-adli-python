@@ -9,12 +9,12 @@
                     "intent": "Import the sys library."
                 },
                 {
-                    "id": "35",
+                    "id": "36",
                     "intent": "Script is being run directly.",
                     "type": "conditional",
                     "abstractions": [
                         {
-                            "id": "36",
+                            "id": "37",
                             "intent": "Start the library manager.",
                             "type": "function_call",
                             "target": "17"
@@ -26,10 +26,10 @@
         "2": {
             "intent": "Place the books from the basket onto the shelf.",
             "source": "27",
-            "abstractons": [
+            "abstractions": [
                 {
                     "id": "3",
-                    "intent":"Place the books form the basket into the shelf",
+                    "intent":"While there are books in the basket.",
                     "type": "independent_while",
                     "abstractions": [
                         {
@@ -47,7 +47,7 @@
                         },
                         {
                             "id": "7",
-                            "intent": "Get the first letter of the book" ,
+                            "intent": "There is no spot for the book on the shelf." ,
                             "abstractions": [
                                 {
                                     "id":"8",
@@ -116,6 +116,7 @@
                         {
                             "id": "22",
                             "intent": "The user chose to add a book",
+                            "type": "conditional_branch",
                             "abstractions": [
                                 {
                                     "id": "23",
@@ -136,6 +137,7 @@
                         {
                             "id": "26",
                             "intent": "The user chose place the books on the shelf.",
+                            "type": "conditional_branch",
                             "abstractions": [
                                 {
                                     "id": "27",
@@ -152,6 +154,7 @@
                         {
                             "id": "29",
                             "intent": "The user chose to display the shelf and basket.",
+                            "type": "conditional_branch",
                             "abstractions": [
                                 {
                                     "id": "30",
@@ -169,12 +172,19 @@
                         },
                         {
                             "id": "33",
-                            "intent": "The user chose to end the program"
+                            "type": "conditional_branch",
+                            "intent": "The user chose to end the program",
+                            "abstractions": [
+                                {
+                                    "id": "34",
+                                    "intent": "Exit the menu."
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "id":"34",
+                    "id":"35",
                     "intent": "Confirm progarm termination"
                 }
             ]
