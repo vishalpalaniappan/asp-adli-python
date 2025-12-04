@@ -11,7 +11,7 @@
                 {
                     "id": "36",
                     "intent": "Script is being run directly.",
-                    "type": "conditional",
+                    "type": "conditional_branch",
                     "abstractions": [
                         {
                             "id": "37",
@@ -47,6 +47,7 @@
                         {
                             "id": "7",
                             "intent": "There is no spot for the book on the shelf." ,
+                            "type": "conditional_branch",
                             "abstractions": [
                                 {
                                     "id":"8",
@@ -56,6 +57,7 @@
                         },
                         {
                             "id": "9",
+                            "type": "conditional_branch",
                             "intent": "Acknowledge that slot for book already exists"
                         },
                         {
