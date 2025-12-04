@@ -6,6 +6,7 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
 
     '''{"type":"adli_abstraction_id","value":"3"}'''
     while len(basket) > 0:
+        
         '''{"type":"adli_abstraction_id","value":"4"}'''
         book = basket.pop()
 
@@ -15,6 +16,7 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
         '''{"type":"adli_abstraction_id","value":"6"}'''
         firstLetter = book['name'][0].upper()
 
+        '''{"type":"adli_abstraction_id","value":"7"}'''
         if (firstLetter not in book_shelf):
             '''{"type":"adli_abstraction_id","value":"8"}'''
             book_shelf[firstLetter] = []
@@ -57,7 +59,7 @@ def library_manager():
     '''{"type":"adli_abstraction_id","value":"20"}'''
     while True:
         
-        '''{"type":"adli_abstraction_id","value":"23"}'''
+        '''{"type":"adli_abstraction_id","value":"21"}'''
         response = input(
             "\n==========================\n"\
             "         Menu:\n" \
@@ -69,35 +71,56 @@ def library_manager():
             "\nResponse:"
         ).lower()
 
+
+        '''{"type":"adli_abstraction_id","value":"22"}'''
         if response == "a":
-            '''{"type":"adli_abstraction_id","value":"21"}'''
+
+            '''{"type":"adli_abstraction_id","value":"23"}'''
             book_details = accept_book()
 
-            '''{"type":"adli_abstraction_id","value":"22"}'''
+            '''{"type":"adli_abstraction_id","value":"24"}'''
             basket.append(book_details)
-
-        elif response == "p":
+            
             '''{"type":"adli_abstraction_id","value":"25"}'''
+            print("Book Shelf:", book_shelf)   
+      
+            '''{"type":"adli_abstraction_id","value":"26"}'''
+            continue
+
+        '''{"type":"adli_abstraction_id","value":"27"}'''
+        if response == "p":
+
+            '''{"type":"adli_abstraction_id","value":"28"}'''
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
-
-        elif response == "d":
-            '''{"type":"adli_abstraction_id","value":"25"}'''
-            print("\nBasket:", basket)
-
-            '''{"type":"adli_abstraction_id","value":"25"}'''
+            
+            '''{"type":"adli_abstraction_id","value":"29"}'''
             print("Book Shelf:", book_shelf)
 
-        else:
-            '''{"type":"adli_abstraction_id","value":"26"}'''
-            break
+            '''{"type":"adli_abstraction_id","value":"30"}'''
+            continue
 
-    '''{"type":"adli_abstraction_id","value":"27"}'''
+        '''{"type":"adli_abstraction_id","value":"31"}'''
+        if response == "d":
+
+            '''{"type":"adli_abstraction_id","value":"32"}'''
+            print("\nBook Shelf:", book_shelf)
+
+            '''{"type":"adli_abstraction_id","value":"33"}'''
+            print("Basket:", basket)
+
+            '''{"type":"adli_abstraction_id","value":"34"}'''
+            continue
+    
+        '''{"type":"adli_abstraction_id","value":"35"}'''
+        break
+
+    '''{"type":"adli_abstraction_id","value":"36"}'''
     print("\nExiting library manager, goodbye.")
 
 
-'''{"type":"adli_abstraction_id","value":"28"}'''
+'''{"type":"adli_abstraction_id","value":"37"}'''
 if __name__ == "__main__":
 
-    '''{"type":"adli_abstraction_id","value":"25"}'''
+    '''{"type":"adli_abstraction_id","value":"38"}'''
     sys.exit(library_manager())
     
