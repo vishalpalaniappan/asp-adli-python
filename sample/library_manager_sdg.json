@@ -119,13 +119,6 @@
                 {
                     "id": "12",
                     "intent": "Prompt and accept book name",
-                    "variables": [
-                        {
-                            "name": "name",
-                            "placeholder":"<name>",
-                            "scope": "local"
-                        }
-                    ],
                     "constraint": [
                         {
                             "name": "name",
