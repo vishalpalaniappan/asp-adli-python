@@ -11,4 +11,4 @@ interface -> ingestor -> orchestrator -->|----> Node A
                                          |----> Node D
 
 
-Through the instrumentation, distributed traces will be extracted and a behavioral map will be extracted.
+Through the instrumentation, distributed traces will be observed and a behavioral map will be created.
