@@ -1,0 +1,14 @@
+This folder will contain a fully instrumented distributed image processor. 
+It will use docker contains to simulate a distributed environment. 
+
+                                         
+interface -> ingestor -> orchestrator -->|----> Node A
+    |                       |            |
+    |                       |            |----> Node B
+    -------------------- Database<------>|               
+                            |            |----> Node C
+                            |------------|
+                                         |----> Node D
+
+
+Through the instrumentation, distributed traces will be extracted and a behavioral map will be extracted.
