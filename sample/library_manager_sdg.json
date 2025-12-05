@@ -127,7 +127,7 @@
                             "value": 1,
                             "failures": ["4"],
                             "rootcause": {
-                                "4": "The root cause of failure was that a book with no name was accepted with the intention of using the first letter of the name to place it in the correct slot on the book shelf. As a result, the program failed when it attempted to access the first letter of the book."
+                                "4": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
                             }
                         }
                     ]
@@ -169,8 +169,8 @@
                             "value": "object",
                             "failures": ["6","9"],
                             "rootcause": {
-                                "6": "The root cause of failure was that book shelf was initialized as an array when in reality it is used as an object to create slots for the books to be placed on the shelf. As a result, the program failed when it attempted to create a slot for the book.",
-                                "9": "The root cause of failure was that book shelf was initialized as an array when in reality it is used as an object to create slots for the books to be placed on the shelf. As a result, the program failed when it attempted to add a book to the slot."
+                                "6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
+                                "9": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
                             }
                         }
                     ]
