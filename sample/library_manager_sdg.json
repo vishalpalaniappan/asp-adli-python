@@ -127,7 +127,7 @@
                             "value": 1,
                             "failures": ["4"],
                             "rootcause": {
-                                "4": "The root cause of failure was that a book was accepted with no name with the intention of using the first letter of the name to place it in the correct slot on the book shelf. As a result, the program failed when it attempted to access the first letter of the book."
+                                "4": "The root cause of failure was that a book with no name was accepted with the intention of using the first letter of the name to place it in the correct slot on the book shelf. As a result, the program failed when it attempted to access the first letter of the book."
                             }
                         }
                     ]
