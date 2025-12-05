@@ -132,7 +132,10 @@
                             "scope": "local",
                             "type":"minLength",
                             "value": 1,
-                            "failures": ["4"]
+                            "failures": ["4"],
+                            "rootcause": {
+                                "4": "The root cause of failure was that I accepted a book with no name with the intention of using the first letter of the name to place it in the correct slot on the book shelf. As a result, the program failed when it attempted to access the first letter of the book."
+                            }
                         }
                     ]
                 },
@@ -171,7 +174,11 @@
                             "scope": "local",
                             "type":"is_object",
                             "value": "object",
-                            "failures": ["6","9"]
+                            "failures": ["6","9"],
+                            "rootcause": {
+                                "6": "The root cause of failure was that book shelf was initialized as an array when in reality it is used as an object to create slots for the books to be placed on the shelf. As a result, the program failed when it attempted to create a slot for the book.",
+                                "9": "The root cause of failure was that book shelf was initialized as an array when in reality it is used as an object to create slots for the books to be placed on the shelf. As a result, the program failed when it attempted to add a book to the slot."
+                            }
                         }
                     ]
                 },
