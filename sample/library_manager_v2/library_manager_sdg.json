@@ -4,6 +4,8 @@
     "meta": "library_manager_meta.json",
     "modules": {
         "0": {
+            "name": "Global Path",
+            "type": "function",
             "abstractions": [
                 {
                     "id": "1"
@@ -20,6 +22,8 @@
             ]
         },
         "2": {
+            "name": "Place Books On Shelf",
+            "type": "function",
             "abstractions": [
                 {
                     "id": "3",
@@ -58,6 +62,8 @@
             ]
         },
         "12": {
+            "name": "Acccept Book Information",
+            "type": "function",
             "source": "23",
             "abstractions": [
                 {
@@ -75,7 +81,8 @@
             ]
         },
         "17": {
-            "intent": "Start the library manager.",
+            "name": "Library Manager",
+            "type": "function",
             "source": "36",
             "abstractions": [
                 {

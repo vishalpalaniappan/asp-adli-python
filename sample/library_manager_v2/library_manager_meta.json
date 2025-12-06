@@ -1,6 +1,7 @@
 {
     "0": {
         "intent": "Global path to initialize the book manager.",
+        "name": "Place_Books_On_Shelf",
         "type": "function",
         "start": true
     },
@@ -19,7 +20,7 @@
     "2": {
         "intent": "Place the books from the basket onto the shelf.",
         "type": "function",
-        "name": "Place_Books_On_Shelf",
+        "name": "Place Books On Shelf",
         "source": "27"
     },
     "3": {
