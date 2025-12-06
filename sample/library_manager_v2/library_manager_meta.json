@@ -19,6 +19,7 @@
     "2": {
         "intent": "Place the books from the basket onto the shelf.",
         "type": "function",
+        "name": "Place_Books_On_Shelf",
         "source": "27"
     },
     "3": {
@@ -53,6 +54,8 @@
     },
     "12": {
         "intent": "Accept the book and return the name and genre.",
+        "type": "function",
+        "name": "Acccept Book Information",
         "source": "23"
     },
     "13": {
@@ -69,6 +72,8 @@
     },
     "17": {
         "intent": "Start the library manager.",
+        "type": "function",
+        "name": "Library Manager",
         "source": "36"
     },
     "18": {
