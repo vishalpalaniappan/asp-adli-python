@@ -1,0 +1,135 @@
+{
+    "0": {
+        "intent": "Global path to initialize the book manager.",
+        "type": "function",
+        "start": true
+    },
+    "1": {
+        "intent": "Import the sys library."
+    },
+    "36": {
+        "intent": "Script is being run directly.",
+        "type": "conditional_branch"
+    },
+    "37": {
+        "intent": "Start the library manager.",
+        "type": "function_call",
+        "target": "17"
+    },
+    "2": {
+        "intent": "Place the books from the basket onto the shelf.",
+        "type": "function",
+        "source": "27"
+    },
+    "3": {
+        "intent": "There are more books in the basket.",
+        "type": "while"
+    },
+    "4": {
+        "intent": "Get a book from the basket"
+    },
+    "5": {
+        "intent": "Display the book information"  
+    },
+    "6": {
+        "intent": "Get the first letter of the book"  
+    },
+    "7": {
+        "intent": "There is no spot for the book on the shelf.",
+        "type": "conditional_branch"
+    },
+    "8": {
+        "intent": "Create spot for book on shelf"
+    },
+    "9": {
+        "intent": "Acknowledge that slot for book already exists",
+        "type": "conditional_branch"
+    },
+    "10": {
+        "intent": "Add book to shelf"
+    },
+    "11": {
+        "intent": "Return book shelf"
+    },
+    "12": {
+        "intent": "Accept the book and return the name and genre.",
+        "source": "23"
+    },
+    "13": {
+        "intent": "Display request for book information."
+    },
+    "14": {
+        "intent": "Prompt and accept book name"
+    },
+    "15": {
+        "intent": "Prompt and accept for book genre"
+    },
+    "16": {
+        "intent": "Return the name <name> and genre <genre>."
+    },
+    "17": {
+        "intent": "Start the library manager.",
+        "source": "36"
+    },
+    "18": {
+        "intent": "Create the bookshelf."
+    },
+    "19": {
+        "intent": "Create the basket."
+    },
+    "20": {
+        "intent": "Display Menu",
+        "type": "while"
+    },
+    "21": {
+        "intent": "Prompt user for choice."
+    },
+    "22": {
+        "intent": "The user chose to add a book",
+        "type": "conditional_branch"
+    },
+    "23": {
+        "intent": "Accept a book"
+    },
+    "24": {
+        "intent": "Add book to basket"
+    },
+    "25": {
+        "intent": "Continue to main menu."
+    },
+    "26": {
+        "intent": "The user chose place the books on the shelf.",
+        "type": "conditional_branch"
+    },
+    "27": {
+        "intent": "Place the books in the basket on the shelf.",
+        "type": "function_call",
+        "target": "2"
+    },
+    "28": {
+        "intent": "Continue to main menu."
+    },
+    "29": {
+        "intent": "The user chose to display the shelf and basket.",
+        "type": "conditional_branch"
+    },
+    "30": {
+        "intent": "Display the shelf"
+    },
+    "31": {
+        "intent": "Display the basket"
+    },
+    "32": {
+        "intent": "Continue to main menu."
+    },
+    "33": {
+        "intent": "The user chose to end the program",
+        "type": "conditional_branch"
+    },
+    "34": {
+        "intent": "Exit the menu."
+    },
+    "35": {
+        "intent": "Confirm progarm termination"
+    }
+}
