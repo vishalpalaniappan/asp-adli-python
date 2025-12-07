@@ -4,6 +4,7 @@ from clp_logging.handlers import ClpKeyValuePairStreamHandler
 
 import traceback
 import threading
+import sys
 import json
 import time
 import os
@@ -143,6 +144,7 @@ class AdliLogger:
         '''
         self.count += 1
         self.exceptionLogCount += 1
+
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),

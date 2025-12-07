@@ -10,7 +10,7 @@
                 },
                 {
                     "id": "24",
-                    "intent": "Script is being run directly.",
+                    "intent": "Check if script is being run directly.",
                     "type": "conditional",
                     "abstractions": [
                         {
@@ -56,7 +56,7 @@
                 },
                 {
                     "id": "5",
-                    "intent": "Slot for letter <firstLetter> does not exist on shelf.",
+                    "intent": "Check if slot for letter <firstLetter> exists.",
                     "type": "conditional_branch",
                     "variables": [
                         {
@@ -127,7 +127,7 @@
                             "value": 1,
                             "failures": ["4"],
                             "rootcause": {
-                                "4": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                                "4": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
                             }
                         }
                     ]
@@ -167,10 +167,19 @@
                             "scope": "local",
                             "type":"is_object",
                             "value": "object",
-                            "failures": ["6","9"],
+                            "failures": ["6"],
                             "rootcause": {
-                                "6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
-                                "9": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                                "6": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book."
+                            }
+                        },
+                        {
+                            "name": "book_shelf",
+                            "scope": "local",
+                            "type":"is_not_null",
+                            "value": "object",
+                            "failures": ["5"],
+                            "rootcause": {
+                                "5": "The root cause of failure was that the bookshelf was initialized as None with the intention of checking to see if a key exists in it for placing the books in the relevant slot. This resulted in a failure when attempting to check if a slot exists for the firstLetter on the bookshelf because the in operator requires an iterable and the bookshelf was None."
                             }
                         }
                     ]
@@ -198,7 +207,7 @@
                         },
                         {
                             "id": "21",
-                            "intent": "The user chose to quit.",
+                            "intent": "Check if the user chose to quit.",
                             "type": "conditional_branch",
                             "abstractions": [
                                 {
