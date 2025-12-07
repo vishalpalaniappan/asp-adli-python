@@ -127,7 +127,7 @@
                             "value": 1,
                             "failures": ["4"],
                             "rootcause": {
-                                "4": "The root cause of failure was that an empty string was accepted as a book name, but the deisign intended to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                                "4": "The root cause of failure was that an empty string was accepted as a book name, but the design intended to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
                             }
                         }
                     ]
