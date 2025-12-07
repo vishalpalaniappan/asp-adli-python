@@ -127,7 +127,7 @@
                             "value": 1,
                             "failures": ["4"],
                             "rootcause": {
-                                "4": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                                "4": "The root cause of failure was that an empty string was accepted as a book name, but the deisign intended to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
                             }
                         }
                     ]
@@ -167,10 +167,9 @@
                             "scope": "local",
                             "type":"is_object",
                             "value": "object",
-                            "failures": ["6","9"],
+                            "failures": ["6"],
                             "rootcause": {
-                                "6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
-                                "9": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                                "6": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to create a slot for the book."
                             }
                         }
                     ]
