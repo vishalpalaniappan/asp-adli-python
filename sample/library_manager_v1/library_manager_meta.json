@@ -5,25 +5,25 @@
         "type": "global",
         "start": true
     },
-    "1": {
+    "0-1": {
         "intent": "Import the sys library."
     },
-    "24": {
+    "0-2": {
         "intent": "Script is being run directly.",
         "type": "conditional_branch"
     },
-    "25": {
+    "0-2-1": {
         "intent": "Start the library manager.",
         "type": "function_call",
-        "target": "15"
+        "target": "3"
     },
-    "2" : {
+    "1" : {
         "intent": "Places book on shelf.",
         "type": "function",
         "name": "Place Books On Shelf",
-        "source": "18"
+        "source": "3-2-2"
     },
-    "3" : {
+    "1-1" : {
         "intent": "Prints details for book named <name> with genre <genre>.",
         "variables": [
             {
@@ -38,7 +38,7 @@
             }
         ]
     },
-    "4": {
+    "1-2": {
         "intent": "Get first letter of book named <name> to create slot for book on shelf.",
         "variables": [
             {
@@ -48,7 +48,7 @@
             }
         ]
     },
-    "5": {
+    "1-3": {
         "intent": "Slot for letter <firstLetter> does not exist on shelf.",
         "variables": [
             {
@@ -58,7 +58,7 @@
             }
         ]
     },
-    "6": {
+    "1-3-1": {
         "intent": "Create slot for book on shelf using first letter <firstLetter>.",
         "variables": [
             {
@@ -68,7 +68,7 @@
             }
         ]
     },
-    "8": {
+    "1-4": {
         "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
         "type": "conditional_branch",
         "variables": [
@@ -79,7 +79,7 @@
             }
         ]
     },
-    "9": {
+    "1-5": {
         "intent": "Place book named <name> on shelf.",
         "variables": [
             {
@@ -89,19 +89,19 @@
             }
         ]
     },
-    "26": {
+    "1-6": {
         "intent": "Place book named <name> on shelf."
     },
-    "10": {
+    "2": {
         "intent": "Accept the book and return the name and genre.",
         "type": "function",
         "name": "Acccept Book Information",
-        "source": "18"
+        "source": "3-2-2"
     },
-    "11": {
+    "2-1": {
         "intent": "Display request for book information."
     },
-    "12": {
+    "2-2": {
         "intent": "Prompt and accept book name",
         "constraint": [
             {
@@ -116,10 +116,10 @@
             }
         ]
     },
-    "13": {
+    "2-3": {
         "intent": "Prompt and accept for book genre"
     },
-    "14": {
+    "2-4": {
         "intent": "Return the name <name> and genre <genre>.",
         "variables": [
             {
@@ -134,13 +134,13 @@
             }
         ]
     },
-    "15": {
+    "3": {
         "intent": "Start the library manager.",
         "type": "function",
         "name": "Library Manager",
-        "source": "36"
+        "source": "0-2-1"
     },
-    "16": {
+    "3-1": {
         "intent": "Create the bookshelf.",
         "constraint": [
             {
@@ -156,33 +156,32 @@
             }
         ]
     },
-    "17": {
+    "3-2": {
         "intent": "Begin accepting book details and sort into shelf.",
         "type": "independent_while",
-        "name": "Library Manager",
-        "source": "36"
+        "name": "Library Manager"
     },
-    "18": {
+    "3-2-1": {
         "intent": "Accept book details",
-        "type": "function_call",
-        "target": "10"
-    },
-    "19": {
-        "intent": "Place book on the shelf",
         "type": "function_call",
         "target": "2"
     },
-    "20": {
+    "3-2-2": {
+        "intent": "Place book on the shelf",
+        "type": "function_call",
+        "target": "1"
+    },
+    "3-2-3": {
         "intent": "Ask the user if they want to continue"
     },
-    "21": {
+    "3-2-4": {
         "intent": "The user chose to quit.",
         "type": "conditional_branch"
     },
-    "22": {
+    "3-2-4-1": {
         "intent": "Terminate program."
     },
-    "23": {
+    "3-3": {
         "intent": "Display message confirming exit."
     }
 }
