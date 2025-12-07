@@ -61,9 +61,7 @@ class ProgramProcessor:
         except json.JSONDecodeError:
             print("SDG file is not a valid JSON for", self.sourceFile)
             sdg = {}
-        
-        # Get the Semantic Design Graph (SDG) meta file
-        no_ext, _ = os.path.splitext(self.sourceFile)
+        # Get the
         sdg_path = no_ext + "_meta.json"
 
         try:
@@ -71,10 +69,10 @@ class ProgramProcessor:
                 sdg_meta = json.loads(f.read())
         except FileNotFoundError:
             print("Could not find SDG metadata file for", self.sourceFile)
-            sdg = {}
+            sdg_meta = {}
         except json.JSONDecodeError:
             print("SDG metadata file is not a valid JSON for", self.sourceFile)
-            sdg = {}
+            sdg_meta = {}
 
         # Process every file found in the program
         for currFilePath in files:
