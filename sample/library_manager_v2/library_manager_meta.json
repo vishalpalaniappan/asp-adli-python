@@ -1,8 +1,8 @@
 {
     "0": {
         "intent": "Global path to initialize the book manager.",
-        "name": "Place_Books_On_Shelf",
-        "type": "function",
+        "name": "global",
+        "type": "global",
         "start": true
     },
     "1": {

@@ -1,0 +1,188 @@
+{
+    "0": {
+        "intent": "Global path to initialize the book manager.",
+        "name": "global",
+        "type": "global",
+        "start": true
+    },
+    "1": {
+        "intent": "Import the sys library."
+    },
+    "24": {
+        "intent": "Script is being run directly.",
+        "type": "conditional_branch"
+    },
+    "25": {
+        "intent": "Start the library manager.",
+        "type": "function_call",
+        "target": "15"
+    },
+    "2" : {
+        "intent": "Places book on shelf.",
+        "type": "function",
+        "name": "Place Books On Shelf",
+        "source": "18"
+    },
+    "3" : {
+        "intent": "Prints details for book named <name> with genre <genre>.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            },
+            {
+                "name": "genre",
+                "placeholder":"<genre>",
+                "scope": "local"
+            }
+        ]
+    },
+    "4": {
+        "intent": "Get first letter of book named <name> to create slot for book on shelf.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            }
+        ]
+    },
+    "5": {
+        "intent": "Slot for letter <firstLetter> does not exist on shelf.",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
+    },
+    "6": {
+        "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
+    },
+    "8": {
+        "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
+        "type": "conditional_branch",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
+    },
+    "9": {
+        "intent": "Place book named <name> on shelf.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            }
+        ]
+    },
+    "26": {
+        "intent": "Place book named <name> on shelf."
+    },
+    "10": {
+        "intent": "Accept the book and return the name and genre.",
+        "type": "function",
+        "name": "Acccept Book Information",
+        "source": "18"
+    },
+    "11": {
+        "intent": "Display request for book information."
+    },
+    "12": {
+        "intent": "Prompt and accept book name",
+        "constraint": [
+            {
+                "name": "name",
+                "scope": "local",
+                "type":"minLength",
+                "value": 1,
+                "failures": ["4"],
+                "rootcause": {
+                    "4": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                }
+            }
+        ]
+    },
+    "13": {
+        "intent": "Prompt and accept for book genre"
+    },
+    "14": {
+        "intent": "Return the name <name> and genre <genre>.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            },
+            {
+                "name": "genre",
+                "placeholder":"<genre>",
+                "scope": "local"
+            }
+        ]
+    },
+    "15": {
+        "intent": "Start the library manager.",
+        "type": "function",
+        "name": "Library Manager",
+        "source": "36"
+    },
+    "16": {
+        "intent": "Create the bookshelf.",
+        "constraint": [
+            {
+                "name": "book_shelf",
+                "scope": "local",
+                "type":"is_object",
+                "value": "object",
+                "failures": ["6","9"],
+                "rootcause": {
+                    "6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
+                    "9": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                }
+            }
+        ]
+    },
+    "17": {
+        "intent": "Begin accepting book details and sort into shelf.",
+        "type": "independent_while",
+        "name": "Library Manager",
+        "source": "36"
+    },
+    "18": {
+        "intent": "Accept book details",
+        "type": "function_call",
+        "target": "10"
+    },
+    "19": {
+        "intent": "Place book on the shelf",
+        "type": "function_call",
+        "target": "2"
+    },
+    "20": {
+        "intent": "Ask the user if they want to continue"
+    },
+    "21": {
+        "intent": "The user chose to quit.",
+        "type": "conditional_branch"
+    },
+    "22": {
+        "intent": "Terminate program."
+    },
+    "23": {
+        "intent": "Display message confirming exit."
+    }
+}
