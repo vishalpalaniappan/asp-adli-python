@@ -150,8 +150,8 @@
                 "value": "object",
                 "failures": ["1-3-1","1-5"],
                 "rootcause": {
-                    "1-3-1": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
-                    "1-5": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                    "1-3-1": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to create a slot for the book.",
+                    "1-5": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to add a book to the slot."
                 }
             }
         ]

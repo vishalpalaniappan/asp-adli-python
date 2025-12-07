@@ -99,14 +99,27 @@
                 "value": "object",
                 "failures": ["1-1-4-1","1-1-6"],
                 "rootcause": {
-                    "1-1-4-1": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
-                    "1-1-6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                    "1-1-4-1": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to create a slot for the book.",
+                    "1-1-6": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to add a book to the slot."
                 }
             }
         ]
     },
     "3-2": {
-        "intent": "Create the basket."
+        "intent": "Create the basket.",
+        "constraint": [
+            {
+                "name": "book_shelf",
+                "scope": "local",
+                "type":"is_array",
+                "value": "array",
+                "failures": ["3-3-2-2","1-1"],
+                "rootcause": {
+                    "3-3-2-2": "The root cause of failure was that the basket was not initialize as an array with the intention of using it as an array. As a result, the program failed when it attempted to add a book to the basket.",
+                    "1-1": "The root cause of failure was that the basket was not initialize as an array with the intention of using it as an array. As a result, the program failed when it attempted to check how many books there are in the basket."
+                }
+            }
+        ]
     },
     "3-3": {
         "intent": "Display Menu",
