@@ -144,22 +144,11 @@ class AdliLogger:
         '''
         self.count += 1
         self.exceptionLogCount += 1
-        
-
-        exc_type, exc_value, tb = sys.exc_info()
-        frame = traceback.extract_tb(tb)[-1]
-        relative_file = os.path.relpath(frame.filename)
-        print(frame.filename)
-        print(relative_file)
-        print(frame.lineno)
 
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "value": traceback.format_exc(),
-            "relativePath": relative_file,
-            "path": frame.filename,
-            "injectedLineno": frame.lineno
+            "value": traceback.format_exc()
         }
         logger.info(exceptionObj)
 
