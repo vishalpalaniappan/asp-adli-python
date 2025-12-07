@@ -65,7 +65,7 @@
             ]
         },
         "2": {
-            "name": "Acccept Book Information",
+            "name": "Accept Book Information",
             "type": "function",
             "source": ["3-3-2-1"],
             "abstractions": [
