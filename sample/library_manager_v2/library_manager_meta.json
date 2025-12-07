@@ -57,7 +57,7 @@
         "intent": "Accept the book and return the name and genre.",
         "type": "function",
         "name": "Acccept Book Information",
-        "source": "23"
+        "source": ["3-3-2-1"]
     },
     "2-1": {
         "intent": "Display request for book information."
@@ -75,7 +75,7 @@
         "intent": "Start the library manager.",
         "type": "function",
         "name": "Library Manager",
-        "source": "36"
+        "source": ["0-2-1"]
     },
     "3-1": {
         "intent": "Create the bookshelf."
@@ -112,7 +112,7 @@
     "3-3-3-1": {
         "intent": "Place the books in the basket on the shelf.",
         "type": "function_call",
-        "target": "2"
+        "target": "1"
     },
     "3-3-3-2": {
         "intent": "Continue to main menu."
