@@ -175,7 +175,7 @@
                         {
                             "name": "book_shelf",
                             "scope": "local",
-                            "type":"is_null",
+                            "type":"is_not_null",
                             "value": "object",
                             "failures": ["5"],
                             "rootcause": {
