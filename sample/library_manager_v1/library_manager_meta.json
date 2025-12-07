@@ -90,7 +90,7 @@
         ]
     },
     "1-6": {
-        "intent": "Place book named <name> on shelf."
+        "intent": "Return updated bookshelf."
     },
     "2": {
         "intent": "Accept the book and return the name and genre.",
@@ -109,9 +109,9 @@
                 "scope": "local",
                 "type":"minLength",
                 "value": 1,
-                "failures": ["4"],
+                "failures": ["1-2"],
                 "rootcause": {
-                    "4": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                    "1-2": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
                 }
             }
         ]
@@ -148,10 +148,10 @@
                 "scope": "local",
                 "type":"is_object",
                 "value": "object",
-                "failures": ["6","9"],
+                "failures": ["1-3-1","1-5"],
                 "rootcause": {
-                    "6": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
-                    "9": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
+                    "1-3-1": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to create a slot for the book.",
+                    "1-5": "The root cause of failure was that the bookshelf was initialized as an array when it should be used as an object to create slots for the books to be placed on the bookshelf. As a result, the program failed when it attempted to add a book to the slot."
                 }
             }
         ]
