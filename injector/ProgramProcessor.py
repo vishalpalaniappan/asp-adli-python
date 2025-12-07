@@ -46,7 +46,9 @@ class ProgramProcessor:
         logTypeCount = 0
         programMetadata = {}
         sdg = {}
-        # Get the semantic dsign graph if it exists
+        sdg_meta = {}
+        #
+        # Get the Semantic Design Graph (SDG)
         no_ext, _ = os.path.splitext(self.sourceFile)
         sdg_path = no_ext + "_sdg.json"
 
@@ -54,10 +56,24 @@ class ProgramProcessor:
             with open(sdg_path, "r") as f:
                 sdg = json.loads(f.read())
         except FileNotFoundError:
-            print("Could not find abstraction metadata file for", self.sourceFile)
+            print("Could not find SDG file for", self.sourceFile)
             sdg = {}
         except json.JSONDecodeError:
-            print("Abstraction metadata file is not a valid JSON for", self.sourceFile)
+            print("SDG file is not a valid JSON for", self.sourceFile)
+            sdg = {}
+        
+        # Get the Semantic Design Graph (SDG) meta file
+        no_ext, _ = os.path.splitext(self.sourceFile)
+        sdg_path = no_ext + "_meta.json"
+
+        try:
+            with open(sdg_path, "r") as f:
+                sdg_meta = json.loads(f.read())
+        except FileNotFoundError:
+            print("Could not find SDG metadata file for", self.sourceFile)
+            sdg = {}
+        except json.JSONDecodeError:
+            print("SDG metadata file is not a valid JSON for", self.sourceFile)
             sdg = {}
 
         # Process every file found in the program
@@ -109,7 +125,8 @@ class ProgramProcessor:
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
             "adliInfo": self.adliInfo,
-            "sdg": sdg
+            "sdg": sdg,
+            "sdg_meta": sdg_meta
         }
 
         try:
