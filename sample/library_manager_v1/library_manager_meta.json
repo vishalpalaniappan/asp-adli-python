@@ -111,7 +111,7 @@
                 "value": 1,
                 "failures": ["1-2"],
                 "rootcause": {
-                    "1-2": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                    "1-2": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
                 }
             }
         ]
@@ -148,10 +148,19 @@
                 "scope": "local",
                 "type":"is_object",
                 "value": "object",
-                "failures": ["1-3-1","1-5"],
+                "failures": ["1-3-1"],
                 "rootcause": {
-                    "1-3-1": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to create a slot for the book.",
-                    "1-5": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to add a book to the slot."
+                    "1-3-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book."
+                }
+            },
+            {
+                "name": "book_shelf",
+                "scope": "local",
+                "type":"is_not_null",
+                "value": "object",
+                "failures": ["1-3"],
+                "rootcause": {
+                    "1-3": "The root cause of failure was that the bookshelf was initialized as None with the intention of checking to see if a key exists in it for placing the books in the relevant slot. This resulted in a failure when attempting to check if a slot exists for the firstLetter on the bookshelf because the in operator requires an iterable and the bookshelf was None."
                 }
             }
         ]
