@@ -9,7 +9,7 @@
         "intent": "Import the sys library."
     },
     "0-2": {
-        "intent": "Script is being run directly.",
+        "intent": "Check if script is being run directly.",
         "type": "conditional_branch"
     },
     "0-2-1": {
@@ -49,7 +49,7 @@
         ]
     },
     "1-3": {
-        "intent": "Slot for letter <firstLetter> does not exist on shelf.",
+        "intent": "Check if slot for letter <firstLetter> exists on the shelf.",
         "variables": [
             {
                 "name": "firstLetter",
@@ -184,7 +184,7 @@
         "intent": "Ask the user if they want to continue"
     },
     "3-2-4": {
-        "intent": "The user chose to quit.",
+        "intent": "Check if the user chose to quit.",
         "type": "conditional_branch"
     },
     "3-2-4-1": {
