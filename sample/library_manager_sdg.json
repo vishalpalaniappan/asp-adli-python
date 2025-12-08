@@ -1,0 +1,228 @@
+{
+    "abstractions":{
+        "1": {
+            "intent": "Global path to initialize the book manager.",
+            "start": true,
+            "abstractions": [
+                {
+                    "id": "1",
+                    "intent": "Import the sys library."
+                },
+                {
+                    "id": "24",
+                    "intent": "Check if script is being run directly.",
+                    "type": "conditional",
+                    "abstractions": [
+                        {
+                            "id": "25",
+                            "intent": "Start the library manager.",
+                            "type": "function_call",
+                            "target": "15"
+                        }
+                    ]
+                }
+            ]
+        },
+        "2" : {
+            "intent": "Places book on shelf.",
+            "source": "18",
+            "abstractions": [
+                {
+                    "id": "3",
+                    "intent": "Prints details for book named <name> with genre <genre>.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        },
+                        {
+                            "name": "genre",
+                            "placeholder":"<genre>",
+                            "scope": "local"
+                        }
+                    ]
+                },
+                {
+                    "id": "4",
+                    "intent": "Get first letter of book named <name> to create slot for book on shelf.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        }
+                    ]
+                },
+                {
+                    "id": "5",
+                    "intent": "Check if slot for letter <firstLetter> exists.",
+                    "type": "conditional_branch",
+                    "variables": [
+                        {
+                            "name": "firstLetter",
+                            "placeholder":"<firstLetter>",
+                            "scope": "local"
+                        }
+                    ],
+                    "abstractions": [
+                        {
+                            "id": "6",
+                            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+                            "variables": [
+                                {
+                                    "name": "firstLetter",
+                                    "placeholder":"<firstLetter>",
+                                    "scope": "local"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "8",
+                    "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
+                    "type": "conditional_branch",
+                    "variables": [
+                        {
+                            "name": "firstLetter",
+                            "placeholder":"<firstLetter>",
+                            "scope": "local"
+                        }
+                    ]
+                },                    
+                {
+                    "id": "9",
+                    "intent": "Place book named <name> on shelf.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        }
+                    ]
+                },                    
+                {
+                    "id": "26",
+                    "intent": "Return the updated book shelf."
+                }
+            ]
+        },
+        "10": {
+            "intent": "Accept the book and return the name and genre.",
+            "source": "18",
+            "abstractions": [
+                {
+                    "id": "11",
+                    "intent": "Request book information."
+                },
+                {
+                    "id": "12",
+                    "intent": "Prompt and accept book name",
+                    "constraint": [
+                        {
+                            "name": "name",
+                            "scope": "local",
+                            "type":"minLength",
+                            "value": 1,
+                            "failures": ["4"],
+                            "rootcause": {
+                                "4": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "13",
+                    "intent": "Prompt and accept for book genre"
+                },
+                {
+                    "id": "14",
+                    "intent": "Return the name <name> and genre <genre>.",
+                    "variables": [
+                        {
+                            "name": "name",
+                            "placeholder":"<name>",
+                            "scope": "local"
+                        },
+                        {
+                            "name": "genre",
+                            "placeholder":"<genre>",
+                            "scope": "local"
+                        }
+                    ]
+                }
+            ]
+        },
+        "15": {
+            "intent": "Provide the library manager.",
+            "source": "25",
+            "abstractions": [
+                {
+                    "id": "16",
+                    "intent": "Create book shelf",
+                    "constraint": [
+                        {
+                            "name": "book_shelf",
+                            "scope": "local",
+                            "type":"is_object",
+                            "value": "object",
+                            "failures": ["6"],
+                            "rootcause": {
+                                "6": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book."
+                            }
+                        },
+                        {
+                            "name": "book_shelf",
+                            "scope": "local",
+                            "type":"is_not_null",
+                            "value": "object",
+                            "failures": ["5"],
+                            "rootcause": {
+                                "5": "The root cause of failure was that the bookshelf was initialized as None with the intention of checking to see if a key exists in it for placing the books in the relevant slot. This resulted in a failure when attempting to check if a slot exists for the firstLetter on the bookshelf because the in operator requires an iterable and the bookshelf was None."
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "17",
+                    "intent": "Begin accepting book details and sort into shelf.",
+                    "type": "independent_while",
+                    "abstractions": [
+                        {
+                            "id": "18",
+                            "intent": "Accept book details",
+                            "type": "function_call",
+                            "target": "10"
+                        },
+                        {
+                            "id": "19",
+                            "intent": "Place book on the shelf",
+                            "type": "function_call",
+                            "target": "2"
+                        },
+                        {
+                            "id": "20",
+                            "intent": "Ask the user if they want to continue"
+                        },
+                        {
+                            "id": "21",
+                            "intent": "Check if the user chose to quit.",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id": "22",
+                                    "intent": "Terminate program."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "23",
+                    "intent": "Display message confirming exit."
+                }
+            ]
+        }
+    }
+}
