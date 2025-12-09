@@ -59,15 +59,32 @@ def getAbsMapFile (sourceFile, sourceFileDirectory):
         print("SDG metadata file is not a valid JSON for", sourceFile)
         absMap = {}
 
-    buildMap(sourceFile=sourceFile, absMap=absMap, sourceFileDirectory=sourceFileDirectory)
+    return buildMap(absMap=absMap)    
 
-    return absMap    
+def buildMap(absMap):
+    '''
+    Build the abstraction map.
+    
+    :param absMap: Mapping of abstractions to line that was provided by user.
+    '''
+    map = {}
 
-def buildMap(sourceFile, sourceFileDirectory, absMap):
-
+    # Loop through each file
     for file in absMap["files"]:
-        print(file["path"])
+        map[file["path"]] = {}
+        fileMap = map[file["path"]]
+
+        # Loop through each module in the file
         for moduleName in file["modules"]:
             module = file["modules"][moduleName]
-            print(module["startLine"])
+
+            # Loop through each abstraction in the module
+            for abs in module["abstractions"]:
+                # Use the line delta to get the line number in the file
+                line = abs["lineDelta"] + module["startLine"]
+                fileMap[line] = abs["id"]
+
+
+    return map
+
             
