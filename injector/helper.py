@@ -202,10 +202,6 @@ def getAdliConfiguration(node):
         }
         '''
         '''
-            '''{"type":"adli_abstraction","value":{"intent":"define the output directory"}}'''
-            output_dir = "output_logs"
-        '''
-        '''
             {
                 "type": "adli_metadata",
                 "value": {
@@ -219,7 +215,7 @@ def getAdliConfiguration(node):
         '''
     """
 
-    validCommentTypes = ["adli_disable_variable","adli_metadata","adli_encode_output","adli_abstraction_id"]   
+    validCommentTypes = ["adli_disable_variable","adli_metadata","adli_encode_output"]   
 
     if "value" in node._fields and isinstance(node.value, ast.Constant):     
         comment = node.value.value

@@ -8,13 +8,15 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, tree, logTypeCount, file, isRoot):
+    def __init__(self, source, tree, logTypeCount, file, isRoot, absMap):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
         self.logTypeCount = logTypeCount
         self.funcId = 0
         self.file = file
+        self.source = source
+        self.fileAbsMap = absMap[file]
 
         self.globalsInFunc = []
         self.globalDisabledVariables = []
@@ -71,13 +73,6 @@ class LogInjector(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
-        # TODO: Currently, this relies on proper instrumentation of each abstraction with the meta data. In the future, 
-        # I plan to validate that each abstraction is properly instrumented instea of assuming it is correct. 
-        if (len(self.abstraction_meta_stack) > 0):
-            abstraction_meta = self.abstraction_meta_stack.pop()
-        else:
-            abstraction_meta = None
-
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "file": self.file,
@@ -86,7 +81,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node),
-            "abstraction_meta": abstraction_meta
+            "abstraction_meta": self.fileAbsMap[node.lineno]
         }
 
         return getLtLogStmt(self.logTypeCount)
@@ -249,14 +244,21 @@ class LogInjector(ast.NodeTransformer):
                 self.localDisabledVariables += parsed["value"]
         elif (parsed and parsed["type"] == "adli_metadata"):
             self.metadata = parsed["value"]
-        elif (parsed and parsed["type"] == "adli_abstraction_id"):   
-            self.abstraction_meta_stack.append(parsed["value"])
-            return None
         elif (parsed and parsed["type"] == "adli_encode_output"):
             encodedStmt = getEncodedOutputStmt(parsed["value"][0])
             return encodedStmt
+        
+        # Check if the Expr is a triple quote comment:
+        # - If it is, then don't inject logs.
+        # - If it isn't, then inject logs.
+        segment = ast.get_source_segment(self.source, node)
+        isComment = segment and segment.lstrip().startswith(("'''", '"""'))
+        
+        if isComment:
+            return node
+        else:
+            return self.injectLogTypesA(node)
 
-        return self.injectLogTypesA(node)
 
     def visit_Pass(self, node):
         return self.injectLogTypesA(node)
