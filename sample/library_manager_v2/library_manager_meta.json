@@ -129,7 +129,7 @@
         "intent": "Prompt user for choice."
     },
     "3-3-2": {
-        "intent": "The user chose to add a book",
+        "intent": "Check if the user chose to add a book.",
         "type": "conditional_branch"
     },
     "3-3-2-1": {
@@ -144,7 +144,7 @@
         "intent": "Continue to main menu."
     },
     "3-3-3": {
-        "intent": "The user chose place the books on the shelf.",
+        "intent": "Check if the user chose to place books on the shelf.",
         "type": "conditional_branch"
     },
     "3-3-3-1": {
@@ -156,7 +156,7 @@
         "intent": "Continue to main menu."
     },
     "3-3-4": {
-        "intent": "The user chose to display the shelf and basket.",
+        "intent": "Check if the user to chose to display the basket and shelf.",
         "type": "conditional_branch"
     },
     "3-3-4-1": {
@@ -169,7 +169,7 @@
         "intent": "Continue to main menu."
     },
     "3-3-5": {
-        "intent": "The user chose to end the program",
+        "intent": "Check if the user chose to end the program.",
         "type": "conditional_branch"
     },
     "3-3-5-1": {
