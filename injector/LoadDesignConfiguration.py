@@ -57,6 +57,6 @@ def getAbsMapFile (sourceFile):
         abs_map = {}
     except json.JSONDecodeError:
         print("SDG metadata file is not a valid JSON for", sourceFile)
-        sdg_meta = {}
+        abs_map = {}
 
     return abs_map    
