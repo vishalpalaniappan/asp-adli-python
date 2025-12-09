@@ -41,9 +41,10 @@ def getSdgMetaFile (sourceFile) :
 
     return sdg_meta
 
-def getAbsMapFile (sourceFile, sourceFileDirectory):
+def getAbsMapFile (sourceFile):
     '''
-    Returns the SDG JSON meta file if it exists.
+    Gets the abstraction map file if it exists and returns
+    the abstraction map that was built.
     '''
 
     no_ext, _ = os.path.splitext(sourceFile)

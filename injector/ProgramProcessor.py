@@ -47,7 +47,7 @@ class ProgramProcessor:
         programMetadata = {}
         sdg = getSdgFile(self.sourceFile)
         sdg_meta = getSdgMetaFile(self.sourceFile)
-        abs_map = getAbsMapFile(self.sourceFile, self.sourceFileDirectory)
+        abs_map = getAbsMapFile(self.sourceFile)
 
         # Process every file found in the program
         for currFilePath in files:
