@@ -8,13 +8,14 @@ from injector.VariableCollectors.CollectCallVariables import CollectCallVariable
 from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjector(ast.NodeTransformer):
-    def __init__(self, tree, logTypeCount, file, isRoot, absMap):
+    def __init__(self, source, tree, logTypeCount, file, isRoot, absMap):
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
         self.logTypeCount = logTypeCount
         self.funcId = 0
         self.file = file
+        self.source = source
         self.fileAbsMap = absMap[file]
 
         self.globalsInFunc = []
@@ -246,8 +247,18 @@ class LogInjector(ast.NodeTransformer):
         elif (parsed and parsed["type"] == "adli_encode_output"):
             encodedStmt = getEncodedOutputStmt(parsed["value"][0])
             return encodedStmt
+        
+        # Check if the Expr is a triple quote comment:
+        # - If it is, then don't inject logs.
+        # - If it isn't, then inject logs.
+        segment = ast.get_source_segment(self.source, node)
+        isComment = segment and segment.lstrip().startswith(("'''", '"""'))
+        
+        if isComment:
+            return node
+        else:
+            return self.injectLogTypesA(node)
 
-        return self.injectLogTypesA(node)
 
     def visit_Pass(self, node):
         return self.injectLogTypesA(node)
