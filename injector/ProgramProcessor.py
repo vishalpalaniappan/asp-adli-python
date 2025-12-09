@@ -9,7 +9,7 @@ from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
-
+from injector.LoadDesignConfiguration import getAbsMapFile, getSdgFile, getSdgMetaFile
 
 class ProgramProcessor:
     '''
@@ -34,6 +34,7 @@ class ProgramProcessor:
             shutil.rmtree(self.outputDirectory)
         os.makedirs(self.outputDirectory)
 
+
     def run(self):
         '''
             Runs the injector.
@@ -41,38 +42,12 @@ class ProgramProcessor:
         ltMap = {}
         varMap = {}
         fileTree = {}
-        fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
         programMetadata = {}
-        sdg = {}
-        sdg_meta = {}
-        #
-        # Get the Semantic Design Graph (SDG)
-        no_ext, _ = os.path.splitext(self.sourceFile)
-        sdg_path = no_ext + "_sdg.json"
-
-        try:
-            with open(sdg_path, "r") as f:
-                sdg = json.loads(f.read())
-        except FileNotFoundError:
-            print("Could not find SDG file for", self.sourceFile)
-            sdg = {}
-        except json.JSONDecodeError:
-            print("SDG file is not a valid JSON for", self.sourceFile)
-            sdg = {}
-        # Get the
-        sdg_path = no_ext + "_meta.json"
-
-        try:
-            with open(sdg_path, "r") as f:
-                sdg_meta = json.loads(f.read())
-        except FileNotFoundError:
-            print("Could not find SDG metadata file for", self.sourceFile)
-            sdg_meta = {}
-        except json.JSONDecodeError:
-            print("SDG metadata file is not a valid JSON for", self.sourceFile)
-            sdg_meta = {}
+        sdg = getSdgFile(self.sourceFile)
+        sdg_meta = getSdgMetaFile(self.sourceFile)
+        abs_map = getAbsMapFile(self.sourceFile)
 
         # Process every file found in the program
         for currFilePath in files:
