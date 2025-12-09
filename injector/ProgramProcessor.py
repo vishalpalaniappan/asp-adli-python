@@ -63,7 +63,7 @@ class ProgramProcessor:
 
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
+            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot, abs_map)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
