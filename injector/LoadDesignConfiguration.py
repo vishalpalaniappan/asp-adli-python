@@ -41,7 +41,7 @@ def getSdgMetaFile (sourceFile) :
 
     return sdg_meta
 
-def getAbsMapFile (sourceFile):
+def getAbsMapFile (sourceFile, sourceFileDirectory):
     '''
     Returns the SDG JSON meta file if it exists.
     '''
@@ -51,12 +51,23 @@ def getAbsMapFile (sourceFile):
 
     try:
         with open(sdg_path, "r") as f:
-            abs_map = json.loads(f.read())
+            absMap = json.loads(f.read())
     except FileNotFoundError:
         print("Could not find SDG metadata file for", sourceFile)
-        abs_map = {}
+        absMap = {}
     except json.JSONDecodeError:
         print("SDG metadata file is not a valid JSON for", sourceFile)
-        abs_map = {}
+        absMap = {}
 
-    return abs_map    
+    buildMap(sourceFile=sourceFile, absMap=absMap, sourceFileDirectory=sourceFileDirectory)
+
+    return absMap    
+
+def buildMap(sourceFile, sourceFileDirectory, absMap):
+
+    for file in absMap["files"]:
+        print(file["path"])
+        for moduleName in file["modules"]:
+            module = file["modules"][moduleName]
+            print(module["startLine"])
+            
