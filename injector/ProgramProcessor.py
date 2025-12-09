@@ -100,7 +100,7 @@ class ProgramProcessor:
             "adliInfo": self.adliInfo
         }
 
-        # Only append design files if they were provided
+        # Only include design file keys if valid files were provided.
         if (sdg):
             header["sdg"] = sdg
 
