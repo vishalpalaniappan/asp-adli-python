@@ -263,7 +263,7 @@ class LogInjector(ast.NodeTransformer):
         '''
             {
                 "type":"adli_disable_variable",
-                "value":["segment", "uid"]
+                "value":["segment"]
             }
         '''
         segment = ast.get_source_segment(self.source, node)
