@@ -51,12 +51,12 @@ def getAbsMapFile (sourceFile):
 
     try:
         with open(sdg_path, "r") as f:
-            sdg_meta = json.loads(f.read())
+            abs_map = json.loads(f.read())
     except FileNotFoundError:
         print("Could not find SDG metadata file for", sourceFile)
-        sdg_meta = {}
+        abs_map = {}
     except json.JSONDecodeError:
         print("SDG metadata file is not a valid JSON for", sourceFile)
         sdg_meta = {}
 
-    return sdg_meta    
+    return abs_map    
