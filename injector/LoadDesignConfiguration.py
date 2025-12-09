@@ -13,10 +13,10 @@ def getSdgFile (sourceFile) :
             sdg = json.loads(f.read())
     except FileNotFoundError:
         print("Could not find SDG file for", sourceFile)
-        sdg = {}
+        sdg = None
     except json.JSONDecodeError:
         print("SDG file is not a valid JSON for", sourceFile)
-        sdg = {}
+        sdg = None
 
     return sdg
 
@@ -34,10 +34,10 @@ def getSdgMetaFile (sourceFile) :
             sdg_meta = json.loads(f.read())
     except FileNotFoundError:
         print("Could not find SDG metadata file for", sourceFile)
-        sdg_meta = {}
+        sdg_meta = None
     except json.JSONDecodeError:
         print("SDG metadata file is not a valid JSON for", sourceFile)
-        sdg_meta = {}
+        sdg_meta = None
 
     return sdg_meta
 
@@ -53,14 +53,15 @@ def getAbsMapFile (sourceFile):
     try:
         with open(sdg_path, "r") as f:
             absMap = json.loads(f.read())
+            absMap = buildMap(absMap)    
     except FileNotFoundError:
         print("Could not find abstraction map file for", sourceFile)
-        absMap = {}
+        absMap = None
     except json.JSONDecodeError:
         print("Abstraction map file is not a valid JSON for", sourceFile)
-        absMap = {}
+        absMap = None
 
-    return buildMap(absMap=absMap)    
+    return absMap
 
 def buildMap(absMap):
     '''

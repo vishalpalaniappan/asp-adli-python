@@ -97,10 +97,15 @@ class ProgramProcessor:
             "varMap": varMap,
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
-            "adliInfo": self.adliInfo,
-            "sdg": sdg,
-            "sdg_meta": sdg_meta
+            "adliInfo": self.adliInfo
         }
+
+        # Only append design files if they were provided
+        if (sdg):
+            header["sdg"] = sdg
+
+        if (sdg_meta):
+            header["sdg_meta"] = sdg_meta
 
         try:
             header_path = os.path.join(self.outputDirectory, "header.json")
