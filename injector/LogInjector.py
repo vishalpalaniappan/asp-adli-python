@@ -16,7 +16,11 @@ class LogInjector(ast.NodeTransformer):
         self.funcId = 0
         self.file = file
         self.source = source
-        self.fileAbsMap = absMap[file]
+
+        if (absMap):
+            self.fileAbsMap = absMap[file]
+        else:
+            self.fileAbsMap = None
 
         self.globalsInFunc = []
         self.globalDisabledVariables = []
@@ -73,6 +77,11 @@ class LogInjector(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
+        if self.fileAbsMap and node.lineno in self.fileAbsMap:
+            absMeta = self.fileAbsMap[node.lineno]
+        else:
+            absMeta = None
+
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
             "file": self.file,
@@ -81,7 +90,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node),
-            "abstraction_meta": self.fileAbsMap[node.lineno]
+            "abstraction_meta": absMeta
         }
 
         return getLtLogStmt(self.logTypeCount)
@@ -251,6 +260,12 @@ class LogInjector(ast.NodeTransformer):
         # Check if the Expr is a triple quote comment:
         # - If it is, then don't inject logs.
         # - If it isn't, then inject logs.
+        '''
+            {
+                "type":"adli_disable_variable",
+                "value":["segment"]
+            }
+        '''
         segment = ast.get_source_segment(self.source, node)
         isComment = segment and segment.lstrip().startswith(("'''", '"""'))
         
