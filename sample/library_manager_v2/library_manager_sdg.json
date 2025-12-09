@@ -1,0 +1,167 @@
+{
+    "name": "library_manager_v2",
+    "type": "Semantic Design Graph",
+    "meta": "library_manager_meta.json",
+    "modules": {
+        "0": {
+            "name": "Global Path",
+            "type": "function",
+            "abstractions": [
+                {
+                    "id": "0-1"
+                },
+                {
+                    "id": "0-2",
+                    "type": "conditional_branch",
+                    "abstractions": [
+                        {
+                            "id": "0-2-1",
+                            "type": "function_call",
+                            "target": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        "1": {
+            "name": "Place Books On Shelf",
+            "type": "function",
+            "source": ["3-3-3-1"],
+            "abstractions": [
+                {
+                    "id": "1-1",
+                    "type": "while",
+                    "abstractions": [
+                        {
+                            "id": "1-1-1"
+                        },
+                        {
+                            "id": "1-1-2"                    
+                        },
+                        {
+                            "id": "1-1-3"                    
+                        },
+                        {
+                            "id": "1-1-4",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id":"1-1-4-1"
+                                }
+                            ]                          
+                        },
+                        {
+                            "id": "1-1-5",
+                            "type": "conditional_branch"
+                        },
+                        {
+                            "id": "1-1-6"
+                        }
+                    ]
+                },
+                {
+                    "id": "1-2"
+                }
+            ]
+        },
+        "2": {
+            "name": "Accept Book Information",
+            "type": "function",
+            "source": ["3-3-2-1"],
+            "abstractions": [
+                {
+                    "id": "2-1"
+                },
+                {
+                    "id": "2-2"
+                },
+                {
+                    "id": "2-3"
+                },
+                {
+                    "id": "2-4"
+                }
+            ]
+        },
+        "3": {
+            "name": "Library Manager",
+            "type": "function",
+            "source": ["0-2-1"],
+            "abstractions": [
+                {
+                    "id": "3-1"
+                },
+                {
+                    "id": "3-2"
+                },
+                {
+                    "id": "3-3",
+                    "type": "while",
+                    "abstractions": [
+                        {
+                            "id": "3-3-1"
+                        },
+                        {
+                            "id": "3-3-2",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id": "3-3-2-1",
+                                    "type": "function_call",
+                                    "target": "2"
+                                },
+                                {
+                                    "id": "3-3-2-2"
+                                },
+                                {
+                                    "id": "3-3-2-3"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "3-3-3",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id": "3-3-3-1",
+                                    "type": "function_call",
+                                    "target": "1"
+                                },
+                                {
+                                    "id": "3-3-3-2"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "3-3-4",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id": "3-3-4-1"
+                                },
+                                {
+                                    "id": "3-3-4-2"
+                                },
+                                {
+                                    "id": "3-3-4-3"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "3-3-5",
+                            "type": "conditional_branch",
+                            "abstractions": [
+                                {
+                                    "id": "3-3-5-1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id":"3-4"
+                }
+            ]
+        }
+    }
+}

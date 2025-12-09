@@ -1,0 +1,181 @@
+{
+    "0": {
+        "intent": "Global path to initialize the book manager.",
+        "name": "global",
+        "type": "global",
+        "start": true
+    },
+    "0-1": {
+        "intent": "Import the sys library."
+    },
+    "0-2": {
+        "intent": "Script is being run directly.",
+        "type": "conditional_branch"
+    },
+    "0-2-1": {
+        "intent": "Start the library manager.",
+        "type": "function_call",
+        "target": "3"
+    },
+    "1": {
+        "intent": "Place the books from the basket onto the shelf.",
+        "type": "function",
+        "name": "Place Books On Shelf",
+        "source": ["3-3-3-1"]
+    },
+    "1-1": {
+        "intent": "There are more books in the basket.",
+        "type": "while"
+    },
+    "1-1-1": {
+        "intent": "Get a book from the basket"
+    },
+    "1-1-2": {
+        "intent": "Display the book information"  
+    },
+    "1-1-3": {
+        "intent": "Get the first letter of the book"  
+    },
+    "1-1-4": {
+        "intent": "There is no spot for the book on the shelf.",
+        "type": "conditional_branch"
+    },
+    "1-1-4-1": {
+        "intent": "Create spot for book on shelf"
+    },
+    "1-1-5": {
+        "intent": "Acknowledge that slot for book already exists",
+        "type": "conditional_branch"
+    },
+    "1-1-6": {
+        "intent": "Add book to shelf"
+    },
+    "1-2": {
+        "intent": "Return book shelf"
+    },
+    "2": {
+        "intent": "Accept the book and return the name and genre.",
+        "type": "function",
+        "name": "Accept Book Information",
+        "source": ["3-3-2-1"]
+    },
+    "2-1": {
+        "intent": "Display request for book information."
+    },
+    "2-2": {
+        "intent": "Prompt and accept book name",
+        "constraint": [
+            {
+                "name": "name",
+                "scope": "local",
+                "type":"minLength",
+                "value": 1,
+                "failures": ["1-1-3"],
+                "rootcause": {
+                    "1-1-3": "The root cause of failure was that a book with no name was accepted, but the program needed to use the first letter of the name to place it in the correct slot on the bookshelf. As a result, the program failed when it attempted to access the first letter of the book's name."
+                }
+            }
+        ]
+    },
+    "2-3": {
+        "intent": "Prompt and accept for book genre"
+    },
+    "2-4": {
+        "intent": "Return the name <name> and genre <genre>."
+    },
+    "3": {
+        "intent": "Start the library manager.",
+        "type": "function",
+        "name": "Library Manager",
+        "source": ["0-2-1"]
+    },
+    "3-1": {
+        "intent": "Create the bookshelf.",
+        "constraint": [
+            {
+                "name": "book_shelf",
+                "scope": "local",
+                "type":"is_object",
+                "value": "object",
+                "failures": ["1-1-4-1","1-1-6"],
+                "rootcause": {
+                    "1-1-4-1": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to create a slot for the book.",
+                    "1-1-6": "The root cause of failure was that the bookshelf was not initialized as an object but had the intention of using it as an object to store the books using the relevant keys. As a result, the program failed when it attempted to add a book to the slot."
+                }
+            }
+        ]
+    },
+    "3-2": {
+        "intent": "Create the basket.",
+        "constraint": [
+            {
+                "name": "basket",
+                "scope": "local",
+                "type":"is_array",
+                "value": "array",
+                "failures": ["3-3-2-2","1-1"],
+                "rootcause": {
+                    "3-3-2-2": "The root cause of failure was that the basket was not initialize as an array with the intention of using it as an array. As a result, the program failed when it attempted to add a book to the basket.",
+                    "1-1": "The root cause of failure was that the basket was not initialize as an array with the intention of using it as an array. As a result, the program failed when it attempted to check how many books there are in the basket."
+                }
+            }
+        ]
+    },
+    "3-3": {
+        "intent": "Display Menu",
+        "type": "while"
+    },
+    "3-3-1": {
+        "intent": "Prompt user for choice."
+    },
+    "3-3-2": {
+        "intent": "The user chose to add a book",
+        "type": "conditional_branch"
+    },
+    "3-3-2-1": {
+        "intent": "Accept a book",
+        "type": "function_call",
+        "target": "2"
+    },
+    "3-3-2-2": {
+        "intent": "Add book to basket"
+    },
+    "3-3-2-3": {
+        "intent": "Continue to main menu."
+    },
+    "3-3-3": {
+        "intent": "The user chose place the books on the shelf.",
+        "type": "conditional_branch"
+    },
+    "3-3-3-1": {
+        "intent": "Place the books in the basket on the shelf.",
+        "type": "function_call",
+        "target": "1"
+    },
+    "3-3-3-2": {
+        "intent": "Continue to main menu."
+    },
+    "3-3-4": {
+        "intent": "The user chose to display the shelf and basket.",
+        "type": "conditional_branch"
+    },
+    "3-3-4-1": {
+        "intent": "Display the shelf"
+    },
+    "3-3-4-2": {
+        "intent": "Display the basket"
+    },
+    "3-3-4-3": {
+        "intent": "Continue to main menu."
+    },
+    "3-3-5": {
+        "intent": "The user chose to end the program",
+        "type": "conditional_branch"
+    },
+    "3-3-5-1": {
+        "intent": "Exit the menu."
+    },
+    "3-4": {
+        "intent": "Confirm program termination"
+    }
+}
