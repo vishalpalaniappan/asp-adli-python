@@ -260,6 +260,12 @@ class LogInjector(ast.NodeTransformer):
         # Check if the Expr is a triple quote comment:
         # - If it is, then don't inject logs.
         # - If it isn't, then inject logs.
+        '''
+            {
+                "type":"adli_disable_variable",
+                "value":["segment", "uid"]
+            }
+        '''
         segment = ast.get_source_segment(self.source, node)
         isComment = segment and segment.lstrip().startswith(("'''", '"""'))
         
