@@ -9,7 +9,6 @@ from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionAr
 
 class LogInjector(ast.NodeTransformer):
     def __init__(self, tree, logTypeCount, file, isRoot):
-        print(file)
         self.metadata = None
         self.ltMap = {}
         self.varMap = {}
