@@ -53,17 +53,17 @@ def getAbsMapFile (sourceFile, sourceFileDirectory):
         with open(sdg_path, "r") as f:
             absMap = json.loads(f.read())
     except FileNotFoundError:
-        print("Could not find SDG metadata file for", sourceFile)
+        print("Could not find abstraction map file for", sourceFile)
         absMap = {}
     except json.JSONDecodeError:
-        print("SDG metadata file is not a valid JSON for", sourceFile)
+        print("Abstraction map file is not a valid JSON for", sourceFile)
         absMap = {}
 
     return buildMap(absMap=absMap)    
 
 def buildMap(absMap):
     '''
-    Build the abstraction map.
+    Build a map of abstraction ids to line numbers for each file.
     
     :param absMap: Mapping of abstractions to line that was provided by user.
     '''
@@ -83,7 +83,6 @@ def buildMap(absMap):
                 # Use the line delta to get the line number in the file
                 line = abs["lineDelta"] + module["startLine"]
                 fileMap[line] = abs["id"]
-
 
     return map
 
