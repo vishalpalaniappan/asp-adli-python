@@ -177,7 +177,7 @@
                         {
                             "id": "3-3-4",
                             "lineDelta": 33,
-                            "syntax": "continue"
+                            "syntax": "elif response == \"d\":"
                         },
                         {
                             "id": "3-3-4-1",
