@@ -9,7 +9,7 @@ from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
-
+from injector.LoadDesignConfiguration import getAbsMapFile, getSdgFile, getSdgMetaFile
 
 class ProgramProcessor:
     '''
@@ -34,6 +34,7 @@ class ProgramProcessor:
             shutil.rmtree(self.outputDirectory)
         os.makedirs(self.outputDirectory)
 
+
     def run(self):
         '''
             Runs the injector.
@@ -41,24 +42,12 @@ class ProgramProcessor:
         ltMap = {}
         varMap = {}
         fileTree = {}
-        fileOutputInfo = []
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
         programMetadata = {}
-        sdg = {}
-        # Get the semantic dsign graph if it exists
-        no_ext, _ = os.path.splitext(self.sourceFile)
-        sdg_path = no_ext + "_sdg.json"
-
-        try:
-            with open(sdg_path, "r") as f:
-                sdg = json.loads(f.read())
-        except FileNotFoundError:
-            print("Could not find abstraction metadata file for", self.sourceFile)
-            sdg = {}
-        except json.JSONDecodeError:
-            print("Abstraction metadata file is not a valid JSON for", self.sourceFile)
-            sdg = {}
+        sdg = getSdgFile(self.sourceFile)
+        sdg_meta = getSdgMetaFile(self.sourceFile)
+        abs_map = getAbsMapFile(self.sourceFile)
 
         # Process every file found in the program
         for currFilePath in files:
@@ -74,7 +63,7 @@ class ProgramProcessor:
 
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(currAst, logTypeCount, currRelPath, isRoot)
+            injector = LogInjector(source, currAst, logTypeCount, currRelPath, isRoot, abs_map)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -108,9 +97,15 @@ class ProgramProcessor:
             "varMap": varMap,
             "programInfo": programMetadata,
             "sysInfo": self.sysinfo,
-            "adliInfo": self.adliInfo,
-            "sdg": sdg
+            "adliInfo": self.adliInfo
         }
+
+        # Only include design file keys if valid files were provided.
+        if (sdg):
+            header["sdg"] = sdg
+
+        if (sdg_meta):
+            header["sdg_meta"] = sdg_meta
 
         try:
             header_path = os.path.join(self.outputDirectory, "header.json")

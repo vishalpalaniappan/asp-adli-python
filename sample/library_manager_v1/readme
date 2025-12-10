@@ -1,0 +1,3 @@
+This is version 1 of the library manager and it contains a simple implementation that accepts a book name and genre before placing it on the shelf. It places it on the shelf using the first letter of the book name. It continues to accept books until the user decides to stop.
+
+This version of the library manager will also use instrumentation to identify abstractions by line to overcome the limitations of existing techniques.
