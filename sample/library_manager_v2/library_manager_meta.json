@@ -37,9 +37,10 @@
         "intent": "Get first letter of book named <name> to create slot for book on shelf.",
         "variables": [
             {
-                "name": "name",
+                "name": "book_shelf",
                 "placeholder":"<name>",
-                "scope": "local"
+                "scope": "local",
+                "key": "name"
             }
         ]
     },
@@ -79,9 +80,10 @@
         "intent": "Place book named <name> on shelf.",
         "variables": [
             {
-                "name": "name",
+                "name": "book_shelf",
                 "placeholder":"<name>",
-                "scope": "local"
+                "scope": "local",
+                "key": "name"
             }
         ]
     },
@@ -208,12 +210,19 @@
         "target": "2"
     },
     "3-3-2-2": {
-        "intent": "Add book named <name> to basket.",
+        "intent": "Add book named <name> with genre <genre> to basket.",
         "variables": [
             {
-                "name": "name",
+                "name": "book_details",
                 "placeholder":"<name>",
-                "scope": "local"
+                "scope": "local",
+                "key": "name"
+            },
+            {
+                "name": "book_details",
+                "placeholder":"<genre>",
+                "scope": "local",
+                "key": "genre"
             }
         ]
     },
