@@ -34,24 +34,59 @@
         "intent": "Display the book information"  
     },
     "1-1-3": {
-        "intent": "Get the first letter of the book"  
+        "intent": "Get first letter of book named <name> to create slot for book on shelf.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            }
+        ]
     },
     "1-1-4": {
-        "intent": "There is no spot for the book on the shelf.",
-        "type": "conditional_branch"
+        "intent": "Check if slot for letter <firstLetter> exists on the shelf.",
+        "type": "conditional_branch",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
     },
     "1-1-4-1": {
-        "intent": "Create spot for book on shelf"
+        "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
     },
     "1-1-5": {
-        "intent": "Acknowledge that slot for book already exists",
-        "type": "conditional_branch"
+        "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
+        "type": "conditional_branch",
+        "variables": [
+            {
+                "name": "firstLetter",
+                "placeholder":"<firstLetter>",
+                "scope": "local"
+            }
+        ]
     },
     "1-1-6": {
-        "intent": "Add book to shelf"
+        "intent": "Place book named <name> on shelf.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            }
+        ]
     },
     "1-2": {
-        "intent": "Return book shelf"
+        "intent": "Return updated bookshelf."
     },
     "2": {
         "intent": "Accept the book and return the name and genre.",
@@ -63,7 +98,7 @@
         "intent": "Display request for book information."
     },
     "2-2": {
-        "intent": "Prompt and accept book name",
+        "intent": "Prompt and accept book name.",
         "constraint": [
             {
                 "name": "name",
@@ -79,10 +114,22 @@
         ]
     },
     "2-3": {
-        "intent": "Prompt and accept for book genre"
+        "intent": "Prompt and accept for book genre."
     },
     "2-4": {
-        "intent": "Return the name <name> and genre <genre>."
+        "intent": "Return the name <name> and genre <genre>.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            },
+            {
+                "name": "genre",
+                "placeholder":"<genre>",
+                "scope": "local"
+            }
+        ]
     },
     "3": {
         "intent": "Start the library manager.",
@@ -161,7 +208,14 @@
         "target": "2"
     },
     "3-3-2-2": {
-        "intent": "Add book to basket"
+        "intent": "Add book named <name> to basket.",
+        "variables": [
+            {
+                "name": "name",
+                "placeholder":"<name>",
+                "scope": "local"
+            }
+        ]
     },
     "3-3-2-3": {
         "intent": "Continue to main menu."
