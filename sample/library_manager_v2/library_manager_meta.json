@@ -221,7 +221,7 @@
                 "value": "array",
                 "failures": ["3-3-2-2"],
                 "rootcause": {
-                    "3-3-2-2": "The root cause of failure was that the basket was initialized as None with the intention of appending books to it. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was None."
+                    "3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list."
                 }
             },
             {
