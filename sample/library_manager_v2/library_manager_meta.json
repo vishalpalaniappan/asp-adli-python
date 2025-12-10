@@ -37,7 +37,7 @@
         "intent": "Get first letter of book named <name> to create slot for book on shelf.",
         "variables": [
             {
-                "name": "book_shelf",
+                "name": "book",
                 "placeholder":"<name>",
                 "scope": "local",
                 "key": "name"
@@ -80,7 +80,7 @@
         "intent": "Place book named <name> on shelf.",
         "variables": [
             {
-                "name": "book_shelf",
+                "name": "book",
                 "placeholder":"<name>",
                 "scope": "local",
                 "key": "name"
