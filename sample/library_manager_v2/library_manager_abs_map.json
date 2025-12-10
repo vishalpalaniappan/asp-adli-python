@@ -16,12 +16,12 @@
                         },
                         {
                             "id": "0-2",
-                            "lineDelta": 77,
+                            "lineDelta": 79,
                             "syntax": "if __name__ == \"__main__\":"
                         },
                         {
                             "id": "0-2-1",
-                            "lineDelta": 78,
+                            "lineDelta": 80,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
@@ -107,12 +107,17 @@
                         {
                             "id": "2-4",
                             "lineDelta": 8,
-                            "syntax": "return {\"name\":name, \"genre\":genre}"
+                            "syntax": "book_details = {\"name\":name,\"genre\":genre}"
+                        },
+                        {
+                            "id": "2-5",
+                            "lineDelta": 10,
+                            "syntax": "return book_details"
                         }
                     ]
                 },
                 "3": {
-                    "startLine": 31,
+                    "startLine": 33,
                     "abstractions": [
                         {
                             "id": "3",

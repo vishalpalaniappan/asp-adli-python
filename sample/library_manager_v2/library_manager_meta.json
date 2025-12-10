@@ -103,6 +103,7 @@
         "intent": "Prompt and accept book name.",
         "constraint": [
             {
+                "id": "2-2+1",
                 "name": "name",
                 "constraint_layer": "design_constraint",
                 "scope": "local",
@@ -119,7 +120,7 @@
         "intent": "Prompt and accept for book genre."
     },
     "2-4": {
-        "intent": "Return the book named <name> with genre <genre>.",
+        "intent": "Create a book with name <name> with genre <genre>.",
         "variables": [
             {
                 "name": "name",
@@ -131,7 +132,47 @@
                 "placeholder":"<genre>",
                 "scope": "local"
             }
+        ],
+        "constraint": [
+            {
+                "id": "2-4+1",
+                "name": "book_details",
+                "constraint_layer": "implementation_contraint",
+                "scope": "local",
+                "type":"has_key",
+                "value": "name",
+                "failures": ["1-1-2"],
+                "rootcause": {
+                    "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"name\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                }
+            },
+            {
+                "id": "2-4+2",
+                "name": "book_details",
+                "constraint_layer": "implementation_contraint",
+                "scope": "local",
+                "type":"has_key",
+                "value": "genre",
+                "failures": ["1-1-2"],
+                "rootcause": {
+                    "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"genre\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                }
+            },
+            {
+                "id": "2-4+3",
+                "name": "book_details",
+                "constraint_layer": "implementation_contraint",
+                "scope": "local",
+                "type":"is_not_null",
+                "failures": ["1-1-2"],
+                "rootcause": {
+                    "1-1-2": "The root cause of failure was that the book details variable was initialized as None, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key on this variable."
+                }
+            }
         ]
+    },
+    "2-5": {
+        "intent": "Return the book details."
     },
     "3": {
         "intent": "Start the library manager.",
@@ -143,6 +184,7 @@
         "intent": "Create the bookshelf.",
         "constraint": [
             {
+                "id": "3-1+1",
                 "name": "book_shelf",
                 "constraint_layer": "implementation_contraint",
                 "scope": "local",
@@ -154,6 +196,7 @@
                 }
             },
             {
+                "id": "3-1+2",
                 "name": "book_shelf",
                 "constraint_layer": "implementation_contraint",
                 "scope": "local",
@@ -170,6 +213,7 @@
         "intent": "Create the basket.",
         "constraint": [
             {
+                "id": "3-2+1",
                 "name": "basket",
                 "constraint_layer": "implementation_contraint",
                 "scope": "local",
@@ -181,11 +225,11 @@
                 }
             },
             {
+                "id": "3-2+2",
                 "name": "basket",
                 "constraint_layer": "implementation_contraint",
                 "scope": "local",
                 "type":"is_not_null",
-                "value": "object",
                 "failures": ["1-1"],
                 "rootcause": {
                     "1-1": "The root cause of failure was that the basket was initialized as None with the intention of checking how many books were in the basket. This resulted in a failure when attempting to determine the length of the basket because the len operation requires an iterable and the basket was None."
