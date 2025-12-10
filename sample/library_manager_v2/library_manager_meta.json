@@ -119,7 +119,7 @@
         "intent": "Prompt and accept for book genre."
     },
     "2-4": {
-        "intent": "Return the name <name> and genre <genre>.",
+        "intent": "Return the book named<name> with genre <genre>.",
         "variables": [
             {
                 "name": "name",
