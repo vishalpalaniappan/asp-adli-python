@@ -122,19 +122,25 @@
         "constraint": [
             {
                 "name": "basket",
+                "constraint_layer": "implementation_contraint",
                 "scope": "local",
                 "type":"is_array",
                 "value": "array",
-                "failures": [],
-                "rootcause": {}
+                "failures": ["3-3-2-2"],
+                "rootcause": {
+                    "3-3-2-2": "The root cause of failure was that the basket wasn't initialized as an array with the intention of adding a book to it. As a result, the program failed when it tried to append a book to the basket variable."
+                }
             },
             {
                 "name": "book_shelf",
+                "constraint_layer": "implementation_contraint",
                 "scope": "local",
                 "type":"is_not_null",
                 "value": "object",
-                "failures": [],
-                "rootcause": {}
+                "failures": ["1-1"],
+                "rootcause": {
+                    "1-1": "The root cause of failure was that the basket intialized as None with the intention of checking to see how many books were in the basket. As a result the program failed when it attempted to check the length of the basket variable."
+                }
             }
         ]
     },
