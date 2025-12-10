@@ -396,7 +396,7 @@ class LogInjector(ast.NodeTransformer):
         return self.injectLogTypesD(node)
     
     def visit_While(self, node):
-        return self.injectLogTypesC(node)
+        return self.injectLogTypesD(node)
 
 
 
