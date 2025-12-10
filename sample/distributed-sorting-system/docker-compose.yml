@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+
+  interface:
+    build:
+      context: ./interface
+      dockerfile: ../shared/Dockerfile
+    container_name: interface
+    networks:
+      - sort-net
+
+  orchestrator:
+    build:
+      context: ./orchestrator
+      dockerfile: ../shared/Dockerfile
+    container_name: orchestrator
+    depends_on:
+      - queue-a
+    networks:
+      - sort-net
+
+  queue-a:
+    build:
+      context: ./queue-a
+      dockerfile: ../shared/Dockerfile
+    container_name: queue-a
+    networks:
+      - sort-net
+
+  sort-a:
+    build:
+      context: ./sort-a
+      dockerfile: ../shared/Dockerfile
+    container_name: sort-a
+    depends_on:
+      - queue-a
+    networks:
+      - sort-net
+
+  sort-b:
+    build:
+      context: ./sort-b
+      dockerfile: ../shared/Dockerfile
+    container_name: sort-b
+    depends_on:
+      - queue-a
+    networks:
+      - sort-net
+
+  sort-c:
+    build:
+      context: ./sort-c
+      dockerfile: ../shared/Dockerfile
+    container_name: sort-c
+    depends_on:
+      - queue-a
+    networks:
+      - sort-net
+
+  database-writer:
+    build:
+      context: ./database-writer
+      dockerfile: ../shared/Dockerfile
+    container_name: database-writer
+    networks:
+      - sort-net
+
+networks:
+  sort-net:
+    driver: bridge
