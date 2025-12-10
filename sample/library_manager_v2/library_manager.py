@@ -26,7 +26,7 @@ def accept_book():
 
     genre = input("Genre: ")
 
-    book_details = {"genre":genre}
+    book_details = {"name": name, "genre":genre}
 
     return book_details
 
