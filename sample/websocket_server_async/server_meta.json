@@ -1,0 +1,48 @@
+{
+    "0": {
+        "intent": "Global path to initialize the book manager.",
+        "name": "global",
+        "type": "global",
+        "start": true
+    },
+    "0-1": {
+        "intent": "Import the asyncio library."
+    },
+    "0-2": {
+        "intent": "Import the serve library."
+    },
+    "0-3": {
+        "intent": "Check if the script is being run directly..",
+        "type": "conditional_branch"
+    },
+    "0-3-1": {
+        "intent": "Start the main function.",
+        "type": "function_call",
+        "target": "2"
+    },
+    "1": {
+        "intent": "Receive messages from the given websocket.",
+        "async": true,
+        "type": "function",
+        "name": "receive_message"
+    },
+    "1-1": {
+        "intent": "Visit each message that was received.",
+        "type": "for"
+    },
+    "1-1-1": {
+        "intent": "Display the message that was received."
+    },
+    "2": {
+        "intent": "Main funcion that starts the server.",
+        "async": true,
+        "type": "function",
+        "name": "main"
+    },
+    "2-1": {
+        "intent": "Create the server."
+    },
+    "2-1-1": {
+        "intent": "Serve the server."
+    }
+}
