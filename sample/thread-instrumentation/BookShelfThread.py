@@ -4,7 +4,6 @@ class BookShelfThread(threading.Thread):
     def __init__(self, id, queue):
         super().__init__(daemon=True)
         self.book_shelf = {}
-        self.id = id
         self.queue = queue
         self.start()
 
@@ -37,6 +36,8 @@ class BookShelfThread(threading.Thread):
                     self.place_books_on_shelf_from_basket(
                         msg["basket"]
                     )
+                    continue
                 elif (msg["type"] == "display"):
                     print(f"\n{threading.get_ident()} Book Shelf:", self.book_shelf)
                     print(f"{threading.get_ident()} Basket:", msg["basket"])
+                    continue

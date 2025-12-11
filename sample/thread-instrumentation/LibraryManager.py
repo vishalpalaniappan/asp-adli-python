@@ -20,7 +20,7 @@ def accept_book():
 
 def main(argv):
     message_queue = queue.Queue()
-    BookShelfThread(1, message_queue)
+    BookShelfThread(message_queue)
 
     basket = []
 
