@@ -61,4 +61,4 @@ def main_menu():
             break
 
 if "__main__" == __name__:
-    sys.exit(main_menu(sys.argv))
+    sys.exit(main_menu())
