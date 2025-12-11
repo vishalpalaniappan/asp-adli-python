@@ -219,9 +219,10 @@
                 "scope": "local",
                 "type":"is_array",
                 "value": "array",
-                "failures": ["3-3-2-2"],
+                "failures": ["3-3-2-2","1-1"],
                 "rootcause": {
-                    "3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list."
+                    "3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list.",
+                    "1-1": "The root cause of failure was that basket was not initialized as an array. This resulted in a faiure when attempting to check the number of books in the basket because the len operation requires an iterable"
                 }
             },
             {
