@@ -1,5 +1,4 @@
 import queue
-import time
 import sys
 import threading
 from BookShelfThread import BookShelfThread
@@ -16,8 +15,7 @@ def accept_book():
 
     return book_details
 
-
-def main():
+def main_menu():
     message_queue = queue.Queue()
 
     BookShelfThread(message_queue)
@@ -63,4 +61,4 @@ def main():
             break
 
 if "__main__" == __name__:
-    sys.exit(main(sys.argv))
+    sys.exit(main_menu(sys.argv))
