@@ -1,14 +1,14 @@
 import threading
 
 class BookShelfThread(threading.Thread):
-    def __init__(self, id, queue):
-        super().__init__(daemon=True)
+    def __init__(self, queue):
+        super().__init__(daemon=False)
         self.book_shelf = {}
         self.queue = queue
         self.start()
 
     def __del__(self):
-        print(f"{threading.get_ident()} Closed Thread", self.id)
+        print(f"{threading.get_ident()} Terminating book shelf thread")
 
     def place_books_on_shelf_from_basket(self, basket):
 
@@ -36,8 +36,8 @@ class BookShelfThread(threading.Thread):
                     self.place_books_on_shelf_from_basket(
                         msg["basket"]
                     )
-                    continue
                 elif (msg["type"] == "display"):
                     print(f"\n{threading.get_ident()} Book Shelf:", self.book_shelf)
                     print(f"{threading.get_ident()} Basket:", msg["basket"])
-                    continue
+                elif (msg["type"] == "quit"):
+                    break

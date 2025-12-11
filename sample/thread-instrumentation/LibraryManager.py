@@ -1,7 +1,6 @@
 import queue
 import time
 import sys
-import random
 import threading
 from BookShelfThread import BookShelfThread
 
@@ -39,24 +38,24 @@ def main(argv):
 
         if response == "a":
             book_details = accept_book()
-            basket.append(book_details)      
-            continue
+            basket.append(book_details)   
 
         elif response == "p":
             message_queue.put({
                 "type": "add",
                 "basket": basket
             })
-            continue
 
         elif response == "d":
             message_queue.put({
                 "type": "display",
                 "basket": basket
             })
-            continue
 
         else:
+            message_queue.put({
+                "type": "quit"
+            })
             break
 
         time.sleep(1)
