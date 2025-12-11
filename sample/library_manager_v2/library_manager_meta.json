@@ -167,7 +167,7 @@
                 "value": "object",
                 "failures": ["1-1-2"],
                 "rootcause": {
-                    "1-1-2": "The root cause of failure was that the book details variable was initialized as None, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
+                    "1-1-2": "The root cause of failure was that the book details variable was not initialized as an object, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
                 }
             }
         ]
@@ -193,7 +193,7 @@
                 "value": "object",
                 "failures": ["1-1-4-1","1-1-4"],
                 "rootcause": {
-                    "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book.",                    
+                    "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book",                    
                     "1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
                 }
             }
