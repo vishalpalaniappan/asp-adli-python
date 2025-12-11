@@ -137,7 +137,7 @@
             {
                 "id": "2-4+1",
                 "name": "book_details",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"has_key",
                 "value": "name",
@@ -149,7 +149,7 @@
             {
                 "id": "2-4+2",
                 "name": "book_details",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"has_key",
                 "value": "genre",
@@ -161,7 +161,7 @@
             {
                 "id": "2-4+3",
                 "name": "book_details",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"is_not_null",
                 "failures": ["1-1-2"],
@@ -186,7 +186,7 @@
             {
                 "id": "3-1+1",
                 "name": "book_shelf",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"is_object",
                 "value": "object",
@@ -198,7 +198,7 @@
             {
                 "id": "3-1+2",
                 "name": "book_shelf",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"is_not_null",
                 "value": "object",
@@ -215,7 +215,7 @@
             {
                 "id": "3-2+1",
                 "name": "basket",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"is_array",
                 "value": "array",
@@ -227,7 +227,7 @@
             {
                 "id": "3-2+2",
                 "name": "basket",
-                "constraint_layer": "implementation_contraint",
+                "constraint_layer": "implementation_constraint",
                 "scope": "local",
                 "type":"is_not_null",
                 "failures": ["1-1"],
@@ -286,7 +286,7 @@
         "intent": "Continue to main menu."
     },
     "3-3-4": {
-        "intent": "Check if the user to chose to display the basket and shelf.",
+        "intent": "Check if the user chose to display the basket and shelf.",
         "type": "conditional_branch"
     },
     "3-3-4-1": {
