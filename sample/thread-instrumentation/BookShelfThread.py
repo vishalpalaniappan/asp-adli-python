@@ -1,11 +1,4 @@
 import threading
-import queue
-import time
-import random
-
-def testFunc():
-    print("test func 1")
-    a = 1
 
 class BookShelfThread(threading.Thread):
     def __init__(self, id, queue):
