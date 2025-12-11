@@ -163,10 +163,11 @@
                 "name": "book_details",
                 "constraint_layer": "implementation_constraint",
                 "scope": "local",
-                "type":"is_not_null",
+                "type":"is_object",
+                "value": "object",
                 "failures": ["1-1-2"],
                 "rootcause": {
-                    "1-1-2": "The root cause of failure was that the book details variable was initialized as None, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key on this variable."
+                    "1-1-2": "The root cause of failure was that the book details variable was initialized as None, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
                 }
             }
         ]
