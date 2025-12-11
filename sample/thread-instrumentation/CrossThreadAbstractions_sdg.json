@@ -1,15 +1,16 @@
 {
     "abstraction": [
         {
-            "name": "Add book",
+            "name": "Receive and Add Books To Shelf",
             "type": "concurrent_function",
             "threads": ["LibraryManager","BookSHelfThread"],
             "segments": [
                 {
                     "name": "Accept Book",
+                    "repeat": true,
                     "abstractions": [
                         "1-2-5-1",
-                        "1-2-5-1",
+                        "1-2-5-2",
                         "1-2-5-3",
                         "1-2-5-3-1",
                         "1-2-5-3-2",
@@ -20,7 +21,7 @@
                     "name": "Send Book",
                     "abstractions": [
                         "1-2-5-1",
-                        "1-2-5-1",
+                        "1-2-5-2",
                         "1-2-5-4",
                         "1-2-5-4-1",
                         "1-2-5-4-2"
@@ -32,6 +33,11 @@
                         "2-4-1-1-1",
                         "2-4-1-1-2",
                         "2-4-1-1-2-1"
+                    ]
+                },
+                {
+                    "name": "Place Book",
+                    "abstractions": [
                     ]
                 }
             ]
