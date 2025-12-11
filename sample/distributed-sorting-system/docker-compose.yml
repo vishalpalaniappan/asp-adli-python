@@ -3,43 +3,65 @@ version: "3.9"
 services:
 
   interface:
-    build: ./interface
+    build:
+      context: ./interface
+      dockerfile: ../shared/dockerfile
     container_name: interface
     networks:
       - sort-net
 
   orchestrator:
-    build: ./orchestrator
+    build:
+      context: ./orchestrator
+      dockerfile: ../shared/dockerfile
     container_name: orchestrator
+    depends_on:
+      - queue-a
     networks:
       - sort-net
 
   queue-a:
-    build: ./queue-a
+    build:
+      context: ./queue-a
+      dockerfile: ../shared/dockerfile
     container_name: queue-a
     networks:
       - sort-net
 
   sort-a:
-    build: ./sort-a
+    build:
+      context: ./sort-a
+      dockerfile: ../shared/dockerfile
     container_name: sort-a
+    depends_on:
+      - queue-a
     networks:
       - sort-net
 
   sort-b:
-    build: ./sort-b
+    build:
+      context: ./sort-b
+      dockerfile: ../shared/dockerfile
     container_name: sort-b
+    depends_on:
+      - queue-a
     networks:
       - sort-net
 
   sort-c:
-    build: ./sort-c
+    build:
+      context: ./sort-c
+      dockerfile: ../shared/dockerfile
     container_name: sort-c
+    depends_on:
+      - queue-a
     networks:
       - sort-net
 
   database-writer:
-    build: ./database-writer
+    build:
+      context: ./database-writer
+      dockerfile: ../shared/dockerfile
     container_name: database-writer
     networks:
       - sort-net
