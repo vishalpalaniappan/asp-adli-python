@@ -1,0 +1,62 @@
+{
+    "name": "library_manager_v2",
+    "type": "Semantic Design Graph",
+    "meta": "library_manager_meta.json",
+    "modules": {
+        "0": {
+            "name": "Global Path",
+            "type": "function",
+            "abstractions": [
+                {
+                    "id": "0-1"
+                },
+                {
+                    "id": "0-2"
+                },
+                {
+                    "id": "0-3",
+                    "type": "conditional_branch",
+                    "abstractions": [
+                        {
+                            "id": "0-3-1",
+                            "type": "function_call",
+                            "target": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        "1": {
+            "name": "Receive Message",
+            "type": "function",
+            "async": true,
+            "abstractions": [
+                {
+                    "id": "1-1",
+                    "type": "for",
+                    "abstractions": [
+                        {
+                            "id": "1-1-1"
+                        }
+                    ]
+                }
+            ]
+        },
+        "2": {
+            "name": "Main Function",
+            "type": "function",
+            "async": true,
+            "source": ["0-3-1"],
+            "abstractions": [
+                {
+                    "id": "2-1",
+                    "abstractions": [
+                        {
+                            "id": "2-1-1"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

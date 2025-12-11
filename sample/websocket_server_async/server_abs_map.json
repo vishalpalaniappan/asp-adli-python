@@ -1,0 +1,77 @@
+{
+    "file": "Server",
+    "version:": "0.0.0",
+    "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
+    "files": [
+        {
+            "path": "server.py",
+            "modules": {
+                "global": {        
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "0-1",
+                            "lineDelta": 2,
+                            "syntax": "import sys"
+                        },
+                        {
+                            "id": "0-2",
+                            "lineDelta": 3,
+                            "syntax": "if __name__ == \"__main__\":"
+                        },
+                        {
+                            "id": "0-3",
+                            "lineDelta": 13,
+                            "syntax": "from websockets.asyncio.server import serve"
+                        },
+                        {
+                            "id": "0-3-1",
+                            "lineDelta": 14,
+                            "syntax": "asyncio.run(main())"
+                        }
+                    ]
+                },
+                "1": {
+                    "startLine": 6,
+                    "abstractions": [
+                        {
+                            "id": "1",
+                            "lineDelta": 0,
+                            "syntax": "async def receieve_message(websocket):"
+                        },
+                        {
+                            "id": "1-1",
+                            "lineDelta": 1,
+                            "syntax": "async for message in websocket:"
+                        },
+                        {
+                            "id": "1-1-1",
+                            "lineDelta": 2,
+                            "syntax": "print(f\"\nReceived message: {message}\")"
+                        }
+                    ]
+                },
+                "2": {
+                    "startLine": 10,
+                    "abstractions": [
+                        {
+                            "id": "2",
+                            "lineDelta": 0,
+                            "syntax": "async def main():"
+                        },
+                        {
+                            "id": "2-1",
+                            "lineDelta": 1,
+                            "syntax": "async with serve(receieve_message, host=\"localhost\", port=8080) as server:"
+                        },
+                        {
+                            "id": "2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "await server.serve_forever()"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
