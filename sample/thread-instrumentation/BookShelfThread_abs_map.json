@@ -105,7 +105,7 @@
               "syntax": "self.book_shelf[firstLetter] = []"
             },
             {
-              "id": "3-1-4-2",
+              "id": "3-1-5",
               "lineDelta": 11,
               "syntax": "else:"
             },
@@ -115,7 +115,7 @@
               "syntax": "print(f\"{threading.get_ident()} Slot for book already exists.\")"
             },
             {
-              "id": "3-1-5",
+              "id": "3-1-6",
               "lineDelta": 14,
               "syntax": "self.book_shelf[firstLetter].append(book['name'])"
             }
