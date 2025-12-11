@@ -19,6 +19,7 @@ def accept_book():
 
 def main(argv):
     message_queue = queue.Queue()
+
     BookShelfThread(message_queue)
 
     basket = []
@@ -39,26 +40,27 @@ def main(argv):
         if response == "a":
             book_details = accept_book()
             basket.append(book_details)   
+            continue       
 
         elif response == "p":
             message_queue.put({
                 "type": "add",
                 "basket": basket
             })
+            continue       
 
         elif response == "d":
             message_queue.put({
                 "type": "display",
                 "basket": basket
             })
+            continue            
 
         else:
             message_queue.put({
                 "type": "quit"
             })
             break
-
-        time.sleep(1)
 
 if "__main__" == __name__:
     sys.exit(main(sys.argv))
