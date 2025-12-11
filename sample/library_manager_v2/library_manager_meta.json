@@ -190,21 +190,10 @@
                 "scope": "local",
                 "type":"is_object",
                 "value": "object",
-                "failures": ["1-1-4-1"],
+                "failures": ["1-1-4-1","1-1-4"],
                 "rootcause": {
-                    "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book."
-                }
-            },
-            {
-                "id": "3-1+2",
-                "name": "book_shelf",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"is_not_null",
-                "value": "object",
-                "failures": ["1-1-4"],
-                "rootcause": {
-                    "1-1-4": "The root cause of failure was that the bookshelf was initialized as None with the intention of checking to see if a key exists in it for placing the books in the relevant slot. This resulted in a failure when attempting to check if a slot exists for the firstLetter on the bookshelf because the in operator requires an iterable and the bookshelf was None."
+                    "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book.",                    
+                    "1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
                 }
             }
         ]
