@@ -46,6 +46,15 @@
                 "1-1-6",
                 "1-2"
             ]
+        },
+        {
+            "name": "Display Basket and BookShelf",
+            "abstractions": [
+                "3-3-4",
+                "3-3-4-1",
+                "3-3-4-2",
+                "3-3-4-3"
+            ]
         }
     ],
     "modules": {
