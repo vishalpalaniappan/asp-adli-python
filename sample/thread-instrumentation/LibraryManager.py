@@ -17,7 +17,7 @@ def accept_book():
     return book_details
 
 
-def main(argv):
+def main():
     message_queue = queue.Queue()
 
     BookShelfThread(message_queue)
