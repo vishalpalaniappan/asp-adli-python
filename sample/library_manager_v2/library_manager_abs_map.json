@@ -16,12 +16,12 @@
                         },
                         {
                             "id": "0-2",
-                            "lineDelta": 79,
+                            "lineDelta": 82,
                             "syntax": "if __name__ == \"__main__\":"
                         },
                         {
                             "id": "0-2-1",
-                            "lineDelta": 80,
+                            "lineDelta": 83,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
