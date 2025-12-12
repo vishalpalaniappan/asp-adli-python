@@ -172,41 +172,51 @@
                         {
                             "id": "3-3-3-1",
                             "lineDelta": 29,
-                            "syntax": "book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)"
+                            "syntax": "if (len(basket) > 5):"
+                        },
+                        {
+                            "id": "3-3-3-1-1",
+                            "lineDelta": 30,
+                            "syntax": "raise Exception(\"Book Shelf Broke\")"
                         },
                         {
                             "id": "3-3-3-2",
-                            "lineDelta": 31,
+                            "lineDelta": 32,
+                            "syntax": "book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)"
+                        },
+                        {
+                            "id": "3-3-3-3",
+                            "lineDelta": 34,
                             "syntax": "continue"
                         },
                         {
                             "id": "3-3-4",
-                            "lineDelta": 33,
+                            "lineDelta": 36,
                             "syntax": "elif response == \"d\":"
                         },
                         {
                             "id": "3-3-4-1",
-                            "lineDelta": 35,
+                            "lineDelta": 38,
                             "syntax": "print(\\nBook Shelf:\", book_shelf)"
                         },
                         {
                             "id": "3-3-4-2",
-                            "lineDelta": 37,
+                            "lineDelta": 40,
                             "syntax": "print(\"Basket:\", basket)"
                         },
                         {
                             "id": "3-3-4-3",
-                            "lineDelta": 39,
+                            "lineDelta": 42,
                             "syntax": "continue"
                         },
                         {
                             "id": "3-3-5",
-                            "lineDelta": 43,
+                            "lineDelta": 46,
                             "syntax": "break"
                         },
                         {
                             "id": "3-4",
-                            "lineDelta": 45,
+                            "lineDelta": 48,
                             "syntax": "print(\"\nExiting library manager, goodbye.\")"
                         }
                     ]
