@@ -197,7 +197,7 @@
                         {
                             "id": "3-3-4-1",
                             "lineDelta": 38,
-                            "syntax": "print(\\nBook Shelf:\", book_shelf)"
+                            "syntax": "print(\"\\nBook Shelf:\", book_shelf)"
                         },
                         {
                             "id": "3-3-4-2",

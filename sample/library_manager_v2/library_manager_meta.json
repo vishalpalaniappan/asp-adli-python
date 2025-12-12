@@ -21,7 +21,7 @@
         "intent": "Place the books from the basket onto the shelf.",
         "type": "function",
         "name": "Place Books On Shelf",
-        "source": ["3-3-3-1"]
+        "source": ["3-3-3-2"]
     },
     "1-1": {
         "intent": "There are more books in the basket.",
