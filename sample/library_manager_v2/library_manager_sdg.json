@@ -2,6 +2,23 @@
     "name": "library_manager_v2",
     "type": "Semantic Design Graph",
     "meta": "library_manager_meta.json",
+    "behavioral": [
+        {
+            "name": "Accept Book and Place in Basket",
+            "abstractions": [
+                "Accept Book",
+                "Place Book In Basket"
+            ]
+        },
+        {
+            "name": "Place Books From Basket Into Shelf",
+            "abstractions": [
+                "Bring Basket To Shelf",
+                "Get Book From Basket",
+                "Place Book on Shelf"
+            ]
+        }
+    ],
     "functional": [
         {
             "name": "Accept Book",
