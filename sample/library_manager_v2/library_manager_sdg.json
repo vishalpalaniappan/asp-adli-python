@@ -5,6 +5,8 @@
     "behavioral": [
         {
             "name": "Accept Book and Place in Basket",
+            "id": "AcceptBookAndPlaceInBasket",
+            "selector": "SelectBehaviorA",
             "abstractions": [
                 "Accept Book",
                 "Place Book In Basket"
@@ -12,6 +14,8 @@
         },
         {
             "name": "Place Books From Basket Into Shelf",
+            "id": "PlaceBooksFromBasketIntoShelf",
+            "selector": "SelectBehaviorB",
             "abstractions": [
                 "Bring Basket To Shelf",
                 "Get Book From Basket",
@@ -20,6 +24,8 @@
         },
         {
             "name": "Display Library State",
+            "id": "DisplayLibraryState",
+            "selector": "SelectBehaviorC",
             "abstractions": [
                 "Display BookShelf",
                 "Display Basket"
@@ -28,7 +34,8 @@
     ],
     "functional": [
         {
-            "id": "Accept Book",
+            "name": "Accept Book",
+            "id": "AcceptBook",
             "abstractions": [
                 "3-3-2-1",
                 "2-1",
@@ -39,19 +46,22 @@
             ]
         },
         {
-            "id": "Place Book in Basket",
+            "name": "Place Book in Basket",
+            "id": "PlaceBookInBasket",
             "abstractions": [
                 "3-3-2-2"
             ]
         },
         {
-            "id": "Bring Basket To Shelf",
+            "name": "Bring Basket To Shelf",
+            "id": "BringBasketToShelf",
             "abstractions": [
                 "3-3-3-1"
             ]
         },
         {
-            "id": "Get Book From Basket",
+            "name": "Get Book From Basket",
+            "id": "GetBookFromBasket",
             "abstractions": [
                 "1-1",
                 "1-1-1",
@@ -59,7 +69,8 @@
             ]
         },
         {
-            "id": "Place Book on Shelf",
+            "name": "Place Book on Shelf",
+            "id": "PlaceBookOnShelf",
             "abstractions": [
                 "1-1-3",
                 "1-1-4",
@@ -70,15 +81,59 @@
             ]
         },
         {
-            "id": "Display BookShelf",
+            "name": "Display BookShelf",
+            "id": "DisplayBookShelf",
             "abstractions": [
                 "3-3-4-1"
             ]
         },
         {
-            "id": "Display Basket",
+            "name": "Display Basket",
+            "id": "DisplayBasket",
             "abstractions": [
                 "3-3-4-2"
+            ]
+        },
+        {
+            "name": "Select Behavior A",
+            "id": "SelectBehaviorA",
+            "condition": {
+                "variable": "response",
+                "value": "a"
+            },
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2"
+            ]
+        },
+        {
+            "name": "Select Behavior B",
+            "id": "SelectBehaviorB",
+            "condition": {
+                "variable": "response",
+                "value": "b"
+            },
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2",
+                "3-3-3"
+            ]
+        },
+        {
+            "name": "Select Behavior C",
+            "id": "SelectBehaviorC",
+            "condition": {
+                "variable": "response",
+                "value": "c"
+            },
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2",
+                "3-3-3",
+                "3-3-4"
             ]
         }
     ],
