@@ -177,7 +177,7 @@
                         {
                             "id": "3-3-3-1-1",
                             "lineDelta": 30,
-                            "syntax": "raise Exception(\"Book Shelf Broke\")"
+                            "syntax": "raise Exception(\"Basket is too heavy, I can't bring it to the shelf.\")"
                         },
                         {
                             "id": "3-3-3-2",
