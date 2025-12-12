@@ -112,59 +112,42 @@
         {
             "name": "Select Behavior A",
             "id": "SelectBehaviorA",
+            "type": "selector",
             "condition": {
                 "variable": "response",
                 "value": "a"
             },
-            "abstractions": [
-                "3-3",
-                "3-3-1",
-                "3-3-2"
-            ]
+            "abstraction": "3-3-1"
         },
         {
             "name": "Select Behavior B",
             "id": "SelectBehaviorB",
+            "type": "selector",
             "condition": {
                 "variable": "response",
                 "value": "b"
             },
-            "abstractions": [
-                "3-3",
-                "3-3-1",
-                "3-3-2",
-                "3-3-3"
-            ]
+            "abstraction": "3-3-1"
         },
         {
             "name": "Select Behavior C",
             "id": "SelectBehaviorC",
+            "type": "selector",
             "condition": {
                 "variable": "response",
                 "value": "c"
             },
-            "abstractions": [
-                "3-3",
-                "3-3-1",
-                "3-3-2",
-                "3-3-3",
-                "3-3-4"
-            ]
+            "abstraction": "3-3-1"
         },
         {
             "name": "Select Behavior D",
             "id": "SelectBehaviorD",
+            "type": "selector",
             "condition": {
                 "variable": "response",
                 "value": "d"
             },
-            "abstractions": [
-                "3-3",
-                "3-3-1",
-                "3-3-2",
-                "3-3-3",
-                "3-3-4"
-            ]
+            "abstraction": "3-3-1"
         }
     ],
     "modules": {
