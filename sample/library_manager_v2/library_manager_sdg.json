@@ -139,17 +139,17 @@
             "selector-abstractions": [
                 {
                     "name": "Accepting Book and Add to Basket",
-                    "id": "AcceptBookAndAddToBasket",
+                    "id": "AcceptingBookAndAddToBasket",
                     "abstraction":  "3-3-2"
                 },
                 {
                     "name": "Placing Books from Basket onto SHelf",
-                    "id": "AcceptBookAndAddToBasket",
+                    "id": "PlacingBooksFromBasketOntoShelf",
                     "abstraction":  "3-3-3"
                 },
                 {
-                    "name": "Display Contents of Library",
-                    "id": "DisplayContentsOfLibrary",
+                    "name": "Displaying Contents of Library",
+                    "id": "DisplayingContentsOfLibrary",
                     "abstraction":  "3-3-4"
                 }
             ],

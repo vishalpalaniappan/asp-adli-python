@@ -1,3 +1,31 @@
 {
-    "description": "Contains the design traces as constructed through the functional, selector and behavioral abstsractions. This will allow the construction of design traces across boundaries such as threads, nodes and processes."
+    "description": "Contains the design traces as constructed through the functional, selector and behavioral abstsractions. This will allow the construction of design traces across boundaries such as threads, nodes and processes.",
+    "tree": [
+        {
+            "id": "CreateBasketAndBookShelf"
+        },
+        {
+            "id": "DisplayMenuAndAcceptResponse",
+            "selectors": [
+                {
+                    "id": "AcceptingBookAndAddToBasket",
+                    "behavior": [
+
+                    ]
+                },
+                {
+                    "id": "PlacingBooksFromBasketOntoShelf",
+                    "behavior": {
+
+                    }
+                },
+                {
+                    "id": "DisplayingContentsOfLibrary",
+                    "behavior": {
+
+                    }
+                }
+            ]
+        }
+    ]
 }
