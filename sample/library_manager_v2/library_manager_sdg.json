@@ -4,20 +4,13 @@
     "meta": "library_manager_meta.json",
     "behavioral_abstractions": [
         {
-            "name": "Provide Library Manager Service To User",
-            "id": "ProvideLibraryManagerServiceToUser",
-            "selector": "LetUserAccessLibraryManager",
-            "functional_abstractions": [
-                "ShowMenuToUserAndAcceptTheirSelection"
-            ]
-        },
-        {
             "name": "Accept Book and Place in Basket",
             "id": "AcceptBookAndPlaceInBasket",
             "selector": "SelectBehaviorA",
             "functional_abstractions": [
                 "AcceptBook",
-                "PlaceBookInBasket"
+                "PlaceBookInBasket",
+                "ShowMenuToUserAndAcceptTheirSelection"
             ]
         },
         {
@@ -27,7 +20,8 @@
             "functional_abstractions": [
                 "BringBasketToShelf",
                 "GetBookFromBasket",
-                "PlaceBookOnShelf"
+                "PlaceBookOnShelf",
+                "ShowMenuToUserAndAcceptTheirSelection"
             ]
         },
         {
@@ -36,7 +30,8 @@
             "selector": "SelectBehaviorC",
             "functional_abstractions": [
                 "DisplayBookShelf",
-                "DisplayBasket"
+                "DisplayBasket",
+                "ShowMenuToUserAndAcceptTheirSelection"
             ]
         },
         {
@@ -48,7 +43,53 @@
             ]
         }
     ],
-    "functional_abstractions": [
+    "functional_abstractions": [        
+        {
+            "name": "Show menu to user and accept their selection.",
+            "id": "ShowMenuToUserAndAcceptTheirSelection",
+            "abstractions": [
+                "3-3",
+                "3-3-1"
+            ]
+        },
+        {
+            "name": "Select Accept Book Option",
+            "id": "SelectAcceptBookOption",
+            "type": "selector",
+            "abstractions": [
+                "3-3-2"
+            ]
+        },
+        {
+            "name": "Select Place Book Option",
+            "id": "SelectPlaceBookOption",
+            "type": "selector",
+            "abstractions": [
+                "3-3-2",
+                "3-3-3"
+            ]
+        },
+        {
+            "name": "Select Display Library Option",
+            "id": "SelectDisplayLibraryOption",
+            "type": "selector",
+            "abstractions": [
+                "3-3-2",
+                "3-3-3",
+                "3-3-4"
+            ]
+        },
+        {
+            "name": "Select Terminate Option",
+            "id": "SelectTerminateOption",
+            "type": "selector",
+            "abstractions": [
+                "3-3-2",
+                "3-3-3",
+                "3-3-4",
+                "3-3-5"
+            ]
+        },
         {
             "name": "Accept Book",
             "id": "AcceptBook",
@@ -124,52 +165,6 @@
             "id": "TerminateProgram",
             "type": "functional",
             "abstractions": [
-                "3-3-5"
-            ]
-        },
-        {
-            "name": "Show menu to user and accept their selection.",
-            "id": "ShowMenuToUserAndAcceptTheirSelection",
-            "abstractions": [
-                "3-3",
-                "3-3-1"
-            ]
-        },
-        {
-            "name": "Select Accept Book Option",
-            "id": "SelectAcceptBookOption",
-            "type": "selector",
-            "abstractions": [
-                "3-3-2"
-            ]
-        },
-        {
-            "name": "Select Place Book Option",
-            "id": "SelectPlaceBookOption",
-            "type": "selector",
-            "abstractions": [
-                "3-3-2",
-                "3-3-3"
-            ]
-        },
-        {
-            "name": "Select Display Library Option",
-            "id": "SelectDisplayLibraryOption",
-            "type": "selector",
-            "abstractions": [
-                "3-3-2",
-                "3-3-3",
-                "3-3-4"
-            ]
-        },
-        {
-            "name": "Select Terminate Option",
-            "id": "SelectTerminateOption",
-            "type": "selector",
-            "abstractions": [
-                "3-3-2",
-                "3-3-3",
-                "3-3-4",
                 "3-3-5"
             ]
         }
