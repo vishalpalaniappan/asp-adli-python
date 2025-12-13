@@ -52,6 +52,7 @@
         {
             "name": "Accept Book",
             "id": "AcceptBook",
+            "type": "functional",
             "abstractions": [
                 "3-3-2-1",
                 "2-1",
@@ -64,6 +65,7 @@
         {
             "name": "Place Book in Basket",
             "id": "PlaceBookInBasket",
+            "type": "functional",
             "abstractions": [
                 "3-3-2-2"
             ]
@@ -71,6 +73,7 @@
         {
             "name": "Bring Basket To Shelf",
             "id": "BringBasketToShelf",
+            "type": "functional",
             "abstractions": [
                 "3-3-3-1",
                 "3-3-3-1-1",
@@ -80,6 +83,7 @@
         {
             "name": "Get Book From Basket",
             "id": "GetBookFromBasket",
+            "type": "functional",
             "abstractions": [
                 "1-1",
                 "1-1-1",
@@ -89,6 +93,7 @@
         {
             "name": "Place Book on Shelf",
             "id": "PlaceBookOnShelf",
+            "type": "functional",
             "abstractions": [
                 "1-1-3",
                 "1-1-4",
@@ -101,6 +106,7 @@
         {
             "name": "Display BookShelf",
             "id": "DisplayBookShelf",
+            "type": "functional",
             "abstractions": [
                 "3-3-4-1"
             ]
@@ -108,6 +114,7 @@
         {
             "name": "Display Basket",
             "id": "DisplayBasket",
+            "type": "functional",
             "abstractions": [
                 "3-3-4-2"
             ]
@@ -115,23 +122,16 @@
         {
             "name": "Terminate Program",
             "id": "TerminateProgram",
+            "type": "functional",
             "abstractions": [
                 "3-3-5"
             ]
         },
         {
-            "name": "Let user access the library manager.",
-            "id": "LetUserAccessLibraryManager",
-            "type": "selector",
-            "abstractions": [
-                "3-3"
-            ]
-        },
-        {
             "name": "Show menu to user and accept their selection.",
             "id": "ShowMenuToUserAndAcceptTheirSelection",
-            "type": "selector",
             "abstractions": [
+                "3-3",
                 "3-3-1"
             ]
         },
