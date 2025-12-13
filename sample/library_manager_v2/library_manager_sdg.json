@@ -112,65 +112,46 @@
             ]
         },
         {
-            "name": "Select Behavior A",
-            "id": "SelectBehaviorA",
-            "type": "selector",
-            "condition": {
-                "variable": "response",
-                "scope": "local",
-                "value": "a"
-            },
+            "name": "Display Menu",
+            "id": "DisplayMenu",
             "abstractions": [
                 "3-3",
-                "3-3-1",
+                "3-3-1"
+            ]
+
+        },
+        {
+            "name": "Select Accept Book Option",
+            "id": "SelectAcceptBookOption",
+            "type": "selector",
+            "abstractions": [
                 "3-3-2"
             ]
         },
         {
-            "name": "Select Behavior B",
-            "id": "SelectBehaviorB",
+            "name": "Select Place Book Option",
+            "id": "SelectPlaceBookOption",
             "type": "selector",
-            "condition": {
-                "variable": "response",
-                "scope": "local",
-                "value": "p"
-            },
             "abstractions": [
-                "3-3",
-                "3-3-1",
                 "3-3-2",
                 "3-3-3"
             ]
         },
         {
-            "name": "Select Behavior C",
-            "id": "SelectBehaviorC",
+            "name": "Select Display Library Option",
+            "id": "SelectDisplayLibraryOption",
             "type": "selector",
-            "condition": {
-                "variable": "response",
-                "scope": "local",
-                "value": "d"
-            },
             "abstractions": [
-                "3-3",
-                "3-3-1",
                 "3-3-2",
                 "3-3-3",
                 "3-3-4"
             ]
         },
         {
-            "name": "Select Behavior D",
-            "id": "SelectBehaviorD",
+            "name": "Select Terminate Option",
+            "id": "SelectTerminateOption",
             "type": "selector",
-            "condition": {
-                "variable": "response",
-                "scope": "local",
-                "not_value": ["a","p","d"]
-            },
             "abstractions": [
-                "3-3",
-                "3-3-1",
                 "3-3-2",
                 "3-3-3",
                 "3-3-4",
