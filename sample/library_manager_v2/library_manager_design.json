@@ -8,42 +8,55 @@
                     "id": "CreateBasketAndBookShelf"
                 },
                 {
-                    "id": "DisplayMenuAndAcceptResponse"                    
-                },
-                {
-                    "type": "selector",
-                    "description": "Select Menu Option",
-                    "selectors": [
+                    "type": "loop",
+                    "nodes": [
                         {
-                            "id": "AcceptingBookAndAddToBasket",
-                            "behavior": [
-                                {
-                                    "id": "AcceptBookInformation",
-                                    "module_name": "AcceptBookModule",
-                                    "type":"module"
-                                },
-                                {
-                                    "id": "AddBookToBasket"
-                                }
-                            ]
+                            "id": "DisplayMenuAndAcceptResponse"                    
                         },
                         {
-                            "id": "PlacingBooksFromBasketOntoShelf",
-                            "behavior":  [
+                            "type": "selector",
+                            "description": "Select Menu Option",
+                            "selectors": [
                                 {
-                                    "id": "PlaceBookOnShelf",
-                                    "type":"module"
-                                }
-                            ]
-                        },
-                        {
-                            "id": "DisplayingContentsOfLibrary",
-                            "behavior": [
-                                {
-                                    "id": "DisplayBookShelf"
+                                    "id": "AcceptingBookAndAddToBasket",
+                                    "behavior": [
+                                        {
+                                            "id": "AcceptBookInformation",
+                                            "module_name": "AcceptBookModule",
+                                            "type":"module"
+                                        },
+                                        {
+                                            "id": "AddBookToBasket"
+                                        }
+                                    ]
                                 },
                                 {
-                                    "id": "DisplayBasket"
+                                    "id": "PlacingBooksFromBasketOntoShelf",
+                                    "behavior":  [
+                                        {
+                                            "id": "PlaceBookOnShelf",
+                                            "type":"module"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "DisplayingContentsOfLibrary",
+                                    "behavior": [
+                                        {
+                                            "id": "DisplayBookShelf"
+                                        },
+                                        {
+                                            "id": "DisplayBasket"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "LeaveLibrary",
+                                    "behavior": [
+                                        {
+                                            "type": "exit_out_loop"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -83,34 +96,39 @@
             "name":"PlaceBookOnShelf",
             "nodes": [
                 {
-                    "type": "selector",
-                    "description": "Check for books in basket",
-                    "selectors": [
+                    "type": "loop",
+                    "nodes": [
                         {
-                            "id": "PlacingBookOnShelf",
-                            "behavior": [
+                            "type": "selector",
+                            "description": "Check for books in basket",
+                            "selectors": [
                                 {
-                                    "id": "GettingBookFromBasket"
-                                },
-                                {
-                                    "id": "GettingFirstNameOfBook"
-                                },
-                                {
-                                    "type": "selector",
-                                    "description": "Check if slot exists for book",
-                                    "selectors": [
+                                    "id": "PlacingBookOnShelf",
+                                    "behavior": [
                                         {
-                                            "id": "CreateSlotForBookOnShelf",
-                                            "behavior": [
+                                            "id": "GettingBookFromBasket"
+                                        },
+                                        {
+                                            "id": "GettingFirstNameOfBook"
+                                        },
+                                        {
+                                            "type": "selector",
+                                            "description": "Check if slot exists for book",
+                                            "selectors": [
                                                 {
-                                                    "id": "CreatingSlotForBookInShelf"
+                                                    "id": "CreateSlotForBookOnShelf",
+                                                    "behavior": [
+                                                        {
+                                                            "id": "CreatingSlotForBookInShelf"
+                                                        }
+                                                    ]
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "id": "AddingBookToShelf"
                                         }
                                     ]
-                                },
-                                {
-                                    "id": "AddingBookToShelf"
                                 }
                             ]
                         }
