@@ -116,6 +116,7 @@
             "type": "function",
             "source": ["3-3-2-1"],
             "behavioral_abstractions": [],
+            "selector-abstractions": [],
             "functional_abstractions": [],
             "abstractions": [
                 {
@@ -173,8 +174,7 @@
                 {
                     "name": "Place Book On Shelf",
                     "id": "PlaceBookOnShelf",
-                    "abstraction":  "3-3-3-2"
-                    
+                    "abstraction":  "3-3-3-2"                    
                 },
                 {
                     "name": "Display Book Shelf",

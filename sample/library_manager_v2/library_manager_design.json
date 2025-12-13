@@ -1,0 +1,3 @@
+{
+    "description": "Contains the design traces as constructed through the functional, selector and behavioral abstsractions. This will allow the construction of design traces across boundaries such as threads, nodes and processes."
+}
