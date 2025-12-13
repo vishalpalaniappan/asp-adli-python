@@ -28,6 +28,19 @@
             "name": "Place Books On Shelf",
             "type": "function",
             "source": ["3-3-3-2"],
+            "behavioral_abstractions": [
+                {
+                    "name": "Placing book on shelf.",
+                    "id": "PlacingBookOnShelf",
+                    "root_abstraction":  "1-1"
+                },
+                {
+                    "name": "Creating slot for book on shelf.",
+                    "id": "AcceptBookAndAddToBasket",
+                    "root_abstraction":  "1-1-4"
+                }
+            ],
+            "functional_abstractions": [],
             "abstractions": [
                 {
                     "id": "1-1",
@@ -69,6 +82,8 @@
             "name": "Accept Book Information",
             "type": "function",
             "source": ["3-3-2-1"],
+            "behavioral_abstractions": [],
+            "functional_abstractions": [],
             "abstractions": [
                 {
                     "id": "2-1"
@@ -91,6 +106,24 @@
             "name": "Library Manager",
             "type": "function",
             "source": ["0-2-1"],
+            "behavioral_abstractions": [
+                {
+                    "name": "Accepting Book and Add to Basket",
+                    "id": "AcceptBookAndAddToBasket",
+                    "abstraction":  "3-3-2"
+                },
+                {
+                    "name": "Placing Books from Basket onto SHelf",
+                    "id": "AcceptBookAndAddToBasket",
+                    "abstraction":  "3-3-3"
+                },
+                {
+                    "name": "Display Contents of Library",
+                    "id": "DisplayContentsOfLibrary",
+                    "abstraction":  "3-3-4"
+                }
+            ],
+            "functional_abstractions": [],
             "abstractions": [
                 {
                     "id": "3-1"
