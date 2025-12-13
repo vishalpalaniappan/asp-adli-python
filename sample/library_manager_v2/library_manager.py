@@ -59,6 +59,9 @@ def library_manager():
 
         elif response == "p":
 
+            if (len(basket) > 5):
+                raise Exception("Basket is too heavy, I can't bring it to the shelf.")
+
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
 
             continue
