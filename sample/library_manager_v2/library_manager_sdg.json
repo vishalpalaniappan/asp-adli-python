@@ -120,7 +120,11 @@
                 "scope": "local",
                 "value": "a"
             },
-            "abstraction": "3-3-1"
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2"
+            ]
         },
         {
             "name": "Select Behavior B",
@@ -131,7 +135,12 @@
                 "scope": "local",
                 "value": "p"
             },
-            "abstraction": "3-3-1"
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2",
+                "3-3-3"
+            ]
         },
         {
             "name": "Select Behavior C",
@@ -142,7 +151,13 @@
                 "scope": "local",
                 "value": "d"
             },
-            "abstraction": "3-3-1"
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2",
+                "3-3-3",
+                "3-3-4"
+            ]
         },
         {
             "name": "Select Behavior D",
@@ -153,7 +168,14 @@
                 "scope": "local",
                 "not_value": ["a","p","d"]
             },
-            "abstraction": "3-3-1"
+            "abstractions": [
+                "3-3",
+                "3-3-1",
+                "3-3-2",
+                "3-3-3",
+                "3-3-4",
+                "3-3-5"
+            ]
         }
     ],
     "modules": {
