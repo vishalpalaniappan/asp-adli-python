@@ -28,7 +28,10 @@
             "name": "Place Books On Shelf",
             "type": "function",
             "source": ["3-3-3-2"],
-            "behavioral_abstractions": [
+            "behavioral-abstractions": [
+
+            ],
+            "selector-abstractions": [
                 {
                     "name": "Placing book on shelf.",
                     "id": "PlacingBookOnShelf",
@@ -40,7 +43,37 @@
                     "root_abstraction":  "1-1-4"
                 }
             ],
-            "functional_abstractions": [],
+            "functional_abstractions": [
+                {
+                    "intent": "Getting book from basket",
+                    "id": "GettingBookFromBasket",
+                    "abstractions": [
+                        "1-1-1",
+                        "1-1-2"
+                    ]
+                },
+                {
+                    "name": "Getting first name of book",
+                    "id": "GettingFirstNameOfBook",
+                    "abstractions": [
+                        "1-1-3"
+                    ]
+                },
+                {
+                    "name": "Creating slot for book in shelf",
+                    "id": "CreatingSlotForBookInShelf",
+                    "abstractions": [
+                        "1-1-4-1"
+                    ]
+                },
+                {
+                    "name": "Adding book to shelf.",
+                    "id": "AddingBookToShelf",
+                    "abstractions": [
+                        "1-1-6"
+                    ]
+                }
+            ],
             "abstractions": [
                 {
                     "id": "1-1",
@@ -107,6 +140,9 @@
             "type": "function",
             "source": ["0-2-1"],
             "behavioral_abstractions": [
+
+            ],
+            "selector-abstractions": [
                 {
                     "name": "Accepting Book and Add to Basket",
                     "id": "AcceptBookAndAddToBasket",
@@ -123,7 +159,34 @@
                     "abstraction":  "3-3-4"
                 }
             ],
-            "functional_abstractions": [],
+            "functional_abstractions": [
+                {
+                    "name": "Accept Book Information",
+                    "id": "AcceptBookInformation",
+                    "abstraction":  "3-3-2-1"
+                },
+                {
+                    "name": "Add Book To Basket",
+                    "id": "AddBookToBasket",
+                    "abstraction":  "3-3-2-2"
+                },
+                {
+                    "name": "Place Book On Shelf",
+                    "id": "PlaceBookOnShelf",
+                    "abstraction":  "3-3-3-2"
+                    
+                },
+                {
+                    "name": "Display Book Shelf",
+                    "id": "DisplayBookShelf",
+                    "abstraction":  "3-3-4-1"
+                },
+                {
+                    "name": "Display Basket",
+                    "id": "DisplayBookShelf",
+                    "abstraction":  "3-3-4-2"
+                }
+            ],
             "abstractions": [
                 {
                     "id": "3-1"
