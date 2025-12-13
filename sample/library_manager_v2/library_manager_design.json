@@ -10,20 +10,34 @@
                 {
                     "id": "AcceptingBookAndAddToBasket",
                     "behavior": [
-
+                        {
+                            "id": "AcceptBookInformation",
+                            "type":"module"
+                        },
+                        {
+                            "id": "AddBookToBasket"
+                        }
                     ]
                 },
                 {
                     "id": "PlacingBooksFromBasketOntoShelf",
-                    "behavior": {
-
-                    }
+                    "behavior":  [
+                        {
+                            "id": "PlaceBookOnShelf",
+                            "type":"module"
+                        }
+                    ]
                 },
                 {
                     "id": "DisplayingContentsOfLibrary",
-                    "behavior": {
-
-                    }
+                    "behavior": [
+                        {
+                            "id": "DisplayBookShelf"
+                        },
+                        {
+                            "id": "DisplayBasket"
+                        }
+                    ]
                 }
             ]
         }
