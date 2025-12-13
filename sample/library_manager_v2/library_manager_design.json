@@ -1,41 +1,118 @@
 {
     "description": "Contains the design traces as constructed through the functional, selector and behavioral abstsractions. This will allow the construction of design traces across boundaries such as threads, nodes and processes.",
-    "tree": [
+    "modules": [
         {
-            "id": "CreateBasketAndBookShelf"
+            "name":"root",
+            "nodes": [
+                {
+                    "id": "CreateBasketAndBookShelf"
+                },
+                {
+                    "id": "DisplayMenuAndAcceptResponse"                    
+                },
+                {
+                    "type": "selector",
+                    "description": "Select Menu Option",
+                    "selectors": [
+                        {
+                            "id": "AcceptingBookAndAddToBasket",
+                            "behavior": [
+                                {
+                                    "id": "AcceptBookInformation",
+                                    "module_name": "AcceptBookModule",
+                                    "type":"module"
+                                },
+                                {
+                                    "id": "AddBookToBasket"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PlacingBooksFromBasketOntoShelf",
+                            "behavior":  [
+                                {
+                                    "id": "PlaceBookOnShelf",
+                                    "type":"module"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "DisplayingContentsOfLibrary",
+                            "behavior": [
+                                {
+                                    "id": "DisplayBookShelf"
+                                },
+                                {
+                                    "id": "DisplayBasket"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "id": "DisplayMenuAndAcceptResponse",
-            "selectors": [
+            "name":"AcceptBookModule",
+            "nodes": [
                 {
-                    "id": "AcceptingBookAndAddToBasket",
-                    "behavior": [
-                        {
-                            "id": "AcceptBookInformation",
-                            "type":"module"
-                        },
-                        {
-                            "id": "AddBookToBasket"
-                        }
-                    ]
+                    "id": "AcceptBookName"
                 },
                 {
-                    "id": "PlacingBooksFromBasketOntoShelf",
-                    "behavior":  [
-                        {
-                            "id": "PlaceBookOnShelf",
-                            "type":"module"
-                        }
-                    ]
+                    "id": "AcceptBookGenre"
                 },
                 {
-                    "id": "DisplayingContentsOfLibrary",
-                    "behavior": [
+                    "id": "AssembleBookDetails"
+                }
+            ]
+        },
+        {
+            "name":"AcceptBookModule",
+            "nodes": [
+                {
+                    "id": "AcceptBookName"
+                },
+                {
+                    "id": "AcceptBookGenre"
+                },
+                {
+                    "id": "AssembleBookDetails"
+                }
+            ]
+        },
+        {
+            "name":"PlaceBookOnShelf",
+            "nodes": [
+                {
+                    "type": "selector",
+                    "description": "Check for books in basket",
+                    "selectors": [
                         {
-                            "id": "DisplayBookShelf"
-                        },
-                        {
-                            "id": "DisplayBasket"
+                            "id": "PlacingBookOnShelf",
+                            "behavior": [
+                                {
+                                    "id": "GettingBookFromBasket"
+                                },
+                                {
+                                    "id": "GettingFirstNameOfBook"
+                                },
+                                {
+                                    "type": "selector",
+                                    "description": "Check if slot exists for book",
+                                    "selectors": [
+                                        {
+                                            "id": "CreateSlotForBookOnShelf",
+                                            "behavior": [
+                                                {
+                                                    "id": "CreatingSlotForBookInShelf"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "AddingBookToShelf"
+                                }
+                            ]
                         }
                     ]
                 }

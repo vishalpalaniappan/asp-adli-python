@@ -36,7 +36,7 @@
                 },
                 {
                     "name": "Creating slot for book on shelf.",
-                    "id": "AcceptBookAndAddToBasket",
+                    "id": "CreateSlotForBookOnShelf",
                     "root_abstraction":  "1-1-4"
                 }
             ],
@@ -113,7 +113,29 @@
             "type": "function",
             "source": ["3-3-2-1"],
             "selector-abstractions": [],
-            "functional_abstractions": [],
+            "functional_abstractions": [
+                {
+                    "name": "Accept Book Name",
+                    "id": "AcceptBookName",
+                    "abstractions":  [
+                        "2-2"
+                    ]
+                },
+                {
+                    "name": "Accept Book Genre",
+                    "id": "AcceptBookGenre",
+                    "abstractions":  [
+                        "2-3"
+                    ]
+                },
+                {
+                    "name": "Assemble Book Details",
+                    "id": "AssembleBookDetails",
+                    "abstractions":  [
+                        "2-4"
+                    ]
+                }
+            ],
             "abstractions": [
                 {
                     "id": "2-1"
