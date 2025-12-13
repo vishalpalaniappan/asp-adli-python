@@ -28,9 +28,6 @@
             "name": "Place Books On Shelf",
             "type": "function",
             "source": ["3-3-3-2"],
-            "behavioral-abstractions": [
-
-            ],
             "selector-abstractions": [
                 {
                     "name": "Placing book on shelf.",
@@ -115,7 +112,6 @@
             "name": "Accept Book Information",
             "type": "function",
             "source": ["3-3-2-1"],
-            "behavioral_abstractions": [],
             "selector-abstractions": [],
             "functional_abstractions": [],
             "abstractions": [
@@ -140,9 +136,6 @@
             "name": "Library Manager",
             "type": "function",
             "source": ["0-2-1"],
-            "behavioral_abstractions": [
-
-            ],
             "selector-abstractions": [
                 {
                     "name": "Accepting Book and Add to Basket",
@@ -162,29 +155,54 @@
             ],
             "functional_abstractions": [
                 {
+                    "name": "Create basket and book_shelf",
+                    "id": "CreateBasketAndBookShelf",
+                    "abstractions":  [
+                        "3-1",
+                        "3-2"
+                    ]
+                },
+                {
+                    "name": "Display Menu and Accept Response",
+                    "id": "DisplayMenuAndAcceptResponse",
+                    "abstractions": [
+                        "3-3-1"
+                    ]
+                },
+                {
                     "name": "Accept Book Information",
                     "id": "AcceptBookInformation",
-                    "abstraction":  "3-3-2-1"
+                    "abstractions":[
+                        "3-3-2-1"
+                    ]
                 },
                 {
                     "name": "Add Book To Basket",
                     "id": "AddBookToBasket",
-                    "abstraction":  "3-3-2-2"
+                    "abstractions":[
+                        "3-3-2-2"
+                    ]
                 },
                 {
                     "name": "Place Book On Shelf",
                     "id": "PlaceBookOnShelf",
-                    "abstraction":  "3-3-3-2"                    
+                    "abstractions":[
+                        "3-3-3-2"
+                    ]                    
                 },
                 {
                     "name": "Display Book Shelf",
                     "id": "DisplayBookShelf",
-                    "abstraction":  "3-3-4-1"
+                    "abstractions":[
+                        "3-3-4-1"
+                    ]
                 },
                 {
                     "name": "Display Basket",
                     "id": "DisplayBookShelf",
-                    "abstraction":  "3-3-4-2"
+                    "abstractions":[
+                        "3-3-4-2"
+                    ]
                 }
             ],
             "abstractions": [
