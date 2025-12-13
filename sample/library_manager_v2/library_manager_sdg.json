@@ -4,6 +4,14 @@
     "meta": "library_manager_meta.json",
     "behavioral_abstractions": [
         {
+            "name": "Provide Library Manager Service To User",
+            "id": "ProvideLibraryManagerServiceToUser",
+            "selector": "LetUserAccessLibraryManager",
+            "functional_abstractions": [
+                "ShowMenuToUserAndAcceptTheirSelection"
+            ]
+        },
+        {
             "name": "Accept Book and Place in Basket",
             "id": "AcceptBookAndPlaceInBasket",
             "selector": "SelectBehaviorA",
@@ -112,13 +120,20 @@
             ]
         },
         {
-            "name": "Display Menu",
-            "id": "DisplayMenu",
+            "name": "Let user access the library manager.",
+            "id": "LetUserAccessLibraryManager",
+            "type": "selector",
             "abstractions": [
-                "3-3",
+                "3-3"
+            ]
+        },
+        {
+            "name": "Show menu to user and accept their selection.",
+            "id": "ShowMenuToUserAndAcceptTheirSelection",
+            "type": "selector",
+            "abstractions": [
                 "3-3-1"
             ]
-
         },
         {
             "name": "Select Accept Book Option",
