@@ -15,7 +15,7 @@
                     "description": "Select Menu Option",
                     "selectors": [
                         {
-                            "id": "AcceptBookAndAddToBasket",
+                            "id": "SelectAddBookToBasket",
                             "behavior": [
                                 {
                                     "id": "AcceptBookInformation",
@@ -28,28 +28,22 @@
                             ]
                         },
                         {
-                            "id": "PlaceBooksFromBasketOntoShelf",
+                            "id": "SelectPlaceBookOnShelf",
                             "behavior":  [
                                 {
                                     "id": "PlaceBookOnShelf",
                                     "type":"module"
-                                },
-                                {
-                                    "id": "AddBookToBasket"
                                 }
                             ]
                         },
                         {
-                            "id": "DisplayingContentsOfLibrary",
+                            "id": "SelectDisplayLibrary",
                             "behavior": [
                                 {
                                     "id": "DisplayBookShelf"
                                 },
                                 {
                                     "id": "DisplayBasket"
-                                },
-                                {
-                                    "id": "AddBookToBasket"
                                 }
                             ]
                         },
