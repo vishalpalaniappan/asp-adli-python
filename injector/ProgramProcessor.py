@@ -9,7 +9,7 @@ from injector import helper
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
-from injector.LoadDesignConfiguration import getAbsMapFile, getSdgFile, getSdgMetaFile
+from injector.LoadDesignConfiguration import getDesignFile, getAbsMapFile, getSdgFile, getSdgMetaFile
 
 class ProgramProcessor:
     '''
@@ -48,6 +48,7 @@ class ProgramProcessor:
         sdg = getSdgFile(self.sourceFile)
         sdg_meta = getSdgMetaFile(self.sourceFile)
         abs_map = getAbsMapFile(self.sourceFile)
+        design_map = getDesignFile(self.sourceFile)
 
         # Process every file found in the program
         for currFilePath in files:
@@ -106,6 +107,9 @@ class ProgramProcessor:
 
         if (sdg_meta):
             header["sdg_meta"] = sdg_meta
+
+        if (design_map):
+            header["design_map"] = design_map
 
         try:
             header_path = os.path.join(self.outputDirectory, "header.json")

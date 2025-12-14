@@ -63,6 +63,28 @@ def getAbsMapFile (sourceFile):
 
     return absMap
 
+
+
+def getDesignFile (sourceFile):
+    '''
+    Gets the design file if it exists.
+    '''
+
+    no_ext, _ = os.path.splitext(sourceFile)
+    design_path = no_ext + "_design.json"
+
+    try:
+        with open(design_path, "r") as f:
+            designMap = json.loads(f.read())
+    except FileNotFoundError:
+        print("Could not find design for ", sourceFile)
+        designMap = None
+    except json.JSONDecodeError:
+        print("Design file is not a valid JSON for", sourceFile)
+        designMap = None
+
+    return designMap
+
 def buildMap(absMap):
     '''
     Build a map of abstraction ids to line numbers for each file.
