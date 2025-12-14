@@ -42,6 +42,13 @@
             ],
             "functional_abstractions": [
                 {
+                    "intent": "Checking Book For Basket",
+                    "id": "CheckingBookForBasket",
+                    "abstractions": [
+                        "1-1"
+                    ]
+                },
+                {
                     "intent": "Getting book from basket",
                     "id": "GettingBookFromBasket",
                     "abstractions": [
@@ -57,6 +64,13 @@
                     ]
                 },
                 {
+                    "name": "Checking If Book Has Name",
+                    "id": "CheckingIfBookHasName",
+                    "abstractions": [
+                        "1-1-4"
+                    ]
+                },
+                {
                     "name": "Creating slot for book in shelf",
                     "id": "CreatingSlotForBookInShelf",
                     "abstractions": [
@@ -68,6 +82,13 @@
                     "id": "AddingBookToShelf",
                     "abstractions": [
                         "1-1-6"
+                    ]
+                },
+                {
+                    "name": "Return Books",
+                    "id": "ReturnBooks",
+                    "abstractions": [
+                        "1-2"
                     ]
                 }
             ],
@@ -115,6 +136,13 @@
             "selector-abstractions": [],
             "functional_abstractions": [
                 {
+                    "name": "Display Request",
+                    "id": "DisplayRequest",
+                    "abstractions":  [
+                        "2-1"
+                    ]
+                },
+                {
                     "name": "Accept Book Name",
                     "id": "AcceptBookName",
                     "abstractions":  [
@@ -133,6 +161,13 @@
                     "id": "AssembleBookDetails",
                     "abstractions":  [
                         "2-4"
+                    ]
+                },
+                {
+                    "name": "Return Book Details",
+                    "id": "ReturnBookDetails",
+                    "abstractions":  [
+                        "2-5"
                     ]
                 }
             ],
@@ -156,6 +191,7 @@
         },
         "3": {
             "name": "Library Manager",
+            "id": "LibraryManager",
             "type": "function",
             "source": ["0-2-1"],
             "selector-abstractions": [
@@ -173,6 +209,11 @@
                     "name": "Displaying Contents of Library",
                     "id": "DisplayingContentsOfLibrary",
                     "abstraction":  "3-3-4"
+                },
+                {
+                    "name": "Leave Library",
+                    "id": "LeaveLibrary",
+                    "abstraction":  "3-3-5"
                 }
             ],
             "functional_abstractions": [
