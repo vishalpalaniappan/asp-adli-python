@@ -88,7 +88,7 @@
                     "description": "Check for books in basket",
                     "selectors": [
                         {
-                            "id": "CheckingBookForBasket",
+                            "id": "CheckingBasketForBook",
                             "behavior": [
                                 {
                                     "id": "GettingBookFromBasket"
@@ -103,9 +103,6 @@
                                     "selectors": [
                                         {
                                             "id": "CreateSlotForBookOnShelf"
-                                        },
-                                        {
-                                            "id": "DisplayConfirmationThatSlotExists"
                                         }
                                     ]
                                 },
@@ -115,7 +112,7 @@
                                 {
                                     "type":"goto",
                                     "module": "PlaceBookOnShelf",
-                                    "id": "CheckingBookForBasket"
+                                    "target_id": "CheckingBasketForBook"
                                 }
                             ]
                         },

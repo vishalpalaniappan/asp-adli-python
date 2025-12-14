@@ -30,9 +30,9 @@
             "source": ["3-3-3-2"],
             "functional_abstractions": [
                 {
-                    "intent": "Checking Book For Basket",
+                    "intent": "Checking Basket For Book",
                     "type": "selector",
-                    "id": "CheckingBookForBasket",
+                    "id": "CheckingBasketForBook",
                     "abstractions": [
                         "1-1"
                     ]
@@ -62,26 +62,17 @@
                     ]
                 },
                 {
-                    "name": "Creating slot for book in shelf",
-                    "id": "CreatingSlotForBookInShelf",
+                    "name": "Creating slot for book on shelf",
+                    "id": "CreateSlotForBookOnShelf",
                     "abstractions": [
                         "1-1-4-1"
-                    ]
-                },
-                {
-                    "name": "Display Confirmation That Slot Exists",
-                    "id": "DisplayConfirmationThatSlotExists",
-                    "type": "selector",
-                    "selector_id": "CreateSlotIfItDoesntExist",
-                    "abstractions": [
-                        "1-1-5"
                     ]
                 },
                 {
                     "name": "Adding book to shelf.",
                     "id": "AddingBookToShelf",
                     "abstractions": [
-                        "1-1-6"
+                        "1-1-5"
                     ]
                 },
                 {
@@ -116,11 +107,7 @@
                             ]                          
                         },
                         {
-                            "id": "1-1-5",
-                            "type": "conditional_branch"
-                        },
-                        {
-                            "id": "1-1-6"
+                            "id": "1-1-5"
                         }
                     ]
                 },
@@ -247,7 +234,7 @@
                     "name": "Place Book On Shelf",
                     "id": "PlaceBookOnShelf",
                     "abstractions":[
-                        "3-3-3-2"
+                        "3-3-3-1"
                     ]                    
                 },
                 {
@@ -276,12 +263,12 @@
                     ]
                 },
                 {
-                    "name": "Terminate Program",
-                    "id": "TerminateProgram",
+                    "name": "Leave Library",
+                    "id": "LeaveLibrary",
                     "selector_id": "CheckMenuResponse",
                     "type": "selector",
                     "abstractions": [
-                        "3-4"
+                        "3-3-5"
                     ]
                 }
             ],
@@ -310,9 +297,6 @@
                                 },
                                 {
                                     "id": "3-3-2-2"
-                                },
-                                {
-                                    "id": "3-3-2-3"
                                 }
                             ]
                         },
@@ -321,21 +305,15 @@
                             "type": "conditional_branch",
                             "abstractions": [
                                 {
-                                    "id": "3-3-3-1",
-                                    "type": "conditional_branch",
-                                    "abstractions": [
-                                        {
-                                            "id": "3-3-3-1-1"
-                                        }
-                                    ]
+                                    "id": "3-3-3-1"
                                 },
                                 {
-                                    "id": "3-3-3-2",
+                                    "id": "3-3-3-2"
+                                },
+                                {
+                                    "id": "3-3-3-3",
                                     "type": "function_call",
                                     "target": "1"
-                                },
-                                {
-                                    "id": "3-3-3-3"
                                 }
                             ]
                         },
@@ -348,9 +326,6 @@
                                 },
                                 {
                                     "id": "3-3-4-2"
-                                },
-                                {
-                                    "id": "3-3-4-3"
                                 }
                             ]
                         },
@@ -359,14 +334,11 @@
                             "type": "conditional_branch",
                             "abstractions": [
                                 {
-                                    "id": "3-3-5-1"
+                                    "id": "3-3-5"
                                 }
                             ]
                         }
                     ]
-                },
-                {
-                    "id":"3-4"
                 }
             ]
         }

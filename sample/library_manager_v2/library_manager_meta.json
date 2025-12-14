@@ -66,17 +66,6 @@
         ]
     },
     "1-1-5": {
-        "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
-        "type": "conditional_branch",
-        "variables": [
-            {
-                "name": "firstLetter",
-                "placeholder":"<firstLetter>",
-                "scope": "local"
-            }
-        ]
-    },
-    "1-1-6": {
         "intent": "Place book named <name> on shelf.",
         "variables": [
             {
@@ -250,26 +239,21 @@
             }
         ]
     },
-    "3-3-2-3": {
-        "intent": "Continue to main menu."
-    },
     "3-3-3": {
         "intent": "Check if the user chose to place books on the shelf.",
         "type": "conditional_branch"
     },
     "3-3-3-1": {
-        "intent": "Check if there are more than 5 books in the basket."
-    },
-    "3-3-3-1-1": {
-        "intent": "Raise error to simulate failure in environment."
+        "intent": "Check if there are more than 5 books in the basket.",
+        "type": "conditional_branch"
     },
     "3-3-3-2": {
+        "intent": "Raise an exception if the basket is too heavy."
+    },
+    "3-3-3-3": {
         "intent": "Place the books in the basket on the shelf.",
         "type": "function_call",
         "target": "1"
-    },
-    "3-3-3-3": {
-        "intent": "Continue to main menu."
     },
     "3-3-4": {
         "intent": "Check if the user chose to display the basket and shelf.",
@@ -281,17 +265,11 @@
     "3-3-4-2": {
         "intent": "Display the basket"
     },
-    "3-3-4-3": {
-        "intent": "Continue to main menu."
-    },
     "3-3-5": {
         "intent": "Check if the user chose to end the program.",
         "type": "conditional_branch"
     },
     "3-3-5-1": {
         "intent": "Exit the menu."
-    },
-    "3-4": {
-        "intent": "Confirm program termination"
     }
 }
