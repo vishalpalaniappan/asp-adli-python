@@ -266,10 +266,7 @@
         "intent": "Display the basket"
     },
     "3-3-5": {
-        "intent": "Check if the user chose to end the program.",
+        "intent": "Exit the menu.",
         "type": "conditional_branch"
-    },
-    "3-3-5-1": {
-        "intent": "Exit the menu."
     }
 }
