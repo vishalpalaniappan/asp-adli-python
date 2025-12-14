@@ -231,10 +231,26 @@
                     ]
                 },
                 {
+                    "name": "Check if too many books",
+                    "id": "CheckIfTooManyBooks",
+                    "selector_id": "CheckIfTooManyBooks",
+                    "type": "selector",
+                    "abstractions":[
+                        "3-3-3-1"
+                    ]                    
+                },
+                {
+                    "name": "Fail if too many books",
+                    "id": "FailIfTooManyBooks",
+                    "abstractions":[
+                        "3-3-3-2"
+                    ]                    
+                },
+                {
                     "name": "Place Book On Shelf",
                     "id": "PlaceBookOnShelf",
                     "abstractions":[
-                        "3-3-3-1"
+                        "3-3-3-3"
                     ]                    
                 },
                 {

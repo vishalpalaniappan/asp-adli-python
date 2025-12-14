@@ -31,6 +31,20 @@
                             "id": "SelectPlaceBookOnShelf",
                             "behavior":  [
                                 {
+                                    "type": "selector",
+                                    "description": "Simulate failure by checking if basket is too heavy.",
+                                    "selectors": [
+                                        {
+                                            "id": "SelectAddBookToBasket",
+                                            "behavior": [
+                                                {
+                                                    "id": "FailIfTooManyBooks"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
                                     "id": "PlaceBookOnShelf",
                                     "type":"module"
                                 }
