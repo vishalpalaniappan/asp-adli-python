@@ -78,6 +78,13 @@
                     ]
                 },
                 {
+                    "name": "Display Confirmation That Slot Exists",
+                    "id": "DisplayConfirmationThatSlotExists",
+                    "abstractions": [
+                        "1-1-5"
+                    ]
+                },
+                {
                     "name": "Adding book to shelf.",
                     "id": "AddingBookToShelf",
                     "abstractions": [

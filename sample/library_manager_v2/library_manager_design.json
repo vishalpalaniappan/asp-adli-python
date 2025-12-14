@@ -15,7 +15,7 @@
                     "description": "Select Menu Option",
                     "selectors": [
                         {
-                            "id": "AcceptingBookAndAddToBasket",
+                            "id": "AcceptBookAndAddToBasket",
                             "behavior": [
                                 {
                                     "id": "AcceptBookInformation",
@@ -28,7 +28,7 @@
                             ]
                         },
                         {
-                            "id": "PlacingBooksFromBasketOntoShelf",
+                            "id": "PlaceBooksFromBasketOntoShelf",
                             "behavior":  [
                                 {
                                     "id": "PlaceBookOnShelf",
@@ -109,12 +109,10 @@
                                     "description": "Check if slot exists for book",
                                     "selectors": [
                                         {
-                                            "id": "CreateSlotForBookOnShelf",
-                                            "behavior": [
-                                                {
-                                                    "id": "CreatingSlotForBookInShelf"
-                                                }
-                                            ]
+                                            "id": "CreateSlotForBookOnShelf"
+                                        },
+                                        {
+                                            "id": "DisplayConfirmationThatSlotExists"
                                         }
                                     ]
                                 },
