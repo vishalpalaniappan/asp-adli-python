@@ -112,11 +112,15 @@
                                 },
                                 {
                                     "type": "selector",
-                                    "id": "CheckingIfBookHasName",
-                                    "description": "Check if slot exists for book",
+                                    "description": "Selects Behavior that Creates a Slot for the Book.",
                                     "selectors": [
                                         {
-                                            "id": "CreateSlotForBookOnShelf"
+                                            "id": "CheckingIfShelfHasSlot",
+                                            "behavior": [
+                                                {
+                                                    "id": "CreateSlotForBookOnShelf"
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
