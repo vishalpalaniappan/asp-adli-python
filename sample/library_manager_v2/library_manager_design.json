@@ -85,11 +85,10 @@
             "nodes": [
                 {
                     "type": "selector",
-                    "id": "CheckingBookForBasket",
                     "description": "Check for books in basket",
                     "selectors": [
                         {
-                            "id": "PlacingBookOnShelf",
+                            "id": "CheckingBookForBasket",
                             "behavior": [
                                 {
                                     "id": "GettingBookFromBasket"
