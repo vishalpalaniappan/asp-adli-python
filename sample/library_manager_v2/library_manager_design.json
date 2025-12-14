@@ -121,7 +121,8 @@
                                 },
                                 {
                                     "type":"goto",
-                                    "module": "CheckingBookForBasket"
+                                    "module": "PlaceBookOnShelf",
+                                    "id": "CheckingBookForBasket"
                                 }
                             ]
                         },

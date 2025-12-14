@@ -28,21 +28,10 @@
             "name": "Place Books On Shelf",
             "type": "function",
             "source": ["3-3-3-2"],
-            "selector-abstractions": [
-                {
-                    "name": "Placing book on shelf.",
-                    "id": "PlacingBookOnShelf",
-                    "root_abstraction":  "1-1"
-                },
-                {
-                    "name": "Creating slot for book on shelf.",
-                    "id": "CreateSlotForBookOnShelf",
-                    "root_abstraction":  "1-1-4"
-                }
-            ],
             "functional_abstractions": [
                 {
                     "intent": "Checking Book For Basket",
+                    "type": "selector",
                     "id": "CheckingBookForBasket",
                     "abstractions": [
                         "1-1"
@@ -66,6 +55,8 @@
                 {
                     "name": "Checking If Book Has Name",
                     "id": "CheckingIfBookHasName",
+                    "type": "selector",
+                    "selector_id": "CreateSlotIfItDoesntExist",
                     "abstractions": [
                         "1-1-4"
                     ]
@@ -80,6 +71,8 @@
                 {
                     "name": "Display Confirmation That Slot Exists",
                     "id": "DisplayConfirmationThatSlotExists",
+                    "type": "selector",
+                    "selector_id": "CreateSlotIfItDoesntExist",
                     "abstractions": [
                         "1-1-5"
                     ]
@@ -140,7 +133,6 @@
             "name": "Accept Book Information",
             "type": "function",
             "source": ["3-3-2-1"],
-            "selector-abstractions": [],
             "functional_abstractions": [
                 {
                     "name": "Display Request",
@@ -201,28 +193,6 @@
             "id": "LibraryManager",
             "type": "function",
             "source": ["0-2-1"],
-            "selector-abstractions": [
-                {
-                    "name": "Accepting Book and Add to Basket",
-                    "id": "AcceptingBookAndAddToBasket",
-                    "abstraction":  "3-3-2"
-                },
-                {
-                    "name": "Placing Books from Basket onto SHelf",
-                    "id": "PlacingBooksFromBasketOntoShelf",
-                    "abstraction":  "3-3-3"
-                },
-                {
-                    "name": "Displaying Contents of Library",
-                    "id": "DisplayingContentsOfLibrary",
-                    "abstraction":  "3-3-4"
-                },
-                {
-                    "name": "Leave Library",
-                    "id": "LeaveLibrary",
-                    "abstraction":  "3-3-5"
-                }
-            ],
             "functional_abstractions": [
                 {
                     "name": "Create basket and book_shelf",
@@ -236,7 +206,17 @@
                     "name": "Display Menu and Accept Response",
                     "id": "DisplayMenuAndAcceptResponse",
                     "abstractions": [
+                        "3-3",
                         "3-3-1"
+                    ]
+                },
+                {
+                    "name": "Select Add Book To Basket",
+                    "id": "SelectAddBookToBasket",
+                    "selector_id": "CheckMenuResponse",
+                    "type": "selector",
+                    "abstractions": [
+                        "3-3-2"
                     ]
                 },
                 {
@@ -254,11 +234,32 @@
                     ]
                 },
                 {
+                    "name": "Select Place Book On Shelf",
+                    "id": "SelectPlaceBookOnShelf",
+                    "selector_id": "CheckMenuResponse",
+                    "type": "selector",
+                    "abstractions": [
+                        "3-3-2",
+                        "3-3-3"
+                    ]
+                },
+                {
                     "name": "Place Book On Shelf",
                     "id": "PlaceBookOnShelf",
                     "abstractions":[
                         "3-3-3-2"
                     ]                    
+                },
+                {
+                    "name": "Select Display Library",
+                    "id": "SelectDisplayLibrary",
+                    "selector_id": "CheckMenuResponse",
+                    "type": "selector",
+                    "abstractions": [
+                        "3-3-2",
+                        "3-3-3",
+                        "3-3-4"
+                    ]
                 },
                 {
                     "name": "Display Book Shelf",
@@ -272,6 +273,15 @@
                     "id": "DisplayBasket",
                     "abstractions":[
                         "3-3-4-2"
+                    ]
+                },
+                {
+                    "name": "Terminate Program",
+                    "id": "TerminateProgram",
+                    "selector_id": "CheckMenuResponse",
+                    "type": "selector",
+                    "abstractions": [
+                        "3-4"
                     ]
                 }
             ],
