@@ -3,6 +3,7 @@
     "behavior": [
         {
             "id": "SelectAcceptBookAndAddToBasket",
+            "group": "MainMenu",
             "abstractions": [
                 "AcceptBookInformation",
                 "AddBookToBasket"
@@ -10,6 +11,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
+            "group": "PlaceBookOnShelfGroup",
             "abstractions": [
                 "CheckIfTooManyBooks",
                 "PlaceBookOnShelf"
@@ -17,12 +19,14 @@
         },
         {
             "id": "SelectFailIfTooManyBooks",
+            "group": "FailIfTooManyBooksGroup",
             "abstractions": [
                 "FailIfTooManyBooks"
             ]
         },
         {
             "id": "SelectDisplayLibrary",
+            "group": "MainMenu",
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
@@ -30,6 +34,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
+            "group": "MainMenu",
             "abstractions": [
                 "GettingBookFromBasket",
                 "GettingFirstNameOfBook",
@@ -40,8 +45,16 @@
         },
         {
             "id": "SelectCreateSlotForBook",
+            "group": "CreateSlotForBookGroup",
             "abstractions":[
                 "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectTerminateProgram",
+            "group": "MainMenu",
+            "abstractions":[
+                "ExitTheMenu"
             ]
         }
     ],
