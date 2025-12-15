@@ -10,7 +10,7 @@
             ]
         },
         {
-            "id": "SelectPlaceBookOnShelf",
+            "id": "SelectPlaceBooksOnShelf",
             "group": "PlaceBookOnShelfGroup",
             "abstractions": [
                 "CheckIfTooManyBooks",
@@ -34,7 +34,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
-            "group": "MainMenu",
+            "group": "PlaceBookOnShelf",
             "abstractions": [
                 "GettingBookFromBasket",
                 "GettingFirstNameOfBook",
