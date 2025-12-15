@@ -25,14 +25,6 @@
             ]
         },
         {
-            "id": "SelectDisplayLibrary",
-            "group": "MainMenuGroup",
-            "abstractions": [
-                "DisplayBookShelf",
-                "DisplayBasket"
-            ]
-        },
-        {
             "id": "SelectPlaceBookOnShelf",
             "group": "PlaceBookOnShelfGroup",
             "abstractions": [
@@ -48,6 +40,14 @@
             "group": "CreateSlotForBookGroup",
             "abstractions":[
                 "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectDisplayLibrary",
+            "group": "MainMenuGroup",
+            "abstractions": [
+                "DisplayBookShelf",
+                "DisplayBasket"
             ]
         },
         {
