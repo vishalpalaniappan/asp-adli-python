@@ -11,7 +11,7 @@
         },
         {
             "id": "SelectPlaceBooksOnShelf",
-            "group": "PlaceBookOnShelfGroup",
+            "group": "PlaceBooksOnShelfGroup",
             "abstractions": [
                 "CheckIfTooManyBooks",
                 "PlaceBookOnShelf"
