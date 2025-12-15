@@ -3,7 +3,7 @@
     "behavior": [
         {
             "id": "SelectAcceptBookAndAddToBasket",
-            "group": "MainMenu",
+            "group": "MainMenuGroup",
             "abstractions": [
                 "AcceptBookInformation",
                 "AddBookToBasket"
@@ -26,7 +26,7 @@
         },
         {
             "id": "SelectDisplayLibrary",
-            "group": "MainMenu",
+            "group": "MainMenuGroup",
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
@@ -34,7 +34,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
-            "group": "PlaceBookOnShelf",
+            "group": "PlaceBookOnShelfGroup",
             "abstractions": [
                 "GettingBookFromBasket",
                 "GettingFirstNameOfBook",
@@ -52,7 +52,7 @@
         },
         {
             "id": "SelectTerminateProgram",
-            "group": "MainMenu",
+            "group": "MainMenuGroup",
             "abstractions":[
                 "ExitTheMenu"
             ]
