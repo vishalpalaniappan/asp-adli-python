@@ -1,5 +1,50 @@
 {
     "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
+    "behavior": [
+        {
+            "id": "SelectAcceptBookAndAddToBasket",
+            "abstractions": [
+                "AcceptBookInformation",
+                "AddBookToBasket"
+            ]
+        },
+        {
+            "id": "SelectPlaceBookOnShelf",
+            "abstractions": [
+                "CheckIfTooManyBooks",
+                "PlaceBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectFailIfTooManyBooks",
+            "abstractions": [
+                "FailIfTooManyBooks"
+            ]
+        },
+        {
+            "id": "SelectDisplayLibrary",
+            "abstractions": [
+                "DisplayBookShelf",
+                "DisplayBasket"
+            ]
+        },
+        {
+            "id": "SelectPlaceBookOnShelf",
+            "abstractions": [
+                "GettingBookFromBasket",
+                "GettingFirstNameOfBook",
+                "CheckingIfShelfHasSlot",
+                "AddingBookToShelf",
+                "ReturnBooks"
+            ]
+        },
+        {
+            "id": "SelectCreateSlotForBook",
+            "abstractions":[
+                "CreateSlotForBookOnShelf"
+            ]
+        }
+    ],
     "modules": {
         "root": {
             "id": "root",
