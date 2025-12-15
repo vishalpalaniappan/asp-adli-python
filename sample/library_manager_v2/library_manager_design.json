@@ -4,6 +4,7 @@
         {
             "id": "SelectAcceptBookAndAddToBasket",
             "group": "MainMenuGroup",
+            "atomic": true,
             "abstractions": [
                 "AcceptBookInformation",
                 "AddBookToBasket"
@@ -12,6 +13,7 @@
         {
             "id": "SelectPlaceBooksOnShelf",
             "group": "MainMenuGroup",
+            "atomic": true,
             "abstractions": [
                 "CheckIfTooManyBooks",
                 "PlaceBookOnShelf"
@@ -45,6 +47,7 @@
         {
             "id": "SelectDisplayLibrary",
             "group": "MainMenuGroup",
+            "atomic": true,
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
@@ -53,6 +56,7 @@
         {
             "id": "SelectTerminateProgram",
             "group": "MainMenuGroup",
+            "atomic": true,
             "abstractions":[
                 "ExitTheMenu"
             ]
