@@ -3,7 +3,22 @@
     "behavior": [
         {
             "id": "SelectAcceptBookAndAddToBasket",
+            "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
             "group": "MainMenuGroup",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ],
             "atomic": true,
             "abstractions": [
                 "AcceptBookInformation",
@@ -13,7 +28,24 @@
         {
             "id": "SelectPlaceBooksOnShelf",
             "group": "MainMenuGroup",
+            "intent": "Placed <num_books> books on the shelf.",
+            "meta_intent": "Created <num_slots> new slots for the books on the shelf.",
             "atomic": true,
+            "variables": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ],
+            "behavioral_variables": [
+                {
+                    "placeholder": "<num_slots>",
+                    "id": "CreateSlotForBookOnShelf",
+                    "type": "count"
+                }
+            ],
             "abstractions": [
                 "CheckIfTooManyBooks",
                 "PlaceBookOnShelf"
@@ -47,6 +79,7 @@
         {
             "id": "SelectDisplayLibrary",
             "group": "MainMenuGroup",
+            "intent": "Display the contents of the library.",
             "atomic": true,
             "abstractions": [
                 "DisplayBookShelf",
@@ -56,6 +89,7 @@
         {
             "id": "SelectTerminateProgram",
             "group": "MainMenuGroup",
+            "intent": "Terminated the program.",
             "atomic": true,
             "abstractions":[
                 "ExitTheMenu"
