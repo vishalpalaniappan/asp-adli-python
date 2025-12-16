@@ -28,8 +28,8 @@
         {
             "id": "SelectPlaceBooksOnShelf",
             "group": "MainMenuGroup",
-            "intent": "Placed <num_books> books on the shelf.",
-            "meta_intent": "Created <num_slots> new slots for the books on the shelf.",
+            "intent": "Placed <num_books> book(s) on the shelf.",
+            "meta_intent": "Created <num_slots> new slots for the book(s) on the shelf.",
             "atomic": true,
             "variables": [
                 {
@@ -79,7 +79,7 @@
         {
             "id": "SelectDisplayLibrary",
             "group": "MainMenuGroup",
-            "intent": "Display the contents of the library.",
+            "intent": "Displayed the contents of the library.",
             "atomic": true,
             "abstractions": [
                 "DisplayBookShelf",
@@ -89,7 +89,7 @@
         {
             "id": "SelectTerminateProgram",
             "group": "MainMenuGroup",
-            "intent": "Terminated the program.",
+            "intent": "Terminated the library manager.",
             "atomic": true,
             "abstractions":[
                 "ExitTheMenu"
