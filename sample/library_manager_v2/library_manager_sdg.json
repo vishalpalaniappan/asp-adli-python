@@ -75,8 +75,8 @@
                     ]
                 },
                 {
-                    "name": "Return Books",
-                    "id": "ReturnBooks",
+                    "name": "Return Book Shelf",
+                    "id": "ReturnBookShelf",
                     "abstractions": [
                         "1-2"
                     ]
