@@ -32,6 +32,10 @@
                 {
                     "intent": "Checking Basket For Book",
                     "type": "selector",
+                    "targetBehaviors": [
+                        "SelectPlaceBookOnShelf",
+                        "SelectReturnBookShelf"
+                    ],
                     "id": "CheckingBasketForBook",
                     "abstractions": [
                         "1-1"
@@ -56,6 +60,9 @@
                     "name": "Checking If Shelf Has Slot",
                     "id": "CheckingIfShelfHasSlot",
                     "type": "selector",
+                    "targetBehaviors": [
+                        "SelectCreateSlotForBook"
+                    ],
                     "abstractions": [
                         "1-1-4"
                     ]
@@ -223,8 +230,10 @@
                 {
                     "name": "Check if too many books",
                     "id": "CheckIfTooManyBooks",
-                    "selector_id": "CheckIfTooManyBooks",
                     "type": "selector",
+                    "targetBehaviors": [
+                        "SelectFailIfTooManyBooks"
+                    ],
                     "abstractions":[
                         "3-3-3-1"
                     ]                    
