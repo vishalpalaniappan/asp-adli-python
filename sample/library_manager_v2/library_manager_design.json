@@ -55,14 +55,6 @@
             ]
         },
         {
-            "id": "SelectReturnBookShelf",
-            "intent": "Returned bookshelf because basket is empty.",
-            "group": "CheckBasketForBooks",
-            "abstractions": [
-                "ReturnBookShelf"
-            ]
-        },
-        {
             "id": "SelectFailIfTooManyBooks",
             "intent": "Failed because there are more than 6 books in the basket (<num_books> books)",
             "variables": [
