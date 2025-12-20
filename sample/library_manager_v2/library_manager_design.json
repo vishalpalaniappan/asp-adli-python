@@ -56,6 +56,7 @@
         },
         {
             "id": "SelectReturnBookShelf",
+            "intent": "Return bookshelf once basket is empty.",
             "group": "CheckBasketForBooks",
             "abstractions": [
                 "ReturnBookShelf"
@@ -63,6 +64,15 @@
         },
         {
             "id": "SelectFailIfTooManyBooks",
+            "intent": "Fail because there are more than 6 books in the basket (<num_books> books)",
+            "variables": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ],
             "group": "FailIfTooManyBooksGroup",
             "abstractions": [
                 "FailIfTooManyBooks"
@@ -70,7 +80,22 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
+            "intent": "Place book named <name> with genre <genre> on the shelf.",
             "group": "CheckBasketForBooks",
+            "variables": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ],
             "abstractions": [
                 "GettingBookFromBasket",
                 "GettingFirstNameOfBook",
@@ -80,7 +105,18 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "group": "CreateSlotForBookGroup",
+            "group": "Clear slot for book named ",
+            "intent": "Clear slot for the letter <letter> on the shelf. ",
+            "variables": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "type": "substring",
+                    "startIndex": 0,
+                    "endIndex": 1
+                }
+            ],
             "abstractions":[
                 "CreateSlotForBookOnShelf"
             ]
