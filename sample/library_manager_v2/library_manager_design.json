@@ -56,7 +56,7 @@
         },
         {
             "id": "SelectReturnBookShelf",
-            "intent": "Return bookshelf once basket is empty.",
+            "intent": "Return bookshelf because basket is empty.",
             "group": "CheckBasketForBooks",
             "abstractions": [
                 "ReturnBookShelf"
