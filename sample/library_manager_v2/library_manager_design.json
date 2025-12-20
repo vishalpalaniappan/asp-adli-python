@@ -105,16 +105,13 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "group": "Clear slot for book named ",
-            "intent": "Clear slot for the letter <letter> on the shelf. ",
+            "group": "CreateSlotForLetterOnShelf",
+            "intent": "Create slot for the letter <letter> on the shelf. ",
             "variables": [
                 {
-                    "name": "book",
-                    "placeholder":"<name>",
-                    "scope": "local",
-                    "type": "substring",
-                    "startIndex": 0,
-                    "endIndex": 1
+                    "name": "firstLetter",
+                    "placeholder":"<letter>",
+                    "scope": "local"
                 }
             ],
             "abstractions":[
