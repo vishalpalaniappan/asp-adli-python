@@ -33,8 +33,7 @@
                     "intent": "Checking Basket For Book",
                     "type": "selector",
                     "targetBehaviors": [
-                        "SelectPlaceBookOnShelf",
-                        "SelectReturnBookShelf"
+                        "SelectPlaceBookOnShelf"
                     ],
                     "id": "CheckingBasketForBook",
                     "abstractions": [

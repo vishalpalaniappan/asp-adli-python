@@ -51,7 +51,8 @@
             ],
             "abstractions": [
                 "CheckIfTooManyBooks",
-                "CheckingBasketForBook"
+                "CheckingBasketForBook",
+                "ReturnBookShelf"
             ]
         },
         {
@@ -98,7 +99,7 @@
         {
             "id": "SelectCreateSlotForBook",
             "group": "CreateSlotForLetterOnShelf",
-            "intent": "Created slot for the letter <letter> on the shelf. ",
+            "intent": "Create slot for the letter <letter> on the shelf. ",
             "variables": [
                 {
                     "name": "firstLetter",
