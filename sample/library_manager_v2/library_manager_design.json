@@ -19,7 +19,6 @@
                     "key": "genre"
                 }
             ],
-            "atomic": true,
             "abstractions": [
                 "AcceptBookInformation",
                 "DisplayRequest",
@@ -35,7 +34,6 @@
             "group": "MainMenuGroup",
             "intent": "Placed <num_books> book(s) on the shelf.",
             "meta_intent": "Created <num_slots> new slots for the book(s) on the shelf.",
-            "atomic": true,
             "variables": [
                 {
                     "name": "basket",
@@ -91,7 +89,6 @@
             "id": "SelectDisplayLibrary",
             "group": "MainMenuGroup",
             "intent": "Displayed the contents of the library.",
-            "atomic": true,
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
@@ -101,7 +98,6 @@
             "id": "SelectTerminateProgram",
             "group": "MainMenuGroup",
             "intent": "Terminated the library manager.",
-            "atomic": true,
             "abstractions":[
                 "ExitTheMenu"
             ]
