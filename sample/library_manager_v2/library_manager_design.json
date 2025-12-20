@@ -56,7 +56,7 @@
         },
         {
             "id": "SelectReturnBookShelf",
-            "intent": "Return bookshelf because basket is empty.",
+            "intent": "Returned bookshelf because basket is empty.",
             "group": "CheckBasketForBooks",
             "abstractions": [
                 "ReturnBookShelf"
@@ -64,7 +64,7 @@
         },
         {
             "id": "SelectFailIfTooManyBooks",
-            "intent": "Fail because there are more than 6 books in the basket (<num_books> books)",
+            "intent": "Failed because there are more than 6 books in the basket (<num_books> books)",
             "variables": [
                 {
                     "name": "basket",
@@ -80,7 +80,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
-            "intent": "Place book named <name> with genre <genre> on the shelf.",
+            "intent": "Placed book named <name> with genre <genre> on the shelf.",
             "group": "CheckBasketForBooks",
             "variables": [
                 {
@@ -106,7 +106,7 @@
         {
             "id": "SelectCreateSlotForBook",
             "group": "CreateSlotForLetterOnShelf",
-            "intent": "Create slot for the letter <letter> on the shelf. ",
+            "intent": "Created slot for the letter <letter> on the shelf. ",
             "variables": [
                 {
                     "name": "firstLetter",
