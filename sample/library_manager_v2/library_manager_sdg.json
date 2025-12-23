@@ -245,8 +245,8 @@
                     ]                    
                 },
                 {
-                    "name": "Place Book On Shelf",
-                    "id": "PlaceBookOnShelf",
+                    "name": "Place Books On Shelf",
+                    "id": "PlaceBooksOnShelf",
                     "abstractions":[
                         "3-3-3-3"
                     ]                    

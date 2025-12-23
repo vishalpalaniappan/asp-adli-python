@@ -51,6 +51,7 @@
             ],
             "abstractions": [
                 "CheckIfTooManyBooks",
+                "PlaceBooksOnShelf",
                 "CheckingBasketForBook",
                 "ReturnBookShelf"
             ]

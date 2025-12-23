@@ -24,8 +24,16 @@
         "source": ["3-3-3-2"]
     },
     "1-1": {
-        "intent": "There are more books in the basket.",
-        "type": "while"
+        "intent": "<num_books> book(s) left in the basket.",
+        "type": "while",
+        "variables": [
+            {
+                "name": "basket",
+                "placeholder":"<num_books>",
+                "scope": "local",
+                "key": "length"
+            }
+        ]
     },
     "1-1-1": {
         "intent": "Get a book from the basket"
