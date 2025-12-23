@@ -153,13 +153,14 @@ class LogInjector(ast.NodeTransformer):
         # Reset function specific variables before visiting children.
         self.localDisabledVariables = []
         self.globalsInFunc = []
-
-        self.generic_visit(node)
-
+        
         # Add log statements for arguments. This is temporary and will be replaced.
         self.nodeVarInfo += CollectFunctionArgInfo(node, self.logTypeCount, self.funcId).variables
         self.nodeVarInfo += CollectCallVariables(node, self.logTypeCount, self.funcId, self.varMap).variables
+
         preLog, postLog = self.generateVarLogStmts()
+
+        self.generic_visit(node)
 
         uidAssign = getUniqueIdAssignStmt()
         node.body = [meta_tag, uidAssign] + postLog + node.body
@@ -369,6 +370,9 @@ class LogInjector(ast.NodeTransformer):
     def visit_ExceptHandler(self, node):
         return self.injectLogTypesC(node)
     
+    def visit_While(self, node):
+        return self.injectLogTypesC(node)
+    
     '''
         INJECT LOGS TYPE D
         Example:
@@ -394,9 +398,5 @@ class LogInjector(ast.NodeTransformer):
     
     def visit_AsyncFor(self, node):
         return self.injectLogTypesD(node)
-    
-    def visit_While(self, node):
-        return self.injectLogTypesD(node)
-
 
 
