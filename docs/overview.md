@@ -14,6 +14,9 @@ For example, if a system intends to use the first letter of a book’s name to p
 
 However, the failure to respect the intention of the design doesn’t necessarily end in a loud failure as expressed by the generated exception. It can simply manifest as the world not realizing itself as intended. For example, the library manager intends to accept a book and place it in the basket. If this intention is not respected, then when it attempts to place the books on the shelf, it won’t be able to. This won’t result in a failure, instead, the design will simply see that there are no books in the basket. In this case, the root cause is a failure to respect the intentions of the design. 
 
-While one ended in a mechanical failure and the other did not, at the semantic level, both failed to realize the design's intentions. In this sense, a semantic failure can result in a mechanical failure but it doesn’t have to. Regardless, at the semantic layer is meaningful, and a failure to respect the intentions of the design establishes predictable failure modalities and defines precise resolution strategies. By instrumenting the design semantics onto the implementation, the misalignment between reality and intention can automatically understood and ultimately, this process automates debugging.
+While one ended in a mechanical failure and the other did not, at the semantic level, both failed to realize the design's intentions. In this sense, a semantic failure can result in a mechanical failure but it doesn’t have to. Regardless, failure at the semantic layer is meaningful, and a failure to respect the intentions of the design establishes predictable failure modalities and defines precise resolution strategies.
+
+This means that by instrumenting the design semantics of each abstraction onto the implementation, the misalignment between reality and intention can be automatically understood and ultimately, this process automates debugging.
+
 
 [library-manager]: ./library_manager_v2.png
