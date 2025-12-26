@@ -92,6 +92,7 @@
             ],
             "abstractions": [
                 "GettingBookFromBasket",
+                "DisplayBookInformation",
                 "GettingFirstNameOfBook",
                 "CheckingIfShelfHasSlot",
                 "AddingBookToShelf"
