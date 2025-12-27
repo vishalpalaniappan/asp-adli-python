@@ -24,7 +24,21 @@
             "intent": "Place the books from the basket onto the shelf.",
             "type": "function",
             "name": "Place Books On Shelf",
-            "source": ["3-3-3-2"]
+            "source": ["3-3-3-2"],
+            "variables": [
+                {
+                    "name": "book_shelf",
+                    "placeholder":"<book_shelf>",
+                    "scope": "local",
+                    "key": []
+                },
+                {
+                    "name": "basket",
+                    "placeholder":"<basket>",
+                    "scope": "local",
+                    "key": []
+                }
+            ]
         },
         "1-1-1": {
             "intent": "<num_books> book(s) left in the basket.",
