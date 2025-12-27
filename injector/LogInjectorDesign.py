@@ -62,7 +62,7 @@ class LogInjectorDesign(ast.NodeTransformer):
                     pass               
 
 
-    def generateLtLogStmts(self, node, type):
+    def generateLtLogStmts(self, node, isFunc, type):
         '''
             This function adds the node to the logtype map and 
             it returns a logging statement to inject.
@@ -75,8 +75,9 @@ class LogInjectorDesign(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
+
         absMeta = None
-        variables = None
+        variables = []
 
         # Get the abstraction metadata if available.
         if self.fileAbsMap and node.lineno in self.fileAbsMap:
@@ -96,7 +97,31 @@ class LogInjectorDesign(ast.NodeTransformer):
             "abstractionId": absMeta
         }
 
-        return getLtLogStmt(self.logTypeCount)
+        if (isFunc):
+            funcId = self.logTypeCount
+        else:
+            funcId = self.funcId
+
+        varLogs = []
+        for variable in variables:
+            varInfo = {
+                "varId": absMeta + "_" + variable["name"],
+                "name": variable["name"],
+                "keys": [],
+                "syntax": variable["name"],
+                "meta": meta["intent"],
+                "logType": self.logTypeCount,
+                "funcId": funcId,
+                "isTemp": False,
+                "global": False
+            }
+            varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
+            self.varMap[varInfo["varId"]] = varInfo
+
+        return {
+            "logStmt": getLtLogStmt(self.logTypeCount),
+            "varLogs": varLogs
+        }
 
     def processFunctionNode(self, node, isAsync):
         '''
@@ -104,7 +129,7 @@ class LogInjectorDesign(ast.NodeTransformer):
             It sets a function id before visiting child nodes and
             resets it back to global scope(0).
         '''
-        logStmt = self.generateLtLogStmts(node, "function")
+        logStmt = self.generateLtLogStmts(node, True, "function")
         meta_tag = getTag(self.logTypeCount, "prev")
 
         self.funcId = self.logTypeCount
@@ -116,7 +141,8 @@ class LogInjectorDesign(ast.NodeTransformer):
 
         self.generic_visit(node)
 
-        node.body = [meta_tag] + node.body
+        uidAssign = getUniqueIdAssignStmt()
+        node.body = [meta_tag, uidAssign] + node.body
         
         self.funcId = 0
         
@@ -133,28 +159,31 @@ class LogInjectorDesign(ast.NodeTransformer):
         '''
             Visit assign statement and extract variables from the target nodes.
         '''
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
 
-        return [logStmt, meta_tag, node]
+        return [logs["logStmt"], meta_tag, node] + logs["varLogs"]
     
     def visit_AugAssign(self, node):
         '''
             Visit AugAssign statement and extract variables from the target node.
         '''
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, "child")
         meta_tag = getTag(self.logTypeCount, "next")
 
-        return [logStmt, meta_tag, node]
+        if node.value:
+            return [logs["logStmt"], meta_tag, node] + logs["varLogs"]
+        else:
+            return [logs["logStmt"], node]
     
     def visit_AnnAssign(self, node):
         '''
             Visit AnnAssign statement and extract variables from target node
             if it has a value.
         '''
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
-        return [logStmt, meta_tag, node]
+        return [logs["logStmt"], meta_tag, node] + logs["varLogs"]
     
     '''
         INJECT LOGS TYPE A
@@ -166,11 +195,11 @@ class LogInjectorDesign(ast.NodeTransformer):
             logger.info(<var_id_n>)
     '''
     def injectLogTypesA(self, node):
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
         self.generic_visit(node)
-        return [logStmt, meta_tag, node]
-    
+        return [logs["logStmt"], meta_tag, node] + logs["varLogs"]
+
     def visit_Global(self, node):
         self.globalsInFunc += node.names
         return self.injectLogTypesA(node)
@@ -249,12 +278,12 @@ class LogInjectorDesign(ast.NodeTransformer):
                 logger.info(<var_id_n>)
     '''
     def injectLogTypesB(self, node):
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
         self.generic_visit(node)
-        node.body = node.body
-        return [logStmt, meta_tag, node]
-
+        node.body = logs["varLogs"] + node.body
+        return [logs["logStmt"], meta_tag, node] 
+    
     def visit_With(self, node):
         return self.injectLogTypesB(node)
     
@@ -275,10 +304,10 @@ class LogInjectorDesign(ast.NodeTransformer):
                 logger.info(<var_id_n>):
     '''
     def injectLogTypesC(self, node):
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "prev")
         self.generic_visit(node)
-        node.body = [meta_tag, logStmt] + node.body
+        node.body = [meta_tag, logs["logStmt"]] + logs["varLogs"] + node.body
         return [node]
 
     def visit_ClassDef(self, node):
@@ -310,11 +339,11 @@ class LogInjectorDesign(ast.NodeTransformer):
                 logger.info(<logtype_id>)
     '''    
     def injectLogTypesD(self, node):
-        logStmt = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
         self.generic_visit(node)
-        node.body = node.body + [logStmt]
-        return [logStmt, meta_tag, node]
+        node.body = logs["varLogs"] + node.body + [logs["logStmt"]]
+        return [logs["logStmt"], meta_tag, node]
     
     def visit_For(self, node):
         return self.injectLogTypesD(node)
