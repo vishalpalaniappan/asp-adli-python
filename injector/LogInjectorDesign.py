@@ -13,7 +13,6 @@ class LogInjectorDesign(ast.NodeTransformer):
         self.ltMap = {}
         self.varMap = {}
         self.logTypeCount = logTypeCount
-        self.funcId = 0
         self.file = file
         self.source = source
         self.sdg_meta = sdg_meta
@@ -23,12 +22,7 @@ class LogInjectorDesign(ast.NodeTransformer):
         else:
             self.fileAbsMap = None
 
-        self.globalsInFunc = []
-        self.globalDisabledVariables = []
-        self.localDisabledVariables = []
         self.nodeVarInfo = []
-
-        self.abstraction_meta_stack = []
 
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(tree)
@@ -100,71 +94,19 @@ class LogInjectorDesign(ast.NodeTransformer):
         }
 
         return getLtLogStmt(self.logTypeCount)
-    
-    def generateVarLogStmts(self):
-        '''
-            This function generates logging statements for all the variables.
-            An assign statement is created for temporary variables before logging
-            their value. Temporary variables are saved in preLog and the target
-            variable is saved in post log.
-        '''
-        preLog = []
-        postLog = []  
-        for variable in self.nodeVarInfo:
-            variable["global"] = variable["name"] in self.globalsInFunc or variable["funcId"] == 0
-
-            if variable["global"] and variable["name"] in self.globalDisabledVariables:
-                continue 
-
-            if not variable["global"] and variable["name"] in self.localDisabledVariables:
-                continue 
-
-            if variable["assignValue"] is None:
-                postLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
-            else:                
-                preLog.append(getAssignStmt(variable["name"], variable["assignValue"]))
-                preLog.append(getVarLogStmt(variable["syntax"], variable["varId"]))
-
-            ''' 
-            Variables named "asp_uid" mark a function as the start of a unique trace.
-            It is a reserved adli keyword and coming updates will ensure that it is only
-            written to once in a function and will raise an error if this is violated.
-            '''
-            if variable["name"] == "asp_uid":
-                self.ltMap[variable["funcId"]]["isUnique"] = True
-
-            del variable["assignValue"]
-            del variable["syntax"]
-            self.varMap[variable["varId"]] = variable
-
-        self.nodeVarInfo= []
-        return preLog, postLog
 
     def processFunctionNode(self, node, isAsync):
         '''
             This function adds a log statement to function body.
-            It sets a function id before visiting child nodes and
-            resets it back to global scope(0).
         '''
         logStmt = self.generateLtLogStmts(node, "function")
         meta_tag = getTag(self.logTypeCount, "prev")
 
-        self.funcId = self.logTypeCount
-
-        # Update the log type map to add function specific information
-        self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
-        self.ltMap[self.logTypeCount]["name"] = node.name
-        self.ltMap[self.logTypeCount]["isAsync"] = isAsync
-
-        preLog, postLog = self.generateVarLogStmts()
-
         self.generic_visit(node)
 
-        node.body = [meta_tag] + postLog + node.body
+        node.body = [meta_tag] + node.body
         
-        self.funcId = 0
-        
-        return preLog + [node]
+        return [node]
 
     
     def visit_FunctionDef(self, node):
