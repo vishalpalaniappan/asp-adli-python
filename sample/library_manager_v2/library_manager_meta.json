@@ -127,9 +127,9 @@
                     "scope": "local",
                     "type":"minLength",
                     "value": 1,
-                    "failures": ["1-1-3"],
+                    "failures": ["1-1-1-3"],
                     "rootcause": {
-                        "1-1-3": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
+                        "1-1-1-3": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
                     }
                 }
             ]
@@ -161,9 +161,9 @@
                     "scope": "local",
                     "type":"has_key",
                     "value": "name",
-                    "failures": ["1-1-2"],
+                    "failures": ["1-1-1-2"],
                     "rootcause": {
-                        "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"name\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                        "1-1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"name\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
                     }
                 },
                 {
@@ -173,9 +173,9 @@
                     "scope": "local",
                     "type":"has_key",
                     "value": "genre",
-                    "failures": ["1-1-2"],
+                    "failures": ["1-1-1-2"],
                     "rootcause": {
-                        "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"genre\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                        "1-1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"genre\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
                     }
                 },
                 {
@@ -185,9 +185,9 @@
                     "scope": "local",
                     "type":"is_object",
                     "value": "object",
-                    "failures": ["1-1-2"],
+                    "failures": ["1-1-1-2"],
                     "rootcause": {
-                        "1-1-2": "The root cause of failure was that the book details variable was not initialized as an object, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
+                        "1-1-1-2": "The root cause of failure was that the book details variable was not initialized as an object, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
                     }
                 }
             ]
@@ -213,10 +213,10 @@
                     "scope": "local",
                     "type":"is_object",
                     "value": "object",
-                    "failures": ["1-1-4-1","1-1-4"],
+                    "failures": ["1-1-1-4-1","1-1-1-4"],
                     "rootcause": {
-                        "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book",                    
-                        "1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
+                        "1-1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book",                    
+                        "1-1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
                     }
                 }
             ]
@@ -232,10 +232,10 @@
                     "scope": "local",
                     "type":"is_array",
                     "value": "array",
-                    "failures": ["3-3-2-2","1-1"],
+                    "failures": ["1-3-3-2-2","1-1-1"],
                     "rootcause": {
-                        "3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list.",
-                        "1-1": "The root cause of failure was that basket was not initialized as an array. This resulted in a failure when attempting to check the number of books in the basket because the len operation requires an iterable."
+                        "1-3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list.",
+                        "1-1-1": "The root cause of failure was that basket was not initialized as an array. This resulted in a failure when attempting to check the number of books in the basket because the len operation requires an iterable."
                     }
                 }
             ]
