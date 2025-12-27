@@ -13,6 +13,7 @@ class LogInjectorDesign(ast.NodeTransformer):
         self.ltMap = {}
         self.varMap = {}
         self.logTypeCount = logTypeCount
+        self.funcId = 0
         self.file = file
         self.source = source
         self.sdg_meta = sdg_meta
@@ -23,6 +24,8 @@ class LogInjectorDesign(ast.NodeTransformer):
             self.fileAbsMap = None
 
         self.nodeVarInfo = []
+
+        self.abstraction_meta_stack = []
 
         self.minLogTypeCount = self.logTypeCount
         self.generic_visit(tree)
@@ -98,13 +101,24 @@ class LogInjectorDesign(ast.NodeTransformer):
     def processFunctionNode(self, node, isAsync):
         '''
             This function adds a log statement to function body.
+            It sets a function id before visiting child nodes and
+            resets it back to global scope(0).
         '''
         logStmt = self.generateLtLogStmts(node, "function")
         meta_tag = getTag(self.logTypeCount, "prev")
 
+        self.funcId = self.logTypeCount
+
+        # Update the log type map to add function specific information
+        self.ltMap[self.logTypeCount]["funcid"] = self.logTypeCount
+        self.ltMap[self.logTypeCount]["name"] = node.name
+        self.ltMap[self.logTypeCount]["isAsync"] = isAsync
+
         self.generic_visit(node)
 
         node.body = [meta_tag] + node.body
+        
+        self.funcId = 0
         
         return [node]
 
