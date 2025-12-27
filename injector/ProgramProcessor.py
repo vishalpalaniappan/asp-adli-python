@@ -102,9 +102,6 @@ class ProgramProcessor:
         }
 
         # Only include design file keys if valid files were provided.
-        if (sdg):
-            header["sdg"] = sdg
-
         if (sdg_meta):
             header["sdg_meta"] = sdg_meta
 
