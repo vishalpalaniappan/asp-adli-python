@@ -90,7 +90,7 @@ class LogInjector(ast.NodeTransformer):
             "end_lineno": node.end_lineno,
             "type": type,
             "statement": ast.unparse(getEmptyRootNode(node) if "body" in node._fields else node),
-            "abstraction_meta": absMeta
+            "abstractionId": absMeta
         }
 
         return getLtLogStmt(self.logTypeCount)
