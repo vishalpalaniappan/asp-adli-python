@@ -143,6 +143,11 @@
             "functionalid": "AssembleBookDetails",
             "variables": [
                 {
+                    "name": "book_details",
+                    "placeholder":"<book_details>",
+                    "scope": "local"
+                },
+                {
                     "name": "name",
                     "placeholder":"<name>",
                     "scope": "local"
