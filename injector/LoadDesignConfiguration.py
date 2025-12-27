@@ -1,26 +1,5 @@
 import os,json
 
-def getSdgFile (sourceFile) :
-    '''
-    Returns the SDG JSON file if it exists.
-    '''
-
-    no_ext, _ = os.path.splitext(sourceFile)
-    sdg_path = no_ext + "_sdg.json"
-
-    try:
-        with open(sdg_path, "r") as f:
-            sdg = json.loads(f.read())
-    except FileNotFoundError:
-        print("Could not find SDG file for", sourceFile)
-        sdg = None
-    except json.JSONDecodeError:
-        print("SDG file is not a valid JSON for", sourceFile)
-        sdg = None
-
-    return sdg
-
-
 def getSdgMetaFile (sourceFile) :
     '''
     Returns the SDG JSON meta file if it exists.
@@ -62,6 +41,28 @@ def getAbsMapFile (sourceFile):
         absMap = None
 
     return absMap
+
+
+
+def getDesignFile (sourceFile):
+    '''
+    Gets the design file if it exists.
+    '''
+
+    no_ext, _ = os.path.splitext(sourceFile)
+    design_path = no_ext + "_design.json"
+
+    try:
+        with open(design_path, "r") as f:
+            designMap = json.loads(f.read())
+    except FileNotFoundError:
+        print("Could not find design for ", sourceFile)
+        designMap = None
+    except json.JSONDecodeError:
+        print("Design file is not a valid JSON for", sourceFile)
+        designMap = None
+
+    return designMap
 
 def buildMap(absMap):
     '''

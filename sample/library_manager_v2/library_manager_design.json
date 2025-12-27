@@ -1,0 +1,134 @@
+{
+    "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
+    "behavior": [
+        {
+            "id": "SelectAcceptBookAndAddToBasket",
+            "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
+            "group": "MainMenuGroup",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ],
+            "abstractions": [
+                "AcceptBookInformation",
+                "DisplayRequest",
+                "AcceptBookName",
+                "AcceptBookGenre",
+                "AssembleBookDetails",
+                "ReturnBookDetails",
+                "AddBookToBasket"
+            ]
+        },
+        {
+            "id": "SelectPlaceBooksOnShelf",
+            "group": "MainMenuGroup",
+            "intent": "Placed <num_books> book(s) on the shelf.",
+            "meta_intent": "Created <num_slots> new slots for the book(s) on the shelf.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ],
+            "behavioral_variables": [
+                {
+                    "placeholder": "<num_slots>",
+                    "id": "CreateSlotForBookOnShelf",
+                    "type": "count"
+                }
+            ],
+            "abstractions": [
+                "CheckIfTooManyBooks",
+                "PlaceBooksOnShelf",
+                "CheckingBasketForBook",
+                "ReturnBookShelf"
+            ]
+        },
+        {
+            "id": "SelectFailIfTooManyBooks",
+            "intent": "Failed because there are more than 6 books in the basket (<num_books> books)",
+            "variables": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ],
+            "group": "FailIfTooManyBooksGroup",
+            "abstractions": [
+                "FailIfTooManyBooks"
+            ]
+        },
+        {
+            "id": "SelectPlaceBookOnShelf",
+            "intent": "Placed book named <name> with genre <genre> on the shelf.",
+            "group": "CheckBasketForBooks",
+            "variables": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ],
+            "abstractions": [
+                "GettingBookFromBasket",
+                "DisplayBookInformation",
+                "GettingFirstNameOfBook",
+                "CheckingIfShelfHasSlot",
+                "AddingBookToShelf"
+            ]
+        },
+        {
+            "id": "SelectCreateSlotForBook",
+            "group": "CreateSlotForLetterOnShelf",
+            "intent": "Create slot for the letter <letter> on the shelf. ",
+            "variables": [
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<letter>",
+                    "scope": "local"
+                }
+            ],
+            "abstractions":[
+                "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectDisplayLibrary",
+            "group": "MainMenuGroup",
+            "intent": "Displayed the contents of the library.",
+            "abstractions": [
+                "DisplayBookShelf",
+                "DisplayBasket"
+            ]
+        },
+        {
+            "id": "SelectTerminateProgram",
+            "group": "MainMenuGroup",
+            "intent": "Terminated the library manager.",
+            "abstractions":[
+                "ExitTheMenu"
+            ]
+        }
+    ]
+}

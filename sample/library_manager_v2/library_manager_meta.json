@@ -1,291 +1,344 @@
 {
-    "0": {
-        "intent": "Global path to initialize the book manager.",
-        "name": "global",
-        "type": "global",
-        "start": true
-    },
-    "0-1": {
-        "intent": "Import the sys library."
-    },
-    "0-2": {
-        "intent": "Script is being run directly.",
-        "type": "conditional_branch"
-    },
-    "0-2-1": {
-        "intent": "Start the library manager.",
-        "type": "function_call",
-        "target": "3"
-    },
-    "1": {
-        "intent": "Place the books from the basket onto the shelf.",
-        "type": "function",
-        "name": "Place Books On Shelf",
-        "source": ["3-3-3-1"]
-    },
-    "1-1": {
-        "intent": "There are more books in the basket.",
-        "type": "while"
-    },
-    "1-1-1": {
-        "intent": "Get a book from the basket"
-    },
-    "1-1-2": {
-        "intent": "Display the book information"  
-    },
-    "1-1-3": {
-        "intent": "Get first letter of book named <name> to create slot for book on shelf.",
-        "variables": [
-            {
-                "name": "book",
-                "placeholder":"<name>",
-                "scope": "local",
-                "key": "name"
-            }
-        ]
-    },
-    "1-1-4": {
-        "intent": "Check if slot for letter <firstLetter> exists on the shelf.",
-        "type": "conditional_branch",
-        "variables": [
-            {
-                "name": "firstLetter",
-                "placeholder":"<firstLetter>",
-                "scope": "local"
-            }
-        ]
-    },
-    "1-1-4-1": {
-        "intent": "Create slot for book on shelf using first letter <firstLetter>.",
-        "variables": [
-            {
-                "name": "firstLetter",
-                "placeholder":"<firstLetter>",
-                "scope": "local"
-            }
-        ]
-    },
-    "1-1-5": {
-        "intent": "Slot for <firstLetter> exists, print confirmation that slot already exists.",
-        "type": "conditional_branch",
-        "variables": [
-            {
-                "name": "firstLetter",
-                "placeholder":"<firstLetter>",
-                "scope": "local"
-            }
-        ]
-    },
-    "1-1-6": {
-        "intent": "Place book named <name> on shelf.",
-        "variables": [
-            {
-                "name": "book",
-                "placeholder":"<name>",
-                "scope": "local",
-                "key": "name"
-            }
-        ]
-    },
-    "1-2": {
-        "intent": "Return updated bookshelf."
-    },
-    "2": {
-        "intent": "Accept the book and return the name and genre.",
-        "type": "function",
-        "name": "Accept Book Information",
-        "source": ["3-3-2-1"]
-    },
-    "2-1": {
-        "intent": "Display request for book information."
-    },
-    "2-2": {
-        "intent": "Prompt and accept book name.",
-        "constraint": [
-            {
-                "id": "2-2+1",
-                "name": "name",
-                "constraint_layer": "design_constraint",
-                "scope": "local",
-                "type":"minLength",
-                "value": 1,
-                "failures": ["1-1-3"],
-                "rootcause": {
-                    "1-1-3": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
+ "description": "Metadata for abstractions in library manager.",
+ "format": "<thread>-[Repeat][<abstraction>-<step>]",
+ "abstractions":   {
+        "1-0": {
+            "intent": "Global path to initialize the book manager.",
+            "name": "global",
+            "type": "global",
+            "start": true
+        },
+        "1-0-1": {
+            "intent": "Import the sys library."
+        },
+        "1-0-2": {
+            "intent": "Script is being run directly.",
+            "type": "conditional_branch"
+        },
+        "1-0-2-1": {
+            "intent": "Start the library manager.",
+            "type": "function_call",
+            "target": "3"
+        },
+        "1-1": {
+            "intent": "Place the books from the basket onto the shelf.",
+            "type": "function",
+            "name": "Place Books On Shelf",
+            "source": ["3-3-3-2"],
+            "variables": [
+                {
+                    "name": "book_shelf",
+                    "placeholder":"<book_shelf>",
+                    "scope": "local",
+                    "key": []
+                },
+                {
+                    "name": "basket",
+                    "placeholder":"<basket>",
+                    "scope": "local",
+                    "key": []
                 }
-            }
-        ]
-    },
-    "2-3": {
-        "intent": "Prompt and accept for book genre."
-    },
-    "2-4": {
-        "intent": "Create a book with name <name> with genre <genre>.",
-        "variables": [
-            {
-                "name": "name",
-                "placeholder":"<name>",
-                "scope": "local"
-            },
-            {
-                "name": "genre",
-                "placeholder":"<genre>",
-                "scope": "local"
-            }
-        ],
-        "constraint": [
-            {
-                "id": "2-4+1",
-                "name": "book_details",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"has_key",
-                "value": "name",
-                "failures": ["1-1-2"],
-                "rootcause": {
-                    "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"name\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+            ]
+        },
+        "1-1-1": {
+            "intent": "<num_books> book(s) left in the basket.",
+            "type": "while",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectPlaceBookOnShelf"
+            ],
+            "functionalid": "CheckingBasketForBook",
+            "variables": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
                 }
-            },
-            {
-                "id": "2-4+2",
-                "name": "book_details",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"has_key",
-                "value": "genre",
-                "failures": ["1-1-2"],
-                "rootcause": {
-                    "1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"genre\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+            ]
+        },
+        "1-1-1-1": {
+            "intent": "Get a book from the basket",
+            "functionalid": "GettingBookFromBasket"
+        },
+        "1-1-1-2": {
+            "intent": "Display the book information",  
+            "functionalid": "DisplayBookInformation"
+        },
+        "1-1-1-3": {
+            "intent": "Get first letter of book named <name> to create slot for book on shelf.",
+            "functionalid": "GettingFirstNameOfBook",
+            "variables": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
                 }
-            },
-            {
-                "id": "2-4+3",
-                "name": "book_details",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"is_object",
-                "value": "object",
-                "failures": ["1-1-2"],
-                "rootcause": {
-                    "1-1-2": "The root cause of failure was that the book details variable was not initialized as an object, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
+            ]
+        },
+        "1-1-1-4": {
+            "intent": "Check if slot for letter <firstLetter> exists on the shelf.",
+            "type": "conditional_branch",
+            "variables": [
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<firstLetter>",
+                    "scope": "local"
                 }
-            }
-        ]
-    },
-    "2-5": {
-        "intent": "Return the book details."
-    },
-    "3": {
-        "intent": "Start the library manager.",
-        "type": "function",
-        "name": "Library Manager",
-        "source": ["0-2-1"]
-    },
-    "3-1": {
-        "intent": "Create the bookshelf.",
-        "constraint": [
-            {
-                "id": "3-1+1",
-                "name": "book_shelf",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"is_object",
-                "value": "object",
-                "failures": ["1-1-4-1","1-1-4"],
-                "rootcause": {
-                    "1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book",                    
-                    "1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
+            ],
+            "functionalid": "CheckingIfShelfHasSlot",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectCreateSlotForBook"
+            ]
+        },
+        "1-1-1-4-1": {
+            "intent": "Create slot for book on shelf using first letter <firstLetter>.",
+            "functionalid": "CreateSlotForBookOnShelf",
+            "variables": [
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<firstLetter>",
+                    "scope": "local"
                 }
-            }
-        ]
-    },
-    "3-2": {
-        "intent": "Create the basket.",
-        "constraint": [
-            {
-                "id": "3-2+1",
-                "name": "basket",
-                "constraint_layer": "implementation_constraint",
-                "scope": "local",
-                "type":"is_array",
-                "value": "array",
-                "failures": ["3-3-2-2","1-1"],
-                "rootcause": {
-                    "3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list.",
-                    "1-1": "The root cause of failure was that basket was not initialized as an array. This resulted in a failure when attempting to check the number of books in the basket because the len operation requires an iterable."
+            ]
+        },
+        "1-1-1-5": {
+            "intent": "Place book named <name> on shelf.",
+            "functionalid": "AddingBookToShelf",
+            "variables": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
                 }
-            }
-        ]
-    },
-    "3-3": {
-        "intent": "Display Menu",
-        "type": "while"
-    },
-    "3-3-1": {
-        "intent": "Prompt user for choice."
-    },
-    "3-3-2": {
-        "intent": "Check if the user chose to add a book.",
-        "type": "conditional_branch"
-    },
-    "3-3-2-1": {
-        "intent": "Accept a book",
-        "type": "function_call",
-        "target": "2"
-    },
-    "3-3-2-2": {
-        "intent": "Add book named <name> with genre <genre> to basket.",
-        "variables": [
-            {
-                "name": "book_details",
-                "placeholder":"<name>",
-                "scope": "local",
-                "key": "name"
-            },
-            {
-                "name": "book_details",
-                "placeholder":"<genre>",
-                "scope": "local",
-                "key": "genre"
-            }
-        ]
-    },
-    "3-3-2-3": {
-        "intent": "Continue to main menu."
-    },
-    "3-3-3": {
-        "intent": "Check if the user chose to place books on the shelf.",
-        "type": "conditional_branch"
-    },
-    "3-3-3-1": {
-        "intent": "Place the books in the basket on the shelf.",
-        "type": "function_call",
-        "target": "1"
-    },
-    "3-3-3-2": {
-        "intent": "Continue to main menu."
-    },
-    "3-3-4": {
-        "intent": "Check if the user chose to display the basket and shelf.",
-        "type": "conditional_branch"
-    },
-    "3-3-4-1": {
-        "intent": "Display the shelf"
-    },
-    "3-3-4-2": {
-        "intent": "Display the basket"
-    },
-    "3-3-4-3": {
-        "intent": "Continue to main menu."
-    },
-    "3-3-5": {
-        "intent": "Check if the user chose to end the program.",
-        "type": "conditional_branch"
-    },
-    "3-3-5-1": {
-        "intent": "Exit the menu."
-    },
-    "3-4": {
-        "intent": "Confirm program termination"
+            ]
+        },
+        "1-1-2": {
+            "intent": "Return updated bookshelf.",
+            "functionalid": "ReturnBookShelf"
+        },
+        "1-2": {
+            "intent": "Accept the book and return the name and genre.",
+            "type": "function",
+            "name": "Accept Book Information",
+            "source": ["3-3-2-1"]
+        },
+        "1-2-1": {
+            "intent": "Display request for book information.",
+            "functionalid": "DisplayRequest"
+        },
+        "1-2-2": {
+            "intent": "Prompt and accept book name.",
+            "functionalid": "AcceptBookName",
+            "constraint": [
+                {
+                    "id": "2-2+1",
+                    "name": "name",
+                    "constraint_layer": "design_constraint",
+                    "scope": "local",
+                    "type":"minLength",
+                    "value": 1,
+                    "failures": ["1-1-1-3"],
+                    "rootcause": {
+                        "1-1-1-3": "The root cause of failure was that an empty string was accepted as a book name, even though the design intended to use the first letter of the name to determine the correct placement slot on the bookshelf, which caused the program to fail when it attempted to access the first character of the name."
+                    }
+                }
+            ]
+        },
+        "1-2-3": {
+            "intent": "Prompt and accept for book genre.",
+            "functionalid": "AcceptBookGenre"
+        },
+        "1-2-4": {
+            "intent": "Create a book with name <name> with genre <genre>.",
+            "functionalid": "AssembleBookDetails",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<book_details>",
+                    "scope": "local"
+                },
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                },
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ],
+            "constraint": [
+                {
+                    "id": "2-4+1",
+                    "name": "book_details",
+                    "constraint_layer": "implementation_constraint",
+                    "scope": "local",
+                    "type":"has_key",
+                    "value": "name",
+                    "failures": ["1-1-1-2"],
+                    "rootcause": {
+                        "1-1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"name\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                    }
+                },
+                {
+                    "id": "2-4+2",
+                    "name": "book_details",
+                    "constraint_layer": "implementation_constraint",
+                    "scope": "local",
+                    "type":"has_key",
+                    "value": "genre",
+                    "failures": ["1-1-1-2"],
+                    "rootcause": {
+                        "1-1-1-2": "The root cause of failure was that the accepted book was not stored in an object structured to include the key \"genre\", despite the design assuming its presence. This resulted in a failure when the program attempted to access the key."
+                    }
+                },
+                {
+                    "id": "2-4+3",
+                    "name": "book_details",
+                    "constraint_layer": "implementation_constraint",
+                    "scope": "local",
+                    "type":"is_object",
+                    "value": "object",
+                    "failures": ["1-1-1-2"],
+                    "rootcause": {
+                        "1-1-1-2": "The root cause of failure was that the book details variable was not initialized as an object, despite the design requiring an object with accessible keys named \"name\" and \"genre\". This resulted in a failure when the program attempted to access a key in this variable."
+                    }
+                }
+            ]
+        },
+        "1-2-5": {
+            "intent": "Return the book details.",
+            "functionalid": "ReturnBookDetails"
+        },
+        "1-3": {
+            "intent": "Start the library manager.",
+            "type": "function",
+            "name": "Library Manager",
+            "source": ["0-2-1"]
+        },
+        "1-3-1": {
+            "intent": "Create the bookshelf.",
+            "functionalid": "CreateTheBookShelf",
+            "constraint": [
+                {
+                    "id": "3-1+1",
+                    "name": "book_shelf",
+                    "constraint_layer": "implementation_constraint",
+                    "scope": "local",
+                    "type":"is_object",
+                    "value": "object",
+                    "failures": ["1-1-1-4-1","1-1-1-4"],
+                    "rootcause": {
+                        "1-1-1-4-1": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to create a slot for a book",                    
+                        "1-1-1-4": "The root cause of failure was that the bookshelf was never initialized as an object, despite the design intending to use it as a keyed storage abstraction for placing books into slots, which caused the program to fail when it attempted to check if a slot exists."
+                    }
+                }
+            ]
+        },
+        "1-3-2": {
+            "intent": "Create the basket.",
+            "functionalid": "CreateTheBasket",
+            "constraint": [
+                {
+                    "id": "3-2+1",
+                    "name": "basket",
+                    "constraint_layer": "implementation_constraint",
+                    "scope": "local",
+                    "type":"is_array",
+                    "value": "array",
+                    "failures": ["1-3-3-2-2","1-1-1"],
+                    "rootcause": {
+                        "1-3-3-2-2": "The root cause of failure was that the basket was not initialized as an array. This resulted in a failure when attempting to append a book to the basket because the append operation requires a list and the basket was not a list.",
+                        "1-1-1": "The root cause of failure was that basket was not initialized as an array. This resulted in a failure when attempting to check the number of books in the basket because the len operation requires an iterable."
+                    }
+                }
+            ]
+        },
+        "1-3-3": {
+            "intent": "Display Menu",
+            "functionalid": "ChooseToDisplayMenu",
+            "type": "while"
+        },
+        "1-3-3-1": {
+            "intent": "Prompt user for choice.",
+            "functionalid": "PromptUserForChoice"
+        },
+        "1-3-3-2": {
+            "intent": "Check if the user chose to add a book.",
+            "functionalid": "CheckIfUserChoseAddBook",
+            "type": "conditional_branch"
+        },
+        "1-3-3-2-1": {
+            "intent": "Accept a book",
+            "functionalid": "AcceptBookInformation",
+            "type": "function_call",
+            "target": "2"
+        },
+        "1-3-3-2-2": {
+            "intent": "Add book named <name> with genre <genre> to basket.",
+            "functionalid": "AddBookToBasket",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
+        },
+        "1-3-3-3": {
+            "intent": "Check if the user chose to place books on the shelf.",
+            "functionalid": "CheckIfUserChosePlaceBook",
+            "type": "conditional_branch"
+        },
+        "1-3-3-3-1": {
+            "intent": "Check if there are more than 5 books in the basket.",
+            "type": "conditional_branch",
+            "functionalid": "CheckIfTooManyBooks",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectFailIfTooManyBooks"
+            ]
+        },
+        "1-3-3-3-2": {
+            "intent": "Raise an exception if the basket is too heavy.",
+            "functionalid": "FailIfTooManyBooks"
+        },
+        "1-3-3-3-3": {
+            "intent": "Place the books in the basket on the shelf.",
+            "functionalid": "PlaceBooksOnShelf",
+            "type": "function_call",
+            "target": "1"
+        },
+        "1-3-3-4": {
+            "intent": "Check if the user chose to display the basket and shelf.",
+            "functionalid": "CheckIfUserChoseDisplayLibrary",
+            "type": "conditional_branch"
+        },
+        "1-3-3-4-1": {
+            "intent": "Display the shelf",
+            "functionalid": "DisplayBookShelf"
+        },
+        "1-3-3-4-2": {
+            "intent": "Display the basket",
+            "functionalid": "DisplayBasket"
+        },
+        "1-3-3-5": {
+            "intent": "Exit the menu.",
+            "functionalid": "ExitTheMenu",
+            "type": "conditional_branch"
+        }
     }
+    
 }

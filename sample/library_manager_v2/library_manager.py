@@ -1,36 +1,46 @@
 import sys
 
 def place_books_on_shelf_from_basket(book_shelf, basket):
-
+    '''
+    This function checks to see if there are books in the
+    basket and places it on the shelf. It continues until
+    there are no more books left.
+    
+    :param book_shelf: Object representing the bookshelf.
+    :param basket: Array representing the basket.
+    '''
     while len(basket) > 0:
         book = basket.pop()
-
         print(f"Accepted book: {book['name']} (Genre: {book['genre']})")
         
         firstLetter = book['name'][0]
 
         if (firstLetter not in book_shelf):
             book_shelf[firstLetter] = []
-        else:
-            print("Slot for book already exists.")
 
         book_shelf[firstLetter].append(book['name'])
 
     return book_shelf
 
 def accept_book():
-
-    print("\nEnter book details:")
-        
+    '''
+    This function accepts the book from the user.
+    '''
+    print("\nEnter book details:")        
     name = input("Book name: ")
-
     genre = input("Genre: ")
-
     book_details = {"name": name, "genre":genre}
-
     return book_details
 
 def library_manager():
+    '''
+    This function serves the library manager. 
+
+    It provides a menu that lets users add books to a basket and 
+    place the books from the basket onto the shelf. It also allows
+    the user to display the contents of the library and finally, it
+    allows the user to exit the library.
+    '''
 
     book_shelf = {}
 
@@ -50,32 +60,20 @@ def library_manager():
         ).lower()
 
         if response == "a":
-
             book_details = accept_book()
-
             basket.append(book_details)
-      
-            continue
 
         elif response == "p":
-
+            if (len(basket) > 5):
+                raise Exception("Basket is too heavy, I can't bring it to the shelf.")
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
 
-            continue
-
         elif response == "d":
-
             print("\nBook Shelf:", book_shelf)
-
             print("Basket:", basket)
 
-            continue
-
-        else:
-        
+        else:        
             break
-
-    print("\nExiting library manager, goodbye.")
 
 if __name__ == "__main__":
     sys.exit(library_manager())
