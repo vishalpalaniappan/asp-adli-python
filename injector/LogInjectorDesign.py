@@ -113,7 +113,7 @@ class LogInjectorDesign(ast.NodeTransformer):
                 "logType": self.logTypeCount,
                 "funcId": funcId,
                 "isTemp": False,
-                "global": False
+                "global": (variable["scope"] == "global")
             }
             varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
             self.varMap[varInfo["varId"]] = varInfo
