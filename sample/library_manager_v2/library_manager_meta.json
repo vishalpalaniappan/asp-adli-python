@@ -28,15 +28,13 @@
             "variables": [
                 {
                     "name": "book_shelf",
-                    "placeholder":"<book_shelf>",
-                    "scope": "local",
+                    "keys": "local",
                     "key": []
                 },
                 {
                     "name": "basket",
-                    "placeholder":"<basket>",
                     "scope": "local",
-                    "key": []
+                    "keys": []
                 }
             ]
         },
@@ -51,6 +49,13 @@
             "variables": [
                 {
                     "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
                     "placeholder":"<num_books>",
                     "scope": "local",
                     "key": "length"
@@ -59,7 +64,19 @@
         },
         "1-1-1-1": {
             "intent": "Get a book from the basket",
-            "functionalid": "GettingBookFromBasket"
+            "functionalid": "GettingBookFromBasket",
+            "variables": [
+                {
+                    "name": "book",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "1-1-1-2": {
             "intent": "Display the book information",  
@@ -69,6 +86,13 @@
             "intent": "Get first letter of book named <name> to create slot for book on shelf.",
             "functionalid": "GettingFirstNameOfBook",
             "variables": [
+                {
+                    "name": "firstLetter",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
                 {
                     "name": "book",
                     "placeholder":"<name>",
