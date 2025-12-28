@@ -28,8 +28,8 @@
             "variables": [
                 {
                     "name": "book_shelf",
-                    "keys": "local",
-                    "key": []
+                    "scope": "local",
+                    "keys": []
                 },
                 {
                     "name": "basket",
