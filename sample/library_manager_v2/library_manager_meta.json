@@ -363,6 +363,14 @@
         },
         "1-3-3-2-2": {
             "intent": "Add book named <name> with genre <genre> to basket.",
+            "intent_validation": [
+                {
+                    "type": "data_exists",
+                    "source_var": "book_details",
+                    "target_var": "basket",
+                    "position": "end"
+                }
+            ],
             "functionalid": "AddBookToBasket",
             "variables": [
                 {
