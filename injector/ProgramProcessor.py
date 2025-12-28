@@ -5,7 +5,7 @@ import uuid
 import json
 import time
 from pathlib import Path
-from injector import helper
+from injector.LogInjectorDesign import LogInjectorDesign
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
@@ -63,7 +63,11 @@ class ProgramProcessor:
 
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(source, currAst, logTypeCount, currRelPath, isRoot, abs_map)
+
+            if abs_map and sdg_meta:
+                injector = LogInjectorDesign(source, currAst, logTypeCount, currRelPath, isRoot, abs_map, sdg_meta)
+            else:
+                injector = LogInjector(source, currAst, logTypeCount, currRelPath, isRoot, abs_map)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
