@@ -27,12 +27,12 @@
                         },
                         {
                             "id": "1-0-4",
-                            "lineDelta": 65,
+                            "lineDelta": 64,
                             "syntax": "if \"__main__\" == __name__:"
                         },
                         {
                             "id": "1-0-4-1",
-                            "lineDelta": 66,
+                            "lineDelta": 65,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
@@ -127,35 +127,35 @@
                         },
                         {
                             "id": "1-2-4-3-1",
-                            "lineDelta": 34,
+                            "lineDelta": 33,
                             "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
                             "id": "1-2-4-4",
-                            "lineDelta": 39,
+                            "lineDelta": 38,
                             "syntax": "elif response == \"d\":"
                         },
                         {
                             "id": "1-2-4-4-1",
-                            "lineDelta": 40,
+                            "lineDelta": 39,
                             "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
                             "id": "1-2-4-5",
-                            "lineDelta": 45,
+                            "lineDelta": 44,
                             "syntax": "else:"
                         },
                         {
                             "id": "1-2-4-5-1",
-                            "lineDelta": 46,
+                            "lineDelta": 45,
                             "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
                             "id": "1-2-4-5-2",
-                            "lineDelta": 49,
+                            "lineDelta": 48,
                             "syntax": "break"
                         }
                     ]
