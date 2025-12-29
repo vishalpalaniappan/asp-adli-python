@@ -1,58 +1,60 @@
 import queue
 import sys
-import threading
-from BookShelfThread import BookShelfThread
+from book_shelf_thread import BookShelfThread
 
 def accept_book():
-
-    print(f"\n{threading.get_ident()} Enter book details:")
-        
-    name = input(f"{threading.get_ident()} Book name: ")
-
-    genre = input(f"{threading.get_ident()} Genre: ")
-
+    '''
+    This function accepts the book from the user.
+    '''
+    print("\nEnter book details:")        
+    name = input("Book name: ")
+    genre = input("Genre: ")
     book_details = {"name": name, "genre":genre}
-
     return book_details
 
-def main_menu():
+def library_manager():
+    '''
+    This function serves the library manager. 
+
+    It provides a menu that lets users add books to a basket and 
+    place the books from the basket onto the shelf. It also allows
+    the user to display the contents of the library and finally, it
+    allows the user to exit the library. The bookshelf exists on a 
+    separate thread and the operations which concern it are
+    communicated to it via a message queue.
+    '''
     message_queue = queue.Queue()
 
     BookShelfThread(message_queue)
 
     basket = []
 
-    print(
-        "\n==========================\n"\
-        "         Main Thread Menu:\n" \
-        "==========================\n"\
-        "Enter a: Add book.\n" \
-        "Enter p: Place books on shelf and continue.\n" \
-        "Enter any other key: Exit\n" \
-    )
-
     while True:
-        response = input().lower()
-        print(f"Option Selected: {response}")
+        response = input(
+            "\n==========================\n"\
+            "      Main Thread Menu\n" \
+            "==========================\n"\
+            "Enter a: Add book.\n" \
+            "Enter p: Place books on shelf and continue.\n" \
+            "Enter d: Display contents of basket and book shelf.\n" \
+            "Enter any other key: Exit\n"
+        ).lower()
 
         if response == "a":
             book_details = accept_book()
             basket.append(book_details)   
-            continue       
 
         elif response == "p":
             message_queue.put({
                 "type": "add",
                 "basket": basket
-            })
-            continue       
+            })      
 
         elif response == "d":
             message_queue.put({
                 "type": "display",
                 "basket": basket
-            })
-            continue            
+            })   
 
         else:
             message_queue.put({
@@ -61,4 +63,4 @@ def main_menu():
             break
 
 if "__main__" == __name__:
-    sys.exit(main_menu())
+    sys.exit(library_manager())

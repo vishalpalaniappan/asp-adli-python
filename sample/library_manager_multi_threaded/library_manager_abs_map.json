@@ -1,196 +1,170 @@
 {
-    "LibraryManager.py": {
-        "path": "LibraryManager.py",
-        "modules": {
-            "1-global": {
-                "startLine": 1,
-                "abstractions": [
-                    {
-                        "id": "1-0-1",
-                        "lineDelta": 0,
-                        "syntax": "import queue"
-                    },
-                    {
-                        "id": "1-0-2",
-                        "lineDelta": 1,
-                        "syntax": "import sys"
-                    },
-                    {
-                        "id": "1-0-3",
-                        "lineDelta": 2,
-                        "syntax": "import threading"
-                    },
-                    {
-                        "id": "1-0-4",
-                        "lineDelta": 3,
-                        "syntax": "from BookShelfThread import BookShelfThread"
-                    },
-                    {
-                        "id": "1-0-5",
-                        "lineDelta": 62,
-                        "syntax": "if \"__main__\" == __name__:"
-                    },
-                    {
-                        "id": "1-0-5-1",
-                        "lineDelta": 63,
-                        "syntax": "sys.exit(library_manager())"
-                    }
-                ]
-            },
-            "1-1": {
-                "startLine": 6,
-                "abstractions": [
-                    {
-                        "id": "1-1",
-                        "lineDelta": 0,
-                        "syntax": "def accept_book():"
-                    },
-                    {
-                        "id": "1-1-1",
-                        "lineDelta": 2,
-                        "syntax": "print(f\"\n{threading.get_ident()} Enter book details:\")"
-                    },
-                    {
-                        "id": "1-1-2",
-                        "lineDelta": 4,
-                        "syntax": "name = input(f\"{threading.get_ident()} Book name: \")"
-                    },
-                    {
-                        "id": "1-1-3",
-                        "lineDelta": 6,
-                        "syntax": "genre = input(f\"{threading.get_ident()} Genre: \")"
-                    },
-                    {
-                        "id": "1-1-4",
-                        "lineDelta": 8,
-                        "syntax": "book_details = {\"name\":name,\"genre\":genre}"
-                    },
-                    {
-                        "id": "1-1-5",
-                        "lineDelta": 10,
-                        "syntax": "return book_details"
-                    }
-                ]
-            },
-            "1-2": {
-                "startLine": 18,
-                "abstractions": [
-                    {
-                        "id": "1-2",
-                        "lineDelta": 0,
-                        "syntax": "def main_menu():"
-                    },
-                    {
-                        "id": "1-2-1",
-                        "lineDelta": 1,
-                        "syntax": "message_queue = queue.Queue()"
-                    },
-                    {
-                        "id": "1-2-2",
-                        "lineDelta": 3,
-                        "syntax": "BookShelfThread(message_queue)"
-                    },
-                    {
-                        "id": "1-2-3",
-                        "lineDelta": 5,
-                        "syntax": "basket = []"
-                    },
-                    {
-                        "id": "1-2-4",
-                        "lineDelta": 7,
-                        "syntax": "print("
-                    },
-                    {
-                        "id": "1-2-5",
-                        "lineDelta": 16,
-                        "syntax": "while True:"
-                    },
-                    {
-                        "id": "1-2-5-1",
-                        "lineDelta": 17,
-                        "syntax": "response = input().lower()"
-                    },
-                    {
-                        "id": "1-2-5-2",
-                        "lineDelta": 18,
-                        "syntax": "print(f\"Option Selected: {response}\")"
-                    },
-                    {
-                        "id": "1-2-5-3",
-                        "lineDelta": 20,
-                        "syntax": "if response == \"a\":"
-                    },
-                    {
-                        "id": "1-2-5-3-1",
-                        "lineDelta": 21,
-                        "syntax": "book_details = accept_book()"
-                    },
-                    {
-                        "id": "1-2-5-3-2",
-                        "lineDelta": 22,
-                        "syntax": "basket.append(book_details)"
-                    },
-                    {
-                        "id": "1-2-5-3-3",
-                        "lineDelta": 23,
-                        "syntax": "continue"
-                    },
-                    {
-                        "id": "1-2-5-4",
-                        "lineDelta": 25,
-                        "syntax": "elif response == \"p\":"
-                    },
-                    {
-                        "id": "1-2-5-4-1",
-                        "lineDelta": 26,
-                        "target": "2-4-1-1-1",
-                        "syntax": "message_queue.put({"
-                    },
-                    {
-                        "id": "1-2-5-4-2",
-                        "lineDelta": 30,
-                        "syntax": "continue"
-                    },
-                    {
-                        "id": "1-2-5-5",
-                        "lineDelta": 32,
-                        "syntax": "elif response == \"d\":"
-                    },
-                    {
-                        "id": "1-2-5-5-1",
-                        "lineDelta": 33,
-                        "target": "2-4-1-1-1",
-                        "syntax": "message_queue.put({"
-                    },
-                    {
-                        "id": "1-2-5-5-2",
-                        "lineDelta": 37,
-                        "syntax": "continue"
-                    },
-                    {
-                        "id": "1-2-5-6",
-                        "lineDelta": 39,
-                        "syntax": "else:"
-                    },
-                    {
-                        "id": "1-2-5-6-1",
-                        "lineDelta": 40,
-                        "target": "2-4-1-1-1",
-                        "syntax": "message_queue.put({"
-                    },
-                    {
-                        "id": "1-2-5-6-2",
-                        "lineDelta": 43,
-                        "syntax": "continue"
-                    }
-                ]
+    "file": "Multi-Threaded Library Manager",
+    "version:": "0.0.0",
+    "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
+    "files": [
+        {
+            "path": "library_manager.py",
+            "threadId": 1,
+            "modules": {
+                "1-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "1-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "1-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import sys"
+                        },
+                        {
+                            "id": "1-0-3",
+                            "lineDelta": 2,
+                            "syntax": "from book_shelf_thread import BookShelfThread"
+                        },
+                        {
+                            "id": "1-0-4",
+                            "lineDelta": 68,
+                            "syntax": "if \"__main__\" == __name__:"
+                        },
+                        {
+                            "id": "1-0-4-1",
+                            "lineDelta": 69,
+                            "syntax": "sys.exit(library_manager())"
+                        }
+                    ]
+                },
+                "1-1": {
+                    "startLine": 5,
+                    "abstractions": [
+                        {
+                            "id": "1-1",
+                            "lineDelta": 0,
+                            "syntax": "def accept_book():"
+                        },
+                        {
+                            "id": "1-1-1",
+                            "lineDelta": 4,
+                            "syntax": "print(\"\nEnter book details:\")"
+                        },
+                        {
+                            "id": "1-1-2",
+                            "lineDelta": 5,
+                            "syntax": "name = input(f\"Book name: \")"
+                        },
+                        {
+                            "id": "1-1-3",
+                            "lineDelta": 6,
+                            "syntax": "genre = input(f\"Genre: \")"
+                        },
+                        {
+                            "id": "1-1-4",
+                            "lineDelta": 7,
+                            "syntax": "book_details = {\"name\":name,\"genre\":genre}"
+                        },
+                        {
+                            "id": "1-1-5",
+                            "lineDelta": 8,
+                            "syntax": "return book_details"
+                        }
+                    ]
+                },
+                "1-2": {
+                    "startLine": 15,
+                    "abstractions": [
+                        {
+                            "id": "1-2",
+                            "lineDelta": 0,
+                            "syntax": "def main_menu():"
+                        },
+                        {
+                            "id": "1-2-1",
+                            "lineDelta": 11,
+                            "syntax": "message_queue = queue.Queue()"
+                        },
+                        {
+                            "id": "1-2-2",
+                            "lineDelta": 13,
+                            "syntax": "BookShelfThread(message_queue)"
+                        },
+                        {
+                            "id": "1-2-3",
+                            "lineDelta": 15,
+                            "syntax": "basket = []"
+                        },
+                        {
+                            "id": "1-2-4",
+                            "lineDelta": 17,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "1-2-4-1",
+                            "lineDelta": 18,
+                            "syntax": "response = input("
+                        },
+                        {
+                            "id": "1-2-4-2",
+                            "lineDelta": 28,
+                            "syntax": "if response == \"a\":"
+                        },
+                        {
+                            "id": "1-2-4-2-1",
+                            "lineDelta": 29,
+                            "syntax": "book_details = accept_book()"
+                        },
+                        {
+                            "id": "1-2-4-2-2",
+                            "lineDelta": 30,
+                            "syntax": "basket.append(book_details)"
+                        },
+                        {
+                            "id": "1-2-4-3",
+                            "lineDelta": 32,
+                            "syntax": "elif response == \"p\":"
+                        },
+                        {
+                            "id": "1-2-5-4-3-1",
+                            "lineDelta": 34,
+                            "target": "",
+                            "syntax": "message_queue.put({"
+                        },
+                        {
+                            "id": "1-2-5-5",
+                            "lineDelta": 39,
+                            "syntax": "elif response == \"d\":"
+                        },
+                        {
+                            "id": "1-2-5-5-1",
+                            "lineDelta": 40,
+                            "target": "",
+                            "syntax": "message_queue.put({"
+                        },
+                        {
+                            "id": "1-2-5-6",
+                            "lineDelta": 45,
+                            "syntax": "else:"
+                        },
+                        {
+                            "id": "1-2-5-6-1",
+                            "lineDelta": 46,
+                            "target": "",
+                            "syntax": "message_queue.put({"
+                        },
+                        {
+                            "id": "1-2-5-6-2",
+                            "lineDelta": 49,
+                            "syntax": "break"
+                        }
+                    ]
+                }
             }
-        }
-    },
-    "BookShelfThread.py": {
-        "file": "Book Shelf Thread",
-        "modules": {
-            "path": "BookShelfThread.py",
+        },
+        {
+            "path": "book_shelf_thread.py",
+            "threadId": 2,
             "modules": {
                 "2-global": {
                     "startLine": 1,
@@ -208,7 +182,7 @@
                     ]
                 },
                 "2-1": {
-                    "startLine": 4,
+                    "startLine": 10,
                     "abstractions": [
                         {
                             "id": "2-1",
@@ -238,7 +212,7 @@
                     ]
                 },
                 "2-2": {
-                    "startLine": 10,
+                    "startLine": 16,
                     "abstractions": [
                         {
                             "id": "2-2",
@@ -262,53 +236,43 @@
                         },
                         {
                             "id": "2-3-1",
-                            "lineDelta": 2,
+                            "lineDelta": 9,
                             "syntax": "while len(basket) > 0:"
                         },
                         {
                             "id": "2-3-1-1",
-                            "lineDelta": 3,
+                            "lineDelta": 10,
                             "syntax": "book = basket.pop()"
                         },
                         {
                             "id": "2-3-1-2",
-                            "lineDelta": 5,
-                            "syntax": "print(f\"{threading.get_ident()} Accepted book: {book['name']} (Genre: {book['genre']})\")"
+                            "lineDelta": 11,
+                            "syntax": "print(f\"Accepted book: {book['name']} (Genre: {book['genre']})\")"
                         },
                         {
                             "id": "2-3-1-3",
-                            "lineDelta": 7,
+                            "lineDelta": 13,
                             "syntax": "firstLetter = book['name'][0]"
                         },
                         {
                             "id": "2-3-1-4",
-                            "lineDelta": 9,
+                            "lineDelta": 15,
                             "syntax": "if (firstLetter not in self.book_shelf):"
                         },
                         {
                             "id": "2-3-1-4-1",
-                            "lineDelta": 10,
+                            "lineDelta": 16,
                             "syntax": "self.book_shelf[firstLetter] = []"
                         },
                         {
                             "id": "2-3-1-5",
-                            "lineDelta": 11,
-                            "syntax": "else:"
-                        },
-                        {
-                            "id": "2-3-1-4-3",
-                            "lineDelta": 12,
-                            "syntax": "print(f\"{threading.get_ident()} Slot for book already exists.\")"
-                        },
-                        {
-                            "id": "2-3-1-6",
-                            "lineDelta": 14,
+                            "lineDelta": 18,
                             "syntax": "self.book_shelf[firstLetter].append(book['name'])"
                         }
                     ]
                 },
                 "2-4": {
-                    "startLine": 30,
+                    "startLine": 40,
                     "abstractions": [
                         {
                             "id": "2-4",
@@ -317,58 +281,64 @@
                         },
                         {
                             "id": "2-4-1",
-                            "lineDelta": 1,
+                            "lineDelta": 8,
                             "syntax": "while True:"
                         },
                         {
                             "id": "2-4-1-1",
-                            "lineDelta": 2,
+                            "lineDelta": 9,
                             "syntax": "if not self.queue.empty():"
                         },
                         {
                             "id": "2-4-1-1-1",
-                            "source": ["1-2-5-4-1","1-2-5-5-1","1-2-5-6-1"],
-                            "lineDelta": 3,
+                            "source": [
+                            ],
+                            "lineDelta": 10,
                             "syntax": "msg = self.queue.get(timeout=0.5)"
                         },
                         {
                             "id": "2-4-1-1-2",
-                            "lineDelta": 5,
+                            "lineDelta": 12,
                             "syntax": "if (msg[\"type\"] == \"add\"):"
                         },
                         {
                             "id": "2-4-1-1-2-1",
-                            "lineDelta": 6,
+                            "lineDelta": 13,
+                            "syntax": "print(f\"\n\")"
+                        },
+                        {
+                            "id": "2-4-1-1-2-2",
+                            "lineDelta": 14,
                             "syntax": "self.place_books_on_shelf_from_basket(msg[\"basket\"])"
                         },
                         {
                             "id": "2-4-1-1-3",
-                            "lineDelta": 9,
+                            "lineDelta": 17,
                             "syntax": "elif (msg[\"type\"] == \"display\"):"
                         },
                         {
                             "id": "2-4-1-1-3-1",
-                            "lineDelta": 10,
+                            "lineDelta": 18,
                             "syntax": "print(f\"\\n{threading.get_ident()} Book Shelf:\", self.book_shelf)"
                         },
                         {
                             "id": "2-4-1-1-3-2",
-                            "lineDelta": 11,
+                            "lineDelta": 19,
                             "syntax": "print(f\"{threading.get_ident()} Basket:\", msg[\"basket\"])"
                         },
                         {
                             "id": "2-4-1-1-4",
-                            "lineDelta": 12,
+                            "lineDelta": 20,
                             "syntax": "elif (msg[\"type\"] == \"quit\"):"
                         },
                         {
                             "id": "2-4-1-1-4-1",
-                            "lineDelta": 13,
+                            "lineDelta": 21,
                             "syntax": "break"
                         }
                     ]
                 }
             }
         }
-    }
+    ]
 }
