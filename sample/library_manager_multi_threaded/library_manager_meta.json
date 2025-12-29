@@ -15,16 +15,13 @@
             "intent": "Import the sys library."
         },
         "1-0-3": {
-            "intent": "Import the threading library."
-        },
-        "1-0-4": {
             "intent": "Import the BookShelf thread."
         },
-        "1-0-5": {
-            "intent": "Import the BookShelf thread.",
+        "1-0-4": {
+            "intent": "Check if we are in main entry to program.",
             "type": "conditional_branch"
         },
-        "1-0-5-1": {
+        "1-0-4-1": {
             "intent": "Start the library manager.",
             "type": "function_call",
             "target": "2"
@@ -70,58 +67,43 @@
             "intent": "Create the basket."
         },
         "1-2-4": {
-            "intent": "Display the menu options."
-        },
-        "1-2-5": {
             "intent": "Enter the main menu.",
             "type": "while"
         },
-        "1-2-5-1": {
+        "1-2-4-1": {
             "intent": "Get the user selection."
         },
-        "1-2-5-2": {
-            "intent": "Display the selected option."
-        },
-        "1-2-5-3": {
+        "1-2-4-2": {
             "intent": "Check if the user chose to add a book."
         },
-        "1-2-5-3-1": {
+        "1-2-4-2-1": {
             "intent": "Accept a book"
         },
-        "1-2-5-3-2": {
+        "1-2-4-2-2": {
             "intent": "Add book named <name> with genre <genre> to basket."
         },
-        "1-2-5-3-3": {
-            "intent": "Continue to main menu."
-        },
-        "1-2-5-4": {
+        "1-2-4-3": {
             "intent": "Check if the user chose to place a book on the shelf."
         },
-        "1-2-5-4-1": {
+        "1-2-4-3-1": {
             "intent": "Send task to add basket to shelf to bookshelf thread.",
             "target": "2-4-1-1-1"
         },
-        "1-2-5-4-2": {
-            "intent": "Continue to main menu."
-        },
-        "1-2-5-5": {
+        "1-2-4-4": {
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
-        "1-2-5-5-1": {
+        "1-2-4-4-1": {
             "intent": "Send task to display basket and bookshelf to bookshelf thread.",
             "target": "2-4-1-1-1"
         },
-        "1-2-5-5-2": {
-            "intent": "Continue to main menu."
-        },
-        "1-2-5-6": {
+        "1-2-4-5": {
             "intent": "The user chose to quit."
         },
-        "1-2-5-6-1": {
+        "1-2-4-5-1": {
             "intent": "Send task to tell bookshelf thread to terminate.",
             "target": "2-4-1-1-1"
         },
-        "1-2-5-6-2": {
+        "1-2-4-5-2": {
             "intent": "Exit menu and terminate program."
         },
         "2-0": {
@@ -189,16 +171,7 @@
         "2-3-1-4-1": {
             "intent": "Create a new shelf slot for this first letter."
         },
-        "2-3-1-4-3": {
-            "intent": "Print confirmation that slot exists."
-        },
         "2-3-1-5": {
-            "intent": "Handle the case where the shelf slot already exists."
-        },
-        "2-3-1-5-1": {
-            "intent": "Log that a shelf slot for this first letter already exists."
-        },
-        "2-3-1-6": {
             "intent": "Add the book's name to the appropriate shelf slot."
         },
         "2-4": {
@@ -222,6 +195,9 @@
             "type": "conditional_branch"
         },
         "2-4-1-1-2-1": {
+            "intent": "Print an empty line for display formatting"
+        },
+        "2-4-1-1-2-2": {
             "intent": "Place books from the basket onto the shelf according to the message.",
             "type": "function_call",
             "target": "3"
