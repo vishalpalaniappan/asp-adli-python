@@ -1,4 +1,5 @@
 import threading
+import queue
 
 class BookShelfThread(threading.Thread):
     '''
@@ -46,16 +47,18 @@ class BookShelfThread(threading.Thread):
         :param self: The object itself.
         '''
         while True:
-            if not self.queue.empty():
-                msg = self.queue.get(timeout=0.5)
+            try:
+                msg = self.queue.get(timeout=10)
+            except queue.Empty:
+                continue
 
-                if (msg["type"] == "add"):
-                    print(f"\n")
-                    self.place_books_on_shelf_from_basket(
-                        msg["basket"]
-                    )
-                elif (msg["type"] == "display"):
-                    print(f"\n{threading.get_ident()} Book Shelf:", self.book_shelf)
-                    print(f"{threading.get_ident()} Basket:", msg["basket"])
-                elif (msg["type"] == "quit"):
-                    break
+            if (msg["type"] == "add"):
+                print(f"\n")
+                self.place_books_on_shelf_from_basket(
+                    msg["basket"]
+                )
+            elif (msg["type"] == "display"):
+                print(f"\n{threading.get_ident()} Book Shelf:", self.book_shelf)
+                print(f"{threading.get_ident()} Basket:", msg["basket"])
+            elif (msg["type"] == "quit"):
+                break
