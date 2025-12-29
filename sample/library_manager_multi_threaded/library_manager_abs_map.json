@@ -126,35 +126,35 @@
                             "syntax": "elif response == \"p\":"
                         },
                         {
-                            "id": "1-2-5-4-3-1",
+                            "id": "1-2-4-3-1",
                             "lineDelta": 34,
-                            "target": "",
+                            "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
-                            "id": "1-2-5-5",
+                            "id": "1-2-4-4",
                             "lineDelta": 39,
                             "syntax": "elif response == \"d\":"
                         },
                         {
-                            "id": "1-2-5-5-1",
+                            "id": "1-2-4-4-1",
                             "lineDelta": 40,
-                            "target": "",
+                            "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
-                            "id": "1-2-5-6",
+                            "id": "1-2-4-5",
                             "lineDelta": 45,
                             "syntax": "else:"
                         },
                         {
-                            "id": "1-2-5-6-1",
+                            "id": "1-2-4-5-1",
                             "lineDelta": 46,
-                            "target": "",
+                            "target": "2-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
-                            "id": "1-2-5-6-2",
+                            "id": "1-2-4-5-2",
                             "lineDelta": 49,
                             "syntax": "break"
                         }
@@ -292,6 +292,9 @@
                         {
                             "id": "2-4-1-1-1",
                             "source": [
+                                "1-2-4-3-1",
+                                "1-2-4-4-1",
+                                "1-2-4-5-1"
                             ],
                             "lineDelta": 10,
                             "syntax": "msg = self.queue.get(timeout=0.5)"
