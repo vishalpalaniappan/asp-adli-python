@@ -61,7 +61,8 @@
             "intent": "Create a queue."
         },
         "1-2-2": {
-            "intent": "Start the bookshelf thread."
+            "intent": "Start the bookshelf thread.",
+            "type": "function_call"
         },
         "1-2-3": {
             "intent": "Create the basket."
