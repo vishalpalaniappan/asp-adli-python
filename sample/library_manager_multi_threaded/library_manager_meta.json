@@ -77,7 +77,8 @@
             "intent": "Check if the user chose to add a book."
         },
         "1-2-4-2-1": {
-            "intent": "Accept a book"
+            "intent": "Accept a book",
+            "type": "function_call"
         },
         "1-2-4-2-2": {
             "intent": "Add book named <name> with genre <genre> to basket."
