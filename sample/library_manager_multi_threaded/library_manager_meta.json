@@ -79,10 +79,38 @@
         },
         "library_manager-2-4-2-1": {
             "intent": "Accept a book",
-            "type": "function_call"
+            "type": "function_call",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "library_manager-2-4-2-2": {
-            "intent": "Add book named <name> with genre <genre> to basket."
+            "intent": "Add book named <name> with genre <genre> to basket.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
         },
         "library_manager-2-4-3": {
             "intent": "Check if the user chose to place a book on the shelf."
