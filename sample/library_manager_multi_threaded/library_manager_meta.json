@@ -249,7 +249,7 @@
                 {
                     "name": "self",
                     "scope": "local",
-                    "keys": ["book_shelf"]
+                    "keys": []
                 }
             ]
         },
@@ -259,7 +259,7 @@
                 {
                     "name": "self",
                     "scope": "local",
-                    "keys": ["queue"]
+                    "keys": []
                 }
             ]
         },
