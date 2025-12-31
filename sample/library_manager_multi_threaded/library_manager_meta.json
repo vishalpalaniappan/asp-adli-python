@@ -135,7 +135,14 @@
             "type": "while"
         },
         "library_manager-2-4-1": {
-            "intent": "Get the user selection."
+            "intent": "Get the user selection.",
+            "variables": [
+                {
+                    "name": "response",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "library_manager-2-4-2": {
             "intent": "Check if the user chose to add a book."
@@ -179,8 +186,23 @@
             "intent": "Check if the user chose to place a book on the shelf."
         },
         "library_manager-2-4-3-1": {
-            "intent": "Send task to add basket to shelf to bookshelf thread.",
-            "target": "book_shelf_thread-4-1-1-1"
+            "intent": "Send basket with <num_books> books to the book shelf thread.",
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
         },
         "library_manager-2-4-3-2": {
             "intent": "Clear the basket after sending it the bookshelf thread.",
@@ -196,15 +218,37 @@
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
         "library_manager-2-4-4-1": {
-            "intent": "Send task to display basket and bookshelf to bookshelf thread.",
-            "target": "book_shelf_thread-4-1-1-1"
+            "intent": "Send basket with <num_boks> to bookshelf thread to display along with book shelf.",
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
         },
         "library_manager-2-4-5": {
             "intent": "The user chose to quit."
         },
         "library_manager-2-4-5-1": {
             "intent": "Send task to tell bookshelf thread to terminate.",
-            "target": "book_shelf_thread-4-1-1-1"
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "library_manager-2-4-5-2": {
             "intent": "Exit menu and terminate program."
