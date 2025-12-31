@@ -26,12 +26,12 @@
                         },
                         {
                             "id": "library_manager-0-4",
-                            "lineDelta": 64,
+                            "lineDelta": 65,
                             "syntax": "if \"__main__\" == __name__:"
                         },
                         {
                             "id": "library_manager-0-4-1",
-                            "lineDelta": 65,
+                            "lineDelta": 66,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
@@ -131,30 +131,35 @@
                             "syntax": "message_queue.put({"
                         },
                         {
+                            "id": "library_manager-2-4-3-2",
+                            "lineDelta": 37,
+                            "syntax": "basket = [] "
+                        },
+                        {
                             "id": "library_manager-2-4-4",
-                            "lineDelta": 38,
+                            "lineDelta": 39,
                             "syntax": "elif response == \"d\":"
                         },
                         {
                             "id": "library_manager-2-4-4-1",
-                            "lineDelta": 39,
+                            "lineDelta": 40,
                             "target": "book_shelf_thread-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
                             "id": "library_manager-2-4-5",
-                            "lineDelta": 44,
+                            "lineDelta": 45,
                             "syntax": "else:"
                         },
                         {
                             "id": "library_manager-2-4-5-1",
-                            "lineDelta": 45,
+                            "lineDelta": 46,
                             "target": "book_shelf_thread-4-1-1-1",
                             "syntax": "message_queue.put({"
                         },
                         {
                             "id": "library_manager-2-4-5-2",
-                            "lineDelta": 48,
+                            "lineDelta": 49,
                             "syntax": "break"
                         }
                     ]

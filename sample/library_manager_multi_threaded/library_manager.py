@@ -48,7 +48,8 @@ def library_manager():
             message_queue.put({
                 "type": "add",
                 "basket": basket
-            })      
+            })
+            basket = []      
 
         elif response == "d":
             message_queue.put({

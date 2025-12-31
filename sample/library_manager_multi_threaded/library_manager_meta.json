@@ -119,6 +119,16 @@
             "intent": "Send task to add basket to shelf to bookshelf thread.",
             "target": "book_shelf_thread-4-1-1-1"
         },
+        "library_manager-2-4-3-2": {
+            "intent": "Clear the basket after sending it the bookshelf thread.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
         "library_manager-2-4-4": {
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
