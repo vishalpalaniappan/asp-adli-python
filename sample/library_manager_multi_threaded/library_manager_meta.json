@@ -218,7 +218,7 @@
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
         "library_manager-2-4-4-1": {
-            "intent": "Send basket with <num_books> to bookshelf thread to display along with book shelf.",
+            "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
@@ -353,27 +353,117 @@
             ]
         },
         "book_shelf_thread-3-1": {
-            "intent": "Iterate while there are still books in the basket.",
-            "type": "while"
+            "intent": "There are <num_books> books left in the basket.",
+            "type": "while",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
         },
         "book_shelf_thread-3-1-1": {
-            "intent": "Remove the next book from the basket."
+            "intent": "Got a book named \"<name>\" with genre \"<genre>\" from the basket.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "book",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
         },
         "book_shelf_thread-3-1-2": {
-            "intent": "Log that the book was accepted along with its name and genre."
+            "intent": "Print confirmation that book is being processed."
         },
         "book_shelf_thread-3-1-3": {
-            "intent": "Get the first letter of the book's name to determine the shelf slot."
+            "intent": "Read the first letter (<first_letter>) of book named \"<name>\"",
+            "variables": [
+                {
+                    "name": "firstLetter",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<first_letter>",
+                    "scope": "local"
+                }
+            ]
         },
         "book_shelf_thread-3-1-4": {
             "intent": "Check whether a shelf slot already exists for this first letter.",
             "type": "conditional_branch"
         },
         "book_shelf_thread-3-1-4-1": {
-            "intent": "Create a new shelf slot for this first letter."
+            "intent": "Created a new shelf slot for books that start with letter <first_letter>.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<first_letter>",
+                    "scope": "local"
+                }
+            ]
         },
         "book_shelf_thread-3-1-5": {
-            "intent": "Add the book's name to the appropriate shelf slot."
+            "intent": "Added book named <name> to bookshelf.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                }
+            ]
         },
         "book_shelf_thread-4": {
             "intent": "Process messages from the queue and update or display the bookshelf based on the message type.",

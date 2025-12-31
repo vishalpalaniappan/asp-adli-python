@@ -28,7 +28,7 @@ class BookShelfThread(threading.Thread):
         '''
         while len(basket) > 0:
             book = basket.pop()
-            print(f"Accepted book: {book['name']} (Genre: {book['genre']})")
+            print(f"Processing Book: {book['name']} (Genre: {book['genre']})")
             
             firstLetter = book['name'][0]
 
