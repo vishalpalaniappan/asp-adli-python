@@ -1,5 +1,5 @@
 {
-    "description": "Metadata for abstractions in library manager.",
+    "description": "Metadata for abstractions in multi-threaded library manager.",
     "format": "<filename>-[Repeat][<abstraction>-<step>]",
     "abstractions": {
         "library_manager-0": {
