@@ -107,14 +107,28 @@
             ]
         },
         "library_manager-2-1": {
-            "intent": "Create a queue."
+            "intent": "Created a queue to communicate with bookshelf thread.",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "library_manager-2-2": {
             "intent": "Start the bookshelf thread.",
             "type": "function_call"
         },
         "library_manager-2-3": {
-            "intent": "Create the basket."
+            "intent": "Create a basket to store the books.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "library_manager-2-4": {
             "intent": "Enter the main menu.",
