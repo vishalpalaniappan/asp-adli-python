@@ -61,6 +61,7 @@
                     "scope": "local",
                     "type":"minLength",
                     "value": 1,
+                    "description": "Failed semantic contract to only accept books with a name.",
                     "failures": ["book_shelf_thread-3-1-3"]
                 }
             ]
@@ -171,6 +172,15 @@
         },
         "library_manager-2-4-2-2": {
             "intent": "Add book named <name> with genre <genre> to basket.",
+            "intent_validation": [
+                {
+                    "type": "data_exists",
+                    "source_var": "book_details",
+                    "target_var": "basket",
+                    "position": "end",
+                    "description": "Failed semantic contract to place book in basket."
+                }
+            ],
             "variables": [
                 {
                     "name": "basket",
