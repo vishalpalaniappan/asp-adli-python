@@ -191,6 +191,18 @@
             "name": "Place Books On Shelf From Basket",
             "source": [
                 "library_manager-2-4-3-1"
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
             ]
         },
         "book_shelf_thread-3-1": {
