@@ -468,25 +468,39 @@
         "book_shelf_thread-4": {
             "intent": "Process messages from the queue and update or display the bookshelf based on the message type.",
             "type": "function",
-            "name": "Run Book Shelf Thread Loop"
+            "name": "Run Book Shelf Thread Loop",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "book_shelf_thread-4-1": {
-            "intent": "Keep processing messages from the queue until told to quit.",
+            "intent": "Keep processing messages from the queue until main thread says to stop.",
             "type": "while"
         },
         "book_shelf_thread-4-1-1": {
-            "intent": "Create block to safely check queue for messages.",
+            "intent": "Try reading messages from queue for 10 seconds.",
             "type": "try"
         },
         "book_shelf_thread-4-1-1-1": {
-            "intent": "Retrieve the next message from the queue with a timeout."
+            "intent": "Retrieve the next message from the queue with a timeout.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "book_shelf_thread-4-1-2": {
-            "intent": "Catch exception raised when getting message from queue",
+            "intent": "No messages were received for 10 seconds.",
             "type": "except"
         },
         "book_shelf_thread-4-1-2-1": {
-            "intent": "There were no messages, so check for messages again."
+            "intent": "There were no messages, so try again."
         },
         "book_shelf_thread-4-1-3": {
             "intent": "Check if the message requests to add books from basket onto bookshelf.",
@@ -498,7 +512,14 @@
         "book_shelf_thread-4-1-3-2": {
             "intent": "Place books from the basket onto the shelf according to the message.",
             "type": "function_call",
-            "target": "book_shelf_thread-3"
+            "target": "book_shelf_thread-3",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "book_shelf_thread-4-1-4": {
             "intent": "Check if the message requests the current bookshelf and basket to be displayed.",
@@ -508,14 +529,14 @@
             "intent": "Print the current state of the bookshelf."
         },
         "book_shelf_thread-4-1-4-2": {
-            "intent": "Print the current contents of the basket that was sent with the message."
+            "intent": "Print the current contents of the basket."
         },
         "book_shelf_thread-4-1-5": {
             "intent": "Check if the message requests this thread to quit.",
             "type": "conditional_branch"
         },
         "book_shelf_thread-4-1-5-1": {
-            "intent": "Break out of the loop and end the thread run method."
+            "intent": "Quit waiting for messages from main thread."
         }
     }
 }
