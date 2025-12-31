@@ -276,7 +276,14 @@
         "book_shelf_thread-2": {
             "intent": "Log that the bookshelf thread is terminating when the object is destroyed.",
             "type": "function",
-            "name": "Terminate BookShelfThread"
+            "name": "Terminate BookShelfThread",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "book_shelf_thread-2-1": {
             "intent": "Print a termination message for the bookshelf thread."
