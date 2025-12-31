@@ -38,7 +38,7 @@
             "intent": "Display request for book information."
         },
         "library_manager-1-2": {
-            "intent": "Prompted user and accepted name \"<name>\".",
+            "intent": "Prompted user and accepted book name \"<name>\".",
             "variables": [
                 {
                     "name": "name",
@@ -51,6 +51,17 @@
                     "name": "name",
                     "placeholder":"<name>",
                     "scope": "local"
+                }
+            ],
+            "constraint": [
+                {
+                    "id": "library_manager-1-2+1",
+                    "name": "name",
+                    "constraint_layer": "design_constraint",
+                    "scope": "local",
+                    "type":"minLength",
+                    "value": 1,
+                    "failures": ["book_shelf_thread-3-1-3"]
                 }
             ]
         },
