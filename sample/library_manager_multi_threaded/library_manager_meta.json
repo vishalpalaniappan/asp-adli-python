@@ -38,13 +38,62 @@
             "intent": "Display request for book information."
         },
         "library_manager-1-2": {
-            "intent": "Prompt and accept book name."
+            "intent": "Prompted user and accepted name \"<name>\".",
+            "variables": [
+                {
+                    "name": "name",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ]
         },
         "library_manager-1-3": {
-            "intent": "Prompt and accept for book genre."
+            "intent": "Prompted user and accepted genre \"<genre>\".",
+            "variables": [
+                {
+                    "name": "genre",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ]
         },
         "library_manager-1-4": {
-            "intent": "Create a book with name <name> with genre <genre>."
+            "intent": "Accepted a book with name <name> with genre <genre>.",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
         },
         "library_manager-1-5": {
             "intent": "Return the book details."
