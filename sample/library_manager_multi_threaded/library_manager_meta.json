@@ -218,7 +218,7 @@
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
         "library_manager-2-4-4-1": {
-            "intent": "Send basket with <num_boks> to bookshelf thread to display along with book shelf.",
+            "intent": "Send basket with <num_books> to bookshelf thread to display along with book shelf.",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
