@@ -1,6 +1,6 @@
 {
     "file": "Multi-Threaded Library Manager",
-    "version:": "0.0.0",
+    "version": "0.0.0",
     "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
     "files": [
         {
