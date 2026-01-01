@@ -102,6 +102,7 @@ class LogInjectorDesign(ast.NodeTransformer):
         else:
             funcId = self.funcId
 
+        outputLogs = []
         varLogs = []
         for variable in variables:
             varInfo = {
@@ -118,9 +119,12 @@ class LogInjectorDesign(ast.NodeTransformer):
             varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
             self.varMap[varInfo["varId"]] = varInfo
 
+            if "output" in variable:
+                outputLogs.append(getEncodedOutputStmt(variable["name"]))
+
         return {
             "logStmt": getLtLogStmt(self.logTypeCount),
-            "varLogs": varLogs
+            "varLogs": outputLogs + varLogs
         }
 
     def processFunctionNode(self, node, isAsync):
