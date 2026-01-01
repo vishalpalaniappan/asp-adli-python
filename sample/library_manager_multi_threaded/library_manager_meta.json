@@ -207,6 +207,16 @@
             "intent": "Check if the user chose to place a book on the shelf."
         },
         "library_manager-2-4-3-1": {
+            "intent": "Prepare task to tell bookshelf thread to add books to shelf.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-3-2": {
             "intent": "Send basket with <num_books> books to the book shelf thread.",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
@@ -225,7 +235,7 @@
                 }
             ]
         },
-        "library_manager-2-4-3-2": {
+        "library_manager-2-4-3-3": {
             "intent": "Clear the basket after sending it the bookshelf thread.",
             "variables": [
                 {
@@ -239,6 +249,16 @@
             "intent": "Check if the user chose to place a display the bookshelf and basket."
         },
         "library_manager-2-4-4-1": {
+            "intent": "Prepare task to tell book shelf thread to display contents.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-4-2": {
             "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
@@ -261,6 +281,16 @@
             "intent": "The user chose to quit."
         },
         "library_manager-2-4-5-1": {
+            "intent": "Prepare task to tell bookshelf thread to terminate.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-5-2": {
             "intent": "Send task to tell bookshelf thread to terminate.",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
@@ -271,7 +301,7 @@
                 }
             ]
         },
-        "library_manager-2-4-5-2": {
+        "library_manager-2-4-5-3": {
             "intent": "Exit menu and terminate program."
         },
         "book_shelf_thread-0": {

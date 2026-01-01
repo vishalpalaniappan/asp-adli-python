@@ -26,12 +26,12 @@
                         },
                         {
                             "id": "library_manager-0-4",
-                            "lineDelta": 65,
+                            "lineDelta": 68,
                             "syntax": "if \"__main__\" == __name__:"
                         },
                         {
                             "id": "library_manager-0-4-1",
-                            "lineDelta": 66,
+                            "lineDelta": 69,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
@@ -127,39 +127,53 @@
                         {
                             "id": "library_manager-2-4-3-1",
                             "lineDelta": 33,
-                            "target": "book_shelf_thread-4-1-1-1",
-                            "syntax": "message_queue.put({"
+                            "syntax": "msg = {"
                         },
                         {
                             "id": "library_manager-2-4-3-2",
                             "lineDelta": 37,
+                            "target": "book_shelf_thread-4-1-1-1",
+                            "syntax": "message_queue.put(msg)"
+                        },
+                        {
+                            "id": "library_manager-2-4-3-3",
+                            "lineDelta": 38,
                             "syntax": "basket = [] "
                         },
                         {
                             "id": "library_manager-2-4-4",
-                            "lineDelta": 39,
+                            "lineDelta": 40,
                             "syntax": "elif response == \"d\":"
                         },
                         {
                             "id": "library_manager-2-4-4-1",
-                            "lineDelta": 40,
+                            "lineDelta": 41,
+                            "syntax": "msg = {"
+                        },
+                        {
+                            "id": "library_manager-2-4-4-2",
+                            "lineDelta": 45,
                             "target": "book_shelf_thread-4-1-1-1",
-                            "syntax": "message_queue.put({"
+                            "syntax": "message_queue.put(msg)"
                         },
                         {
                             "id": "library_manager-2-4-5",
-                            "lineDelta": 45,
+                            "lineDelta": 47,
                             "syntax": "else:"
                         },
                         {
                             "id": "library_manager-2-4-5-1",
-                            "lineDelta": 46,
-                            "target": "book_shelf_thread-4-1-1-1",
-                            "syntax": "message_queue.put({"
+                            "lineDelta": 48,
+                            "syntax": "msg = {"
                         },
                         {
                             "id": "library_manager-2-4-5-2",
-                            "lineDelta": 49,
+                            "lineDelta": 51,
+                            "syntax": "message_queue.put(msg)"
+                        },
+                        {
+                            "id": "library_manager-2-4-5-3",
+                            "lineDelta": 52,
                             "syntax": "break"
                         }
                     ]

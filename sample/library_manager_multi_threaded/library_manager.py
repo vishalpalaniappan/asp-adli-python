@@ -45,22 +45,25 @@ def library_manager():
             basket.append(book_details)   
 
         elif response == "p":
-            message_queue.put({
+            msg = {
                 "type": "add",
                 "basket": basket
-            })
+            }
+            message_queue.put(msg)
             basket = []      
 
         elif response == "d":
-            message_queue.put({
+            msg = {
                 "type": "display",
                 "basket": basket
-            })   
+            }
+            message_queue.put(msg)   
 
         else:
-            message_queue.put({
+            msg = {
                 "type": "quit"
-            })
+            }
+            message_queue.put(msg)
             break
 
 if "__main__" == __name__:
