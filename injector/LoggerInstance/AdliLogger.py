@@ -190,11 +190,13 @@ class AdliLogger:
         self.count += 1
         self.outputCount += 1
 
+        execId = str(threading.get_ident()) + str(uuid.uuid4());
+
         logInfo = {
             "type": "adli_output",
             "outputName": variableName,
             "thread": threading.get_ident(),
-            "adliExecutionId": ADLI_EXECUTION_ID,
+            "adliExecutionId": execId,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
         }
@@ -202,7 +204,7 @@ class AdliLogger:
         logger.info(logInfo)
 
         return {
-            "adliExecutionId": ADLI_EXECUTION_ID,
+            "adliExecutionId": execId,
             "adliExecutionIndex": self.count + 1,
             "adliValue": value
         }
