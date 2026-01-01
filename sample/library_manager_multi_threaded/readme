@@ -1,0 +1,5 @@
+This folder will contain a multi threaded application and will contain the relevant instrumentation. 
+
+I was thinking about this and each thread will be in its own file and it will have its own design specs. Since I defined the abstractions ID's in a hierarchial structure, I can identify the ids in each thread uniquely using this heierarchial structure. Then I can encode messages between threads and create traces that show the communication between processs in multiple threads and observe traces in the design that span multiple threads.
+
+This is similar to the distributed traces that are observed and I think its simpler place to start, so I will start here. This will give me a chance to design a multi threaded application and instrument.

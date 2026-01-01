@@ -1,0 +1,563 @@
+{
+    "description": "Metadata for abstractions in multi-threaded library manager.",
+    "format": "<filename>-[Repeat][<abstraction>-<step>]",
+    "abstractions": {
+        "library_manager-0": {
+            "intent": "Global path to initialize the book manager.",
+            "name": "global",
+            "type": "global",
+            "start": true
+        },
+        "library_manager-0-1": {
+            "intent": "Import the queue library."
+        },
+        "library_manager-0-2": {
+            "intent": "Import the sys library."
+        },
+        "library_manager-0-3": {
+            "intent": "Import the BookShelf thread."
+        },
+        "library_manager-0-4": {
+            "intent": "Check if we are in main entry to program.",
+            "type": "conditional_branch"
+        },
+        "library_manager-0-4-1": {
+            "intent": "Start the library manager.",
+            "type": "function_call",
+            "target": "library_manager-2"
+        },
+        "library_manager-1": {
+            "intent": "Accept the book and return the name and genre.",
+            "type": "function",
+            "name": "Accept Book Information",
+            "source": [
+                "book_shelf_thread-5-3-1"
+            ]
+        },
+        "library_manager-1-1": {
+            "intent": "Display request for book information."
+        },
+        "library_manager-1-2": {
+            "intent": "Prompted user and accepted book name \"<name>\".",
+            "variables": [
+                {
+                    "name": "name",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "name",
+                    "placeholder":"<name>",
+                    "scope": "local"
+                }
+            ],
+            "constraint": [
+                {
+                    "id": "library_manager-1-2+1",
+                    "name": "name",
+                    "constraint_layer": "design_constraint",
+                    "scope": "local",
+                    "type":"minLength",
+                    "value": 1,
+                    "description": "Failed semantic contract to only accept books with a name.",
+                    "failures": ["book_shelf_thread-3-1-3"]
+                }
+            ]
+        },
+        "library_manager-1-3": {
+            "intent": "Prompted user and accepted genre \"<genre>\".",
+            "variables": [
+                {
+                    "name": "genre",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "genre",
+                    "placeholder":"<genre>",
+                    "scope": "local"
+                }
+            ]
+        },
+        "library_manager-1-4": {
+            "intent": "Accepted a book with name <name> with genre <genre>.",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
+        },
+        "library_manager-1-5": {
+            "intent": "Return the book details."
+        },
+        "library_manager-2": {
+            "intent": "Start the library manager.",
+            "type": "function",
+            "name": "Library Manager",
+            "source": [
+                "library_manager-0-4-1"
+            ]
+        },
+        "library_manager-2-1": {
+            "intent": "Created a queue to communicate with bookshelf thread.",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-2": {
+            "intent": "Start the bookshelf thread.",
+            "type": "function_call"
+        },
+        "library_manager-2-3": {
+            "intent": "Create a basket to store the books.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4": {
+            "intent": "Enter the main menu.",
+            "type": "while"
+        },
+        "library_manager-2-4-1": {
+            "intent": "Get the user selection.",
+            "variables": [
+                {
+                    "name": "response",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-2": {
+            "intent": "Check if the user chose to add a book."
+        },
+        "library_manager-2-4-2-1": {
+            "intent": "Accept a book",
+            "type": "function_call",
+            "variables": [
+                {
+                    "name": "book_details",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-2-2": {
+            "intent": "Add book named <name> with genre <genre> to basket.",
+            "intent_validation": [
+                {
+                    "type": "data_exists",
+                    "source_var": "book_details",
+                    "target_var": "basket",
+                    "position": "end",
+                    "description": "Failed semantic contract to place book in basket."
+                }
+            ],
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book_details",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book_details",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
+        },
+        "library_manager-2-4-3": {
+            "intent": "Check if the user chose to place a book on the shelf."
+        },
+        "library_manager-2-4-3-1": {
+            "intent": "Send basket with <num_books> books to the book shelf thread.",
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
+        },
+        "library_manager-2-4-3-2": {
+            "intent": "Clear the basket after sending it the bookshelf thread.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-4": {
+            "intent": "Check if the user chose to place a display the bookshelf and basket."
+        },
+        "library_manager-2-4-4-1": {
+            "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
+        },
+        "library_manager-2-4-5": {
+            "intent": "The user chose to quit."
+        },
+        "library_manager-2-4-5-1": {
+            "intent": "Send task to tell bookshelf thread to terminate.",
+            "target": "book_shelf_thread-4-1-1-1",
+            "variables": [
+                {
+                    "name": "message_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "library_manager-2-4-5-2": {
+            "intent": "Exit menu and terminate program."
+        },
+        "book_shelf_thread-0": {
+            "intent": "Global path for the bookshelf thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "book_shelf_thread-0-1": {
+            "intent": "Import the threading library."
+        },
+        "book_shelf_thread-0-2": {
+            "intent": "Import the queue ibrary."
+        },
+        "book_shelf_thread-0-3": {
+            "intent": "Define the BookShelfThread class that runs in its own thread."
+        },
+        "book_shelf_thread-1": {
+            "intent": "Initialize the BookShelfThread with an empty bookshelf and a queue, then start the thread.",
+            "type": "function",
+            "name": "Initialize BookShelfThread",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-1-1": {
+            "intent": "Initialize the base Thread class with daemon mode disabled."
+        },
+        "book_shelf_thread-1-2": {
+            "intent": "Create an empty bookshelf.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-1-3": {
+            "intent": "Save the queue that will be used to communicate with main thread.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-1-4": {
+            "intent": "Start the book shelf manager thread.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-2": {
+            "intent": "Log that the bookshelf thread is terminating when the object is destroyed.",
+            "type": "function",
+            "name": "Terminate BookShelfThread",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-2-1": {
+            "intent": "Print a termination message for the bookshelf thread."
+        },
+        "book_shelf_thread-3": {
+            "intent": "Place all books from the basket onto the bookshelf grouped by the first letter of the book name.",
+            "type": "function",
+            "name": "Place Books On Shelf From Basket",
+            "source": [
+                "library_manager-2-4-3-1"
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-3-1": {
+            "intent": "There are <num_books> books left in the basket.",
+            "type": "while",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "basket",
+                    "placeholder":"<num_books>",
+                    "scope": "local",
+                    "key": "length"
+                }
+            ]
+        },
+        "book_shelf_thread-3-1-1": {
+            "intent": "Got a book named \"<name>\" with genre \"<genre>\" from the basket.",
+            "variables": [
+                {
+                    "name": "basket",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "book",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "book",
+                    "placeholder":"<genre>",
+                    "scope": "local",
+                    "key": "genre"
+                }
+            ]
+        },
+        "book_shelf_thread-3-1-2": {
+            "intent": "Print confirmation that book is being processed."
+        },
+        "book_shelf_thread-3-1-3": {
+            "intent": "Read the first letter (<first_letter>) of book named \"<name>\"",
+            "variables": [
+                {
+                    "name": "firstLetter",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                },
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<first_letter>",
+                    "scope": "local"
+                }
+            ]
+        },
+        "book_shelf_thread-3-1-4": {
+            "intent": "Check whether a shelf slot already exists for this first letter.",
+            "type": "conditional_branch"
+        },
+        "book_shelf_thread-3-1-4-1": {
+            "intent": "Created a new shelf slot for books that start with letter <first_letter>.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "firstLetter",
+                    "placeholder":"<first_letter>",
+                    "scope": "local"
+                }
+            ]
+        },
+        "book_shelf_thread-3-1-5": {
+            "intent": "Added book named <name> to bookshelf.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ],
+            "placeholders": [
+                {
+                    "name": "book",
+                    "placeholder":"<name>",
+                    "scope": "local",
+                    "key": "name"
+                }
+            ]
+        },
+        "book_shelf_thread-4": {
+            "intent": "Process messages from the queue and update or display the bookshelf based on the message type.",
+            "type": "function",
+            "name": "Run Book Shelf Thread Loop",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-4-1": {
+            "intent": "Keep processing messages from the queue until main thread says to stop.",
+            "type": "while"
+        },
+        "book_shelf_thread-4-1-1": {
+            "intent": "Try reading messages from queue for 10 seconds.",
+            "type": "try"
+        },
+        "book_shelf_thread-4-1-1-1": {
+            "intent": "Retrieve the next message from the queue with a timeout.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-4-1-2": {
+            "intent": "No messages were received for 10 seconds.",
+            "type": "except"
+        },
+        "book_shelf_thread-4-1-2-1": {
+            "intent": "There were no messages, so try again."
+        },
+        "book_shelf_thread-4-1-3": {
+            "intent": "Check if the message requests to add books from basket onto bookshelf.",
+            "type": "conditional_branch"
+        },
+        "book_shelf_thread-4-1-3-1": {
+            "intent": "Print new line for formatting"
+        },
+        "book_shelf_thread-4-1-3-2": {
+            "intent": "Place books from the basket onto the shelf according to the message.",
+            "type": "function_call",
+            "target": "book_shelf_thread-3",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "book_shelf_thread-4-1-4": {
+            "intent": "Check if the message requests the current bookshelf and basket to be displayed.",
+            "type": "conditional_branch"
+        },
+        "book_shelf_thread-4-1-4-1": {
+            "intent": "Print the current state of the bookshelf."
+        },
+        "book_shelf_thread-4-1-4-2": {
+            "intent": "Print the current contents of the basket."
+        },
+        "book_shelf_thread-4-1-5": {
+            "intent": "Check if the message requests this thread to quit.",
+            "type": "conditional_branch"
+        },
+        "book_shelf_thread-4-1-5-1": {
+            "intent": "Quit waiting for messages from main thread."
+        }
+    }
+}

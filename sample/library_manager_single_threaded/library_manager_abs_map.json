@@ -5,23 +5,24 @@
     "files": [
         {
             "path": "library_manager.py",
+            "threadId": 1,
             "modules": {
                 "global": {        
                     "startLine": 1,
                     "abstractions": [
                         {
-                            "id": "0-1",
+                            "id": "1-0-1",
                             "lineDelta": 0,
                             "syntax": "import sys"
                         },
                         {
-                            "id": "0-2",
-                            "lineDelta": 79,
+                            "id": "1-0-2",
+                            "lineDelta": 77,
                             "syntax": "if __name__ == \"__main__\":"
                         },
                         {
-                            "id": "0-2-1",
-                            "lineDelta": 80,
+                            "id": "1-0-2-1",
+                            "lineDelta": 78,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
@@ -30,184 +31,169 @@
                     "startLine": 3,
                     "abstractions": [
                         {
-                            "id": "1",
+                            "id": "1-1",
                             "lineDelta": 0,
                             "syntax": "def place_books_on_shelf_from_basket(book_shelf, basket):"
                         },
                         {
-                            "id": "1-1",
-                            "lineDelta": 2,
+                            "id": "1-1-1",
+                            "lineDelta": 9,
                             "syntax": "while len(basket) > 0:"
                         },
                         {
-                            "id": "1-1-1",
-                            "lineDelta": 3,
+                            "id": "1-1-1-1",
+                            "lineDelta": 10,
                             "syntax": "book = basket.pop()"
                         },
                         {
-                            "id": "1-1-2",
-                            "lineDelta": 5,
+                            "id": "1-1-1-2",
+                            "lineDelta": 11,
                             "syntax": "print(f\"Accepted book: {book['name']} (Genre: {book['genre']})\")"
                         },
                         {
-                            "id": "1-1-3",
-                            "lineDelta": 7,
+                            "id": "1-1-1-3",
+                            "lineDelta": 13,
                             "syntax": "firstLetter = book['name'][0]"
                         },
                         {
-                            "id": "1-1-4",
-                            "lineDelta": 9,
+                            "id": "1-1-1-4",
+                            "lineDelta": 15,
                             "syntax": "if (firstLetter not in book_shelf):"
                         },
                         {
-                            "id": "1-1-4-1",
-                            "lineDelta": 10,
+                            "id": "1-1-1-4-1",
+                            "lineDelta": 16,
                             "syntax": "book_shelf[firstLetter] = []"
                         },
                         {
-                            "id": "1-1-5",
-                            "lineDelta": 12,
-                            "syntax": "print(\"Slot for book already exists.\")"
-                        },
-                        {
-                            "id": "1-1-6",
-                            "lineDelta": 14,
+                            "id": "1-1-1-5",
+                            "lineDelta": 18,
                             "syntax": "book_shelf[firstLetter].append(book['name'])"
                         },
                         {
-                            "id": "1-2",
-                            "lineDelta": 16,
+                            "id": "1-1-2",
+                            "lineDelta": 20,
                             "syntax": "return book_shelf"
                         }
                     ]
                 },
                 "2": {
-                    "startLine": 21,
+                    "startLine": 25,
                     "abstractions": [
                         {
-                            "id": "2",
+                            "id": "1-2",
                             "lineDelta": 0,
                             "syntax": "def accept_book():"
                         },
                         {
-                            "id": "2-1",
-                            "lineDelta": 2,
+                            "id": "1-2-1",
+                            "lineDelta": 4,
                             "syntax": "print(\"\nEnter book details:\")"
                         },
                         {
-                            "id": "2-2",
-                            "lineDelta": 4,
+                            "id": "1-2-2",
+                            "lineDelta": 5,
                             "syntax": "name = input(\"Book name: \")"
                         },
                         {
-                            "id": "2-3",
+                            "id": "1-2-3",
                             "lineDelta": 6,
                             "syntax": "genre = input(\"Genre: \")"
                         },
                         {
-                            "id": "2-4",
-                            "lineDelta": 8,
+                            "id": "1-2-4",
+                            "lineDelta": 7,
                             "syntax": "book_details = {\"name\":name,\"genre\":genre}"
                         },
                         {
-                            "id": "2-5",
-                            "lineDelta": 10,
+                            "id": "1-2-5",
+                            "lineDelta": 8,
                             "syntax": "return book_details"
                         }
                     ]
                 },
                 "3": {
-                    "startLine": 33,
+                    "startLine": 35,
                     "abstractions": [
                         {
-                            "id": "3",
+                            "id": "1-3",
                             "lineDelta": 0,
                             "syntax": "def library_manager():"
                         },
                         {
-                            "id": "3-1",
-                            "lineDelta": 2,
+                            "id": "1-3-1",
+                            "lineDelta": 10,
                             "syntax": "book_shelf = {}"
                         },
                         {
-                            "id": "3-2",
-                            "lineDelta": 4,
+                            "id": "1-3-2",
+                            "lineDelta": 12,
                             "syntax": "basket = []"
                         },
                         {
-                            "id": "3-3",
-                            "lineDelta": 6,
+                            "id": "1-3-3",
+                            "lineDelta": 14,
                             "syntax": "while True:"
                         },
                         {
-                            "id": "3-3-1",
-                            "lineDelta": 8,
+                            "id": "1-3-3-1",
+                            "lineDelta": 16,
                             "syntax": "response = input("
                         },
                         {
-                            "id": "3-3-2",
-                            "lineDelta": 19,
+                            "id": "1-3-3-2",
+                            "lineDelta": 27,
                             "syntax": "if response == \"a\":"
                         },
                         {
-                            "id": "3-3-2-1",
-                            "lineDelta": 21,
+                            "id": "1-3-3-2-1",
+                            "lineDelta": 28,
                             "syntax": "book_details = accept_book()"
                         },
                         {
-                            "id": "3-3-2-2",
-                            "lineDelta": 23,
+                            "id": "1-3-3-2-2",
+                            "lineDelta": 29,
                             "syntax": "basket.append(book_details)"
                         },
                         {
-                            "id": "3-3-2-3",
-                            "lineDelta": 25,
-                            "syntax": "continue"
-                        },
-                        {
-                            "id": "3-3-3",
-                            "lineDelta": 27,
+                            "id": "1-3-3-3",
+                            "lineDelta": 31,
                             "syntax": "elif response == \"p\":"
                         },
                         {
-                            "id": "3-3-3-1",
-                            "lineDelta": 29,
+                            "id": "1-3-3-3-1",
+                            "lineDelta": 32,
+                            "syntax": "if (len(basket) > 5):"
+                        },
+                        {
+                            "id": "1-3-3-3-2",
+                            "lineDelta": 33,
+                            "syntax": "raise Exception(\"Basket is too heavy, I can't bring it to the shelf.\")"
+                        },
+                        {
+                            "id": "1-3-3-3-3",
+                            "lineDelta": 34,
                             "syntax": "book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)"
                         },
                         {
-                            "id": "3-3-3-2",
-                            "lineDelta": 31,
-                            "syntax": "continue"
-                        },
-                        {
-                            "id": "3-3-4",
-                            "lineDelta": 33,
+                            "id": "1-3-3-4",
+                            "lineDelta": 36,
                             "syntax": "elif response == \"d\":"
                         },
                         {
-                            "id": "3-3-4-1",
-                            "lineDelta": 35,
-                            "syntax": "print(\\nBook Shelf:\", book_shelf)"
+                            "id": "1-3-3-4-1",
+                            "lineDelta": 37,
+                            "syntax": "print(\"\\nBook Shelf:\", book_shelf)"
                         },
                         {
-                            "id": "3-3-4-2",
-                            "lineDelta": 37,
+                            "id": "1-3-3-4-2",
+                            "lineDelta": 38,
                             "syntax": "print(\"Basket:\", basket)"
                         },
                         {
-                            "id": "3-3-4-3",
-                            "lineDelta": 39,
-                            "syntax": "continue"
-                        },
-                        {
-                            "id": "3-3-5",
-                            "lineDelta": 43,
+                            "id": "1-3-3-5",
+                            "lineDelta": 41,
                             "syntax": "break"
-                        },
-                        {
-                            "id": "3-4",
-                            "lineDelta": 45,
-                            "syntax": "print(\"\nExiting library manager, goodbye.\")"
                         }
                     ]
                 }

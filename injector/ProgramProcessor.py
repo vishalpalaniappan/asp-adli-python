@@ -5,11 +5,11 @@ import uuid
 import json
 import time
 from pathlib import Path
-from injector import helper
+from injector.LogInjectorDesign import LogInjectorDesign
 from injector.FindLocalImports import findLocalImports
 from injector.LogInjector import LogInjector
 from injector.LoggerInstance.getLoggerInstance import getLoggerInstance
-from injector.LoadDesignConfiguration import getAbsMapFile, getSdgFile, getSdgMetaFile
+from injector.LoadDesignConfiguration import getDesignFile, getAbsMapFile, getSdgMetaFile
 
 class ProgramProcessor:
     '''
@@ -45,9 +45,9 @@ class ProgramProcessor:
         files = findLocalImports(self.sourceFile)
         logTypeCount = 0
         programMetadata = {}
-        sdg = getSdgFile(self.sourceFile)
         sdg_meta = getSdgMetaFile(self.sourceFile)
         abs_map = getAbsMapFile(self.sourceFile)
+        design_map = getDesignFile(self.sourceFile)
 
         # Process every file found in the program
         for currFilePath in files:
@@ -63,7 +63,11 @@ class ProgramProcessor:
 
             currAst = ast.parse(source)
             isRoot = (self.sourceFile == currFilePath)
-            injector = LogInjector(source, currAst, logTypeCount, currRelPath, isRoot, abs_map)
+
+            if abs_map and sdg_meta:
+                injector = LogInjectorDesign(source, currAst, logTypeCount, currRelPath, isRoot, abs_map, sdg_meta)
+            else:
+                injector = LogInjector(source, currAst, logTypeCount, currRelPath, isRoot, abs_map)
 
             if(injector.metadata):
                 programMetadata = injector.metadata
@@ -101,11 +105,11 @@ class ProgramProcessor:
         }
 
         # Only include design file keys if valid files were provided.
-        if (sdg):
-            header["sdg"] = sdg
-
         if (sdg_meta):
             header["sdg_meta"] = sdg_meta
+
+        if (design_map):
+            header["design_map"] = design_map
 
         try:
             header_path = os.path.join(self.outputDirectory, "header.json")
