@@ -144,10 +144,12 @@
         },
         "library_manager-2-4": {
             "intent": "Enter the main menu.",
+            "functionalId": "EnterMenu",
             "type": "while"
         },
         "library_manager-2-4-1": {
             "intent": "Get the user selection.",
+            "functionalId": "GetSelection",
             "variables": [
                 {
                     "name": "response",
@@ -157,7 +159,8 @@
             ]
         },
         "library_manager-2-4-2": {
-            "intent": "Check if the user chose to add a book."
+            "intent": "Check if the user chose to add a book.",
+            "fuctionalId": "CheckIfAddBook"
         },
         "library_manager-2-4-2-1": {
             "intent": "Accept a book",
@@ -204,7 +207,8 @@
             ]
         },
         "library_manager-2-4-3": {
-            "intent": "Check if the user chose to place a book on the shelf."
+            "intent": "Check if the user chose to place a book on the shelf.",
+            "functionalId": "CheckIfPlaceBook"
         },
         "library_manager-2-4-3-1": {
             "intent": "Prepare task to tell bookshelf thread to add books to shelf.",
@@ -248,10 +252,15 @@
             ]
         },
         "library_manager-2-4-4": {
-            "intent": "Check if the user chose to place a display the bookshelf and basket."
+            "intent": "Check if the user chose to place a display the bookshelf and basket.",
+            "functionalId": "CheckIfDisplay",
+            "targetBehaviors": [
+                "SelectDisplayAction"
+            ]
         },
         "library_manager-2-4-4-1": {
             "intent": "Prepare task to tell book shelf thread to display contents.",
+            "functionaId": "PrepareDisplayTask",
             "variables": [
                 {
                     "name": "msg",

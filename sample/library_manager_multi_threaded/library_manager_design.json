@@ -1,5 +1,27 @@
 {
     "description": "Contains the behavioral abstractions of the multi-threaded library manager.",
     "behavior": [
+        {
+            "id": "SelectMenu",
+            "intent": "Display Menu to User.",
+            "abstractions": [
+                "EnterMenu",
+                "GetSelection",
+                "CheckIfAddBook",
+                "CheckIfPlaceBook",
+                "CheckIfDisplay"
+            ]
+        },
+        {
+            "id": "SelectDisplayAction",
+            "intent": "Select action to display library conents.",
+            "abstractions": [
+                "PrepareDisplayTask",
+                "SendBasketToDisplay",
+                "ReadMessage",
+                "CheckIfDisplayMsg",
+                "CheckIfQuitMsg"
+            ]
+        }
     ]
 }
