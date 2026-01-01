@@ -1,1 +1,6 @@
-{}
+{
+    "description": "Contains the behavioral abstractions of the multi-threaded library manager.",
+    "behavior": [
+
+    ]
+}
