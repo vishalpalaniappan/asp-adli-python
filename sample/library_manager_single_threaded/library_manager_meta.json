@@ -45,7 +45,7 @@
             "targetBehaviors": [
                 "SelectPlaceBookOnShelf"
             ],
-            "functionalid": "CheckingBasketForBook",
+            "functionalId": "CheckingBasketForBook",
             "variables": [
                 {
                     "name": "basket",
@@ -64,7 +64,7 @@
         },
         "1-1-1-1": {
             "intent": "Get a book from the basket",
-            "functionalid": "GettingBookFromBasket",
+            "functionalId": "GettingBookFromBasket",
             "variables": [
                 {
                     "name": "book",
@@ -80,11 +80,11 @@
         },
         "1-1-1-2": {
             "intent": "Display the book information",  
-            "functionalid": "DisplayBookInformation"
+            "functionalId": "DisplayBookInformation"
         },
         "1-1-1-3": {
             "intent": "Get first letter of book named <name> to create slot for book on shelf.",
-            "functionalid": "GettingFirstNameOfBook",
+            "functionalId": "GettingFirstNameOfBook",
             "variables": [
                 {
                     "name": "firstLetter",
@@ -111,7 +111,7 @@
                     "scope": "local"
                 }
             ],
-            "functionalid": "CheckingIfShelfHasSlot",
+            "functionalId": "CheckingIfShelfHasSlot",
             "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectCreateSlotForBook"
@@ -119,7 +119,7 @@
         },
         "1-1-1-4-1": {
             "intent": "Create slot for book on shelf using first letter <firstLetter>.",
-            "functionalid": "CreateSlotForBookOnShelf",
+            "functionalId": "CreateSlotForBookOnShelf",
             "variables": [
                 {
                     "name": "book_shelf",
@@ -137,7 +137,7 @@
         },
         "1-1-1-5": {
             "intent": "Place book named <name> on shelf.",
-            "functionalid": "AddingBookToShelf",
+            "functionalId": "AddingBookToShelf",
             "variables": [
                 {
                     "name": "book_shelf",
@@ -156,7 +156,7 @@
         },
         "1-1-2": {
             "intent": "Return updated bookshelf.",
-            "functionalid": "ReturnBookShelf"
+            "functionalId": "ReturnBookShelf"
         },
         "1-2": {
             "intent": "Accept the book and return the name and genre.",
@@ -166,11 +166,11 @@
         },
         "1-2-1": {
             "intent": "Display request for book information.",
-            "functionalid": "DisplayRequest"
+            "functionalId": "DisplayRequest"
         },
         "1-2-2": {
             "intent": "Prompt and accept book name.",
-            "functionalid": "AcceptBookName",
+            "functionalId": "AcceptBookName",
             "variables": [
                 {
                     "name": "name",
@@ -195,7 +195,7 @@
         },
         "1-2-3": {
             "intent": "Prompt and accept for book genre.",
-            "functionalid": "AcceptBookGenre",
+            "functionalId": "AcceptBookGenre",
             "variables": [
                 {
                     "name": "genre",
@@ -206,7 +206,7 @@
         },
         "1-2-4": {
             "intent": "Create a book with name <name> with genre <genre>.",
-            "functionalid": "AssembleBookDetails",
+            "functionalId": "AssembleBookDetails",
             "variables": [
                 {
                     "name": "book_details",
@@ -267,7 +267,7 @@
         },
         "1-2-5": {
             "intent": "Return the book details.",
-            "functionalid": "ReturnBookDetails"
+            "functionalId": "ReturnBookDetails"
         },
         "1-3": {
             "intent": "Start the library manager.",
@@ -277,7 +277,7 @@
         },
         "1-3-1": {
             "intent": "Create the bookshelf.",
-            "functionalid": "CreateTheBookShelf",
+            "functionalId": "CreateTheBookShelf",
             "variables": [
                 {
                     "name": "book_shelf",
@@ -303,7 +303,7 @@
         },
         "1-3-2": {
             "intent": "Create the basket.",
-            "functionalid": "CreateTheBasket",
+            "functionalId": "CreateTheBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -329,12 +329,12 @@
         },
         "1-3-3": {
             "intent": "Display Menu",
-            "functionalid": "ChooseToDisplayMenu",
+            "functionalId": "ChooseToDisplayMenu",
             "type": "while"
         },
         "1-3-3-1": {
             "intent": "Prompt user for choice.",
-            "functionalid": "PromptUserForChoice",
+            "functionalId": "PromptUserForChoice",
             "variables": [
                 {
                     "name": "response",
@@ -345,12 +345,12 @@
         },
         "1-3-3-2": {
             "intent": "Check if the user chose to add a book.",
-            "functionalid": "CheckIfUserChoseAddBook",
+            "functionalId": "CheckIfUserChoseAddBook",
             "type": "conditional_branch"
         },
         "1-3-3-2-1": {
             "intent": "Accept a book",
-            "functionalid": "AcceptBookInformation",
+            "functionalId": "AcceptBookInformation",
             "type": "function_call",
             "target": "2",
             "variables": [
@@ -371,7 +371,7 @@
                     "position": "end"
                 }
             ],
-            "functionalid": "AddBookToBasket",
+            "functionalId": "AddBookToBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -396,13 +396,13 @@
         },
         "1-3-3-3": {
             "intent": "Check if the user chose to place books on the shelf.",
-            "functionalid": "CheckIfUserChosePlaceBook",
+            "functionalId": "CheckIfUserChosePlaceBook",
             "type": "conditional_branch"
         },
         "1-3-3-3-1": {
             "intent": "Check if there are more than 5 books in the basket.",
             "type": "conditional_branch",
-            "functionalid": "CheckIfTooManyBooks",
+            "functionalId": "CheckIfTooManyBooks",
             "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectFailIfTooManyBooks"
@@ -410,11 +410,11 @@
         },
         "1-3-3-3-2": {
             "intent": "Raise an exception if the basket is too heavy.",
-            "functionalid": "FailIfTooManyBooks"
+            "functionalId": "FailIfTooManyBooks"
         },
         "1-3-3-3-3": {
             "intent": "Place the books in the basket on the shelf.",
-            "functionalid": "PlaceBooksOnShelf",
+            "functionalId": "PlaceBooksOnShelf",
             "type": "function_call",
             "target": "1",
             "variables": [
@@ -432,20 +432,20 @@
         },
         "1-3-3-4": {
             "intent": "Check if the user chose to display the basket and shelf.",
-            "functionalid": "CheckIfUserChoseDisplayLibrary",
+            "functionalId": "CheckIfUserChoseDisplayLibrary",
             "type": "conditional_branch"
         },
         "1-3-3-4-1": {
             "intent": "Display the shelf",
-            "functionalid": "DisplayBookShelf"
+            "functionalId": "DisplayBookShelf"
         },
         "1-3-3-4-2": {
             "intent": "Display the basket",
-            "functionalid": "DisplayBasket"
+            "functionalId": "DisplayBasket"
         },
         "1-3-3-5": {
             "intent": "Exit the menu.",
-            "functionalid": "ExitTheMenu",
+            "functionalId": "ExitTheMenu",
             "type": "conditional_branch"
         }
     }
