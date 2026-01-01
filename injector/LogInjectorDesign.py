@@ -168,7 +168,7 @@ class LogInjectorDesign(ast.NodeTransformer):
         '''
             Visit AugAssign statement and extract variables from the target node.
         '''
-        logs = self.generateLtLogStmts(node, "child")
+        logs = self.generateLtLogStmts(node, False, "child")
         meta_tag = getTag(self.logTypeCount, "next")
 
         if node.value:
