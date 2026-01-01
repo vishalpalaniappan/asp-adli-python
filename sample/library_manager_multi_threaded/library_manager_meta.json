@@ -544,6 +544,7 @@
         },
         "book_shelf_thread-4-1-1-1": {
             "intent": "Retrieve the next message from the queue with a timeout.",
+            "input": true,
             "variables": [
                 {
                     "name": "msg",
