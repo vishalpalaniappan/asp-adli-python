@@ -254,6 +254,7 @@
         "library_manager-2-4-4": {
             "intent": "Check if the user chose to place a display the bookshelf and basket.",
             "functionalId": "CheckIfDisplay",
+            "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectDisplayAction"
             ]
