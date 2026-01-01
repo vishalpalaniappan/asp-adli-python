@@ -219,6 +219,7 @@
         },
         "library_manager-2-4-3-2": {
             "intent": "Send basket with <num_books> books to the book shelf thread.",
+            "output": true,
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
@@ -262,6 +263,7 @@
         },
         "library_manager-2-4-4-2": {
             "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
+            "output": true,
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
@@ -295,6 +297,7 @@
         },
         "library_manager-2-4-5-2": {
             "intent": "Send task to tell bookshelf thread to terminate.",
+            "output": true,
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
