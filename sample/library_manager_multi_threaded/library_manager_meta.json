@@ -39,6 +39,7 @@
         },
         "library_manager-1-2": {
             "intent": "Prompted user and accepted book name \"<name>\".",
+            "functionalid": "AcceptBookName",
             "variables": [
                 {
                     "name": "name",
@@ -68,6 +69,7 @@
         },
         "library_manager-1-3": {
             "intent": "Prompted user and accepted genre \"<genre>\".",
+            "functionalid": "AcceptBookGenre",
             "variables": [
                 {
                     "name": "genre",
@@ -85,6 +87,7 @@
         },
         "library_manager-1-4": {
             "intent": "Accepted a book with name <name> with genre <genre>.",
+            "functionalid": "AssembleBookDetails",
             "variables": [
                 {
                     "name": "book_details",
@@ -108,7 +111,8 @@
             ]
         },
         "library_manager-1-5": {
-            "intent": "Return the book details."
+            "intent": "Return the book details.",
+            "functionalid": "ReturnBookDetails"
         },
         "library_manager-2": {
             "intent": "Start the library manager.",
@@ -120,6 +124,7 @@
         },
         "library_manager-2-1": {
             "intent": "Created a queue to communicate with bookshelf thread.",
+            "functionalid": "CreateTheQueue",
             "variables": [
                 {
                     "name": "message_queue",
@@ -130,10 +135,12 @@
         },
         "library_manager-2-2": {
             "intent": "Start the bookshelf thread.",
+            "functionalid": "StartBookShelfThread",
             "type": "function_call"
         },
         "library_manager-2-3": {
             "intent": "Create a basket to store the books.",
+            "functionalid": "CreateTheBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -144,10 +151,12 @@
         },
         "library_manager-2-4": {
             "intent": "Enter the main menu.",
+            "functionalid": "ChooseToDisplayMenu",
             "type": "while"
         },
         "library_manager-2-4-1": {
             "intent": "Get the user selection.",
+            "functionalid": "PromptUserForChoice",
             "variables": [
                 {
                     "name": "response",
@@ -157,11 +166,15 @@
             ]
         },
         "library_manager-2-4-2": {
-            "intent": "Check if the user chose to add a book."
+            "intent": "Check if the user chose to add a book.",
+            "functionalid": "CheckIfUserChoseAddBook",
+            "type": "conditional_branch"
         },
         "library_manager-2-4-2-1": {
             "intent": "Accept a book",
+            "functionalid": "AcceptBookInformation",
             "type": "function_call",
+            "target": "library_manager-1",
             "variables": [
                 {
                     "name": "book_details",
@@ -172,6 +185,7 @@
         },
         "library_manager-2-4-2-2": {
             "intent": "Add book named <name> with genre <genre> to basket.",
+            "functionalid": "AddBookToBasket",
             "intent_validation": [
                 {
                     "type": "data_exists",
@@ -204,10 +218,13 @@
             ]
         },
         "library_manager-2-4-3": {
-            "intent": "Check if the user chose to place a book on the shelf."
+            "intent": "Check if the user chose to place a book on the shelf.",
+            "functionalid": "CheckIfUserChosePlaceBook",
+            "type": "conditional_branch"
         },
         "library_manager-2-4-3-1": {
             "intent": "Send basket with <num_books> books to the book shelf thread.",
+            "functionalid": "SendTaskToPlaceBooksOnSHelf",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
@@ -227,6 +244,7 @@
         },
         "library_manager-2-4-3-2": {
             "intent": "Clear the basket after sending it the bookshelf thread.",
+            "functionalid": "ClearBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -236,11 +254,14 @@
             ]
         },
         "library_manager-2-4-4": {
-            "intent": "Check if the user chose to place a display the bookshelf and basket."
+            "intent": "Check if the user chose to place a display the bookshelf and basket.",
+            "functionalid": "CheckIfUserChoseDisplayLibrary",
+            "type": "conditional_branch"
         },
         "library_manager-2-4-4-1": {
             "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
             "target": "book_shelf_thread-4-1-1-1",
+            "functionalid": "SendTaskToDisplayLibrary",
             "variables": [
                 {
                     "name": "message_queue",
@@ -258,10 +279,13 @@
             ]
         },
         "library_manager-2-4-5": {
-            "intent": "The user chose to quit."
+            "intent": "The user chose to quit.",
+            "functionalid": "CheckIfUserChoseToQuit",
+            "type": "conditional_branch"
         },
         "library_manager-2-4-5-1": {
             "intent": "Send task to tell bookshelf thread to terminate.",
+            "functionalid": "SendTaskTerminateBookshelf",
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
                 {
@@ -272,7 +296,8 @@
             ]
         },
         "library_manager-2-4-5-2": {
-            "intent": "Exit menu and terminate program."
+            "intent": "Exit menu and terminate program.",
+            "functionalid": "ExitMenu"
         },
         "book_shelf_thread-0": {
             "intent": "Global path for the bookshelf thread module.",
@@ -375,6 +400,7 @@
         },
         "book_shelf_thread-3-1": {
             "intent": "There are <num_books> books left in the basket.",
+            "functionaId": "CheckingBasketForBook",
             "type": "while",
             "variables": [
                 {
@@ -394,6 +420,7 @@
         },
         "book_shelf_thread-3-1-1": {
             "intent": "Got a book named \"<name>\" with genre \"<genre>\" from the basket.",
+            "functionaId": "GettingBookFromBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -422,10 +449,12 @@
             ]
         },
         "book_shelf_thread-3-1-2": {
-            "intent": "Print confirmation that book is being processed."
+            "intent": "Print confirmation that book is being processed.",
+            "functionaId": "DisplayBookInformation"
         },
         "book_shelf_thread-3-1-3": {
             "intent": "Read the first letter (<first_letter>) of book named \"<name>\"",
+            "functionaId": "GettingFirstNameOfBook",
             "variables": [
                 {
                     "name": "firstLetter",
@@ -449,6 +478,7 @@
         },
         "book_shelf_thread-3-1-4": {
             "intent": "Check whether a shelf slot already exists for this first letter.",
+            "functionaId": "CheckingIfShelfHasSlot",
             "type": "conditional_branch"
         },
         "book_shelf_thread-3-1-4-1": {
@@ -470,6 +500,7 @@
         },
         "book_shelf_thread-3-1-5": {
             "intent": "Added book named <name> to bookshelf.",
+            "functionaId": "AddingBookToShelf",
             "variables": [
                 {
                     "name": "self",
@@ -508,6 +539,7 @@
         },
         "book_shelf_thread-4-1-1-1": {
             "intent": "Retrieve the next message from the queue with a timeout.",
+            "functionId": "ReceiveTaskFromMainThread",
             "variables": [
                 {
                     "name": "msg",
@@ -534,6 +566,7 @@
             "intent": "Place books from the basket onto the shelf according to the message.",
             "type": "function_call",
             "target": "book_shelf_thread-3",
+            "functionaId": "PlaceBooksOnShelf",
             "variables": [
                 {
                     "name": "self",
