@@ -160,7 +160,7 @@
         },
         "library_manager-2-4-2": {
             "intent": "Check if the user chose to add a book.",
-            "fuctionalId": "CheckIfAddBook"
+            "functionalId": "CheckIfAddBook"
         },
         "library_manager-2-4-2-1": {
             "intent": "Accept a book",
