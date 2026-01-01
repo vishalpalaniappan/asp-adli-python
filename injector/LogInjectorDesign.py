@@ -124,7 +124,7 @@ class LogInjectorDesign(ast.NodeTransformer):
 
         return {
             "logStmt": getLtLogStmt(self.logTypeCount),
-            "varLogs": outputLogs + varLogs
+            "varLogs": varLogs + outputLogs
         }
 
     def processFunctionNode(self, node, isAsync):
