@@ -13,6 +13,41 @@
             ]
         },
         {
+            "id": "SelectMsg",
+            "intent": "Select the message in the thread.",
+            "abstractions": [
+                "ReadMessage",
+                "CheckIfPlaceBooksMsg",
+                "CheckIfDisplayMsg",
+                "CheckIfQuitMsg"
+            ]
+        },
+        {
+            "id": "SelectDisplayAction",
+            "intent": "Select action to display library conents.",
+            "abstractions": [
+                "PrepareDisplayTask",
+                "SendBasketToDisplay"
+            ]
+        },
+        {
+            "id": "SelectPlaceBookAction",
+            "intent": "Select action to place contents from basket onto shelf.",
+            "abstractions": [
+                "PreparePlaceTask",
+                "SendBasketToPlaceOnShelf",
+                "ClearBasketAfterPlacingContentsOnShelf"
+            ]
+        },
+        {
+            "id": "SelectPlaceBookMsg",
+            "intent": "Select msg to place books on shelf.",
+            "abstractions": [
+                "PrintFormattingLine",
+                "PlaceBooksOnShelf"
+            ]
+        },
+        {
             "id": "SelectAcceptBookAction",
             "intent": "Select action to add contents to basket.",
             "abstractions": [
@@ -23,17 +58,6 @@
                 "AssembleBookDetails",
                 "ReturnBookDetails",
                 "AddBookToBasket"
-            ]
-        },
-        {
-            "id": "SelectDisplayAction",
-            "intent": "Select action to display library conents.",
-            "abstractions": [
-                "PrepareDisplayTask",
-                "SendBasketToDisplay",
-                "ReadMessage",
-                "CheckIfDisplayMsg",
-                "CheckIfQuitMsg"
             ]
         },
         {

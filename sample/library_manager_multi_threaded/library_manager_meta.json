@@ -219,10 +219,15 @@
         },
         "library_manager-2-4-3": {
             "intent": "Check if the user chose to place a book on the shelf.",
-            "functionalId": "CheckIfPlaceBook"
+            "functionalId": "CheckIfPlaceBook",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectPlaceBookAction"
+            ]
         },
         "library_manager-2-4-3-1": {
             "intent": "Prepare task to tell bookshelf thread to add books to shelf.",
+            "functionalId": "PreparePlaceTask",
             "variables": [
                 {
                     "name": "msg",
@@ -234,6 +239,11 @@
         },
         "library_manager-2-4-3-2": {
             "intent": "Send basket with <num_books> books to the book shelf thread.",
+            "functionalId": "SendBasketToPlaceOnShelf",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectMsg"
+            ],
             "output": true,
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
@@ -254,6 +264,7 @@
         },
         "library_manager-2-4-3-3": {
             "intent": "Clear the basket after sending it the bookshelf thread.",
+            "functionalId": "ClearBasketAfterPlacingContentsOnShelf",
             "variables": [
                 {
                     "name": "basket",
@@ -285,6 +296,10 @@
         "library_manager-2-4-4-2": {
             "intent": "Send basket with <num_books> books to bookshelf thread to display along with book shelf.",
             "functionalId": "SendBasketToDisplay",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectMsg"
+            ],
             "output": true,
             "target": "book_shelf_thread-4-1-1-1",
             "variables": [
@@ -585,14 +600,20 @@
         },
         "book_shelf_thread-4-1-3": {
             "intent": "Check if the message requests to add books from basket onto bookshelf.",
-            "functionalId": "CheckIfAddMsg",
-            "type": "conditional_branch"
+            "functionalId": "CheckIfPlaceBooksMsg",
+            "type": "conditional_branch",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectPlaceBookMsg"
+            ]
         },
         "book_shelf_thread-4-1-3-1": {
-            "intent": "Print new line for formatting"
+            "intent": "Print new line for formatting",
+            "functionalId": "PrintFormattingLine"
         },
         "book_shelf_thread-4-1-3-2": {
             "intent": "Place books from the basket onto the shelf according to the message.",
+            "functionalId": "PlaceBooksOnShelf",
             "type": "function_call",
             "target": "book_shelf_thread-3",
             "variables": [
