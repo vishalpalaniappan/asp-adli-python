@@ -7,9 +7,22 @@
             "abstractions": [
                 "EnterMenu",
                 "GetSelection",
-                "CheckIfAddBook",
+                "CheckIfAcceptBook",
                 "CheckIfPlaceBook",
                 "CheckIfDisplay"
+            ]
+        },
+        {
+            "id": "SelectAcceptBookAction",
+            "intent": "Select action to add contents to basket.",
+            "abstractions": [
+                "AcceptBookInformation",
+                "DisplayRequest",
+                "AcceptBookName",
+                "AcceptBookGenre",
+                "AssembleBookDetails",
+                "ReturnBookDetails",
+                "AddBookToBasket"
             ]
         },
         {
@@ -21,6 +34,14 @@
                 "ReadMessage",
                 "CheckIfDisplayMsg",
                 "CheckIfQuitMsg"
+            ]
+        },
+        {
+            "id": "SelectDisplayLibrary",
+            "intent": "Display Library.",
+            "abstractions": [
+                "DisplayBookShelf",
+                "DisplayBasket"
             ]
         }
     ]
