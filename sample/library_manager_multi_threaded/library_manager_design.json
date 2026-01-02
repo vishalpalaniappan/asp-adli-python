@@ -3,7 +3,7 @@
     "behavior": [
         {
             "id": "SelectMenu",
-            "intent": "Display Menu to User.",
+            "intent": "Get menu selection from user.",
             "abstractions": [
                 "EnterMenu",
                 "GetSelection",
