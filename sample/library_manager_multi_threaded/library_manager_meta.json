@@ -449,6 +449,10 @@
         "book_shelf_thread-3-1": {
             "intent": "There are <num_books> books left in the basket.",
             "functionalId": "CheckingBasketForBook",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectPlaceBookOnShelf"
+            ],
             "type": "while",
             "variables": [
                 {
@@ -468,6 +472,7 @@
         },
         "book_shelf_thread-3-1-1": {
             "intent": "Got a book named \"<name>\" with genre \"<genre>\" from the basket.",
+            "functionalId": "GettingBookFromBasket",
             "variables": [
                 {
                     "name": "basket",
@@ -496,10 +501,12 @@
             ]
         },
         "book_shelf_thread-3-1-2": {
-            "intent": "Print confirmation that book is being processed."
+            "intent": "Print confirmation that book is being processed.",
+            "functionalId": "DisplayBookInformation"
         },
         "book_shelf_thread-3-1-3": {
             "intent": "Read the first letter (<first_letter>) of book named \"<name>\"",
+            "functionalId": "GettingFirstNameOfBook",
             "variables": [
                 {
                     "name": "firstLetter",
@@ -523,10 +530,16 @@
         },
         "book_shelf_thread-3-1-4": {
             "intent": "Check whether a shelf slot already exists for this first letter.",
+            "functionalId": "CheckingIfShelfHasSlot",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectCreateSlotForBook"
+            ],
             "type": "conditional_branch"
         },
         "book_shelf_thread-3-1-4-1": {
             "intent": "Created a new shelf slot for books that start with letter <first_letter>.",
+            "functionalId": "CreateSlotForBookOnShelf",
             "variables": [
                 {
                     "name": "self",
@@ -544,6 +557,7 @@
         },
         "book_shelf_thread-3-1-5": {
             "intent": "Added book named <name> to bookshelf.",
+            "functionalId": "AddingBookToShelf",
             "variables": [
                 {
                     "name": "self",

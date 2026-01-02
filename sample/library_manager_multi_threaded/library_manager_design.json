@@ -50,6 +50,24 @@
             ]
         },
         {
+            "id": "SelectPlaceBookOnShelf",
+            "intent": "Select msg to place book on shelf.",
+            "abstractions": [
+                "GettingBookFromBasket",
+                "DisplayBookInformation",
+                "GettingFirstNameOfBook",
+                "CheckingIfShelfHasSlot",
+                "AddingBookToShelf"
+            ]
+        },
+        {
+            "id": "SelectCreateSlotForBook",
+            "intent":  "Create slot for the letter <letter> on the shelf. ",
+            "abstractions": [
+                "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
             "id": "SelectAcceptBookAction",
             "intent": "Select action to add contents to basket.",
             "abstractions": [
