@@ -45,7 +45,8 @@
             "intent": "Select msg to place books on shelf.",
             "abstractions": [
                 "PrintFormattingLine",
-                "PlaceBooksOnShelf"
+                "PlaceBooksOnShelf",
+                "CheckingBasketForBook"
             ]
         },
         {

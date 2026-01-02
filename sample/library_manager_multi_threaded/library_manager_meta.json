@@ -448,6 +448,7 @@
         },
         "book_shelf_thread-3-1": {
             "intent": "There are <num_books> books left in the basket.",
+            "functionalId": "CheckingBasketForBook",
             "type": "while",
             "variables": [
                 {
