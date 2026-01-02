@@ -242,7 +242,7 @@
             "functionalId": "SendBasketToPlaceOnShelf",
             "behavioral_role": "selector",
             "targetBehaviors": [
-                "SelectMsg"
+                "SelectMsgBookShelf"
             ],
             "output": true,
             "target": "book_shelf_thread-4-1-1-1",
@@ -298,7 +298,7 @@
             "functionalId": "SendBasketToDisplay",
             "behavioral_role": "selector",
             "targetBehaviors": [
-                "SelectMsg"
+                "SelectMsgBookShelf"
             ],
             "output": true,
             "target": "book_shelf_thread-4-1-1-1",

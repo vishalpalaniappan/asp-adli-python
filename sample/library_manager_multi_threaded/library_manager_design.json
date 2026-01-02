@@ -13,8 +13,9 @@
             ]
         },
         {
-            "id": "SelectMsg",
-            "intent": "Select the message in the thread.",
+            "id": "SelectMsgBookShelf",
+            "type": "atomic",
+            "intent": "Select the message in the bookshelf thread.",
             "abstractions": [
                 "ReadMessage",
                 "CheckIfPlaceBooksMsg",
