@@ -42,7 +42,7 @@
         },
         {
             "id": "SelectPlaceBookMsg",
-            "intent": "Select msg to place books on shelf.",
+            "intent": "Place books from basket on shelf.",
             "abstractions": [
                 "PrintFormattingLine",
                 "PlaceBooksOnShelf",
@@ -51,7 +51,7 @@
         },
         {
             "id": "SelectPlaceBookOnShelf",
-            "intent": "Select msg to place book on shelf.",
+            "intent": "Place book on shelf.",
             "abstractions": [
                 "GettingBookFromBasket",
                 "DisplayBookInformation",
@@ -62,7 +62,7 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "intent":  "Create slot for the letter <letter> on the shelf. ",
+            "intent": "Create slot for the letter <letter> on the shelf. ",
             "abstractions": [
                 "CreateSlotForBookOnShelf"
             ]
@@ -82,7 +82,7 @@
         },
         {
             "id": "SelectDisplayLibrary",
-            "intent": "Display Library.",
+            "intent": "Display contents of library.",
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
