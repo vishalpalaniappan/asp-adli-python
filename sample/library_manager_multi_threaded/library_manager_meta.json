@@ -598,7 +598,6 @@
             "intent": "Retrieve the next message from the queue with a timeout.",
             "functionalId": "ReadMessage",
             "input": true,
-            "concurrent": true,
             "variables": [
                 {
                     "name": "msg",
