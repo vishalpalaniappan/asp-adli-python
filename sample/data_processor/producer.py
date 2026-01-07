@@ -4,7 +4,7 @@ import time
 from consumer import ConsumerThread
 from worker import WorkerThread
 
-def ingestor():
+def producer():
 
     consumer_queue = queue.Queue()
     ConsumerThread(consumer_queue)
@@ -25,4 +25,4 @@ def ingestor():
         time.sleep(1)
 
 if "__main__" == __name__:
-    sys.exit(ingestor())
+    sys.exit(producer())
