@@ -17,9 +17,8 @@ def ingestor():
     WorkerThread(2, message_queue_b, consumer_queue)
     WorkerThread(3, message_queue_c, consumer_queue)
 
-    while True:
-        print("\nEnter Job id:")        
-        data = input("ID (ex: 1,5,4,3,9): ")
+    while True:    
+        data = input("\nEnter any string:")
         message_queue_a.put(data)
         message_queue_b.put(data)
         message_queue_c.put(data)
