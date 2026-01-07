@@ -1,0 +1,132 @@
+{
+    "file": "Multi-Threaded Data Processor",
+    "version": "0.0.0",
+    "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
+    "files": [
+        {
+            "path": "producer.py",
+            "modules": {
+                "producer-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "producer-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "producer-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import sys"
+                        },
+                        {
+                            "id": "producer-0-3",
+                            "lineDelta": 2,
+                            "syntax": "import time"
+                        },
+                        {
+                            "id": "producer-0-4",
+                            "lineDelta": 3,
+                            "syntax": "from consumer import ConsumerThread"
+                        },
+                        {
+                            "id": "producer-0-5",
+                            "lineDelta": 4,
+                            "syntax": "from worker import WorkerThread"
+                        },
+                        {
+                            "id": "producer-0-6",
+                            "lineDelta": 25,
+                            "syntax": "if \"__main__\" == __name__:"
+                        },
+                        {
+                            "id": "library_manager-0-6-1",
+                            "lineDelta": 26,
+                            "syntax": "sys.exit(library_manager())"
+                        }
+                    ]
+                },
+                "producer-1": {
+                    "startLine": 7,
+                    "abstractions": [
+                        {
+                            "id": "producer-1",
+                            "lineDelta": 0,
+                            "syntax": "def producer():"
+                        },
+                        {
+                            "id": "producer-1-1",
+                            "lineDelta": 1,
+                            "syntax": "consumer_queue = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-2",
+                            "lineDelta": 2,
+                            "syntax": "ConsumerThread(consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-3",
+                            "lineDelta": 4,
+                            "syntax": "message_queue_a = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-4",
+                            "lineDelta": 5,
+                            "syntax": "message_queue_b = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-5",
+                            "lineDelta": 6,
+                            "syntax": "message_queue_c = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-6",
+                            "lineDelta": 8,
+                            "syntax": "WorkerThread(1, message_queue_a, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-7",
+                            "lineDelta": 9,
+                            "syntax": "WorkerThread(2, message_queue_b, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-8",
+                            "lineDelta": 10,
+                            "syntax": "WorkerThread(3, message_queue_c, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-9",
+                            "lineDelta": 12,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "producer-1-9-1",
+                            "lineDelta": 13,
+                            "syntax": "data = input(\"\nEnter any string:\")"
+                        },
+                        {
+                            "id": "producer-1-9-2",
+                            "lineDelta": 14,
+                            "syntax": "message_queue_a.put(data)"
+                        },
+                        {
+                            "id": "producer-1-9-3",
+                            "lineDelta": 15,
+                            "syntax": "message_queue_b.put(data)"
+                        },
+                        {
+                            "id": "producer-1-9-4",
+                            "lineDelta": 16,
+                            "syntax": "message_queue_c.put(data)"
+                        },
+                        {
+                            "id": "producer-1-9-5",
+                            "lineDelta": 17,
+                            "syntax": "time.sleep(1)"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

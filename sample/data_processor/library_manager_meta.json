@@ -1,0 +1,81 @@
+{
+    "description": "Metadata for abstractions in multi-threaded library manager.",
+    "format": "<filename>-[Repeat][<abstraction>-<step>]",
+    "abstractions": {
+        "producer-0": {
+            "intent": "Global path to initialize the book manager.",
+            "name": "global",
+            "type": "global",
+            "start": true
+        },
+        "producer-0-1": {
+            "intent": "Import the queue library."
+        },
+        "producer-0-2": {
+            "intent": "Import the sys library."
+        },
+        "producer-0-3": {
+            "intent": "Import the time library."
+        },
+        "producer-0-4": {
+            "intent": "Import the consumer thread."
+        },
+        "producer-0-5": {
+            "intent": "Import the worker thread."
+        },
+        "library_manager-0-6": {
+            "intent": "Check if we are in main entry to program.",
+            "type": "conditional_branch"
+        },
+        "library_manager-0-6-1": {
+            "intent": "Start the producer.",
+            "type": "function_call",
+            "target": "library_manager-1"
+        },
+        "producer-1": {
+            "intent": "Define the producer module"
+        },
+        "producer-1-1": {
+            "intent": "Create the consumer queue."
+        },
+        "producer-1-2": {
+            "intent": "Initialize the consumer thread"
+        },
+        "producer-1-3": {
+            "intent": "Create queue to worker A."
+        },
+        "producer-1-4": {
+            "intent": "Create queue to worker B."
+        },
+        "producer-1-5": {
+            "intent": "Create queue to worker C."
+        },
+        "producer-1-6": {
+            "intent": "Create worker thread A."
+        },
+        "producer-1-7": {
+            "intent": "Create worker thread B."
+        },
+        "producer-1-8": {
+            "intent": "Create worker thread C."
+        },
+        "producer-1-9": {
+            "intent": "Enter the main data ingestor loop."
+        },
+        "producer-1-9-1": {
+            "intent": "Accept the data from the user."
+        },
+        "producer-1-9-2": {
+            "intent": "Send data to worker A."
+        },
+        "producer-1-9-3": {
+            "intent": "Send data to worker B."
+        },
+        "producer-1-9-4": {
+            "intent": "Send data to worker C."
+        },
+        "producer-1-9-5": {
+            "intent": "Sleep before accepting more data."
+        }
+    }
+}
