@@ -5,8 +5,8 @@ class ConsumerThread(threading.Thread):
     def __init__(self, queue):
         super().__init__(daemon=True)
         self.queue = queue
-        self.start()
         self.items = {}
+        self.start()
 
     def run(self):
         while True:
