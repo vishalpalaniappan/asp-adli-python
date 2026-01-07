@@ -36,19 +36,47 @@
             "intent": "Define the producer module"
         },
         "producer-1-1": {
-            "intent": "Create the consumer queue."
+            "intent": "Create the consumer queue.",
+            "variables": [
+                {
+                    "name": "consumer_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-2": {
             "intent": "Initialize the consumer thread"
         },
         "producer-1-3": {
-            "intent": "Create queue to worker A."
+            "intent": "Create queue to worker A.",
+            "variables": [
+                {
+                    "name": "message_queue_a",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-4": {
-            "intent": "Create queue to worker B."
+            "intent": "Create queue to worker B.",
+            "variables": [
+                {
+                    "name": "message_queue_b",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-5": {
-            "intent": "Create queue to worker C."
+            "intent": "Create queue to worker C.",
+            "variables": [
+                {
+                    "name": "message_queue_c",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-6": {
             "intent": "Create worker thread A."
@@ -63,7 +91,14 @@
             "intent": "Enter the main data ingestor loop."
         },
         "producer-1-9-1": {
-            "intent": "Accept the data from the user."
+            "intent": "Accept the data from the user.",
+            "variables": [
+                {
+                    "name": "data",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-9-2": {
             "intent": "Send data to worker A."
@@ -93,26 +128,76 @@
         },
         "worker-1": {
             "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "consumerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-1-1": {
             "intent": "Initialize the base Thread class."
         },
         "worker-1-2": {
-            "intent": "Initialize the queue."
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-1-3": {
-            "intent": "Initialize the ID."
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-1-4": {
-            "intent": "Initialize the consumer queue."
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-1-5": {
             "intent": "Start the worker."
         },
         "worker-2": {
             "intent": "Define the run worker module.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-2-1": {
             "intent": "Enter main loop to receive jobs"
@@ -121,7 +206,14 @@
             "intent": "Try to receive messages."
         },
         "worker-2-1-1-1": {
-            "intent": "Receive messages."
+            "intent": "Receive message.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "worker-2-1-2": {
             "intent": "Catch exception if no message was received"
@@ -133,7 +225,14 @@
             "intent": "Display the received message."
         },
         "worker-2-1-4": {
-            "intent": "Put the processed result in queue."
+            "intent": "Put the processed result in queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-0": {
             "intent": "Global path for the worker thread module.",
@@ -151,23 +250,63 @@
         },
         "consumer-1": {
             "intent": "Initialize the ConsumerThread",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-1-1": {
             "intent": "Initialize the base Thread class."
         },
         "consumer-1-2": {
-            "intent": "Initialize the queue."
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-1-3": {
-            "intent": "Initialize the items."
+            "intent": "Initialize the items.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-1-4": {
-            "intent": "Start the consumer thread."
+            "intent": "Start the consumer thread.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-2": {
             "intent": "Define the consumer run module.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-2-1": {
             "intent": "Enter main loop to receive jobs"
@@ -176,7 +315,14 @@
             "intent": "Try to receive messages."
         },
         "consumer-2-1-1-1": {
-            "intent": "Receive messages."
+            "intent": "Receive message.",
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-2-1-2": {
             "intent": "Catch exception if no message was received"
@@ -185,7 +331,14 @@
             "intent": "Continue receiving messages."
         },
         "consumer-2-1-3": {
-            "intent": "Increment the number of parts done for the current data."
+            "intent": "Increment the number of parts done for the current data.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "consumer-2-1-4": {
             "intent": "Check if all the parts are done"
@@ -194,7 +347,14 @@
             "intent": "Display confirmation that all parts for job are done."
         },
         "consumer-2-1-4-2": {
-            "intent": "Delete the key from the items to cleanup."
+            "intent": "Delete the key from the items to cleanup.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         }
     }
 }
