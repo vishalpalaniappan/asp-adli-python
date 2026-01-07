@@ -6,6 +6,7 @@ class ConsumerThread(threading.Thread):
         super().__init__(daemon=True)
         self.queue = queue
         self.start()
+        self.items = {}
 
     def run(self):
         while True:
@@ -14,4 +15,8 @@ class ConsumerThread(threading.Thread):
             except queue.Empty:
                 continue
 
-            print("Consumer Received message:", msg)
+            self.items[msg["data"]] = self.items.get(msg["data"], 0) + 1
+
+            if self.items[msg["data"]] == 3:
+                print("Consumer recieved the processed data from all three workers for the following data: ", msg["data"])
+                del self.items[msg["data"]]

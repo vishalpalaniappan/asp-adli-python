@@ -5,7 +5,6 @@ from consumer import ConsumerThread
 from worker import WorkerThread
 
 def producer():
-
     consumer_queue = queue.Queue()
     ConsumerThread(consumer_queue)
 
