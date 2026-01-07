@@ -127,6 +127,112 @@
                     ]
                 }
             }
+        },
+        {
+            "path": "worker.py",
+            "threadId": 2,
+            "modules": {
+                "worker-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "worker-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "worker-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "worker-0-3",
+                            "lineDelta": 3,
+                            "syntax": "class WorkerThread(threading.Thread):"
+                        }
+                    ]
+                },
+                "worker-1": {
+                    "startLine": 5,
+                    "abstractions": [
+                        {
+                            "id": "worker-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "worker-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "worker-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "worker-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "worker-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "worker-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "worker-2": {
+                    "startLine": 12,
+                    "abstractions": [
+                        {
+                            "id": "worker-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "worker-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "worker-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "worker-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "worker-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "worker-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "worker-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "print(\"Worker Received message:\", msg)"
+                        },
+                        {
+                            "id": "worker-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
         }
     ]
 }

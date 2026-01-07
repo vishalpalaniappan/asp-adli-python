@@ -76,6 +76,63 @@
         },
         "producer-1-9-5": {
             "intent": "Sleep before accepting more data."
+        },
+        "worker-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "worker-0-1": {
+            "intent": "Import the threading library."
+        },
+        "worker-0-2": {
+            "intent": "Import the queue ibrary."
+        },
+        "worker-0-3": {
+            "intent": "Define the worker class that runs in its own thread."
+        },
+        "worker-1": {
+            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "type": "function"
+        },
+        "worker-1-1": {
+            "intent": "Initialize the base Thread class."
+        },
+        "worker-1-2": {
+            "intent": "Initialize the queue."
+        },
+        "worker-1-3": {
+            "intent": "Initialize the ID."
+        },
+        "worker-1-4": {
+            "intent": "Initialize the consumer queue."
+        },
+        "worker-1-5": {
+            "intent": "Start the worker."
+        },
+        "worker-2": {
+            "intent": "Define the run worker module."
+        },
+        "worker-2-1": {
+            "intent": "Enter main loop to receive jobs"
+        },
+        "worker-2-1-1": {
+            "intent": "Try to receive messages."
+        },
+        "worker-2-1-1-1": {
+            "intent": "Receive messages."
+        },
+        "worker-2-1-2": {
+            "intent": "Catch exception if no message was received"
+        },
+        "worker-2-1-2-1": {
+            "intent": "Continue receiving messages."
+        },
+        "worker-2-1-3": {
+            "intent": "Display the received message."
+        },
+        "worker-2-1-4": {
+            "intent": "Put the processed result in queue."
         }
     }
 }
