@@ -1,16 +1,10 @@
 import queue
 import sys
 import time
-import sqlite3
 from consumer import ConsumerThread
 from worker import WorkerThread
 
 def ingestor():
-    conn = sqlite3.connect('jobs.db')
-
-    cursor = conn.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, item TEXT)")
-    conn.commit()
 
     consumer_queue = queue.Queue()
     ConsumerThread(consumer_queue)
