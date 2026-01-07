@@ -1,0 +1,17 @@
+{
+    "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
+    "behavior": [
+        {
+            "id": "MainSelectMenu",
+            "intent": "Get the data to process from the user.",
+            "abstractions": [
+                "EnterDataIngestorLoop",
+                "AcceptData",
+                "SendDataToWorkerA",
+                "SendDataToWorkerB",
+                "SendDataToWorkerC",
+                "SleepToThrottleIngestion"
+            ]
+        }
+    ]
+}
