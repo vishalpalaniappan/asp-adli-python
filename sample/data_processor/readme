@@ -1,7 +1,6 @@
-This folder contains a multi threaded data processor.
+This folder contains a multi-threaded data processor.
 
-
-It has an ingestor which sends jobs to three processors (workers) and a consumer that writes the completed job to file. 
-
-The ingestor adds the jobs to a SQlite database before sending it to the processors, the processors finish processing the data and update the job status in the database and then the final consumer recognizes that the job finished by reading the status in the database and then reads the results and writes them to a single file. 
-
+High level:
+- Producer accepts data, sends to three workers.
+- Worker proecss data and sends to consumer.
+- Once all workers have completed, consumer writes all three results to file.
