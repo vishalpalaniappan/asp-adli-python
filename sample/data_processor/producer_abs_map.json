@@ -40,7 +40,7 @@
                             "syntax": "if \"__main__\" == __name__:"
                         },
                         {
-                            "id": "library_manager-0-6-1",
+                            "id": "producer-0-6-1",
                             "lineDelta": 26,
                             "syntax": "sys.exit(library_manager())"
                         }

@@ -23,11 +23,11 @@
         "producer-0-5": {
             "intent": "Import the worker thread."
         },
-        "library_manager-0-6": {
+        "producer-0-6": {
             "intent": "Check if we are in main entry to program.",
             "type": "conditional_branch"
         },
-        "library_manager-0-6-1": {
+        "producer-0-6-1": {
             "intent": "Start the producer.",
             "type": "function_call",
             "target": "library_manager-1"
