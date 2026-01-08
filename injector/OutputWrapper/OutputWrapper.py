@@ -1,4 +1,6 @@
 import ast
+import uuid
+from injector.helper import getEncodedOutputStmt
 
 def isValidCall(node, callName):
     '''
@@ -14,6 +16,21 @@ def isValidCall(node, callName):
     isAttr = isinstance(node.func, ast.Attribute)
     return ((isName and node.func.id == callName) or (isAttr and node.func.attr == callName))
 
+def getVariableName():
+    '''
+        Generates a temporary variable name using the uuid module.
+    '''
+    return "asp_temp_var_" + str(uuid.uuid4()).replace("-", "")
+
+def getAssignStmt(name, value):
+    '''
+        Returns an assign statement with the provided arguments.
+    '''
+    return ast.fix_missing_locations(ast.Assign(
+        targets=[ast.Name(id=name, ctx=ast.Store)],
+        value= value
+    ))
+
 class OutputWrapper(ast.NodeTransformer):
 
     def __init__(self, node, outputMeta):
@@ -25,18 +42,30 @@ class OutputWrapper(ast.NodeTransformer):
         :param outputMeta: Instrumented output metadata.
         '''
         self.node = node
+        self.assignStmts = []
         self.outputMeta = outputMeta
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
     
     def visit_Call(self, node):
         '''
         Visit call nodes so that they can be transformed.
+
+        - Finds function calls with the specified names
+        - Assigns arguments to a temporary variable
+        - Replaces function argumnet with a temporary variable
         
         :param self: 
         :param node: Node that is being visited and transformed.
         '''
         for output in self.outputMeta:
             if isValidCall(node, output["function"]):
-                print("Found function named", output["function"])
+                tempName = getVariableName()
+                self.assignStmts.append(getAssignStmt(tempName, node.args))
+                self.assignStmts.append(getEncodedOutputStmt(tempName))
+                node.args = [ast.Name(id=tempName, ctx=ast.Load)]
+
+        for stmt in self.assignStmts:
+            print(ast.unparse(stmt))
+        print(ast.unparse(node))
 
         return node
