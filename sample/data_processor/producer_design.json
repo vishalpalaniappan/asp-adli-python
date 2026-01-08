@@ -6,10 +6,22 @@
             "intent": "Get the data to process from the user.",
             "abstractions": [
                 "EnterDataIngestorLoop",
-                "AcceptData",
+                "AcceptData"
+            ]
+        },
+        {
+            "id": "SendJobToWorker",
+            "intent": "Send jobs to workers.",
+            "abstractions": [
                 "SendDataToWorkerA",
                 "SendDataToWorkerB",
-                "SendDataToWorkerC",
+                "SendDataToWorkerC"
+            ]
+        },
+        {
+            "id": "ThrottleIngestion",
+            "intent": "Throttle the ingestion.",
+            "abstractions": [
                 "SleepToThrottleIngestion"
             ]
         },
