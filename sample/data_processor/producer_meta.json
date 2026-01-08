@@ -112,15 +112,24 @@
         },
         "producer-1-9-2": {
             "intent": "Send data to worker A.",
-            "functionalId": "SendDataToWorkerA"
+            "functionalId": "SendDataToWorkerA",
+            "target": "worker-2-1-1-1",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ]
+            
         },
         "producer-1-9-3": {
             "intent": "Send data to worker B.",
-            "functionalId": "SendDataToWorkerB"
+            "functionalId": "SendDataToWorkerB",
+            "target": "worker-2-1-1-1"
         },
         "producer-1-9-4": {
             "intent": "Send data to worker C.",
-            "functionalId": "SendDataToWorkerC"
+            "functionalId": "SendDataToWorkerC",
+            "target": "worker-2-1-1-1"
         },
         "producer-1-9-5": {
             "intent": "Sleep before accepting more data.",
@@ -223,7 +232,7 @@
         },
         "worker-2-1-1-1": {
             "intent": "Receive message.",
-            "functionalId": "ReceiveMessage",
+            "functionalId": "WorkerReceiveMessage",
             "variables": [
                 {
                     "name": "msg",
