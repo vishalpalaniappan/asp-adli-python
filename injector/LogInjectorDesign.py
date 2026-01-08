@@ -2,10 +2,6 @@ import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
 from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag
-from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
-from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
-from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
-from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
 
 class LogInjectorDesign(ast.NodeTransformer):
     def __init__(self, source, tree, logTypeCount, file, isRoot, absMap, sdg_meta):
