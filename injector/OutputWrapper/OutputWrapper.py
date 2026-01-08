@@ -42,7 +42,7 @@ class OutputWrapper(ast.NodeTransformer):
         :param outputMeta: Instrumented output metadata.
         '''
         self.node = node
-        self.assignStmts = []
+        self.metaStmts = []
         self.outputMeta = outputMeta
         self.generic_visit(ast.Module(body=[node], type_ignores=[]))
     
@@ -60,11 +60,11 @@ class OutputWrapper(ast.NodeTransformer):
         for output in self.outputMeta:
             if isValidCall(node, output["function"]):
                 tempName = getVariableName()
-                self.assignStmts.append(getAssignStmt(tempName, node.args))
-                self.assignStmts.append(getEncodedOutputStmt(tempName))
+                self.metaStmts.append(getAssignStmt(tempName, node.args))
+                self.metaStmts.append(getEncodedOutputStmt(tempName))
                 node.args = [ast.Name(id=tempName, ctx=ast.Load)]
 
-        for stmt in self.assignStmts:
+        for stmt in self.metaStmts:
             print(ast.unparse(stmt))
         print(ast.unparse(node))
 

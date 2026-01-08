@@ -72,19 +72,13 @@ class LogInjectorDesign(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
-
         absMeta = None
-        variables = []
-        outputMeta = []
+        wrapper = []
 
         # Get the abstraction metadata if available.
         if self.fileAbsMap and node.lineno in self.fileAbsMap:
             absMeta = self.fileAbsMap[node.lineno]
             meta = self.sdg_meta["abstractions"][absMeta]
-            if "variables" in meta:
-                variables = meta["variables"]
-            if "output" in meta:
-                outputMeta = meta["output"]
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -102,30 +96,32 @@ class LogInjectorDesign(ast.NodeTransformer):
         else:
             funcId = self.funcId
 
-        outputLogs = []
         varLogs = []
-        for variable in variables:
-            varInfo = {
-                "varId": absMeta + "_" + variable["name"],
-                "name": variable["name"],
-                "keys": [],
-                "syntax": variable["name"],
-                "meta": meta["intent"],
-                "logType": self.logTypeCount,
-                "funcId": funcId,
-                "isTemp": False,
-                "global": (variable["scope"] == "global")
-            }
-            varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
-            self.varMap[varInfo["varId"]] = varInfo
+        if "variables" in meta:
+            for variable in meta["variables"]:
+                varInfo = {
+                    "varId": absMeta + "_" + variable["name"],
+                    "name": variable["name"],
+                    "keys": [],
+                    "syntax": variable["name"],
+                    "meta": meta["intent"],
+                    "logType": self.logTypeCount,
+                    "funcId": funcId,
+                    "isTemp": False,
+                    "global": (variable["scope"] == "global")
+                }
+                varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
+                self.varMap[varInfo["varId"]] = varInfo
 
-        if outputMeta:
-            wrapper = OutputWrapper(node, outputMeta)
-            #outputLogs.append(getEncodedOutputStmt(variable["name"]))
+        # If the node is instrumented as an output, then wrap the data that is sent as an output.
+        wrapperStmts = []
+        if "output" in meta:
+            wrapper = OutputWrapper(node, meta["output"])
+            wrapperStmts= wrapper.metaStmts
 
         return {
-            "logStmt": getLtLogStmt(self.logTypeCount),
-            "varLogs": varLogs + outputLogs
+            "logStmt": wrapperStmts + [getLtLogStmt(self.logTypeCount)],
+            "varLogs": varLogs
         }
 
     def processFunctionNode(self, node, isAsync):
