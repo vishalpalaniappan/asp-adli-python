@@ -2,6 +2,7 @@ import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
 from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag
+from injector.OutputWrapper.OutputWrapper import OutputWrapper
 
 class LogInjectorDesign(ast.NodeTransformer):
     def __init__(self, source, tree, logTypeCount, file, isRoot, absMap, sdg_meta):
@@ -74,6 +75,7 @@ class LogInjectorDesign(ast.NodeTransformer):
 
         absMeta = None
         variables = []
+        outputMeta = []
 
         # Get the abstraction metadata if available.
         if self.fileAbsMap and node.lineno in self.fileAbsMap:
@@ -81,6 +83,8 @@ class LogInjectorDesign(ast.NodeTransformer):
             meta = self.sdg_meta["abstractions"][absMeta]
             if "variables" in meta:
                 variables = meta["variables"]
+            if "output" in meta:
+                outputMeta = meta["output"]
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -115,8 +119,9 @@ class LogInjectorDesign(ast.NodeTransformer):
             varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
             self.varMap[varInfo["varId"]] = varInfo
 
-            if "output" in variable:
-                outputLogs.append(getEncodedOutputStmt(variable["name"]))
+        if outputMeta:
+            wrapper = OutputWrapper(node, outputMeta)
+            #outputLogs.append(getEncodedOutputStmt(variable["name"]))
 
         return {
             "logStmt": getLtLogStmt(self.logTypeCount),
