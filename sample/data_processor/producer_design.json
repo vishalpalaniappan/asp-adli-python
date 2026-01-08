@@ -16,6 +16,7 @@
         {
             "id": "SelectReceiveMessageWorker",
             "intent": "Receive message in worker.",
+            "type": "atomic",
             "abstractions": [
                 "WorkerReceiveMessage",
                 "DisplayReceivedMessage",
