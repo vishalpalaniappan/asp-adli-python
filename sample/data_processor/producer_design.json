@@ -2,7 +2,7 @@
     "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
     "behavior": [
         {
-            "id": "MainSelectMenu",
+            "id": "SelectMainMenu",
             "intent": "Get the data to process from the user.",
             "abstractions": [
                 "EnterDataIngestorLoop",
@@ -11,6 +11,15 @@
                 "SendDataToWorkerB",
                 "SendDataToWorkerC",
                 "SleepToThrottleIngestion"
+            ]
+        },
+        {
+            "id": "SelectReceiveMessageWorker",
+            "intent": "Receive message in worker.",
+            "abstractions": [
+                "WorkerReceiveMessage",
+                "DisplayReceivedMessage",
+                "PutProcessedResultInQueue"
             ]
         }
     ]

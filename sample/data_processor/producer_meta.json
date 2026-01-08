@@ -114,6 +114,10 @@
             "intent": "Send data to worker A.",
             "functionalId": "SendDataToWorkerA",
             "target": "worker-2-1-1-1",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectReceiveMessageWorker"
+            ],
             "output": [
                 {
                     "function": "put"
