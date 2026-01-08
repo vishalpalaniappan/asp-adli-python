@@ -123,17 +123,34 @@
                     "function": "put"
                 }
             ]
-            
         },
         "producer-1-9-3": {
             "intent": "Send data to worker B.",
             "functionalId": "SendDataToWorkerB",
-            "target": "worker-2-1-1-1"
+            "target": "worker-2-1-1-1",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectReceiveMessageWorker"
+            ],
+            "output": [
+                {
+                    "function": "put"
+                }
+            ]
         },
         "producer-1-9-4": {
             "intent": "Send data to worker C.",
             "functionalId": "SendDataToWorkerC",
-            "target": "worker-2-1-1-1"
+            "target": "worker-2-1-1-1",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectReceiveMessageWorker"
+            ],
+            "output": [
+                {
+                    "function": "put"
+                }
+            ]
         },
         "producer-1-9-5": {
             "intent": "Sleep before accepting more data.",
@@ -228,15 +245,15 @@
         },
         "worker-2-1": {
             "intent": "Enter main loop to receive jobs",
-            "functionalId": "WorkerMainLoop"
+            "functionalId": "MainLoopWorker"
         },
         "worker-2-1-1": {
             "intent": "Try to receive messages.",
-            "functionalId": "TryToReceiveMessage"
+            "functionalId": "TryToReceiveMessageWorker"
         },
         "worker-2-1-1-1": {
             "intent": "Receive message.",
-            "functionalId": "WorkerReceiveMessage",
+            "functionalId": "ReceiveMessageWorker",
             "variables": [
                 {
                     "name": "msg",
@@ -246,23 +263,33 @@
             ]
         },
         "worker-2-1-2": {
-            "intent": "Catch exception if no message was received"
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionWorker"
         },
         "worker-2-1-2-1": {
-            "intent": "Continue receiving messages."
+            "intent": "Continue receiving messages.",
+            "functionalId": "ContinueRecvMessagesWorker"
         },
         "worker-2-1-3": {
             "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessage"
+            "functionalId": "DisplayReceivedMessageWorker"
         },
         "worker-2-1-4": {
             "intent": "Put the processed result in queue.",
-            "functionalId": "PutProcessedResultInQueue",
+            "functionalId": "PutProcessedResultInQueueWorker",
             "variables": [
                 {
                     "name": "self",
                     "scope": "local",
                     "keys": []
+                }
+            ],
+            "targetBehaviors": [
+                "SelectReceiveMessageConsumer"
+            ],
+            "output": [
+                {
+                    "function": "put"
                 }
             ]
         },
@@ -346,11 +373,11 @@
         },
         "consumer-2-1-1": {
             "intent": "Try to receive messages.",
-            "functionalId": "TryToReceieveMessage"
+            "functionalId": "TryToReceieveMessageConsumer"
         },
         "consumer-2-1-1-1": {
             "intent": "Receive message.",
-            "functionalId": "ReceieveMessage",
+            "functionalId": "ReceieveMessageConsumer",
             "variables": [
                 {
                     "name": "msg",
@@ -360,14 +387,16 @@
             ]
         },
         "consumer-2-1-2": {
-            "intent": "Catch exception if no message was received"
+            "intent": "Catch exception if no message was received",
+            "functionalId": "NoMsgExceptionConsumer"
         },
         "consumer-2-1-2-1": {
-            "intent": "Continue receiving messages."
+            "intent": "Continue receiving messages.",
+            "functionalId": "ContinueRecvMsgConsumer"
         },
         "consumer-2-1-3": {
             "intent": "Increment the number of parts done for the current data.",
-            "functionalId": "IncrementJobStatus",
+            "functionalId": "IncrementJobStatusConsumer",
             "variables": [
                 {
                     "name": "self",
@@ -378,15 +407,15 @@
         },
         "consumer-2-1-4": {
             "intent": "Check if all the parts are done",
-            "functionalId": "CheckIfJobIsDone"
+            "functionalId": "CheckIfJobIsDoneConsumer"
         },
         "consumer-2-1-4-1": {
             "intent": "Display confirmation that all parts for job are done.",
-            "functionalId": "DisplayConfirmation"
+            "functionalId": "DisplayConfirmationConsumer"
         },
         "consumer-2-1-4-2": {
             "intent": "Delete the key from the items to cleanup.",
-            "functionalId": "CleanUpJobStatus",
+            "functionalId": "CleanUpJobStatusConsumer",
             "variables": [
                 {
                     "name": "self",

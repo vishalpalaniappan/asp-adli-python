@@ -16,11 +16,59 @@
         {
             "id": "SelectReceiveMessageWorker",
             "intent": "Receive message in worker.",
-            "type": "atomic",
             "abstractions": [
-                "WorkerReceiveMessage",
-                "DisplayReceivedMessage",
-                "PutProcessedResultInQueue"
+                "MainLoopWorker",
+                "TryToReceiveMessageWorker",
+                "ReceiveMessageWorker"
+            ]
+        },
+        {
+            "id": "SelectNoMsgReceivedWorker",
+            "intent": "No message received worker.",
+            "abstractions": [
+                "CatchNoMsgExceptionWorker",
+                "ContinueRecvMessagesWorker"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgWorker",
+            "intent": "Process Received Message in Worker",
+            "abstractions": [
+                "DisplayReceivedMessageWorker",
+                "PutProcessedResultInQueueWorker"
+            ]
+        },
+        {
+            "id": "SelectReceiveMessageConsumer",
+            "intent": "Receive message in consumer.",
+            "abstractions": [
+                "MainLoopConsumer",
+                "TryToReceieveMessageConsumer",
+                "ReceieveMessageConsumer"
+            ]
+        },
+        {
+            "id": "SelectNoMsgReceivedConsumer",
+            "intent": "No message received in consumer.",
+            "abstractions": [
+                "NoMsgExceptionConsumer",
+                "ContinueRecvMsgConsumer"
+            ]
+        },
+        {
+            "id": "UpdateJobStatus",
+            "intent": "Update the status of the job.",
+            "abstractions": [
+                "IncrementJobStatusConsumer",
+                "CheckIfJobIsDoneConsumer"
+            ]
+        },
+        {
+            "id": "CleanupJob",
+            "intent": "Cleanup the completed job.",
+            "abstractions": [
+                "DisplayConfirmationConsumer",
+                "CleanUpJobStatusConsumer"
             ]
         }
     ]
