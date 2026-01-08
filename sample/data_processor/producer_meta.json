@@ -277,19 +277,20 @@
         "worker-2-1-4": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueWorker",
-            "variables": [
-                {
-                    "name": "self",
-                    "scope": "local",
-                    "keys": []
-                }
-            ],
+            "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectReceiveMessageConsumer"
             ],
             "output": [
                 {
                     "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
                 }
             ]
         },
@@ -407,7 +408,11 @@
         },
         "consumer-2-1-4": {
             "intent": "Check if all the parts are done",
-            "functionalId": "CheckIfJobIsDoneConsumer"
+            "functionalId": "CheckIfJobIsDoneConsumer",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectCleanupJob"
+            ]
         },
         "consumer-2-1-4-1": {
             "intent": "Display confirmation that all parts for job are done.",

@@ -56,7 +56,7 @@
             ]
         },
         {
-            "id": "UpdateJobStatus",
+            "id": "SelectUpdateJobStatus",
             "intent": "Update the status of the job.",
             "abstractions": [
                 "IncrementJobStatusConsumer",
@@ -64,7 +64,7 @@
             ]
         },
         {
-            "id": "CleanupJob",
+            "id": "SelectCleanupJob",
             "intent": "Cleanup the completed job.",
             "abstractions": [
                 "DisplayConfirmationConsumer",
