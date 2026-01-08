@@ -369,7 +369,7 @@
         },
         "consumer-2-1": {
             "intent": "Enter main loop to receive jobs",
-            "functionalId": "MainConsumerLoop"
+            "functionalId": "MainLoopConsumer"
         },
         "consumer-2-1-1": {
             "intent": "Try to receive messages.",
