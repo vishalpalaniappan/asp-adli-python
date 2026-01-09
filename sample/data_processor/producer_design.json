@@ -46,6 +46,7 @@
     "behavior": [
         {
             "id": "SelectMainMenu",
+            "atomic": true,
             "intent": "Get the data to process from the user.",
             "abstractions": [
                 "EnterDataIngestorLoop",
