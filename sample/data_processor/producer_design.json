@@ -3,13 +3,19 @@
     "concurrent_abstractions": [
         {
             "id": "ProcessData",
-            "intention": "Processes the data provided by the user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
-            "start": [
-                "SelectMainMenu"
-            ],
-            "concurrent": [
+            "intention": "Processes the data provided by user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
+            "behaviors": [
+                {
+                    "id": "SelectStart",
+                    "type": "start",
+                    "intention": "Begin the concurrent abstraction.",
+                    "behaviors": [
+                        "SelectMainMenu"
+                    ]
+                },
                 {
                     "id": "ProcessDataWithWorkerA",
+                    "type": "concurrent",
                     "intention": "Process the provided data with worker A and send to consumer.",
                     "behaviors": [
                         "SelectSendJobToWorkerA",
@@ -21,6 +27,7 @@
                 },
                 {
                     "id": "ProcessDataWithWorkerB",
+                    "type": "concurrent",
                     "intention": "Process the provided data with worker B and send to consumer.",
                     "behaviors": [
                         "SelectSendJobToWorkerB",
@@ -32,6 +39,7 @@
                 },
                 {
                     "id": "ProcessDataWithWorkerC",
+                    "type": "concurrent",
                     "intention": "Process the provided data with worker C and send to consumer.",
                     "behaviors": [
                         "SelectSendJobToWorkerC",
@@ -40,10 +48,15 @@
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
+                },
+                {
+                    "id": "SelectEnd",
+                    "type": "end",
+                    "intention": "En the concurrent abstraction.",
+                    "behaviors": [
+                        "SelectCleanupJob"
+                    ]
                 }
-            ],
-            "end": [
-                "SelectCleanupJob"
             ]
         }
     ],
