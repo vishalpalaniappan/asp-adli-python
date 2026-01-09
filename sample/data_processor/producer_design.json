@@ -3,6 +3,7 @@
     "concurrent_abstractions": [
         {
             "id": "ProcessData",
+            "intention": "Processes the data provided by the user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
             "start": "SelectMainMenu",
             "concurrent_abstractions": [
                 {
