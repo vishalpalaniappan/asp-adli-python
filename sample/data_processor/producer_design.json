@@ -4,8 +4,10 @@
         {
             "id": "ProcessData",
             "intention": "Processes the data provided by the user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
-            "start": "SelectMainMenu",
-            "concurrent_abstractions": [
+            "start": [
+                "SelectMainMenu"
+            ],
+            "concurrent": [
                 {
                     "id": "ProcessDataWithWorkerA",
                     "intention": "Process the provided data with worker A and send to consumer.",
@@ -40,7 +42,9 @@
                     ]
                 }
             ],
-            "end": "SelectCleanupJob"
+            "end": [
+                "SelectCleanupJob"
+            ]
         }
     ],
     "behavior": [
