@@ -4,33 +4,27 @@
         {
             "id": "ProcessData",
             "start": "SelectMainMenu",
-            "concurrent": [
+            "concurrent_behaviors": [
                 [
-                    "SendDataToWorkerA",
-                    "ReceiveMessageWorker",
-                    "DisplayReceivedMessageWorker",
-                    "PutProcessedResultInQueueWorker",
-                    "ReceieveMessageConsumer",
-                    "IncrementJobStatusConsumer",
-                    "CheckIfJobIsDoneConsumer"
+                    "SelectSendJobToWorkerA",
+                    "SelectReceiveMessageWorker",
+                    "SelectProcessReceivedMsgWorker",
+                    "SelectReceiveMessageConsumer",
+                    "SelectUpdateJobStatus"
                 ],
                 [
-                    "SendDataToWorkerB",
-                    "ReceiveMessageWorker",
-                    "DisplayReceivedMessageWorker",
-                    "PutProcessedResultInQueueWorker",
-                    "ReceieveMessageConsumer",
-                    "IncrementJobStatusConsumer",
-                    "CheckIfJobIsDoneConsumer"
+                    "SelectSendJobToWorkerB",
+                    "SelectReceiveMessageWorker",
+                    "SelectProcessReceivedMsgWorker",
+                    "SelectReceiveMessageConsumer",
+                    "SelectUpdateJobStatus"
                 ],
                 [
-                    "SendDataToWorkerC",
-                    "ReceiveMessageWorker",
-                    "DisplayReceivedMessageWorker",
-                    "PutProcessedResultInQueueWorker",
-                    "ReceieveMessageConsumer",
-                    "IncrementJobStatusConsumer",
-                    "CheckIfJobIsDoneConsumer"
+                    "SelectSendJobToWorkerC",
+                    "SelectReceiveMessageWorker",
+                    "SelectProcessReceivedMsgWorker",
+                    "SelectReceiveMessageConsumer",
+                    "SelectUpdateJobStatus"
                 ]
             ],
             "end": "SelectCleanupJob"
@@ -46,11 +40,23 @@
             ]
         },
         {
-            "id": "SendJobToWorker",
-            "intent": "Send jobs to workers.",
+            "id": "SelectSendJobToWorkerA",
+            "intent": "Send jobs to worker A.",
             "abstractions": [
-                "SendDataToWorkerA",
-                "SendDataToWorkerB",
+                "SendDataToWorkerA"
+            ]
+        },
+        {
+            "id": "SelectSendJobToWorkerB",
+            "intent": "Send jobs to worker B.",
+            "abstractions": [
+                "SendDataToWorkerB"
+            ]
+        },
+        {
+            "id": "SelectSendJobToWorkerC",
+            "intent": "Send jobs to worker C.",
+            "abstractions": [
                 "SendDataToWorkerC"
             ]
         },
