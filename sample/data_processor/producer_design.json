@@ -4,28 +4,40 @@
         {
             "id": "ProcessData",
             "start": "SelectMainMenu",
-            "concurrent_behaviors": [
-                [
-                    "SelectSendJobToWorkerA",
-                    "SelectReceiveMessageWorker",
-                    "SelectProcessReceivedMsgWorker",
-                    "SelectReceiveMessageConsumer",
-                    "SelectUpdateJobStatus"
-                ],
-                [
-                    "SelectSendJobToWorkerB",
-                    "SelectReceiveMessageWorker",
-                    "SelectProcessReceivedMsgWorker",
-                    "SelectReceiveMessageConsumer",
-                    "SelectUpdateJobStatus"
-                ],
-                [
-                    "SelectSendJobToWorkerC",
-                    "SelectReceiveMessageWorker",
-                    "SelectProcessReceivedMsgWorker",
-                    "SelectReceiveMessageConsumer",
-                    "SelectUpdateJobStatus"
-                ]
+            "concurrent_abstractions": [
+                {
+                    "id": "ProcessDataWithWorkerA",
+                    "intention": "Process the provided data with worker A and send to consumer.",
+                    "behaviors": [
+                        "SelectSendJobToWorkerA",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
+                    ]
+                },
+                {
+                    "id": "ProcessDataWithWorkerB",
+                    "intention": "Process the provided data with worker B and send to consumer.",
+                    "behaviors": [
+                        "SelectSendJobToWorkerB",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
+                    ]
+                },
+                {
+                    "id": "ProcessDataWithWorkerC",
+                    "intention": "Process the provided data with worker C and send to consumer.",
+                    "behaviors": [
+                        "SelectSendJobToWorkerC",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
+                    ]
+                }
             ],
             "end": "SelectCleanupJob"
         }
