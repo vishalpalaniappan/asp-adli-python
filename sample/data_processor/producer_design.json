@@ -1,5 +1,41 @@
 {
     "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
+    "concurrent_abstractions": [
+        {
+            "id": "ProcessData",
+            "start": "SelectMainMenu",
+            "concurrent": [
+                [
+                    "SendDataToWorkerA",
+                    "ReceiveMessageWorker",
+                    "DisplayReceivedMessageWorker",
+                    "PutProcessedResultInQueueWorker",
+                    "ReceieveMessageConsumer",
+                    "IncrementJobStatusConsumer",
+                    "CheckIfJobIsDoneConsumer"
+                ],
+                [
+                    "SendDataToWorkerB",
+                    "ReceiveMessageWorker",
+                    "DisplayReceivedMessageWorker",
+                    "PutProcessedResultInQueueWorker",
+                    "ReceieveMessageConsumer",
+                    "IncrementJobStatusConsumer",
+                    "CheckIfJobIsDoneConsumer"
+                ],
+                [
+                    "SendDataToWorkerC",
+                    "ReceiveMessageWorker",
+                    "DisplayReceivedMessageWorker",
+                    "PutProcessedResultInQueueWorker",
+                    "ReceieveMessageConsumer",
+                    "IncrementJobStatusConsumer",
+                    "CheckIfJobIsDoneConsumer"
+                ]
+            ],
+            "end": "SelectCleanupJob"
+        }
+    ],
     "behavior": [
         {
             "id": "SelectMainMenu",
