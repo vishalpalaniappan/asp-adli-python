@@ -4,6 +4,7 @@
         {
             "id": "ProcessData",
             "intention": "Processes the data provided by user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
+            "numConcurrent": 3,
             "behaviors": [
                 {
                     "id": "SelectStart",
