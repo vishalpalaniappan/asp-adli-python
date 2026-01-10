@@ -8,6 +8,7 @@
             "behaviors": [
                 {
                     "id": "SelectStart",
+                    "level": 1,
                     "type": "start",
                     "intention": "Begin the concurrent abstraction to process the accepted data.",
                     "behaviors": [
@@ -16,6 +17,7 @@
                 },
                 {
                     "id": "ProcessDataWithWorkerA",
+                    "level": 2,
                     "type": "concurrent",
                     "intention": "Process the provided data with worker A and send to consumer.",
                     "behaviors": [
@@ -28,6 +30,7 @@
                 },
                 {
                     "id": "ProcessDataWithWorkerB",
+                    "level": 2,
                     "type": "concurrent",
                     "intention": "Process the provided data with worker B and send to consumer.",
                     "behaviors": [
@@ -40,6 +43,7 @@
                 },
                 {
                     "id": "ProcessDataWithWorkerC",
+                    "level": 2,
                     "type": "concurrent",
                     "intention": "Process the provided data with worker C and send to consumer.",
                     "behaviors": [
@@ -52,6 +56,7 @@
                 },
                 {
                     "id": "SelectEnd",
+                    "level": 3,
                     "type": "end",
                     "intention": "All workers are done, so cleanup job.",
                     "behaviors": [
