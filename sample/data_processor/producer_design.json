@@ -8,7 +8,7 @@
                 {
                     "id": "SelectStart",
                     "type": "start",
-                    "intention": "Begin the concurrent abstraction.",
+                    "intention": "Begin the concurrent abstraction to process the accepted data.",
                     "behaviors": [
                         "SelectMainMenu"
                     ]
@@ -52,7 +52,7 @@
                 {
                     "id": "SelectEnd",
                     "type": "end",
-                    "intention": "En the concurrent abstraction.",
+                    "intention": "All workers are done, so cleanup job.",
                     "behaviors": [
                         "SelectCleanupJob"
                     ]
