@@ -126,6 +126,7 @@
             "intent": "Process Received Message in Worker",
             "abstractions": [
                 "DisplayReceivedMessageWorker",
+                "ProcessMessageWorker",
                 "PutProcessedResultInQueueWorker"
             ]
         },

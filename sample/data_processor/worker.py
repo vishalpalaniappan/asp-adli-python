@@ -17,6 +17,7 @@ class WorkerThread(threading.Thread):
                 continue
 
             print("Worker Received message:", msg)
+            msg = msg[0] + msg
             self.consumer_queue.put({
                 "id": self.id,
                 "data": msg

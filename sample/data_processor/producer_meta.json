@@ -276,6 +276,10 @@
             "functionalId": "DisplayReceivedMessageWorker"
         },
         "worker-2-1-4": {
+            "intent": "Process the message.",
+            "functionalId": "ProcessMessageWorker"
+        },
+        "worker-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueWorker",
             "behavioral_role": "selector",

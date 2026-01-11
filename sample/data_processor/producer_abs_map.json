@@ -229,6 +229,11 @@
                         {
                             "id": "worker-2-1-4",
                             "lineDelta": 8,
+                            "syntax": "msg = msg[0] + msg"
+                        },
+                        {
+                            "id": "worker-2-1-5",
+                            "lineDelta": 9,
                             "syntax": "self.consumer_queue.put({"
                         }
                     ]
