@@ -370,7 +370,7 @@
             ]
         },
         "consumer-2-1": {
-            "intent": "Enter main loop to receive jobs",
+            "intent": "Enter main loop to receive results in consumer.",
             "functionalId": "MainLoopConsumer"
         },
         "consumer-2-1-1": {
