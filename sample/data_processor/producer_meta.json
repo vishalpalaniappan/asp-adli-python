@@ -108,6 +108,18 @@
                     "scope": "local",
                     "keys": []
                 }
+            ],
+            "constraint": [
+                {
+                    "id": "producer-1-9-1+1",
+                    "name": "data",
+                    "constraint_layer": "design_constraint",
+                    "scope": "local",
+                    "type":"minLength",
+                    "value": 1,
+                    "description": "Failed semantic contract to accept non empty string.",
+                    "failures": ["worker-2-1-4"]
+                }
             ]
         },
         "producer-1-9-2": {
