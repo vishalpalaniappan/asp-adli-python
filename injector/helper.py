@@ -14,6 +14,11 @@ def getInjectedImports():
                 ast.alias(name="adli")
             ],
             level=0
+        ),
+        ast.Import(
+            names=[
+                ast.alias(name="traceback", asname=None)
+            ]
         )
     ]
 
@@ -75,11 +80,7 @@ def getLtLogStmt(logTypeId):
                 ast.Name(id="adli_uid", ctx=ast.Load()),
                 ast.Call(
                     func=ast.Attribute(
-                        value= ast.Attribute(
-                            value=ast.Name(id='adli', ctx=ast.Load()),
-                            attr='traceback',
-                            ctx=ast.Load()
-                        ),
+                        value= ast.Name(id="traceback", ctx=ast.Load()),
                         attr='extract_stack',
                         ctx=ast.Load()
                     ),
@@ -159,6 +160,27 @@ def injectRootLoggingSetup(tree):
     mod = ast.Module(body=[], type_ignores=[])
     mod.body = loggerInstance + [header] + [mainTry]
     return mod
+
+def injectExceptionHandling(funcNode):
+    '''
+        Injects a try catch sttement into a function body.
+    '''
+    handler = ast.ExceptHandler(
+        type=ast.Name(id='Exception', ctx=ast.Load()),
+        name='e',
+        body=[
+            ast.parse("adli.logException()"),
+            ast.parse("raise"),
+        ]
+    )
+    mainTry = ast.Try(
+        body= [funcNode.body],
+        handlers=[handler],
+        orelse=[],
+        finalbody=[]
+    )
+
+    return mainTry
 
 def injectLoggingSetup(tree):
     '''

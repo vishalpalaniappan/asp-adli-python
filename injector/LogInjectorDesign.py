@@ -1,7 +1,7 @@
 import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
-from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag
+from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, injectExceptionHandling
 from injector.OutputWrapper.OutputWrapper import OutputWrapper
 
 class LogInjectorDesign(ast.NodeTransformer):
@@ -144,10 +144,11 @@ class LogInjectorDesign(ast.NodeTransformer):
 
         uidAssign = getUniqueIdAssignStmt()
         node.body = [meta_tag, uidAssign] + logStmt["varLogs"] + node.body
+        node.body = [injectExceptionHandling(node)]
         
         self.funcId = 0
         
-        return [node]
+        return node
 
     
     def visit_FunctionDef(self, node):
