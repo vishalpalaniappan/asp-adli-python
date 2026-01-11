@@ -95,6 +95,8 @@ class AdliLogger:
         self.count += 1
         self.variableLogCount += 1
 
+        value = self.decodeInput(value)
+
         try:
             # Try to serialize the variable
             adliValue = self.variableToJson(value)
@@ -118,7 +120,7 @@ class AdliLogger:
             }
             logger.info(varObj)
 
-        return self.decodeInput(value)
+        return value
 
     def logStmt(self, stmtId, scope_uid, fullStack):
         '''
