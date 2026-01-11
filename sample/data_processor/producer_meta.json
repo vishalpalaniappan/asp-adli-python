@@ -244,15 +244,15 @@
             ]
         },
         "worker-2-1": {
-            "intent": "Enter main loop to receive jobs",
+            "intent": "Enter main loop to receive task in worker.",
             "functionalId": "MainLoopWorker"
         },
         "worker-2-1-1": {
-            "intent": "Try to receive messages.",
+            "intent": "Try to receive messages in worker.",
             "functionalId": "TryToReceiveMessageWorker"
         },
         "worker-2-1-1-1": {
-            "intent": "Receive message.",
+            "intent": "Receive message in worker.",
             "functionalId": "ReceiveMessageWorker",
             "input": true,
             "variables": [
@@ -268,7 +268,7 @@
             "functionalId": "CatchNoMsgExceptionWorker"
         },
         "worker-2-1-2-1": {
-            "intent": "Continue receiving messages.",
+            "intent": "Continue receiving messages in worker.",
             "functionalId": "ContinueRecvMessagesWorker"
         },
         "worker-2-1-3": {
@@ -374,11 +374,11 @@
             "functionalId": "MainLoopConsumer"
         },
         "consumer-2-1-1": {
-            "intent": "Try to receive messages.",
+            "intent": "Try to receive messages in consumer.",
             "functionalId": "TryToReceieveMessageConsumer"
         },
         "consumer-2-1-1-1": {
-            "intent": "Receive message.",
+            "intent": "Receive message in consumer.",
             "functionalId": "ReceieveMessageConsumer",
             "input": true,
             "variables": [
@@ -394,7 +394,7 @@
             "functionalId": "NoMsgExceptionConsumer"
         },
         "consumer-2-1-2-1": {
-            "intent": "Continue receiving messages.",
+            "intent": "Continue receiving messages in consumer.",
             "functionalId": "ContinueRecvMsgConsumer"
         },
         "consumer-2-1-3": {
