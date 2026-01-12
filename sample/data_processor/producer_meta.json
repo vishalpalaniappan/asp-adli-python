@@ -1,5 +1,5 @@
 {
-    "description": "Metadata for abstractions in multi-threaded library manager.",
+    "description": "Metadata for abstractions in multi-threaded data processor.",
     "format": "<filename>-[Repeat][<abstraction>-<step>]",
     "abstractions": {
         "producer-0": {
@@ -30,7 +30,7 @@
         "producer-0-6-1": {
             "intent": "Start the producer.",
             "type": "function_call",
-            "target": "library_manager-1"
+            "target": "producer-1"
         },
         "producer-1": {
             "intent": "Define the producer module"
@@ -162,7 +162,7 @@
             "intent": "Import the threading library."
         },
         "worker-0-2": {
-            "intent": "Import the queue ibrary."
+            "intent": "Import the queue library."
         },
         "worker-0-3": {
             "intent": "Define the worker class that runs in its own thread."
@@ -293,7 +293,7 @@
             ]
         },
         "consumer-0": {
-            "intent": "Global path for the worker thread module.",
+            "intent": "Global path for the consumer thread module.",
             "name": "global",
             "type": "global"
         },

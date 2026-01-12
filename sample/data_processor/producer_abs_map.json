@@ -340,7 +340,7 @@
                         {
                             "id": "consumer-2-1-4-1",
                             "lineDelta": 10,
-                            "syntax": "print(\"Consumer recieved the processed data from all three workers for the following data: \", msg[\"data\"])"
+                            "syntax": "print(\"Consumer received the processed data from all three workers for the following data: \", msg[\"data\"])"
                         },
                         {
                             "id": "consumer-2-1-4-2",

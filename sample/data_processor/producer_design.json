@@ -12,7 +12,7 @@
                     "id": "SelectStart",
                     "level": 1,
                     "type": "start",
-                    "intention": "Accept data from the user through the main menu.",
+                    "intention": "Accepted data(\"<data>\") from the user to create job.",
                     "behaviors": [
                         "SelectMainMenu"
                     ]
@@ -63,7 +63,7 @@
                     "id": "SelectEnd",
                     "level": 3,
                     "type": "end",
-                    "intention": "All workers completed, clean up job.",
+                    "intention": "All workers completed, cleaned up job.",
                     "behaviors": [
                         "SelectCleanupJob"
                     ]
