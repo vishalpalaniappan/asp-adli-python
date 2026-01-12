@@ -270,7 +270,7 @@
                         {
                             "id": "consumer-1",
                             "lineDelta": 0,
-                            "syntax": "def __init__(self, id, queue):"
+                            "syntax": "def __init__(self, queue):"
                         },
                         {
                             "id": "consumer-1-1",
