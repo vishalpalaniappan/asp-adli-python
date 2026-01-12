@@ -64,8 +64,4 @@ class OutputWrapper(ast.NodeTransformer):
                 self.metaStmts.append(getEncodedOutputStmt(tempName))
                 node.args = [ast.Name(id=tempName, ctx=ast.Load)]
 
-        for stmt in self.metaStmts:
-            print(ast.unparse(stmt))
-        print(ast.unparse(node))
-
         return node
