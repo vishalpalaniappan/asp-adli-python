@@ -52,7 +52,7 @@ class OutputWrapper(ast.NodeTransformer):
 
         - Finds function calls with the specified names
         - Assigns arguments to a temporary variable
-        - Replaces function argumnet with a temporary variable
+        - Replaces function argument with a temporary variable
         
         :param self: 
         :param node: Node that is being visited and transformed.
@@ -60,8 +60,8 @@ class OutputWrapper(ast.NodeTransformer):
         for output in self.outputMeta:
             if isValidCall(node, output["function"]):
                 tempName = getVariableName()
-                self.metaStmts.append(getAssignStmt(tempName, node.args))
+                self.metaStmts.append(getAssignStmt(tempName, node.args[0]))
                 self.metaStmts.append(getEncodedOutputStmt(tempName))
-                node.args = [ast.Name(id=tempName, ctx=ast.Load)]
+                node.args = [ast.Name(id=tempName, ctx=ast.Load())]
 
         return node
