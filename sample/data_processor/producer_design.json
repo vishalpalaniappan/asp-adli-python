@@ -12,7 +12,7 @@
                     "id": "SelectStart",
                     "level": 1,
                     "type": "start",
-                    "intention": "Begin the concurrent abstraction to process the accepted data.",
+                    "intention": "Accept data from the user through the main menu.",
                     "behaviors": [
                         "SelectMainMenu"
                     ]
@@ -21,7 +21,7 @@
                     "id": "ProcessDataWithWorkerA",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Process the provided data with worker A and send to consumer.",
+                    "intention": "Concurrently process the provided data with worker A.",
                     "behaviors": [
                         "SelectSendJobToWorkerA",
                         "SelectReceiveMessageWorker",
@@ -35,7 +35,7 @@
                     "id": "ProcessDataWithWorkerB",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Process the provided data with worker B and send to consumer.",
+                    "intention": "Concurrently process the provided data with worker B.",
                     "behaviors": [
                         "SelectSendJobToWorkerB",
                         "SelectReceiveMessageWorker",
@@ -49,7 +49,7 @@
                     "id": "ProcessDataWithWorkerC",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Process the provided data with worker C and send to consumer.",
+                    "intention": "Concurrently process the provided data with worker C.",
                     "behaviors": [
                         "SelectSendJobToWorkerC",
                         "SelectReceiveMessageWorker",
@@ -63,7 +63,7 @@
                     "id": "SelectEnd",
                     "level": 3,
                     "type": "end",
-                    "intention": "All workers are done, so cleanup job.",
+                    "intention": "All workers completed, clean up job.",
                     "behaviors": [
                         "SelectCleanupJob"
                     ]
