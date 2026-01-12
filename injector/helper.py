@@ -163,7 +163,7 @@ def injectRootLoggingSetup(tree):
 
 def injectExceptionHandling(funcNode):
     '''
-        Injects a try catch sttement into a function body.
+        Injects a try catch statement into a function body.
     '''
     handler = ast.ExceptHandler(
         type=ast.Name(id='Exception', ctx=ast.Load()),
