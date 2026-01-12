@@ -161,7 +161,7 @@ def injectRootLoggingSetup(tree):
     mod.body = loggerInstance + [header] + [mainTry]
     return mod
 
-def injectExceptionHandling(funcNode):
+def injectExceptionHandling(funcBody):
     '''
         Injects a try catch statement into a function body.
     '''
@@ -174,7 +174,7 @@ def injectExceptionHandling(funcNode):
         ]
     )
     mainTry = ast.Try(
-        body= funcNode.body,
+        body= funcBody,
         handlers=[handler],
         orelse=[],
         finalbody=[]

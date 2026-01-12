@@ -143,8 +143,8 @@ class LogInjectorDesign(ast.NodeTransformer):
         self.generic_visit(node)
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign] + logStmt["varLogs"] + node.body
-        node.body = [injectExceptionHandling(node)]
+        newBody = [meta_tag, uidAssign] + logStmt["varLogs"] + node.body
+        node.body = [injectExceptionHandling(newBody)]
         
         self.funcId = 0
         
