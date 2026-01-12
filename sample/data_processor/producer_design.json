@@ -24,7 +24,7 @@
                         "SelectSendJobToWorkerA",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
-                        "SendProcessedResultsToConsumer",
+                        "SelectSendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -38,7 +38,7 @@
                         "SelectSendJobToWorkerB",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
-                        "SendProcessedResultsToConsumer",
+                        "SelectSendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -52,7 +52,7 @@
                         "SelectSendJobToWorkerC",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
-                        "SendProcessedResultsToConsumer",
+                        "SelectSendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -136,7 +136,7 @@
             ]
         },
         {
-            "id": "SendProcessedResultsToConsumer",
+            "id": "SelectSendProcessedResultsToConsumer",
             "intent": "Send Processed Results to Consumer.",
             "target": "consumer",
             "abstractions": [
