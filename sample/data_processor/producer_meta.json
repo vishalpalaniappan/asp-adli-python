@@ -125,42 +125,30 @@
         "producer-1-9-2": {
             "intent": "Send data to worker A.",
             "functionalId": "SendDataToWorkerA",
-            "target": "worker-2-1-1-1",
-            "behavioral_role": "selector",
-            "targetBehaviors": [
-                "SelectReceiveMessageWorker"
-            ],
             "output": [
                 {
-                    "function": "put"
+                    "function": "put",
+                    "target": "worker"
                 }
             ]
         },
         "producer-1-9-3": {
             "intent": "Send data to worker B.",
             "functionalId": "SendDataToWorkerB",
-            "target": "worker-2-1-1-1",
-            "behavioral_role": "selector",
-            "targetBehaviors": [
-                "SelectReceiveMessageWorker"
-            ],
             "output": [
                 {
-                    "function": "put"
+                    "function": "put",
+                    "target": "worker"
                 }
             ]
         },
         "producer-1-9-4": {
             "intent": "Send data to worker C.",
             "functionalId": "SendDataToWorkerC",
-            "target": "worker-2-1-1-1",
-            "behavioral_role": "selector",
-            "targetBehaviors": [
-                "SelectReceiveMessageWorker"
-            ],
             "output": [
                 {
-                    "function": "put"
+                    "function": "put",
+                    "target": "worker"
                 }
             ]
         },
@@ -294,13 +282,10 @@
         "worker-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueWorker",
-            "behavioral_role": "selector",
-            "targetBehaviors": [
-                "SelectReceiveMessageConsumer"
-            ],
             "output": [
                 {
-                    "function": "put"
+                    "function": "put",
+                    "target": "consumer"
                 }
             ],
             "variables": [
