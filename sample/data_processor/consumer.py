@@ -18,5 +18,5 @@ class ConsumerThread(threading.Thread):
             self.items[msg["data"]] = self.items.get(msg["data"], 0) + 1
 
             if self.items[msg["data"]] == 3:
-                print("Consumer recieved the processed data from all three workers for the following data: ", msg["data"])
+                print("Consumer received the processed data from all three workers for the following data: ", msg["data"])
                 del self.items[msg["data"]]
