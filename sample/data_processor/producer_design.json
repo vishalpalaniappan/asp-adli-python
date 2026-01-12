@@ -12,7 +12,7 @@
                     "id": "SelectStart",
                     "level": 1,
                     "type": "start",
-                    "intention": "Accepted data(\"<data>\") from the user to create job.",
+                    "intention": "Accepted data from the user to create job.",
                     "behaviors": [
                         "SelectMainMenu"
                     ]
@@ -21,7 +21,7 @@
                     "id": "ProcessDataWithWorkerA",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Concurrently process the provided data with worker A.",
+                    "intention": "Concurrently process the data with worker A.",
                     "behaviors": [
                         "SelectSendJobToWorkerA",
                         "SelectReceiveMessageWorker",
@@ -35,7 +35,7 @@
                     "id": "ProcessDataWithWorkerB",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Concurrently process the provided data with worker B.",
+                    "intention": "Concurrently process the data with worker B.",
                     "behaviors": [
                         "SelectSendJobToWorkerB",
                         "SelectReceiveMessageWorker",
@@ -49,7 +49,7 @@
                     "id": "ProcessDataWithWorkerC",
                     "level": 2,
                     "type": "concurrent",
-                    "intention": "Concurrently process the provided data with worker C.",
+                    "intention": "Concurrently process the data with worker C.",
                     "behaviors": [
                         "SelectSendJobToWorkerC",
                         "SelectReceiveMessageWorker",
