@@ -174,7 +174,7 @@ def injectExceptionHandling(funcNode):
         ]
     )
     mainTry = ast.Try(
-        body= [funcNode.body],
+        body= funcNode.body,
         handlers=[handler],
         orelse=[],
         finalbody=[]
