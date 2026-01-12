@@ -127,8 +127,7 @@
             "functionalId": "SendDataToWorkerA",
             "output": [
                 {
-                    "function": "put",
-                    "target": "worker"
+                    "function": "put"
                 }
             ]
         },
@@ -137,8 +136,7 @@
             "functionalId": "SendDataToWorkerB",
             "output": [
                 {
-                    "function": "put",
-                    "target": "worker"
+                    "function": "put"
                 }
             ]
         },
@@ -147,8 +145,7 @@
             "functionalId": "SendDataToWorkerC",
             "output": [
                 {
-                    "function": "put",
-                    "target": "worker"
+                    "function": "put"
                 }
             ]
         },
@@ -284,8 +281,7 @@
             "functionalId": "PutProcessedResultInQueueWorker",
             "output": [
                 {
-                    "function": "put",
-                    "target": "consumer"
+                    "function": "put"
                 }
             ],
             "variables": [

@@ -24,6 +24,7 @@
                         "SelectSendJobToWorkerA",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
+                        "SendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -37,6 +38,7 @@
                         "SelectSendJobToWorkerB",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
+                        "SendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -50,6 +52,7 @@
                         "SelectSendJobToWorkerC",
                         "SelectReceiveMessageWorker",
                         "SelectProcessReceivedMsgWorker",
+                        "SendProcessedResultsToConsumer",
                         "SelectReceiveMessageConsumer",
                         "SelectUpdateJobStatus"
                     ]
@@ -79,6 +82,7 @@
         {
             "id": "SelectSendJobToWorkerA",
             "intent": "Send jobs to worker A.",
+            "target": "worker",
             "abstractions": [
                 "SendDataToWorkerA"
             ]
@@ -86,6 +90,7 @@
         {
             "id": "SelectSendJobToWorkerB",
             "intent": "Send jobs to worker B.",
+            "target": "worker",
             "abstractions": [
                 "SendDataToWorkerB"
             ]
@@ -93,6 +98,7 @@
         {
             "id": "SelectSendJobToWorkerC",
             "intent": "Send jobs to worker C.",
+            "target": "worker",
             "abstractions": [
                 "SendDataToWorkerC"
             ]
@@ -123,10 +129,17 @@
         },
         {
             "id": "SelectProcessReceivedMsgWorker",
-            "intent": "Process Received Message in Worker",
+            "intent": "Process Received Message in Worker.",
             "abstractions": [
                 "DisplayReceivedMessageWorker",
-                "ProcessMessageWorker",
+                "ProcessMessageWorker"
+            ]
+        },
+        {
+            "id": "SendProcessedResultsToConsumer",
+            "intent": "Send Processed Results to Consumer.",
+            "target": "consumer",
+            "abstractions": [
                 "PutProcessedResultInQueueWorker"
             ]
         },

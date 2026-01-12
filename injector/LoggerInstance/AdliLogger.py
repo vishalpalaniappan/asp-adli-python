@@ -174,7 +174,7 @@ class AdliLogger:
             :param value: Value of the variable being encoded.
         '''
 
-        execId = str(threading.get_ident()) + str(uuid.uuid4());
+        execId = str(threading.get_ident()) + str(uuid.uuid4())
 
         logInfo = {
             "type": "adli_output",
