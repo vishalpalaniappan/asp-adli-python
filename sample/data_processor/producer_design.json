@@ -150,8 +150,8 @@
             "intent": "Receive message in consumer.",
             "abstractions": [
                 "MainLoopConsumer",
-                "TryToReceieveMessageConsumer",
-                "ReceieveMessageConsumer"
+                "TryToReceiveMessageConsumer",
+                "ReceiveMessageConsumer"
             ]
         },
         {

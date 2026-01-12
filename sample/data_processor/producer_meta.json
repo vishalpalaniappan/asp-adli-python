@@ -3,7 +3,7 @@
     "format": "<filename>-[Repeat][<abstraction>-<step>]",
     "abstractions": {
         "producer-0": {
-            "intent": "Global path to initialize the book manager.",
+            "intent": "Global path to initialize the data processor.",
             "name": "global",
             "type": "global",
             "start": true
@@ -301,7 +301,7 @@
             "intent": "Import the threading library."
         },
         "consumer-0-2": {
-            "intent": "Import the queue ibrary."
+            "intent": "Import the queue library."
         },
         "consumer-0-3": {
             "intent": "Define the consumer class that runs in its own thread."
@@ -372,11 +372,11 @@
         },
         "consumer-2-1-1": {
             "intent": "Try to receive messages in consumer.",
-            "functionalId": "TryToReceieveMessageConsumer"
+            "functionalId": "TryToReceiveMessageConsumer"
         },
         "consumer-2-1-1-1": {
             "intent": "Receive message in consumer.",
-            "functionalId": "ReceieveMessageConsumer",
+            "functionalId": "ReceiveMessageConsumer",
             "input": true,
             "variables": [
                 {
