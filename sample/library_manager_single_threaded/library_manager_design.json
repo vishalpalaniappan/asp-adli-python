@@ -5,7 +5,7 @@
             "id": "MainMenu",
             "intention": "Present the user with the menu, accept the selection and execution the selection.",
             "behaviors": [
-                "SelectMenu",
+                "SelectDisplayMenu",
                 "SelectAcceptBookAndAddToBasket",
                 "SelectPlaceBooksOnShelf",
                 "SelectFailIfTooManyBooks",
@@ -18,7 +18,7 @@
     ],    
     "behavior": [
         {
-            "id": "SelectMenu",
+            "id": "SelectDisplayMenu",
             "atomic": true,
             "intent": "Select menu to user and accept their choice.",
             "abstractions":[
