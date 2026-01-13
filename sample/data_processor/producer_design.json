@@ -1,8 +1,10 @@
 {
     "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
-    "concurrent_abstractions": [
+    "abstractions": [
         {
             "id": "ProcessData",
+            "entry": "SelectMainMenu",
+            "abstraction_type": "concurrent",
             "type": "SplitJobTypeA",
             "type_description": "This type of concurrent abstraction splits a job between N workers. Each worker processes the job and sends the results to a single consumer who tracks when the workers have finished and cleans up the job.",
             "intention": "Processes the data provided by user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",

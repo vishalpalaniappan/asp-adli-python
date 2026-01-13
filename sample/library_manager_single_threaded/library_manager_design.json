@@ -3,7 +3,9 @@
     "abstraction": [
         {
             "id": "MainMenu",
-            "intention": "Present the user with the menu, accept the selection and execution the selection.",
+            "entry": "SelectDisplayMenu",
+            "abstraction_type": "sequential",
+            "intention": "Present the user with the menu, accept the selection and execute the selection.",
             "behaviors": [
                 "SelectDisplayMenu",
                 "SelectAcceptBookAndAddToBasket",
