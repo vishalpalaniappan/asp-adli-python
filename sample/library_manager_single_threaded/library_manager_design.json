@@ -20,7 +20,7 @@
         {
             "id": "SelectMenu",
             "atomic": true,
-            "intent": "Terminated the library manager.",
+            "intent": "Select menu to user and accept their choice.",
             "abstractions":[
                 "ChooseToDisplayMenu",
                 "PromptUserForChoice",
