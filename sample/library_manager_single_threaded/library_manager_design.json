@@ -1,6 +1,6 @@
 {
     "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
-    "abstraction": [
+    "abstractions": [
         {
             "id": "MainMenu",
             "entry": "SelectDisplayMenu",
