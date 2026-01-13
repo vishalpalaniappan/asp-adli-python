@@ -1,10 +1,37 @@
 {
     "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
+    "abstraction": [
+        {
+            "id": "MainMenu",
+            "intention": "Present the user with the menu, accept the selection and execution the selection.",
+            "behaviors": [
+                "SelectMenu",
+                "SelectAcceptBookAndAddToBasket",
+                "SelectPlaceBooksOnShelf",
+                "SelectFailIfTooManyBooks",
+                "SelectPlaceBookOnShelf",
+                "SelectCreateSlotForBook",
+                "SelectDisplayLibrary",
+                "SelectTerminateProgram"
+            ]
+        }
+    ],    
     "behavior": [
+        {
+            "id": "SelectMenu",
+            "atomic": true,
+            "intent": "Terminated the library manager.",
+            "abstractions":[
+                "ChooseToDisplayMenu",
+                "PromptUserForChoice",
+                "CheckIfUserChoseAddBook",
+                "CheckIfUserChosePlaceBook",
+                "CheckIfUserChoseDisplayLibrary"
+            ]
+        },
         {
             "id": "SelectAcceptBookAndAddToBasket",
             "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
-            "group": "MainMenuGroup",
             "variables": [
                 {
                     "name": "book_details",
@@ -31,7 +58,6 @@
         },
         {
             "id": "SelectPlaceBooksOnShelf",
-            "group": "MainMenuGroup",
             "intent": "Placed <num_books> book(s) on the shelf.",
             "meta_intent": "Created <num_slots> new slots for the book(s) on the shelf.",
             "variables": [
@@ -75,7 +101,6 @@
         {
             "id": "SelectPlaceBookOnShelf",
             "intent": "Placed book named <name> with genre <genre> on the shelf.",
-            "group": "CheckBasketForBooks",
             "variables": [
                 {
                     "name": "book",
@@ -100,7 +125,6 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "group": "CreateSlotForLetterOnShelf",
             "intent": "Create slot for the letter <letter> on the shelf. ",
             "variables": [
                 {
@@ -115,7 +139,6 @@
         },
         {
             "id": "SelectDisplayLibrary",
-            "group": "MainMenuGroup",
             "intent": "Displayed the contents of the library.",
             "abstractions": [
                 "DisplayBookShelf",
@@ -124,7 +147,6 @@
         },
         {
             "id": "SelectTerminateProgram",
-            "group": "MainMenuGroup",
             "intent": "Terminated the library manager.",
             "abstractions":[
                 "ExitTheMenu"
