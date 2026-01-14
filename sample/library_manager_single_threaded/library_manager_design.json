@@ -22,7 +22,7 @@
         {
             "id": "SelectDisplayMenu",
             "atomic": true,
-            "intent": "Select menu to user and accept their choice.",
+            "intent": "Show menu to user and accept their choice.",
             "abstractions":[
                 "ChooseToDisplayMenu",
                 "PromptUserForChoice",
