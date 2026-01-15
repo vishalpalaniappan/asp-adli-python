@@ -46,6 +46,62 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "Add Books to Basket",
+            "entry": {
+                "behavior": "SelectAcceptBookAndAddToBasket"
+            },
+            "steps": [
+                {
+                    "id": "AddBookToBasket",
+                    "behavior": [
+                        "SelectAcceptBookAndAddToBasket"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Place Books On Shelf",
+            "entry": {
+                "behavior": "SelectPlaceBooksOnShelf"
+            },
+            "steps": [
+                {
+                    "id": "PlaceBooks",
+                    "behavior": [
+                        "SelectPlaceBooksOnShelf"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Display Books",
+            "entry": {
+                "behavior": "SelectDisplayLibrary"
+            },
+            "steps": [
+                {
+                    "id": "DisplayBooks",
+                    "behavior": [
+                        "SelectDisplayLibrary"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Exit Program",
+            "entry": {
+                "behavior": "SelectTerminateProgram"
+            },
+            "steps": [
+                {
+                    "id": "Exit",
+                    "behavior": [
+                        "SelectTerminateProgram"
+                    ]
+                }
+            ]
         }
     ],
     "behavior": [
