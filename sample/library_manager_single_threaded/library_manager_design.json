@@ -12,55 +12,39 @@
                     "type": "sequential",
                     "id": "LibraryManagerEntry",
                     "behavior": [
-                        "ChooseToDisplayMenu",
-                        "PromptUserForChoice"
+                        "SelectDisplayMenu"
                     ]
                 },
                 {
                     "type": "selector",
-                    "id": "MenuSelection",
-                    "checks": [
+                    "id": "MenuOptions",
+                    "options": [
                         {
-                            "check": "CheckIfUserChoseAddBook",
-                            "onSelect": {
-                                "enter": "AddBookToBasket"
-                            }
+                            "id": "AddBookToBasket",
+                            "behavior": [
+                                "SelectAcceptBookAndAddToBasket"
+                            ]
                         },
                         {
-                            "check": "CheckIfUserChosePlaceBook",
-                            "onSelect": {
-                                "enter": "PlaceBooksOnShelf"
-                            }
+                            "id": "PlaceBooks",
+                            "behavior": [
+                                "SelectPlaceBooksOnShelf"
+                            ]
                         },
                         {
-                            "check": "CheckIfUserChoseDisplayLibrary",
-                            "onSelect": {
-                                "enter": "DisplayLibrary"
-                            }
+                            "id": "DisplayBooks",
+                            "behavior": [
+                                "SelectDisplayLibrary"
+                            ]
                         },
                         {
-                            "check": "ExitTheMenu",
-                            "onSelect": {
-                                "terminate": true
-                            }
+                            "id": "Exit",
+                            "behavior": [
+                                "SelectTerminateProgram"
+                            ]
                         }
                     ]
                 }
-            ]
-        },
-        {
-            "id": "AddBookToBasket",
-            "steps": [
-            ]
-        },
-        {
-            "id": "PlaceBooksOnShelf",
-            "steps": [
-            ]
-        },
-        {
-            "id": "DisplayLibrary",
-            "steps": [
             ]
         }
     ],
