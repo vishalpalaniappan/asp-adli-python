@@ -1,0 +1,73 @@
+{
+    "design": {
+        "name": "ProcessData",
+        "entry": {
+            "type": "atomic",
+            "id": "ProcessDataEntry",
+            "behavior": [
+                "SelectMainMenu"
+            ]
+        },
+        "behavior": {
+            "type": "sequential",
+            "id": "ProcessDataBody",
+            "steps": [
+                {
+                    "type": "fanout",
+                    "id": "WORKERS",
+                    "output": "finish_order",
+                    "workers": [
+                        {
+                            "id": "A",
+                            "behavior": [
+                                "SelectSendJobToWorkerA",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
+                        },
+                        {
+                            "id": "B",
+                            "behavior": [
+                                "SelectSendJobToWorkerB",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
+                        },
+                        {
+                            "id": "C",
+                            "behavior": [
+                                "SelectSendJobToWorkerC",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "join",
+                    "fanoutRef": "WORKERS",
+                    "condition": {
+                        "type": "finish_order",
+                        "selector": "last"
+                    }
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataEnd",
+                    "behavior": [
+                        "SelectCleanupJob"
+                    ]
+                }
+            ]
+        }
+    }
+}
