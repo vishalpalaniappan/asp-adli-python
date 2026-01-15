@@ -6,77 +6,77 @@
             "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
             "entry": {
                 "type": "atomic",
-                "id": "ProcessDataEntry",
-                "behavior": [
-                    "SelectMainMenu"
-                ]
+                "behavior": "SelectMainMenuAndAcceptData"
             },
-            "behavior": {
-                "type": "sequential",
-                "id": "ProcessDataBody",
-                "steps": [
-                    {
-                        "type": "fanout",
-                        "id": "WORKERS",
-                        "output": "finish_order",
-                        "workers": [
-                            {
-                                "id": "A",
-                                "behavior": [
-                                    "SelectSendJobToWorkerA",
-                                    "SelectReceiveMessageWorker",
-                                    "SelectProcessReceivedMsgWorker",
-                                    "SelectSendProcessedResultsToConsumer",
-                                    "SelectReceiveMessageConsumer",
-                                    "SelectUpdateJobStatus"
-                                ]
-                            },
-                            {
-                                "id": "B",
-                                "behavior": [
-                                    "SelectSendJobToWorkerB",
-                                    "SelectReceiveMessageWorker",
-                                    "SelectProcessReceivedMsgWorker",
-                                    "SelectSendProcessedResultsToConsumer",
-                                    "SelectReceiveMessageConsumer",
-                                    "SelectUpdateJobStatus"
-                                ]
-                            },
-                            {
-                                "id": "C",
-                                "behavior": [
-                                    "SelectSendJobToWorkerC",
-                                    "SelectReceiveMessageWorker",
-                                    "SelectProcessReceivedMsgWorker",
-                                    "SelectSendProcessedResultsToConsumer",
-                                    "SelectReceiveMessageConsumer",
-                                    "SelectUpdateJobStatus"
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "join",
-                        "fanoutRef": "WORKERS",
-                        "condition": {
-                            "type": "finish_order",
-                            "selector": "last"
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataEntry",
+                    "behavior": [
+                        "SelectMainMenuAndAcceptData"
+                    ]
+                },
+                {
+                    "type": "fanout",
+                    "id": "WORKERS",
+                    "output": "finish_order",
+                    "workers": [
+                        {
+                            "id": "A",
+                            "behavior": [
+                                "SelectSendJobToWorkerA",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
+                        },
+                        {
+                            "id": "B",
+                            "behavior": [
+                                "SelectSendJobToWorkerB",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
+                        },
+                        {
+                            "id": "C",
+                            "behavior": [
+                                "SelectSendJobToWorkerC",
+                                "SelectReceiveMessageWorker",
+                                "SelectProcessReceivedMsgWorker",
+                                "SelectSendProcessedResultsToConsumer",
+                                "SelectReceiveMessageConsumer",
+                                "SelectUpdateJobStatus"
+                            ]
                         }
-                    },
-                    {
-                        "type": "sequential",
-                        "id": "ProcessDataEnd",
-                        "behavior": [
-                            "SelectCleanupJob"
-                        ]
+                    ]
+                },
+                {
+                    "type": "join",
+                    "fanoutRef": "WORKERS",
+                    "condition": {
+                        "type": "finish_order",
+                        "selector": "last"
                     }
-                ]
-            }
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataEnd",
+                    "behavior": [
+                        "SelectCleanupJob"
+                    ]
+                }
+            ]
         }
     ],
     "behavior": [
         {
-            "id": "SelectMainMenu",
+            "id": "SelectMainMenuAndAcceptData",
             "atomic": true,
             "intent": "Get the data to process from the user.",
             "abstractions": [
