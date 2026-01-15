@@ -1,29 +1,75 @@
 {
     "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
-    "abstractions": [
+    "design": [
         {
-            "id": "MainMenu",
-            "entry": "SelectDisplayMenu",
-            "abstraction_type": "sequential",
-            "intention": "Present the user with the menu, accept the selection and execute the selection.",
-            "behaviors": [
-                "SelectDisplayMenu",
-                "SelectAcceptBookAndAddToBasket",
-                "SelectPlaceBooksOnShelf",
-                "SelectFailIfTooManyBooks",
-                "SelectPlaceBookOnShelf",
-                "SelectCreateSlotForBook",
-                "SelectDisplayLibrary",
-                "SelectTerminateProgram"
+            "name": "LibraryManager",
+            "entry": {
+                "type": "atomic",
+                "behavior": "SelectDisplayMenu"
+            },
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "LibraryManagerEntry",
+                    "behavior": [
+                        "ChooseToDisplayMenu",
+                        "PromptUserForChoice"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "id": "MenuSelection",
+                    "checks": [
+                        {
+                            "check": "CheckIfUserChoseAddBook",
+                            "onSelect": {
+                                "enter": "AddBookToBasket"
+                            }
+                        },
+                        {
+                            "check": "CheckIfUserChosePlaceBook",
+                            "onSelect": {
+                                "enter": "PlaceBooksOnShelf"
+                            }
+                        },
+                        {
+                            "check": "CheckIfUserChoseDisplayLibrary",
+                            "onSelect": {
+                                "enter": "DisplayLibrary"
+                            }
+                        },
+                        {
+                            "check": "ExitTheMenu",
+                            "onSelect": {
+                                "terminate": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "AddBookToBasket",
+            "steps": [
+            ]
+        },
+        {
+            "id": "PlaceBooksOnShelf",
+            "steps": [
+            ]
+        },
+        {
+            "id": "DisplayLibrary",
+            "steps": [
             ]
         }
-    ],    
+    ],
     "behavior": [
         {
             "id": "SelectDisplayMenu",
             "atomic": true,
             "intent": "Show menu to user and accept their choice.",
-            "abstractions":[
+            "abstractions": [
                 "ChooseToDisplayMenu",
                 "PromptUserForChoice",
                 "CheckIfUserChoseAddBook",
@@ -37,13 +83,13 @@
             "variables": [
                 {
                     "name": "book_details",
-                    "placeholder":"<name>",
+                    "placeholder": "<name>",
                     "scope": "local",
                     "key": "name"
                 },
                 {
                     "name": "book_details",
-                    "placeholder":"<genre>",
+                    "placeholder": "<genre>",
                     "scope": "local",
                     "key": "genre"
                 }
@@ -65,7 +111,7 @@
             "variables": [
                 {
                     "name": "basket",
-                    "placeholder":"<num_books>",
+                    "placeholder": "<num_books>",
                     "scope": "local",
                     "key": "length"
                 }
@@ -90,7 +136,7 @@
             "variables": [
                 {
                     "name": "basket",
-                    "placeholder":"<num_books>",
+                    "placeholder": "<num_books>",
                     "scope": "local",
                     "key": "length"
                 }
@@ -106,13 +152,13 @@
             "variables": [
                 {
                     "name": "book",
-                    "placeholder":"<name>",
+                    "placeholder": "<name>",
                     "scope": "local",
                     "key": "name"
                 },
                 {
                     "name": "book",
-                    "placeholder":"<genre>",
+                    "placeholder": "<genre>",
                     "scope": "local",
                     "key": "genre"
                 }
@@ -131,11 +177,11 @@
             "variables": [
                 {
                     "name": "firstLetter",
-                    "placeholder":"<letter>",
+                    "placeholder": "<letter>",
                     "scope": "local"
                 }
             ],
-            "abstractions":[
+            "abstractions": [
                 "CreateSlotForBookOnShelf"
             ]
         },
@@ -150,7 +196,7 @@
         {
             "id": "SelectTerminateProgram",
             "intent": "Terminated the library manager.",
-            "abstractions":[
+            "abstractions": [
                 "ExitTheMenu"
             ]
         }
