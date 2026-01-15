@@ -1,76 +1,76 @@
 {
     "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
-    "abstractions": [
+    "design": [
         {
-            "id": "ProcessData",
-            "entry": "SelectMainMenu",
-            "abstraction_type": "concurrent",
-            "type": "SplitJobTypeA",
-            "type_description": "This type of concurrent abstraction splits a job between N workers. Each worker processes the job and sends the results to a single consumer who tracks when the workers have finished and cleans up the job.",
-            "intention": "Processes the data provided by user by splitting the job between three workers and it aggregates the results in a consumer before finishing the job.",
-            "numConcurrent": 3,
-            "behaviors": [
-                {
-                    "id": "SelectStart",
-                    "level": 1,
-                    "type": "start",
-                    "intention": "Accepted data from the user to create job.",
-                    "behaviors": [
-                        "SelectMainMenu"
-                    ]
-                },
-                {
-                    "id": "ProcessDataWithWorkerA",
-                    "level": 2,
-                    "type": "concurrent",
-                    "intention": "Concurrently process the data with worker A.",
-                    "behaviors": [
-                        "SelectSendJobToWorkerA",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
-                    ]
-                },
-                {
-                    "id": "ProcessDataWithWorkerB",
-                    "level": 2,
-                    "type": "concurrent",
-                    "intention": "Concurrently process the data with worker B.",
-                    "behaviors": [
-                        "SelectSendJobToWorkerB",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
-                    ]
-                },
-                {
-                    "id": "ProcessDataWithWorkerC",
-                    "level": 2,
-                    "type": "concurrent",
-                    "intention": "Concurrently process the data with worker C.",
-                    "behaviors": [
-                        "SelectSendJobToWorkerC",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
-                    ]
-                },
-                {
-                    "id": "SelectEnd",
-                    "level": 3,
-                    "type": "end",
-                    "intention": "All workers completed, cleaned up job.",
-                    "behaviors": [
-                        "SelectCleanupJob"
-                    ]
-                }
-            ]
+            "name": "ProcessData",
+            "entry": {
+                "type": "atomic",
+                "id": "ProcessDataEntry",
+                "behavior": [
+                    "SelectMainMenu"
+                ]
+            },
+            "behavior": {
+                "type": "sequential",
+                "id": "ProcessDataBody",
+                "steps": [
+                    {
+                        "type": "fanout",
+                        "id": "WORKERS",
+                        "output": "finish_order",
+                        "workers": [
+                            {
+                                "id": "A",
+                                "behavior": [
+                                    "SelectSendJobToWorkerA",
+                                    "SelectReceiveMessageWorker",
+                                    "SelectProcessReceivedMsgWorker",
+                                    "SelectSendProcessedResultsToConsumer",
+                                    "SelectReceiveMessageConsumer",
+                                    "SelectUpdateJobStatus"
+                                ]
+                            },
+                            {
+                                "id": "B",
+                                "behavior": [
+                                    "SelectSendJobToWorkerB",
+                                    "SelectReceiveMessageWorker",
+                                    "SelectProcessReceivedMsgWorker",
+                                    "SelectSendProcessedResultsToConsumer",
+                                    "SelectReceiveMessageConsumer",
+                                    "SelectUpdateJobStatus"
+                                ]
+                            },
+                            {
+                                "id": "C",
+                                "behavior": [
+                                    "SelectSendJobToWorkerC",
+                                    "SelectReceiveMessageWorker",
+                                    "SelectProcessReceivedMsgWorker",
+                                    "SelectSendProcessedResultsToConsumer",
+                                    "SelectReceiveMessageConsumer",
+                                    "SelectUpdateJobStatus"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "join",
+                        "fanoutRef": "WORKERS",
+                        "condition": {
+                            "type": "finish_order",
+                            "selector": "last"
+                        }
+                    },
+                    {
+                        "type": "sequential",
+                        "id": "ProcessDataEnd",
+                        "behavior": [
+                            "SelectCleanupJob"
+                        ]
+                    }
+                ]
+            }
         }
     ],
     "behavior": [
