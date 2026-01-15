@@ -1,8 +1,9 @@
 {
-    "description": "Contains the behavioral abstractions of the multi-threaded data processor.",
+    "description": "Contains the design and behavioral abstractions of the multi-threaded data processor.",
     "design": [
         {
             "name": "ProcessData",
+            "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
             "entry": {
                 "type": "atomic",
                 "id": "ProcessDataEntry",
