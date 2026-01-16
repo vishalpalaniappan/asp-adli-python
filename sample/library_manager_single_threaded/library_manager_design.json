@@ -68,9 +68,55 @@
             },
             "steps": [
                 {
+                    "id": "GetBookFromBasket",
+                    "behavior": [
+                        "SelectGetBookFromBasket"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "id": "CheckShelfForSlot",
+                    "options": [
+                        {
+                            "id": "CreateSlotForBook",
+                            "behavior": [
+                                "SelectCreateSlotForBook"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "SelectAddBookToShelf",
+                    "behavior": [
+                        "SelectAddBookToShelf"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Create Slot For Book On Shelf",
+            "entry": {
+                "behavior": "SelectCreateSlotForBook"
+            },
+            "steps": [
+                {
+                    "id": "CreateSlotForBook",
+                    "behavior": [
+                        "SelectCreateSlotForBook"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Place Book On Shelf",
+            "entry": {
+                "behavior": "SelectPlaceBookOnShelf"
+            },
+            "steps": [
+                {
                     "id": "PlaceBooks",
                     "behavior": [
-                        "SelectPlaceBooksOnShelf"
+                        "SelectPlaceBookOnShelf"
                     ]
                 }
             ]
@@ -187,7 +233,7 @@
             ]
         },
         {
-            "id": "SelectPlaceBookOnShelf",
+            "id": "SelectGetBookFromBasket",
             "intent": "Placed book named <name> with genre <genre> on the shelf.",
             "variables": [
                 {
@@ -207,8 +253,14 @@
                 "GettingBookFromBasket",
                 "DisplayBookInformation",
                 "GettingFirstNameOfBook",
-                "CheckingIfShelfHasSlot",
-                "AddingBookToShelf"
+                "CheckingIfShelfHasSlot"
+            ]
+        },
+        {
+            "id": "SelectCheckShelfForSlot",
+            "intent": "Check if the shelf has the expected slot.",
+            "abstractions": [
+                "CheckingIfShelfHasSlot"
             ]
         },
         {
@@ -223,6 +275,13 @@
             ],
             "abstractions": [
                 "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectAddBookToShelf",
+            "intent": "Create slot for the letter <letter> on the shelf. ",
+            "abstractions": [
+                "AddingBookToShelf"
             ]
         },
         {
