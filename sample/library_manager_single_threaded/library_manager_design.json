@@ -75,6 +75,7 @@
                 },
                 {
                     "type": "selector",
+                    "repeat": true,
                     "id": "CheckIfBasketHasBook",
                     "options": [
                         {
