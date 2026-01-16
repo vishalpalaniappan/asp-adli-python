@@ -1,0 +1,13 @@
+[project]
+name = "asp-adli-python"
+version = "0.0.0"
+license = { text = "Apache License 2.0" }
+authors = [
+    { name="Vishal Palaniappan", email="vishal.palaniappan@gmail.com" },
+]
+description = "A tool to inject diagnostic logs into a python program. "
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+"License :: OSI Approved :: Apache Software License",
+]
