@@ -72,6 +72,64 @@
                     "behavior": [
                         "SelectPlaceBooksOnShelf"
                     ]
+                },
+                {
+                    "type": "selector",
+                    "id": "CheckIfBasketHasBook",
+                    "options": [
+                        {
+                            "id": "GetBookFromBasket",
+                            "behavior": [
+                                "SelectGettingBookFromBasket"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Get Book From Basket",
+            "entry": {
+                "behavior": "SelectGettingBookFromBasket"
+            },
+            "steps": [
+                {
+                    "id": "GettingBookFromBasket",
+                    "behavior": [
+                        "SelectGettingBookFromBasket"
+                    ]
+                },
+                {
+                    "id": "CheckIfShelfHasSlot",
+                    "behavior": [
+                        "SelectCheckingIfShelfHasSlot"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "id": "CreateSlotForBook",
+                    "options": [
+                        {
+                            "id": "CreateSlotForBook",
+                            "behavior": [
+                                "SelectCreateSlotForBook"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Create Slot For Book",
+            "entry": {
+                "behavior": "SelectCreateSlotForBook"
+            },
+            "steps": [
+                {
+                    "id": "CreateSlotForBook",
+                    "behavior": [
+                        "SelectCreateSlotForBook"
+                    ]
                 }
             ]
         },
@@ -150,6 +208,26 @@
             "abstractions": [
                 "CheckIfTooManyBooks",
                 "CheckingBasketForBook"
+            ]
+        },
+        {
+            "id": "SelectGettingBookFromBasket",
+            "abstractions": [
+                "GettingBookFromBasket",
+                "DisplayBookInformation",
+                "GettingFirstNameOfBook"
+            ]
+        },
+        {
+            "id": "SelectCheckingIfShelfHasSlot",
+            "abstractions": [
+                "CheckingIfShelfHasSlot"
+            ]
+        },
+        {
+            "id": "SelectCreateSlotForBook",
+            "abstractions": [
+                "CreateSlotForBookOnShelf"
             ]
         },
         {
