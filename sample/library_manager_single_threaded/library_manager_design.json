@@ -116,6 +116,12 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "id": "AddingBookToShelf",
+                    "behavior": [
+                        "SelectAddingBookToShelf"
+                    ]
                 }
             ]
         },
@@ -228,6 +234,12 @@
             "id": "SelectCreateSlotForBook",
             "abstractions": [
                 "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectAddingBookToShelf",
+            "abstractions": [
+                "AddingBookToShelf"
             ]
         },
         {
