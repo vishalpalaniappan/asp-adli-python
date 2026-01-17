@@ -4,10 +4,8 @@
         {
             "name": "ProcessData",
             "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
-            "entry": {
-                "type": "atomic",
-                "behavior": "SelectMainMenuAndAcceptData"
-            },
+            "type": "atomic",
+            "entry": "SelectMainMenuAndAcceptData",
             "steps": [
                 {
                     "type": "sequential",
@@ -20,39 +18,18 @@
                     "type": "fanout",
                     "id": "WORKERS",
                     "output": "finish_order",
-                    "workers": [
+                    "branches": [
                         {
                             "id": "A",
-                            "behavior": [
-                                "SelectSendJobToWorkerA",
-                                "SelectReceiveMessageWorker",
-                                "SelectProcessReceivedMsgWorker",
-                                "SelectSendProcessedResultsToConsumer",
-                                "SelectReceiveMessageConsumer",
-                                "SelectUpdateJobStatus"
-                            ]
+                            "module": "SelectSendJobToWorkerA"
                         },
                         {
                             "id": "B",
-                            "behavior": [
-                                "SelectSendJobToWorkerB",
-                                "SelectReceiveMessageWorker",
-                                "SelectProcessReceivedMsgWorker",
-                                "SelectSendProcessedResultsToConsumer",
-                                "SelectReceiveMessageConsumer",
-                                "SelectUpdateJobStatus"
-                            ]
+                            "module": "SelectSendJobToWorkerB"
                         },
                         {
                             "id": "C",
-                            "behavior": [
-                                "SelectSendJobToWorkerC",
-                                "SelectReceiveMessageWorker",
-                                "SelectProcessReceivedMsgWorker",
-                                "SelectSendProcessedResultsToConsumer",
-                                "SelectReceiveMessageConsumer",
-                                "SelectUpdateJobStatus"
-                            ]
+                            "module": "SelectSendJobToWorkerC"
                         }
                     ]
                 },
@@ -69,6 +46,60 @@
                     "id": "ProcessDataEnd",
                     "behavior": [
                         "SelectCleanupJob"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Process Data With Worker A",
+            "entry": "SelectSendJobToWorkerA",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataWithWorkerA",
+                    "behavior": [
+                        "SelectSendJobToWorkerA",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectSendProcessedResultsToConsumer",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Process Data With Worker B",
+            "entry": "SelectSendJobToWorkerB",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectSendJobToWorkerB",
+                    "behavior": [
+                        "SelectSendJobToWorkerB",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectSendProcessedResultsToConsumer",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Process Data With Worker C",
+            "entry": "SelectSendJobToWorkerC",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectSendJobToWorkerC",
+                    "behavior": [
+                        "SelectSendJobToWorkerC",
+                        "SelectReceiveMessageWorker",
+                        "SelectProcessReceivedMsgWorker",
+                        "SelectSendProcessedResultsToConsumer",
+                        "SelectReceiveMessageConsumer",
+                        "SelectUpdateJobStatus"
                     ]
                 }
             ]
