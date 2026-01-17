@@ -54,6 +54,7 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "AddBookToBasket",
                     "behavior": [
                         "SelectAcceptBookAndAddToBasket"
@@ -68,6 +69,7 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "PlaceBooksOnShelf",
                     "behavior": [
                         "SelectPlaceBooksOnShelf"
@@ -95,12 +97,14 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "GettingBookFromBasket",
                     "behavior": [
                         "SelectGettingBookFromBasket"
                     ]
                 },
                 {
+                    "type": "sequential",
                     "id": "CheckIfShelfHasSlot",
                     "behavior": [
                         "SelectCheckingIfShelfHasSlot"
@@ -119,6 +123,7 @@
                     ]
                 },
                 {
+                    "type": "sequential",
                     "id": "AddingBookToShelf",
                     "behavior": [
                         "SelectAddingBookToShelf"
@@ -133,6 +138,7 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "CreateSlotForBook",
                     "behavior": [
                         "SelectCreateSlotForBook"
@@ -147,6 +153,7 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "DisplayBooks",
                     "behavior": [
                         "SelectDisplayLibrary"
@@ -161,6 +168,7 @@
             },
             "steps": [
                 {
+                    "type": "sequential",
                     "id": "Exit",
                     "behavior": [
                         "SelectTerminateProgram"
@@ -214,7 +222,8 @@
             "intent": "Placed <num_books> book(s) on the shelf.",
             "abstractions": [
                 "CheckIfTooManyBooks",
-                "CheckingBasketForBook"
+                "CheckingBasketForBook",
+                "ReturnBookShelf"
             ]
         },
         {
