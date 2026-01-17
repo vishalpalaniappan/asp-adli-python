@@ -3,10 +3,8 @@
     "design": [
         {
             "name": "LibraryManager",
-            "entry": {
-                "type": "atomic",
-                "behavior": "SelectDisplayMenu"
-            },
+            "type": "atomic",
+            "entry": "SelectDisplayMenu",
             "steps": [
                 {
                     "type": "sequential",
@@ -21,27 +19,19 @@
                     "options": [
                         {
                             "id": "AddBookToBasket",
-                            "behavior": [
-                                "SelectAcceptBookAndAddToBasket"
-                            ]
+                            "behavior": "SelectAcceptBookAndAddToBasket"
                         },
                         {
                             "id": "PlaceBooks",
-                            "behavior": [
-                                "SelectPlaceBooksOnShelf"
-                            ]
+                            "behavior": "SelectPlaceBooksOnShelf"
                         },
                         {
                             "id": "DisplayBooks",
-                            "behavior": [
-                                "SelectDisplayLibrary"
-                            ]
+                            "behavior": "SelectDisplayLibrary"
                         },
                         {
                             "id": "Exit",
-                            "behavior": [
-                                "SelectTerminateProgram"
-                            ]
+                            "behavior": "SelectTerminateProgram"
                         }
                     ]
                 }
@@ -49,9 +39,7 @@
         },
         {
             "name": "Add Books to Basket",
-            "entry": {
-                "behavior": "SelectAcceptBookAndAddToBasket"
-            },
+            "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
                 {
                     "type": "sequential",
@@ -64,9 +52,7 @@
         },
         {
             "name": "Place Books on Shelf",
-            "entry": {
-                "behavior": "SelectPlaceBooksOnShelf"
-            },
+            "entry": "SelectPlaceBooksOnShelf",
             "steps": [
                 {
                     "type": "sequential",
@@ -82,9 +68,7 @@
                     "options": [
                         {
                             "id": "GetBookFromBasket",
-                            "behavior": [
-                                "SelectGettingBookFromBasket"
-                            ]
+                            "behavior": "SelectGettingBookFromBasket"
                         }
                     ]
                 }
@@ -92,9 +76,7 @@
         },
         {
             "name": "Get Book From Basket",
-            "entry": {
-                "behavior": "SelectGettingBookFromBasket"
-            },
+            "entry": "SelectGettingBookFromBasket",
             "steps": [
                 {
                     "type": "sequential",
@@ -116,9 +98,7 @@
                     "options": [
                         {
                             "id": "CreateSlotForBook",
-                            "behavior": [
-                                "SelectCreateSlotForBook"
-                            ]
+                            "behavior": "SelectCreateSlotForBook"
                         }
                     ]
                 },
@@ -133,9 +113,7 @@
         },
         {
             "name": "Create Slot For Book",
-            "entry": {
-                "behavior": "SelectCreateSlotForBook"
-            },
+            "entry": "SelectCreateSlotForBook",
             "steps": [
                 {
                     "type": "sequential",
@@ -148,9 +126,7 @@
         },
         {
             "name": "Display Books",
-            "entry": {
-                "behavior": "SelectDisplayLibrary"
-            },
+            "entry": "SelectDisplayLibrary",
             "steps": [
                 {
                     "type": "sequential",
@@ -163,9 +139,7 @@
         },
         {
             "name": "Exit Program",
-            "entry": {
-                "behavior": "SelectTerminateProgram"
-            },
+            "entry": "SelectTerminateProgram",
             "steps": [
                 {
                     "type": "sequential",
