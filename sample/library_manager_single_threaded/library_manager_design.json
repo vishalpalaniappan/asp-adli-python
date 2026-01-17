@@ -23,7 +23,7 @@
                         },
                         {
                             "id": "PlaceBooks",
-                            "module": "SelectPlaceBooksOnShelf"
+                            "module": "SelectCheckIfTooManyBooks"
                         },
                         {
                             "id": "DisplayBooks",
@@ -52,8 +52,25 @@
         },
         {
             "name": "Place Books on Shelf",
-            "entry": "SelectPlaceBooksOnShelf",
+            "entry": "SelectCheckIfTooManyBooks",
             "steps": [
+                {
+                    "type": "sequential",
+                    "id": "CheckIfTooManyBooks",
+                    "behavior": [
+                        "SelectCheckIfTooManyBooks"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "id": "CheckIfTooManyBooks",
+                    "options": [
+                        {
+                            "id": "SelectTooManyBooks",
+                            "module": "SelectTooManyBooks"
+                        }
+                    ]
+                },
                 {
                     "type": "sequential",
                     "id": "PlaceBooksOnShelf",
@@ -70,6 +87,19 @@
                             "id": "GetBookFromBasket",
                             "module": "SelectGettingBookFromBasket"
                         }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Select Too Many Books",
+            "entry": "SelectTooManyBooks",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectTooManyBooks",
+                    "behavior": [
+                        "SelectTooManyBooks"
                     ]
                 }
             ]
@@ -189,6 +219,20 @@
                 "AssembleBookDetails",
                 "ReturnBookDetails",
                 "AddBookToBasket"
+            ]
+        },
+        {
+            "id": "SelectCheckIfTooManyBooks",
+            "intent": "Check if there are too many books.",
+            "abstractions": [
+                "CheckIfTooManyBooks"
+            ]
+        },
+        {
+            "id": "SelectTooManyBooks",
+            "intent": "Check if there are too many books.",
+            "abstractions": [
+                "FailIfTooManyBooks"
             ]
         },
         {
