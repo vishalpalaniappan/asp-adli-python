@@ -16,22 +16,21 @@
                 },
                 {
                     "type": "fanout",
-                    "id": "WORKERS",
-                    "output": "finish_order",
-                    "branches": [
-                        {
-                            "id": "A",
-                            "module": "SelectSendJobToWorkerA"
-                        },
-                        {
-                            "id": "B",
-                            "module": "SelectSendJobToWorkerB"
-                        },
-                        {
-                            "id": "C",
-                            "module": "SelectSendJobToWorkerC"
-                        }
-                    ]
+                    "id": "A",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToWorkerA"
+                },
+                {
+                    "type": "fanout",
+                    "id": "B",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToWorkerB"
+                },
+                {
+                    "type": "fanout",
+                    "id": "C",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToWorkerC"
                 },
                 {
                     "type": "join",
