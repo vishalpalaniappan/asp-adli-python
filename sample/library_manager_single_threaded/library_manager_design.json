@@ -79,7 +79,7 @@
                     ]
                 },
                 {
-                    "type": "selector",
+                    "type": "selector_repeat",
                     "repeat": true,
                     "id": "CheckIfBasketHasBook",
                     "options": [
