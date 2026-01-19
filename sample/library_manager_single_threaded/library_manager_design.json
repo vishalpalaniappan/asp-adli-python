@@ -88,6 +88,13 @@
                             "module": "SelectGettingBookFromBasket"
                         }
                     ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReturnBookShelf",
+                    "behavior": [
+                        "SelectReturnBookShelf"
+                    ]
                 }
             ]
         },
@@ -240,8 +247,7 @@
             "intent": "Placed <num_books> book(s) on the shelf.",
             "abstractions": [
                 "CheckIfTooManyBooks",
-                "CheckingBasketForBook",
-                "ReturnBookShelf"
+                "CheckingBasketForBook"
             ]
         },
         {
@@ -268,6 +274,12 @@
             "id": "SelectAddingBookToShelf",
             "abstractions": [
                 "AddingBookToShelf"
+            ]
+        },
+        {
+            "id": "SelectReturnBookShelf",
+            "abstractions": [
+                "ReturnBookShelf"
             ]
         },
         {
