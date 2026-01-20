@@ -3,12 +3,13 @@
     "design": [
         {
             "name": "LibraryManager",
+            "id": "LibraryManagerModule",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "LibraryManagerEntry",
+                    "id": "DisplayMenuStep",
                     "behavior": [
                         "SelectDisplayMenu"
                     ]
@@ -16,7 +17,7 @@
                 {
                     "type": "selector",
                     "mutex": true,
-                    "id": "MenuOptions",
+                    "id": "AcceptMenuOptionStep",
                     "options": [
                         {
                             "id": "AddBookToBasket",
@@ -40,11 +41,13 @@
         },
         {
             "name": "Add Books to Basket",
+            "id": "AddBooksToBasketModule",
+            "description": "Accept Book From User and Add to Basket",
             "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "AddBookToBasket",
+                    "id": "AcceptBookAndAddToBasketStep",
                     "behavior": [
                         "SelectAcceptBookAndAddToBasket"
                     ]
@@ -53,11 +56,12 @@
         },
         {
             "name": "Place Books on Shelf",
+            "id": "PlaceBooksOnSHelfModule",
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "CheckIfTooManyBooks",
+                    "id": "CheckIfTooManyBooksStep",
                     "behavior": [
                         "SelectCheckIfTooManyBooks"
                     ]
@@ -65,7 +69,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "CheckIfTooManyBooks",
+                    "id": "SelectCheckIfTooManyBooksStep",
                     "options": [
                         {
                             "id": "SelectTooManyBooks",
@@ -75,7 +79,7 @@
                 },
                 {
                     "type": "sequential",
-                    "id": "PlaceBooksOnShelf",
+                    "id": "PlaceBooksOnShelfStep",
                     "behavior": [
                         "SelectPlaceBooksOnShelf"
                     ]
@@ -84,7 +88,7 @@
                     "type": "selector_repeat",
                     "mutex": false,
                     "repeat": true,
-                    "id": "CheckIfBasketHasBook",
+                    "id": "CheckIfBasketHasBookStep",
                     "options": [
                         {
                             "id": "GetBookFromBasket",
@@ -94,7 +98,7 @@
                 },
                 {
                     "type": "sequential",
-                    "id": "ReturnBookShelf",
+                    "id": "SaveUpdatedBookShelfStep",
                     "behavior": [
                         "SelectReturnBookShelf"
                     ]
@@ -103,11 +107,12 @@
         },
         {
             "name": "Select Too Many Books",
+            "id": "SelectTooManyBooksModule",
             "entry": "SelectTooManyBooks",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "SelectTooManyBooks",
+                    "id": "SelectTooManyBooksStep",
                     "behavior": [
                         "SelectTooManyBooks"
                     ]
@@ -116,18 +121,19 @@
         },
         {
             "name": "Get Book From Basket",
+            "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "GettingBookFromBasket",
+                    "id": "GettingBookFromBasketStep",
                     "behavior": [
                         "SelectGettingBookFromBasket"
                     ]
                 },
                 {
                     "type": "sequential",
-                    "id": "CheckIfShelfHasSlot",
+                    "id": "CheckIfShelfHasSlotStep",
                     "behavior": [
                         "SelectCheckingIfShelfHasSlot"
                     ]
@@ -135,7 +141,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "CreateSlotForBook",
+                    "id": "CreateSlotForBookStep",
                     "options": [
                         {
                             "id": "CreateSlotForBook",
@@ -145,7 +151,7 @@
                 },
                 {
                     "type": "sequential",
-                    "id": "AddingBookToShelf",
+                    "id": "AddingBookToShelfStep",
                     "behavior": [
                         "SelectAddingBookToShelf"
                     ]
@@ -154,11 +160,12 @@
         },
         {
             "name": "Create Slot For Book",
+            "id": "CreateSlotForBookModule",
             "entry": "SelectCreateSlotForBook",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "CreateSlotForBook",
+                    "id": "CreateSlotForBookStep",
                     "behavior": [
                         "SelectCreateSlotForBook"
                     ]
@@ -167,11 +174,12 @@
         },
         {
             "name": "Display Books",
+            "id": "DisplayBooksModule",
             "entry": "SelectDisplayLibrary",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "DisplayBooks",
+                    "id": "DisplayLibraryStep",
                     "behavior": [
                         "SelectDisplayLibrary"
                     ]
@@ -180,11 +188,12 @@
         },
         {
             "name": "Exit Program",
+            "id": "ExitProgramModule",
             "entry": "SelectTerminateProgram",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "Exit",
+                    "id": "ExitStep",
                     "behavior": [
                         "SelectTerminateProgram"
                     ]
