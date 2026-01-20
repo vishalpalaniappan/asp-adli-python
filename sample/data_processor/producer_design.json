@@ -3,38 +3,39 @@
     "design": [
         {
             "name": "ProcessData",
+            "id": "ProcessDataModule",
             "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
             "type": "atomic",
             "entry": "SelectMainMenuAndAcceptData",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "ProcessDataEntry",
+                    "id": "DisplayMenuAndAcceptDataStep",
                     "behavior": [
                         "SelectMainMenuAndAcceptData"
                     ]
                 },
                 {
                     "type": "fanout",
-                    "id": "A",
+                    "id": "WorkerAFanoutStep",
                     "fanoutRef": "WORKERS",
                     "module": "SelectSendJobToWorkerA"
                 },
                 {
                     "type": "fanout",
-                    "id": "B",
+                    "id": "WorkerBFanoutStep",
                     "fanoutRef": "WORKERS",
                     "module": "SelectSendJobToWorkerB"
                 },
                 {
                     "type": "fanout",
-                    "id": "C",
+                    "id": "WorkerCFanoutStep",
                     "fanoutRef": "WORKERS",
                     "module": "SelectSendJobToWorkerC"
                 },
                 {
                     "type": "sequential",
-                    "id": "ThrottleIngestion",
+                    "id": "ThrottleIngestionStep",
                     "behavior": [
                         "SelectThrottleIngestion"
                     ]
@@ -43,11 +44,13 @@
         },
         {
             "name": "Process Data With Worker A",
+            "id": "ProcessDataWithWorkerAModule",
+            "type": "fork",
             "entry": "SelectSendJobToWorkerA",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "ProcessDataWithWorkerA",
+                    "id": "ProcessDataWithWorkerAStep",
                     "behavior": [
                         "SelectSendJobToWorkerA",
                         "SelectReceiveMessageWorker",
@@ -60,7 +63,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "SelectCleanupJob",
+                    "id": "SelectCleanupJobStep",
                     "options": [
                         {
                             "id": "SelectCleanupJob",
@@ -72,11 +75,13 @@
         },
         {
             "name": "Process Data With Worker B",
+            "id": "ProcessDataWithWorkerBModule",
+            "type": "fork",
             "entry": "SelectSendJobToWorkerB",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "SelectSendJobToWorkerB",
+                    "id": "ProcessDataWithWorkerBStep",
                     "behavior": [
                         "SelectSendJobToWorkerB",
                         "SelectReceiveMessageWorker",
@@ -89,7 +94,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "SelectCleanupJob",
+                    "id": "SelectCleanupJobStep",
                     "options": [
                         {
                             "id": "SelectCleanupJob",
@@ -101,11 +106,13 @@
         },
         {
             "name": "Process Data With Worker C",
+            "id": "ProcessDataWithWorkerCModule",
+            "type": "fork",
             "entry": "SelectSendJobToWorkerC",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "SelectSendJobToWorkerC",
+                    "id": "ProcessDataWithWorkerCStep",
                     "behavior": [
                         "SelectSendJobToWorkerC",
                         "SelectReceiveMessageWorker",
@@ -118,7 +125,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "SelectCleanupJob",
+                    "id": "SelectCleanupJobStep",
                     "options": [
                         {
                             "id": "SelectCleanupJob",
