@@ -20,19 +20,19 @@
                     "id": "AcceptMenuOptionStep",
                     "options": [
                         {
-                            "id": "AddBookToBasket",
+                            "id": "AddBooksToBasketModule",
                             "module": "SelectAcceptBookAndAddToBasket"
                         },
                         {
-                            "id": "PlaceBooks",
+                            "id": "PlaceBooksOnShelfModule",
                             "module": "SelectCheckIfTooManyBooks"
                         },
                         {
-                            "id": "DisplayBooks",
+                            "id": "DisplayBooksModule",
                             "module": "SelectDisplayLibrary"
                         },
                         {
-                            "id": "Exit",
+                            "id": "ExitProgramModule",
                             "module": "SelectTerminateProgram"
                         }
                     ]
@@ -56,7 +56,7 @@
         },
         {
             "name": "Place Books on Shelf",
-            "id": "PlaceBooksOnSHelfModule",
+            "id": "PlaceBooksOnShelfModule",
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
@@ -72,7 +72,7 @@
                     "id": "SelectCheckIfTooManyBooksStep",
                     "options": [
                         {
-                            "id": "SelectTooManyBooks",
+                            "id": "SelectTooManyBooksModule",
                             "module": "SelectTooManyBooks"
                         }
                     ]
@@ -91,7 +91,7 @@
                     "id": "CheckIfBasketHasBookStep",
                     "options": [
                         {
-                            "id": "GetBookFromBasket",
+                            "id": "GetBookFromBasketModule",
                             "module": "SelectGettingBookFromBasket"
                         }
                     ]
@@ -144,7 +144,7 @@
                     "id": "CreateSlotForBookStep",
                     "options": [
                         {
-                            "id": "CreateSlotForBook",
+                            "id": "CreateSlotForBookModule",
                             "module": "SelectCreateSlotForBook"
                         }
                     ]
