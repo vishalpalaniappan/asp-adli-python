@@ -66,12 +66,14 @@
                             "placeholder": "<name>",
                             "type": "variable_in_behavior",
                             "behavior": "SelectAcceptBookAndAddToBasket",
+                            "functionalid": "AcceptBookName",
                             "name": "name"
                         },
                         {
                             "placeholder": "<genre>",
                             "type": "variable_in_behavior",
                             "behavior": "SelectAcceptBookAndAddToBasket",
+                            "functionalid": "AcceptBookGenre",
                             "name": "genre"
                         }
                     ],
