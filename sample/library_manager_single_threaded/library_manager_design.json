@@ -18,7 +18,13 @@
                 {
                     "type": "selector",
                     "mutex": true,
-                    "placeholder": "<SelectMenuOptionStep>",
+                    "placeholders": [
+                        {
+                            "placeholder": "<SelectMenuOptionStep>",
+                            "type": "option_value"
+
+                        }
+                    ],
                     "id": "SelectMenuOptionStep",
                     "options": [
                         {
@@ -48,12 +54,27 @@
         {
             "name": "Add Books to Basket",
             "id": "AddBooksToBasketModule",
+            "action": "The user added a book named <name> with genre <genre> to the basket.",
             "description": "Accept Book From User and Add to Basket",
             "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "AcceptBookAndAddToBasketStep",
+                    "placeholders": [
+                        {
+                            "placeholder": "<name>",
+                            "type": "variable_in_behavior",
+                            "behavior": "SelectAcceptBookAndAddToBasket",
+                            "name": "name"
+                        },
+                        {
+                            "placeholder": "<genre>",
+                            "type": "variable_in_behavior",
+                            "behavior": "SelectAcceptBookAndAddToBasket",
+                            "name": "genre"
+                        }
+                    ],
                     "behavior": [
                         "SelectAcceptBookAndAddToBasket"
                     ]
