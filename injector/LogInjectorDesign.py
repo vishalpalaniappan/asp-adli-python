@@ -327,9 +327,6 @@ class LogInjectorDesign(ast.NodeTransformer):
     def visit_ExceptHandler(self, node):
         return self.injectLogTypesC(node)
     
-    def visit_While(self, node):
-        return self.injectLogTypesC(node)
-    
     '''
         INJECT LOGS TYPE D
         Example:
@@ -351,6 +348,9 @@ class LogInjectorDesign(ast.NodeTransformer):
         return self.injectLogTypesD(node)
     
     def visit_AsyncFor(self, node):
+        return self.injectLogTypesD(node)
+    
+    def visit_While(self, node):
         return self.injectLogTypesD(node)
 
 

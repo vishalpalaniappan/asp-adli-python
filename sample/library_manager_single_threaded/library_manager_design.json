@@ -17,7 +17,7 @@
                 {
                     "type": "selector",
                     "mutex": true,
-                    "id": "AcceptMenuOptionStep",
+                    "id": "SelectMenuOptionStep",
                     "options": [
                         {
                             "id": "AddBooksToBasketModule",
@@ -79,16 +79,16 @@
                 },
                 {
                     "type": "sequential",
-                    "id": "PlaceBooksOnShelfStep",
+                    "id": "CheckBasketForBookStep",
                     "behavior": [
-                        "SelectPlaceBooksOnShelf"
+                        "SelectCheckBasketForBook"
                     ]
                 },
                 {
-                    "type": "selector_repeat",
+                    "type": "selector",
                     "mutex": false,
                     "repeat": true,
-                    "id": "CheckIfBasketHasBookStep",
+                    "id": "SelectBasketHasBookStep",
                     "options": [
                         {
                             "id": "GetBookFromBasketModule",
@@ -141,7 +141,7 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "id": "CreateSlotForBookStep",
+                    "id": "SelectCreateSlotForBookStep",
                     "options": [
                         {
                             "id": "CreateSlotForBookModule",
@@ -260,10 +260,9 @@
             ]
         },
         {
-            "id": "SelectPlaceBooksOnShelf",
+            "id": "SelectCheckBasketForBook",
             "intent": "Placed <num_books> book(s) on the shelf.",
             "abstractions": [
-                "CheckIfTooManyBooks",
                 "CheckingBasketForBook"
             ]
         },
