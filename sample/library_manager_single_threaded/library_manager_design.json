@@ -4,6 +4,7 @@
         {
             "name": "LibraryManager",
             "id": "LibraryManagerModule",
+            "action": "User chose to <SelectMenuOptionStep>.",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
             "steps": [
@@ -17,22 +18,27 @@
                 {
                     "type": "selector",
                     "mutex": true,
+                    "placeholder": "<SelectMenuOptionStep>",
                     "id": "SelectMenuOptionStep",
                     "options": [
                         {
                             "id": "AddBooksToBasketModule",
+                            "value": "add books to the basket",                            
                             "module": "SelectAcceptBookAndAddToBasket"
                         },
                         {
                             "id": "PlaceBooksOnShelfModule",
+                            "value": "place books from basket onto the shelf",
                             "module": "SelectCheckIfTooManyBooks"
                         },
                         {
                             "id": "DisplayBooksModule",
+                            "value": "display the contents of the library",
                             "module": "SelectDisplayLibrary"
                         },
                         {
                             "id": "ExitProgramModule",
+                            "value": "leave the library",
                             "module": "SelectTerminateProgram"
                         }
                     ]
