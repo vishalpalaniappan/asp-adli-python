@@ -74,11 +74,6 @@
                     "behavior": "SelectAcceptBookAndAddToBasket",
                     "functionalid": "AcceptBookGenre",
                     "name": "genre"
-                },
-                {
-                    "placeholder": "<num_books_from_steps>",
-                    "type": "step_execution_count",
-                    "step": "SelectBasketHasBookStep"
                 }
             ],
             "steps": [
@@ -95,6 +90,13 @@
             "name": "Place Books on Shelf",
             "id": "PlaceBooksOnShelfModule",
             "action": "Picked up <num_books_from_steps> books from the basket to place on the shelf.",
+            "placeholders": [
+                {
+                    "placeholder": "<num_books_from_steps>",
+                    "type": "step_execution_count",
+                    "step": "SelectBasketHasBookStep"
+                }
+            ],
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
