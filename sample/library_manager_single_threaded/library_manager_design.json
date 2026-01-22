@@ -168,7 +168,7 @@
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "CreateSlotForBookStep",
+                    "id": "SelectCreateSlotForBook",
                     "behavior": [
                         "SelectCreateSlotForBook"
                     ]
