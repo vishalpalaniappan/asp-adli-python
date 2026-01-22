@@ -4,7 +4,7 @@
         {
             "name": "LibraryManager",
             "id": "LibraryManagerModule",
-            "action": "User chose to <SelectMenuOptionStep>.",
+            "action": "The user chose to <SelectMenuOptionStep>.",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
             "steps": [
@@ -54,7 +54,7 @@
         {
             "name": "Add Books to Basket",
             "id": "AddBooksToBasketModule",
-            "action": "The user added a book named <name> with genre <genre> to the basket.",
+            "action": "The user submitted a book named <name> with genre <genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
             "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
