@@ -162,6 +162,33 @@
             "name": "Get Book From Basket",
             "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
+            "action": "Got a book named <name> from the basket and added it to the shelf in the slot for the letter <first_letter> <create_slot_sentence>.",
+            "placeholders": [
+                {
+                    "placeholder": "<create_slot_sentence>",
+                    "type": "step_existence_check",
+                    "value_if_true": "in a new slot that was created",
+                    "value_if_false": "in a slot that already existed",
+                    "step": "SelectCreateSlotForBookStep"
+                },
+                {
+                    "placeholder": "<name>",
+                    "step": "GettingBookFromBasketStep",
+                    "type": "variable_in_behavior",
+                    "behavior": "SelectGettingBookFromBasket",
+                    "functionalid": "GettingFirstNameOfBook",
+                    "name": "book",
+                    "key": "name"
+                },
+                {
+                    "placeholder": "<first_letter>",
+                    "step": "GettingBookFromBasketStep",
+                    "type": "variable_in_behavior",
+                    "behavior": "SelectGettingBookFromBasket",
+                    "functionalid": "GettingFirstNameOfBook",
+                    "name": "firstLetter"
+                }
+            ],
             "steps": [
                 {
                     "type": "sequential",
