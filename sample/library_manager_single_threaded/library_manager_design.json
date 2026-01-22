@@ -87,7 +87,6 @@
                 {
                     "type": "selector",
                     "mutex": false,
-                    "repeat": true,
                     "id": "SelectBasketHasBookStep",
                     "options": [
                         {
