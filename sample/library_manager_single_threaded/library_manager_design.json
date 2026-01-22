@@ -7,6 +7,14 @@
             "action": "The user chose to <SelectMenuOptionStep>.",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
+            "placeholders": [
+                {
+                    "placeholder": "<SelectMenuOptionStep>",
+                    "step": "SelectMenuOptionStep",
+                    "type": "option_value"
+
+                }
+            ],
             "steps": [
                 {
                     "type": "sequential",
@@ -18,13 +26,6 @@
                 {
                     "type": "selector",
                     "mutex": true,
-                    "placeholders": [
-                        {
-                            "placeholder": "<SelectMenuOptionStep>",
-                            "type": "option_value"
-
-                        }
-                    ],
                     "id": "SelectMenuOptionStep",
                     "options": [
                         {
@@ -57,26 +58,33 @@
             "action": "The user submitted a book named <name> with genre <genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
             "entry": "SelectAcceptBookAndAddToBasket",
+            "placeholders": [
+                {
+                    "placeholder": "<name>",
+                    "step": "AcceptBookAndAddToBasketStep",
+                    "type": "variable_in_behavior",
+                    "behavior": "SelectAcceptBookAndAddToBasket",
+                    "functionalid": "AcceptBookName",
+                    "name": "name"
+                },
+                {
+                    "placeholder": "<genre>",
+                    "step": "AcceptBookAndAddToBasketStep",
+                    "type": "variable_in_behavior",
+                    "behavior": "SelectAcceptBookAndAddToBasket",
+                    "functionalid": "AcceptBookGenre",
+                    "name": "genre"
+                },
+                {
+                    "placeholder": "<num_books_from_steps>",
+                    "type": "step_execution_count",
+                    "step": "SelectBasketHasBookStep"
+                }
+            ],
             "steps": [
                 {
                     "type": "sequential",
                     "id": "AcceptBookAndAddToBasketStep",
-                    "placeholders": [
-                        {
-                            "placeholder": "<name>",
-                            "type": "variable_in_behavior",
-                            "behavior": "SelectAcceptBookAndAddToBasket",
-                            "functionalid": "AcceptBookName",
-                            "name": "name"
-                        },
-                        {
-                            "placeholder": "<genre>",
-                            "type": "variable_in_behavior",
-                            "behavior": "SelectAcceptBookAndAddToBasket",
-                            "functionalid": "AcceptBookGenre",
-                            "name": "genre"
-                        }
-                    ],
                     "behavior": [
                         "SelectAcceptBookAndAddToBasket"
                     ]
@@ -86,22 +94,12 @@
         {
             "name": "Place Books on Shelf",
             "id": "PlaceBooksOnShelfModule",
-            "action": "Placed <num_books> from the basket onto the shelf.",
+            "action": "Picked up <num_books_from_steps> books from the basket to place on the shelf.",
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "CheckIfTooManyBooksStep",
-                    "placeholders": [
-                        {
-                            "placeholder": "<num_books>",
-                            "type": "variable_in_behavior",
-                            "behavior": "SelectCheckIfTooManyBooks",
-                            "functionalid": "CheckIfTooManyBooks",
-                            "name": "basket",
-                            "key": "length"
-                        }
-                    ],
                     "behavior": [
                         "SelectCheckIfTooManyBooks"
                     ]
