@@ -167,7 +167,7 @@
                 {
                     "placeholder": "<create_slot_sentence>",
                     "type": "step_existence_check",
-                    "value_if_true": "by creating a new slot",
+                    "value_if_true": "after creating a new slot",
                     "value_if_false": "in a pre-existing slot",
                     "step": "SelectCreateSlotForBookStep"
                 },
