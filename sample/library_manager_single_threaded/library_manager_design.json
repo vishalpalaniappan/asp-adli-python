@@ -86,11 +86,22 @@
         {
             "name": "Place Books on Shelf",
             "id": "PlaceBooksOnShelfModule",
+            "action": "Placed <num_books> from the basket onto the shelf.",
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "CheckIfTooManyBooksStep",
+                    "placeholders": [
+                        {
+                            "placeholder": "<num_books>",
+                            "type": "variable_in_behavior",
+                            "behavior": "SelectCheckIfTooManyBooks",
+                            "functionalid": "CheckIfTooManyBooks",
+                            "name": "basket",
+                            "key": "length"
+                        }
+                    ],
                     "behavior": [
                         "SelectCheckIfTooManyBooks"
                     ]
