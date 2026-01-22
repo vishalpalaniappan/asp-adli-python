@@ -152,6 +152,10 @@
                 {
                     "type": "sequential",
                     "id": "AddingBookToShelfStep",
+                    "goto": {
+                        "module": "PlaceBooksOnShelfModule",
+                        "step": 3
+                    },
                     "behavior": [
                         "SelectAddingBookToShelf"
                     ]
