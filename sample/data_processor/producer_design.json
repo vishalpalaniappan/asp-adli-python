@@ -149,7 +149,7 @@
             ]
         }
     ],
-    "abstractions": [
+    "behavior": [
         {
             "id": "SelectMainMenuAndAcceptData",
             "atomic": true,

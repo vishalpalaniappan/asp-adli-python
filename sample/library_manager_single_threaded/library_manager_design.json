@@ -271,7 +271,7 @@
             ]
         }
     ],
-    "abstractions": [
+    "behavior": [
         {
             "id": "SelectDisplayMenu",
             "atomic": true,
