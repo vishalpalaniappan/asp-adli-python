@@ -139,7 +139,7 @@
                     "type": "sequential",
                     "id": "SaveUpdatedBookShelfStep",
                     "behavior": [
-                        "SelectReturnBookShelf"
+                        "SelectSaveUpdatedBookSHelf"
                     ]
                 }
             ]
@@ -287,15 +287,17 @@
         {
             "id": "SelectAcceptBookAndAddToBasket",
             "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
-            "variables": [
+            "state_variables": [
                 {
                     "name": "book_details",
+                    "functionalId": "AcceptBookName",
                     "placeholder": "<name>",
                     "scope": "local",
                     "key": "name"
                 },
                 {
                     "name": "book_details",
+                    "functionalId": "AcceptBookGenre",
                     "placeholder": "<genre>",
                     "scope": "local",
                     "key": "genre"
@@ -359,7 +361,7 @@
             ]
         },
         {
-            "id": "SelectReturnBookShelf",
+            "id": "SelectSaveUpdatedBookSHelf",
             "abstractions": [
                 "ReturnBookShelf"
             ]
