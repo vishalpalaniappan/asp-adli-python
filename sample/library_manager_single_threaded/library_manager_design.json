@@ -289,18 +289,16 @@
             "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
             "state_variables": [
                 {
-                    "name": "book_details",
+                    "name": "name",
                     "functionalId": "AcceptBookName",
                     "placeholder": "<name>",
-                    "scope": "local",
-                    "key": "name"
+                    "scope": "local"
                 },
                 {
-                    "name": "book_details",
+                    "name": "genre",
                     "functionalId": "AcceptBookGenre",
                     "placeholder": "<genre>",
-                    "scope": "local",
-                    "key": "genre"
+                    "scope": "local"
                 }
             ],
             "abstractions": [
