@@ -10,9 +10,7 @@
             "placeholders": [
                 {
                     "placeholder": "<SelectMenuOptionStep>",
-                    "step": "SelectMenuOptionStep",
-                    "type": "option_value"
-
+                    "state": "option_SelectMenuOptionStep"
                 }
             ],
             "steps": [
@@ -57,6 +55,16 @@
             "id": "AddBooksToBasketModule",
             "action": "The user submitted a book named <name> with genre <genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
+            "state": [
+                {
+                    "placeholder": "<name>",
+                    "state": "book_name"
+                },
+                {
+                    "placeholder": "<genre>",
+                    "state": "book_genre"
+                }
+            ],
             "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
                 {
