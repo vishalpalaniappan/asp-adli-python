@@ -152,7 +152,7 @@
             "name": "Get Book From Basket",
             "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
-            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name> based on the first letter of the book's name. <first_letter_of_slot>",
+            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name> based on the first letter of the book's name. <created_slot_for_letter>",
             "placeholders": [
                 {
                     "state": "name_of_book_from_basket",
@@ -163,7 +163,7 @@
                     "type": "state"
                 },
                 {
-                    "state": "first_letter_of_slot",
+                    "state": "created_slot_for_letter",
                     "step": "SelectCreateSlotForBookStep",
                     "selection": true
                 }
@@ -210,11 +210,11 @@
         {
             "name": "Create Slot For Book",
             "id": "CreateSlotForBookModule",
-            "action": "Created slot for letter <first_letter_of_slot> on the bookshelf",
+            "action": "Created slot for letter <created_slot_for_letter> on the bookshelf",
             "entry": "SelectCreateSlotForBook",
             "placeholders": [
                 {
-                    "state": "first_letter_of_slot"
+                    "state": "created_slot_for_letter"
                 }
             ],
             "steps": [
