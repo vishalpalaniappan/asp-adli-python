@@ -79,7 +79,7 @@
         {
             "name": "Place Books on Shelf",
             "id": "PlaceBooksOnShelfModule",
-            "action": "Picked up <num_books_from_steps> books from the basket to place on the shelf.",
+            "action": "Picked up <num_books_from_steps> books from the basket and placed on the shelf.",
             "placeholders": [
                 {
                     "state": "num_books_from_steps",
@@ -152,7 +152,7 @@
             "name": "Get Book From Basket",
             "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
-            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name> based on the first letter of the book's name. <created_slot_for_letter>",
+            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name><created_slot_for_letter>.",
             "placeholders": [
                 {
                     "state": "name_of_book_from_basket",
@@ -165,7 +165,10 @@
                 {
                     "state": "created_slot_for_letter",
                     "step": "SelectCreateSlotForBookStep",
-                    "selection": true
+                    "selection": true,
+                    "type": "select_sentence_boolean",
+                    "if_value_exists": " after creating the slot",
+                    "if_value_does_not_exist": ""                    
                 }
             ],
             "steps": [
@@ -214,7 +217,8 @@
             "entry": "SelectCreateSlotForBook",
             "placeholders": [
                 {
-                    "state": "created_slot_for_letter"
+                    "state": "created_slot_for_letter",
+                    "type": "state"
                 }
             ],
             "steps": [
