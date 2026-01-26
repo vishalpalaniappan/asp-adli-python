@@ -184,7 +184,8 @@
                     "id": "SelectCreateSlotForBookStep",
                     "state_variables": [
                         {
-                            "state": "created_slot_for_book"
+                            "state": "created_slot_for_book",
+                            "select_state": "first_letter_of_slot"                            
                         }
                     ],
                     "options": [
@@ -336,12 +337,6 @@
                     "scope": "local",
                     "state": "name_of_book_from_basket",
                     "key": "name"
-                },
-                {
-                    "name": "firstLetter",
-                    "functionalId": "GettingFirstNameOfBook",
-                    "scope": "local",
-                    "state": "first_letter_of_book_name"
                 }
             ],
             "abstractions": [
@@ -372,6 +367,14 @@
         },
         {
             "id": "SelectAddingBookToShelf",
+            "state_variables": [
+                {
+                    "name": "firstLetter",
+                    "functionalId": "AddingBookToShelf",
+                    "scope": "local",
+                    "state": "first_letter_of_book_name"
+                }
+            ],
             "abstractions": [
                 "AddingBookToShelf"
             ]
