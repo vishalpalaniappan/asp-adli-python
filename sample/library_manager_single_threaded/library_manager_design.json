@@ -4,13 +4,13 @@
         {
             "name": "LibraryManager",
             "id": "LibraryManagerModule",
-            "action": "The user selected <SelectMenuOptionStep>.",
+            "action": "The user selected <option_SelectMenuOptionStep>.",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
             "placeholders": [
                 {
-                    "key": "<SelectMenuOptionStep>",
-                    "state": "option_SelectMenuOptionStep"
+                    "state": "option_SelectMenuOptionStep",
+                    "type": "state"
                 }
             ],
             "steps": [
@@ -53,16 +53,16 @@
         {
             "name": "Add Books to Basket",
             "id": "AddBooksToBasketModule",
-            "action": "The user submitted a book named <name> with genre <genre> and it was added to the basket.",
+            "action": "The user submitted a book named <book_name> with genre <book_genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
             "state": [
                 {
-                    "key": "<name>",
-                    "state": "book_name"
+                    "state": "book_name",
+                    "type": "state"
                 },
                 {
-                    "key": "<genre>",
-                    "state": "book_genre"
+                    "state": "book_genre",
+                    "type": "state"
                 }
             ],
             "entry": "SelectAcceptBookAndAddToBasket",
@@ -82,7 +82,7 @@
             "action": "Picked up <num_books_from_steps> books from the basket to place on the shelf.",
             "placeholders": [
                 {
-                    "key": "<num_books_from_steps>",
+                    "state": "num_books_from_steps",
                     "type": "step_execution_count",
                     "step": "SelectBasketHasBookStep"
                 }
@@ -152,15 +152,15 @@
             "name": "Get Book From Basket",
             "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
-            "action": "Got a book named <book_name> from the basket and added it to the shelf in a slot for the letter <first_letter>.",
+            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in a slot for the letter <first_letter_of_book_name>.",
             "placeholders": [
                 {
-                    "key": "<book_name>",
-                    "state": "name_of_book_from_basket"
+                    "state": "name_of_book_from_basket",
+                    "type": "state"
                 },
                 {
-                    "key": "<first_letter>",
-                    "state": "first_letter_of_book_name"
+                    "state": "first_letter_of_book_name",
+                    "type": "state"
                 }
             ],
             "steps": [
@@ -211,11 +211,10 @@
         {
             "name": "Create Slot For Book",
             "id": "CreateSlotForBookModule",
-            "action": "Created slot for letter <slot_letter> on the bookshelf",
+            "action": "Created slot for letter <first_letter_of_slot> on the bookshelf",
             "entry": "SelectCreateSlotForBook",
             "placeholders": [
                 {
-                    "key": "<slot_letter>",
                     "state": "first_letter_of_slot"
                 }
             ],
