@@ -184,7 +184,7 @@
                     "id": "SelectCreateSlotForBookStep",
                     "state_variables": [
                         {
-                            "state": "created_slot_for_book",
+                            "state": "created_slot_for_letter",
                             "select_state": "first_letter_of_slot"                            
                         }
                     ],
