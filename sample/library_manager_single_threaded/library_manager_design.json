@@ -356,7 +356,7 @@
                     "name": "firstLetter",
                     "functionalId": "CreateSlotForBookOnShelf",
                     "scope": "local",
-                    "state": "first_letter_of_slot"
+                    "state": "created_slot_for_letter"
                 }
             ],
             "abstractions": [
