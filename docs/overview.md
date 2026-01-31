@@ -22,12 +22,17 @@ However, the failure to respect the intention of the design doesn’t necessaril
 
 In the examples above, while one ended in a mechanical failure and the other did not, both failed at the semantic level by failing to realize the design's intentions. Failure to respect the intentions of the design establishes predictable failure modalities and defines precise resolution strategies. This means that by instrumenting the design semantics of each abstraction onto the implementation, the misalignment between reality and intention can be automatically understood and ultimately, this process automates debugging.
 
-## Instrumenting Design Semantics
+## Design Abstraction Language (DAL)
 
+## Semantic Transformation
 
-## Semantic Transformation and Preserving Intention Across Boundaries
+### Semantic Transformation of Concurrent Designs
 
-## Behavioral Map and Systems Management
+### Validation Design Semantics
+
+## Automating Systems Managment
+
+## Automating Testing
 
 ## Conclusion
 
