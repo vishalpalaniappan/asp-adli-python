@@ -4,9 +4,15 @@ Modern software systems are vast, often spanning thousands of interconnected ser
 
 Traditionally, to understand the execution of a software system, the engineer relied on log files to provide clues about what the system was doing during execution. Typically, this was in the form of unstructured logs and it could include a stack trace provided by an exception. These clues would then be used to understand the behavior of the design that led to the unwanted state. In some cases, the bug is the result of an incorrect implementation of the design and in other cases, the design itself would need to evolve and learn how to function effectively in the environment. While this is already a tedious process, the distributed nature of modern software systems adds to the challenge. There have been many interesting approaches to expedite the debugging and recovery process by understanding the behavior of the design from the logs but all these solutions inherently suffer from the same limitation, they are working with incomplete information and as a result, their conclusions are inherently probabilistic instead of verifiable facts.
 
+> [!NOTE]  
+> I am just going from presenting the issue and jumping into the solution, I think if this is an overview, there should be a section highlighting the solution that will be presented.
+
 ### Design Semantics and Behavioral Correctness
 
 Before exploring how these limitations can be addressed, it is useful to clarify how the execution of a software system is understood through the behavior of its design. In this context, behavior is defined as the actions taken and choices made by the design in response to a given input. The design unambiguously establishes the intentions of a world governed by semantic contracts and relationships, expressed as semantic invariants that define the conditions under which the world is valid. When the design’s behavior preserves these invariants, the world functions as intended; when an invariant is violated, the world enters a semantically invalid state.
+
+> [!NOTE]  
+> When I revisit this and the two sections below, I want to bring in the library manager system diagram and then motivate these things more precisely.
 
 ### Semantic Invariants
 
@@ -33,6 +39,8 @@ To address the limitations of traditional approaches to understanding software s
 - Second, it automates testing, since an implementation that preserves all semantic invariants is, by definition, capable of realizing the design’s intentions.
 - Third, it automates systems management by continuously ensuring that execution remains aligned with the design’s intentions as the system operates within its environment.
 
+> [!NOTE]  
+> When I revisit this, I think there is a much more meaningful way to highlighth how the design automates this.
 
 ### Design Instrumentation and Semantic Transformation
 
@@ -40,13 +48,35 @@ To make this possible, the design is unambiguously instrumented into the impleme
 
 For designs that involve concurrency, the Semantic Transform maps execution distributed across multiple threads, processes, or nodes into the behavior of a single, coherent design. This is achieved by propagating unique identifiers across threads, processes, and nodes, allowing the transform to maintain continuity of design behavior across distributed execution. By interpreting distributed execution through a single design, the transform collapses incidental complexity and enables deterministic understanding of distributed system behavior.
 
+> [!NOTE]  
+> When I revisit this, there is more to say here about how the transform is performed, I also want to highlight the idea that we are solving the problem at the source and explain using an analogy how producing presolved data eliminates the need for thinking.
+
+### Lossless Behavioral Representation and Domain-Specific Compression
+
+However, all of this is only possible if the behavior of the design is represented losslessly and faithfully. Any gaps in behavioral representation break the automatic nature of the process, as execution can no longer be understood purely through observation. Instead, missing behavior must be inferred, reintroducing probability and uncertainty into the analysis.
+
+The same requirement applies to testing and learning. If the environments that motivated semantic invariants cannot be unambiguously identified from execution, then testing cannot be automated and constraints cannot be reliably validated. For this reason, it is critical that execution is preserved losslessly.
+
+To make this feasible, the unambiguous nature of the design is leveraged to fully specify the structure of the execution data. Because the design defines exactly what behavior is possible, this structure can be exploited to apply domain-specific compression, significantly reducing the size of the resulting execution trace. Since program execution is highly repetitive and predictable, this compression can be further improved by leveraging recurring structural patterns in the data.
+
+Through this process, the complete execution history and a lossless representation of design behavior can be preserved in a practical and scalable form. To manage these domain-compressed execution traces, an open-source tool named CLP can be used. CLP supports domain-specific compression of unambiguous dynamic traces and enables efficient search directly over compressed data, without requiring decompression. It has been proven at petabyte scale, making it a practical foundation for enabling automated debugging, testing, and systems management.
+
+> [!NOTE]  
+> When I revisit this, I want to be more specific about how domain specific compression works and give examples how the variable structure can be specified.
+
+
+### The Design Feedback Loop
+
 ![feedback]
 
-However, all of this is only possible if the behavior of the design is represented losslessly and faithfully. If there were gaps in the behavior, then this process wouldn’t be automatic as the execution wouldn’t be understood simply through observation, resulting in algorithms that must infer the behavior of the design by thinking, introducing probability and uncertainty. Moreover, testing wouldn’t be automated if the environments which produced the constraints can’t be unambiguously identified. As such it is critical that the execution is losslessly preserved.
-To make this possible, the unambiguous nature of the design can be leveraged to fully specify the structure of the data. This can then be exploited to apply domain specific compression to the data to minimize the size of the resulting execution. Since programs are repetitive and predictable, it becomes possible to further improve the compression by leveraging its structure. In the process, the entire execution history and a lossless representation of its behavior can be preserved. Practically, to manage the domain compressed logs, an open-source tool named CLP can be leveraged. It enables domain specific compression of the unambiguous data in the dynamic trace and supports search of the compressed data without decompression. In addition, CLP has been proven at a petabyte scale, making it the ideal solution to help enable the automation of software systems management.
+Through instrumentation, domain-specific compression, and semantic transformation, the entire process is encapsulated in the feedback loop illustrated above. The design serves as the highest authority over the software system, ensuring that execution is always understood with semantic clarity rather. When execution enters a semantically invalid state, the behavior of the design is examined directly to determine whether the cause can be explained by an existing invariant violation. If no such explanation exists, the process enables the design to unambiguously learn from its environment by incorporating new invariants or behavioral refinements.
 
+Through this loop, both the evolution of the design and the realities that shaped it are preserved losslessly. The design does not merely guide implementation; it continuously audits execution, validates its own assumptions, and evolves in response to observed reality, without ever dissolving into ambiguity or probabilistic reasoning.
 
-Through the instrumentation, compression and transformation, the entire process can be encapsulated in a feedback loop shown in the diagram above. Since the design is the highest authority on the software system, this process never dissolves into confusion and always sees the execution with clarity. When the root cause can’t be identified through observation, this process enables the design to unambiguously learn from its environment. In the process, the entire evolution of the design is unambiguously preserved along with the reality that shaped it. 
+> [!NOTE]  
+> There is a lot to improve about this section, I'm not tying in the automating that the lossless behavior of the design brings into this section very well.
+
+------
 
 Missing (identified so far):
 In the design section, be more explicit about how failures are predicted and resolved, you just talked about it indirectly.
