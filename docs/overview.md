@@ -4,8 +4,7 @@ Modern software systems are vast, often spanning thousands of interconnected ser
 
 Traditionally, to understand the execution of a software system, the engineer relied on log files to provide clues about what the system was doing during execution. Typically, this was in the form of unstructured logs and it could include a stack trace provided by an exception. These clues would then be used to understand the behavior of the design that led to the unwanted state. In some cases, the bug is the result of an incorrect implementation of the design and in other cases, the design itself would need to evolve and learn how to function effectively in the environment. While this is already a tedious process, the distributed nature of modern software systems adds to the challenge. There have been many interesting approaches to expedite the debugging and recovery process by understanding the behavior of the design from the logs but all these solutions inherently suffer from the same limitation, they are working with incomplete information and as a result, their conclusions are inherently probabilistic instead of verifiable facts.
 
-> [!NOTE]  
-> I am just going from presenting the issue and jumping into the solution, I think if this is an overview, there should be a section highlighting the solution that will be presented.
+To address these limitations, this document proposes an approach that grounds the understanding of execution in a faithful, semantic representation of the system’s design. This representation enables execution to be interpreted deterministically, providing a foundation for automated analysis and management without reliance on probabilistic inference.
 
 ### Design Semantics and Behavioral Correctness
 
