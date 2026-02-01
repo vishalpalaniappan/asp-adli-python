@@ -6,7 +6,7 @@ Traditionally, to understand the execution of a software system, the engineer re
 
 ### Design Semantics and Behavioral Correctness
 
-Before exploring how these limitations can be addressed, it is worth clarifying how the execution of a software system is understood through the behavior of its design. In this context, behavior is defined as the set of actions taken and choices made by the design in response to a given input. The design unambiguously establishes the intentions of a world that is bound by semantic contracts and relationships that define its reality. When these semantic contracts are respected by its behavior, the world functions as the design intended and when they are violated, the world enters a semantically invalid state.
+Before exploring how these limitations can be addressed, it is useful to clarify how the execution of a software system is understood through the behavior of its design. In this context, behavior is defined as the actions taken and choices made by the design in response to a given input. The design unambiguously establishes the intentions of a world governed by semantic contracts and relationships, expressed as semantic invariants that define the conditions under which the world is valid. When the design’s behavior preserves these invariants, the world functions as intended; when an invariant is violated, the world enters a semantically invalid state.
 
 ### Semantic Invariants
 
