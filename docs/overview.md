@@ -20,7 +20,7 @@ These semantic invariants constrain the design’s behavior to ensure that its i
 For example, consider a library manager whose design accepts books and places them on shelves using the first letter of each book’s name as a sorting key. Within this design, accepting a book without a name violates a semantic invariant and predicts a failure when the behavior attempts to read the first letter. The resolution is a behavioral refinement of the design: rejecting books without a name at the point of acceptance. By enforcing this invariant, the design prevents the system from entering a semantically invalid state.
 
 
-### Environmental Restrictions
+### Environmental Constraints and Learned Invariants.
 
 However, the assumptions made by a design can conflict with the reality of what is actually possible. A design encodes expectations about its operating environment, and those expectations may be refuted by observed behavior during execution. When this occurs, the environment imposes restrictions on how the design can realize its intentions, forcing the design to learn new behavior and introduce new constraints.
 
