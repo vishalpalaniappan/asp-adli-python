@@ -402,7 +402,14 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "intent": "Create a slot for the book",
+            "intent": "Created a slot for the letter <first_letter>",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                }
+            ],
             "participants": [
                 {
                     "name": "book",
@@ -412,6 +419,12 @@
                 {
                     "name": "book_shelf",
                     "functionalId": "CreateSlotForBookOnShelf",
+                    "scope": "local"    
+                },
+                {
+                    "name": "firstLetter",
+                    "provenance": "book",
+                    "functionalId": "CheckingIfShelfHasSlot",
                     "scope": "local"    
                 }
             ],
