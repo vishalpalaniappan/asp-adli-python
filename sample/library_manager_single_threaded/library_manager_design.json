@@ -221,6 +221,7 @@
             "placeholders": [
                 {
                     "string": "<response>",
+                    "type": "value",
                     "participantName": "response"
                 }
             ],
@@ -253,10 +254,12 @@
             "placeholders": [
                 {
                     "string": "<genre>",
+                    "type": "value",
                     "participantName": "genre"
                 },
                 {
                     "string": "<name>",
+                    "type": "value",
                     "participantName": "name"
                 }
             ],
