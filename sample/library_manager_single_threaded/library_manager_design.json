@@ -324,7 +324,7 @@
         },
         {
             "id": "SelectCheckBasketForBook",
-            "intent": "The basket has <num_books> books in it.",
+            "intent": "The basket has <num_books> book(s) in it.",
             "placeholders": [
                 {
                     "string": "<num_books>",
