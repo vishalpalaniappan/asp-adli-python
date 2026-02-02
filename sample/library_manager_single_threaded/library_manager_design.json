@@ -242,6 +242,24 @@
         {
             "id": "SelectAcceptBookAndAddToBasket",
             "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
+            "intent_validation": [
+                {
+                    "type": "data_exists",
+                    "source_var": "book_details",
+                    "target_var": "basket",
+                    "position": "end"
+                }
+            ],
+            "placeholders": [
+                {
+                    "string": "<genre>",
+                    "participantName": "genre"
+                },
+                {
+                    "string": "<name>",
+                    "participantName": "name"
+                }
+            ],
             "participants": [
                 {
                     "name": "name",
@@ -262,6 +280,11 @@
                 {
                     "name": "basket",
                     "functionalId": "AddBookToBasket",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_details",
+                    "functionalId": "AssembleBookDetails",
                     "scope": "local"
                 }
             ],
