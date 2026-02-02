@@ -402,7 +402,7 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "intent": "Created a slot for the letter <first_letter>",
+            "intent": "Creating a slot for the letter <first_letter>",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -434,7 +434,21 @@
         },
         {
             "id": "SelectAddingBookToShelf",
-            "intent": "Adding a book to the shelf",
+            "intent": "Adding a book named <book_name> with genre <book_genre> to the shelf.",
+            "placeholders": [
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["name"]
+                },
+                {
+                    "string": "<book_genre>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["genre"]
+                }
+            ],
             "participants": [
                 {
                     "name": "book",
