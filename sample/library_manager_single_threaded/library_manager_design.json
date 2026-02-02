@@ -346,7 +346,15 @@
         },
         {
             "id": "SelectGettingBookFromBasket",
-            "intent": "Getting a book from the basket.",
+            "intent": "Got a book named <book_name> from the basket.",
+            "placeholders": [
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "key": ["name"]
+                }
+            ],
             "participants": [
                 {
                     "name": "book",
