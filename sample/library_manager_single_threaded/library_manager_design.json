@@ -424,7 +424,7 @@
                 {
                     "name": "firstLetter",
                     "provenance": "book",
-                    "functionalId": "CheckingIfShelfHasSlot",
+                    "functionalId": "CreateSlotForBookOnShelf",
                     "scope": "local"    
                 }
             ],
