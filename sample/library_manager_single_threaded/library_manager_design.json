@@ -281,7 +281,13 @@
                     "name": "name",
                     "functionalId": "AcceptBookName",
                     "scope": "local",
-                    "state": "book_name"
+                    "state": "book_name",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "value": 1
+                        }
+                    ]
                 },
                 {
                     "name": "genre",
