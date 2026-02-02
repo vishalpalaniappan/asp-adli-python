@@ -352,7 +352,7 @@
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "key": ["name"]
+                    "keys": ["name"]
                 }
             ],
             "participants": [
