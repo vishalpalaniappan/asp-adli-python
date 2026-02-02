@@ -7,12 +7,6 @@
             "action": "The user selected <option_SelectMenuOptionStep>.",
             "type": "atomic",
             "entry": "SelectDisplayMenu",
-            "placeholders": [
-                {
-                    "state": "option_SelectMenuOptionStep",
-                    "type": "state"
-                }
-            ],
             "steps": [
                 {
                     "type": "sequential",
@@ -55,16 +49,6 @@
             "id": "AddBooksToBasketModule",
             "action": "The user submitted a book named <book_name> with genre <book_genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
-            "state": [
-                {
-                    "state": "book_name",
-                    "type": "state"
-                },
-                {
-                    "state": "book_genre",
-                    "type": "state"
-                }
-            ],
             "entry": "SelectAcceptBookAndAddToBasket",
             "steps": [
                 {
@@ -80,13 +64,6 @@
             "name": "Place Books on Shelf",
             "id": "PlaceBooksOnShelfModule",
             "action": "Picked up <num_books_from_steps> books from the basket and placed on the shelf.",
-            "placeholders": [
-                {
-                    "state": "num_books_from_steps",
-                    "type": "step_execution_count",
-                    "step": "SelectBasketHasBookStep"
-                }
-            ],
             "entry": "SelectCheckIfTooManyBooks",
             "steps": [
                 {
@@ -153,24 +130,6 @@
             "id": "GetBookFromBasketModule",
             "entry": "SelectGettingBookFromBasket",
             "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name><created_slot_for_letter>.",
-            "placeholders": [
-                {
-                    "state": "name_of_book_from_basket",
-                    "type": "state"
-                },
-                {
-                    "state": "first_letter_of_book_name",
-                    "type": "state"
-                },
-                {
-                    "state": "created_slot_for_letter",
-                    "step": "SelectCreateSlotForBookStep",
-                    "selection": true,
-                    "type": "select_sentence_boolean",
-                    "if_value_exists": " after creating the slot",
-                    "if_value_does_not_exist": ""                    
-                }
-            ],
             "steps": [
                 {
                     "type": "sequential",
@@ -215,12 +174,6 @@
             "id": "CreateSlotForBookModule",
             "action": "Created slot for letter <created_slot_for_letter> on the bookshelf",
             "entry": "SelectCreateSlotForBook",
-            "placeholders": [
-                {
-                    "state": "created_slot_for_letter",
-                    "type": "state"
-                }
-            ],
             "steps": [
                 {
                     "type": "sequential",
@@ -276,7 +229,7 @@
         {
             "id": "SelectAcceptBookAndAddToBasket",
             "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
-            "state_variables": [
+            "participants": [
                 {
                     "name": "name",
                     "functionalId": "AcceptBookName",
@@ -323,12 +276,11 @@
         {
             "id": "SelectCheckBasketForBook",
             "intent": "Placed <num_books> book(s) on the shelf.",
-            "state_variables": [
+            "participants": [
                 {
                     "name": "basket",
                     "functionalId": "CheckingBasketForBook",
                     "scope": "local",
-                    "key": "length",
                     "state": "num_books_in_basket"
                 }
             ],
@@ -338,13 +290,11 @@
         },
         {
             "id": "SelectGettingBookFromBasket",
-            "state_variables": [
+            "participants": [
                 {
                     "name": "book",
                     "functionalId": "GettingBookFromBasket",
-                    "scope": "local",
-                    "state": "name_of_book_from_basket",
-                    "key": "name"
+                    "scope": "local"
                 }
             ],
             "abstractions": [
@@ -361,12 +311,11 @@
         },
         {
             "id": "SelectCreateSlotForBook",
-            "state_variables": [
+            "participants": [
                 {
-                    "name": "firstLetter",
+                    "name": "book",
                     "functionalId": "CreateSlotForBookOnShelf",
-                    "scope": "local",
-                    "state": "created_slot_for_letter"
+                    "scope": "local"
                 }
             ],
             "abstractions": [
@@ -375,12 +324,11 @@
         },
         {
             "id": "SelectAddingBookToShelf",
-            "state_variables": [
+            "participants": [
                 {
                     "name": "firstLetter",
                     "functionalId": "AddingBookToShelf",
-                    "scope": "local",
-                    "state": "first_letter_of_book_name"
+                    "scope": "local"
                 }
             ],
             "abstractions": [
