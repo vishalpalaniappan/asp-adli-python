@@ -370,7 +370,14 @@
         },
         {
             "id": "SelectCheckingIfShelfHasSlot",
-            "intent": "Checking if shelf has a slot for the book",
+            "intent": "Checking if shelf has a slot for the letter <first_letter>",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                }
+            ],
             "participants": [
                 {
                     "name": "book",
@@ -379,6 +386,12 @@
                 },
                 {
                     "name": "book_shelf",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"    
+                },
+                {
+                    "name": "firstLetter",
+                    "provenance": "book",
                     "functionalId": "CheckingIfShelfHasSlot",
                     "scope": "local"    
                 }
