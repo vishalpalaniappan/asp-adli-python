@@ -300,7 +300,7 @@
         },
         {
             "id": "SelectCheckIfTooManyBooks",
-            "intent": "Check if there are too many books.",
+            "intent": "Checked if there are more than 5 books in the basket.",
             "participants": [
                 {
                     "name": "basket",
@@ -321,7 +321,15 @@
         },
         {
             "id": "SelectCheckBasketForBook",
-            "intent": "The basket has <num_book> books in it.",
+            "intent": "The basket has <num_books> books in it.",
+            "placeholders": [
+                {
+                    "string": "<num_books>",
+                    "type": "semantic_property",
+                    "participantName": "basket",
+                    "property": "length"
+                }
+            ],
             "participants": [
                 {
                     "name": "basket",
