@@ -220,8 +220,8 @@
             "intent": "Displayed the menu to user and they selected the response <response>.",
             "placeholders": [
                 {
-                    "value": "<response>",
-                    "name": "response"
+                    "string": "<response>",
+                    "participantName": "response"
                 }
             ],
             "participants": [
@@ -328,6 +328,7 @@
         },
         {
             "id": "SelectCheckingIfShelfHasSlot",
+            "intent": "Checking if shelf has a slot for the book",
             "participants": [
                 {
                     "name": "book",
@@ -346,6 +347,7 @@
         },
         {
             "id": "SelectCreateSlotForBook",
+            "intent": "Create a slot for the book",
             "participants": [
                 {
                     "name": "book",
@@ -364,6 +366,7 @@
         },
         {
             "id": "SelectAddingBookToShelf",
+            "intent": "Adding a book to the shelf",
             "participants": [
                 {
                     "name": "book",
@@ -382,6 +385,7 @@
         },
         {
             "id": "SelectSaveUpdatedBookSHelf",
+            "intent": "Save the updated bookshelf.",
             "abstractions": [
                 "ReturnBookShelf"
             ]
