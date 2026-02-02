@@ -217,7 +217,13 @@
         {
             "id": "SelectDisplayMenu",
             "atomic": true,
-            "intent": "Show menu to user and accept their choice.",
+            "intent": "Displayed the menu to user and they selected the response <response>.",
+            "placeholders": [
+                {
+                    "value": "<response>",
+                    "name": "response"
+                }
+            ],
             "participants": [
                 {
                     "name": "response",
