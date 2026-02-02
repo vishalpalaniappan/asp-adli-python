@@ -218,6 +218,13 @@
             "id": "SelectDisplayMenu",
             "atomic": true,
             "intent": "Show menu to user and accept their choice.",
+            "participants": [
+                {
+                    "name": "response",
+                    "functionalId": "PromptUserForChoice",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ChooseToDisplayMenu",
                 "PromptUserForChoice",
@@ -234,7 +241,6 @@
                     "name": "name",
                     "functionalId": "AcceptBookName",
                     "scope": "local",
-                    "state": "book_name",
                     "constraint": [
                         {
                             "type":"minLength",
@@ -245,8 +251,12 @@
                 {
                     "name": "genre",
                     "functionalId": "AcceptBookGenre",
-                    "scope": "local",
-                    "state": "book_genre"
+                    "scope": "local"
+                },
+                {
+                    "name": "basket",
+                    "functionalId": "AddBookToBasket",
+                    "scope": "local"
                 }
             ],
             "abstractions": [
@@ -262,26 +272,32 @@
         {
             "id": "SelectCheckIfTooManyBooks",
             "intent": "Check if there are too many books.",
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "CheckIfTooManyBooks",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "CheckIfTooManyBooks"
             ]
         },
         {
             "id": "SelectTooManyBooks",
-            "intent": "Check if there are too many books.",
+            "intent": "Artificially raise exception if there are too many books.",
             "abstractions": [
                 "FailIfTooManyBooks"
             ]
         },
         {
             "id": "SelectCheckBasketForBook",
-            "intent": "Placed <num_books> book(s) on the shelf.",
+            "intent": "The basket has <num_book> books in it.",
             "participants": [
                 {
                     "name": "basket",
                     "functionalId": "CheckingBasketForBook",
-                    "scope": "local",
-                    "state": "num_books_in_basket"
+                    "scope": "local"
                 }
             ],
             "abstractions": [
@@ -290,6 +306,7 @@
         },
         {
             "id": "SelectGettingBookFromBasket",
+            "intent": "Getting a book from the basket.",
             "participants": [
                 {
                     "name": "book",
@@ -305,6 +322,18 @@
         },
         {
             "id": "SelectCheckingIfShelfHasSlot",
+            "participants": [
+                {
+                    "name": "book",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"    
+                }
+            ],
             "abstractions": [
                 "CheckingIfShelfHasSlot"
             ]
@@ -316,6 +345,11 @@
                     "name": "book",
                     "functionalId": "CreateSlotForBookOnShelf",
                     "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "CreateSlotForBookOnShelf",
+                    "scope": "local"    
                 }
             ],
             "abstractions": [
@@ -326,9 +360,14 @@
             "id": "SelectAddingBookToShelf",
             "participants": [
                 {
-                    "name": "firstLetter",
+                    "name": "book",
                     "functionalId": "AddingBookToShelf",
                     "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "AddingBookToShelf",
+                    "scope": "local"    
                 }
             ],
             "abstractions": [
@@ -344,6 +383,18 @@
         {
             "id": "SelectDisplayLibrary",
             "intent": "Displayed the contents of the library.",
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "DisplayBasket",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "DisplayBookShelf",
+                    "scope": "local"    
+                }
+            ],
             "abstractions": [
                 "DisplayBookShelf",
                 "DisplayBasket"
