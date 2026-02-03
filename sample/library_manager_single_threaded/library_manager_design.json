@@ -271,21 +271,70 @@
         },
         {
             "id": "SelectAcceptBookName",
-            "intent": "Librarian requests and accepts book name from the user.",
+            "intent": "Librarian accepts the books name: <name>.",
+            "placeholders": [
+                {
+                    "string": "<name>",
+                    "type": "value",
+                    "participantName": "name"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "name",
+                    "functionalId": "AcceptBookName",
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "value": 1
+                        }
+                    ]
+                }
+            ],
             "abstractions": [
                 "AcceptBookName"
             ]
         },
         {
             "id": "SelectAcceptBookGenre",
-            "intent": "Librarian requests and accepts book genre from the user.",
+            "intent": "Librarian accepts the books genre: <genre>",
+            "placeholders": [
+                {
+                    "string": "<genre>",
+                    "type": "value",
+                    "participantName": "genre"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "genre",
+                    "functionalId": "AcceptBookGenre",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "AcceptBookGenre"
             ]
         },
         {
             "id": "SelectAddBookToBasket",
-            "intent": "Librarian adds book to basket.",
+            "intent": "Librarian added book named <name> to basket.",
+            "placeholders": [
+                {
+                    "string": "<name>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["name"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book_details",
+                    "functionalId": "AddBookToBasket",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "AssembleBookDetails",
                 "ReturnBookDetails",
