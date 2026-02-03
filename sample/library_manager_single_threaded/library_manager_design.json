@@ -31,9 +31,9 @@
                             "module": "SelectCheckIfTooManyBooks"
                         },
                         {
-                            "id": "DisplayBooksModule",
+                            "id": "DisplayLibraryContentsModule",
                             "value": "display the contents of the library",
-                            "module": "SelectDisplayLibrary"
+                            "module": "SelectDisplayBookShelf"
                         },
                         {
                             "id": "ExitProgramModule",
@@ -53,28 +53,28 @@
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "RequestBook",
+                    "id": "RequestBookStep",
                     "behavior": [
                         "SelectRequestBook"
                     ]
                 },
                 {
                     "type": "sequential",
-                    "id": "AcceptBookName",
+                    "id": "AcceptBookNameStep",
                     "behavior": [
                         "SelectAcceptBookName"
                     ]
                 },
                 {
                     "type": "sequential",
-                    "id": "AcceptBookGenre",
+                    "id": "AcceptBookGenreStep",
                     "behavior": [
                         "SelectAcceptBookGenre"
                     ]
                 },
                 {
                     "type": "sequential",
-                    "id": "AddBookToBasket",
+                    "id": "AddBookToBasketStep",
                     "behavior": [
                         "SelectAddBookToBasket"
                     ]
@@ -200,14 +200,21 @@
         },
         {
             "name": "Display Books",
-            "id": "DisplayBooksModule",
-            "entry": "SelectDisplayLibrary",
+            "id": "DisplayLibraryContentsModule",
+            "entry": "SelectDisplayBookShelf",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "DisplayLibraryStep",
+                    "id": "DisplayBookShelfStep",
                     "behavior": [
-                        "SelectDisplayLibrary"
+                        "SelectDisplayBookShelf"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "DisplayBasketStep",
+                    "behavior": [
+                        "SelectDisplayBasket"
                     ]
                 }
             ]
@@ -458,22 +465,30 @@
             ]
         },
         {
-            "id": "SelectDisplayLibrary",
-            "intent": "Displayed the contents of the library.",
+            "id": "SelectDisplayBookShelf",
             "participants": [
-                {
-                    "name": "basket",
-                    "functionalId": "DisplayBasket",
-                    "scope": "local"
-                },
                 {
                     "name": "book_shelf",
                     "functionalId": "DisplayBookShelf",
                     "scope": "local"    
                 }
             ],
+            "intent": "Librarian displays the contents of the bookshelf to the user.",
             "abstractions": [
-                "DisplayBookShelf",
+                "DisplayBookShelf"
+            ]
+        },
+        {
+            "id": "SelectDisplayBasket",
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "DisplayBasket",
+                    "scope": "local"
+                }
+            ],
+            "intent": "Librarian displays the contents of the basket to the user.",
+            "abstractions": [
                 "DisplayBasket"
             ]
         },
