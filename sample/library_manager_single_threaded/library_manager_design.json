@@ -357,7 +357,22 @@
         },
         {
             "id": "SelectTooManyBooks",
-            "intent": "Artificially raise exception if there are too many books.",
+            "intent": "Artificially raise exception because there are <num_books> books in the basket.",
+            "placeholders": [
+                {
+                    "string": "<num_books>",
+                    "type": "semantic_property",
+                    "participantName": "basket",
+                    "property": "length"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "FailIfTooManyBooks",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "FailIfTooManyBooks"
             ]
