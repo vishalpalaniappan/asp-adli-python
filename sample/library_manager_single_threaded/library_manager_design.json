@@ -23,7 +23,7 @@
                         {
                             "id": "AddBooksToBasketModule",
                             "value": "add books to the basket",                            
-                            "module": "SelectAcceptBookAndAddToBasket"
+                            "module": "SelectRequestBook"
                         },
                         {
                             "id": "PlaceBooksOnShelfModule",
@@ -49,13 +49,34 @@
             "id": "AddBooksToBasketModule",
             "action": "The user submitted a book named <book_name> with genre <book_genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
-            "entry": "SelectAcceptBookAndAddToBasket",
+            "entry": "SelectRequestBook",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "AcceptBookAndAddToBasketStep",
+                    "id": "RequestBook",
                     "behavior": [
-                        "SelectAcceptBookAndAddToBasket"
+                        "SelectRequestBook"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AcceptBookName",
+                    "behavior": [
+                        "SelectAcceptBookName"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AcceptBookGenre",
+                    "behavior": [
+                        "SelectAcceptBookGenre"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AddBookToBasket",
+                    "behavior": [
+                        "SelectAddBookToBasket"
                     ]
                 }
             ]
@@ -234,61 +255,31 @@
             ]
         },
         {
-            "id": "SelectAcceptBookAndAddToBasket",
-            "intent": "Accepted a book named <name> with genre <genre> and added it to the basket.",
-            "intent_validation": [
-                {
-                    "type": "data_exists",
-                    "source_var": "book_details",
-                    "target_var": "basket",
-                    "position": "end"
-                }
-            ],
-            "placeholders": [
-                {
-                    "string": "<genre>",
-                    "type": "value",
-                    "participantName": "genre"
-                },
-                {
-                    "string": "<name>",
-                    "type": "value",
-                    "participantName": "name"
-                }
-            ],
-            "participants": [
-                {
-                    "name": "name",
-                    "functionalId": "AcceptBookName",
-                    "scope": "local",
-                    "constraint": [
-                        {
-                            "type":"minLength",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "name": "genre",
-                    "functionalId": "AcceptBookGenre",
-                    "scope": "local"
-                },
-                {
-                    "name": "basket",
-                    "functionalId": "AddBookToBasket",
-                    "scope": "local"
-                },
-                {
-                    "name": "book_details",
-                    "functionalId": "AssembleBookDetails",
-                    "scope": "local"
-                }
-            ],
+            "id": "SelectRequestBook",
+            "intent": "Librarian requests the book from the user.",
             "abstractions": [
                 "AcceptBookInformation",
-                "DisplayRequest",
-                "AcceptBookName",
-                "AcceptBookGenre",
+                "DisplayRequest"
+            ]
+        },
+        {
+            "id": "SelectAcceptBookName",
+            "intent": "Librarian requests and accepts book name from the user.",
+            "abstractions": [
+                "AcceptBookName"
+            ]
+        },
+        {
+            "id": "SelectAcceptBookGenre",
+            "intent": "Librarian requests and accepts book genre from the user.",
+            "abstractions": [
+                "AcceptBookGenre"
+            ]
+        },
+        {
+            "id": "SelectAddBookToBasket",
+            "intent": "Librarian adds book to basket.",
+            "abstractions": [
                 "AssembleBookDetails",
                 "ReturnBookDetails",
                 "AddBookToBasket"
