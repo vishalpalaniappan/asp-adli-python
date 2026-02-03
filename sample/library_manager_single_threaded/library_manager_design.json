@@ -101,13 +101,6 @@
                             "module": "SelectGettingBookFromBasket"
                         }
                     ]
-                },
-                {
-                    "type": "sequential",
-                    "id": "SaveUpdatedBookShelfStep",
-                    "behavior": [
-                        "SelectSaveUpdatedBookSHelf"
-                    ]
                 }
             ]
         },
@@ -341,7 +334,8 @@
                 }
             ],
             "abstractions": [
-                "CheckingBasketForBook"
+                "CheckingBasketForBook",
+                "ReturnBookShelf"
             ]
         },
         {
