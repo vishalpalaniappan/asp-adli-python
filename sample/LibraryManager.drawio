@@ -700,7 +700,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="d36U6bBc5eHirfBQ7eSF" name="libary-manager-design-v2">
-    <mxGraphModel dx="2711" dy="1876" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1284" dy="888" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -814,26 +814,20 @@
         <mxCell id="pXmw6R75mtPUzVqG9uPS-43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-36" target="pXmw6R75mtPUzVqG9uPS-37">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-36" value="Librarian asks user for the book name." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pXmw6R75mtPUzVqG9uPS-36" value="Librarian asks user for the book." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="745.6199999999999" y="343" width="138.38" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-44" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-37" target="pXmw6R75mtPUzVqG9uPS-38">
+        <mxCell id="cF0m9kQgirqLR0RK9UqF-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-37" target="pXmw6R75mtPUzVqG9uPS-39">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-37" value="Librarian accepts book name." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="745.6199999999999" y="439.5" width="138.38" height="66" as="geometry" />
-        </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-38" target="pXmw6R75mtPUzVqG9uPS-39">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-38" value="Librarian asks user for book genre." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="745.6199999999999" y="536" width="138.38" height="66" as="geometry" />
+          <mxGeometry x="745.6199999999999" y="461" width="138.38" height="66" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-46" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-39" target="pXmw6R75mtPUzVqG9uPS-40">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-39" value="Librarian accepts book genre." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="745.6199999999999" y="633" width="138.38" height="66" as="geometry" />
+          <mxGeometry x="745.6199999999999" y="580" width="138.38" height="66" as="geometry" />
         </mxCell>
         <mxCell id="x42WoTasqX86uFXYpC4k-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-40" target="cF0m9kQgirqLR0RK9UqF-1">
           <mxGeometry relative="1" as="geometry">
@@ -841,7 +835,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-40" value="Librarian adds book to basket." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="745.6199999999999" y="726" width="138.38" height="66" as="geometry" />
+          <mxGeometry x="745.6199999999999" y="697" width="138.38" height="66" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-48" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="pXmw6R75mtPUzVqG9uPS-49" target="JPFPJ_-Ey1wk1CBHCRIR-1">
           <mxGeometry relative="1" as="geometry">
@@ -942,6 +936,13 @@
         </mxCell>
         <mxCell id="cF0m9kQgirqLR0RK9UqF-4" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="1473" y="832" width="44" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cF0m9kQgirqLR0RK9UqF-5" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="1163" y="610" as="sourcePoint" />
+            <mxPoint x="1243" y="610" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
