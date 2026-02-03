@@ -348,6 +348,11 @@
                     "name": "book_details",
                     "functionalId": "AddBookToBasket",
                     "scope": "local"
+                },
+                {
+                    "name": "basket",
+                    "functionalId": "AddBookToBasket",
+                    "scope": "local"
                 }
             ],
             "abstractions": [
