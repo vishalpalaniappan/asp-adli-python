@@ -154,6 +154,13 @@
                 },
                 {
                     "type": "sequential",
+                    "id": "GettingFirstLetterOfBookName",
+                    "behavior": [
+                        "SelectGettingFirstLetterOfBookName"
+                    ]
+                },
+                {
+                    "type": "sequential",
                     "id": "CheckIfShelfHasSlotStep",
                     "behavior": [
                         "SelectCheckingIfShelfHasSlot"
@@ -420,7 +427,27 @@
             ],
             "abstractions": [
                 "GettingBookFromBasket",
-                "DisplayBookInformation",
+                "DisplayBookInformation"
+            ]
+        },
+        {
+            "id": "SelectGettingFirstLetterOfBookName",
+            "intent": "Got the first letter '<first_letter>' of the books name.",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "firstLetter",
+                    "functionalId": "GettingFirstNameOfBook",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
                 "GettingFirstNameOfBook"
             ]
         },
