@@ -15,8 +15,8 @@ class PackerThread(threading.Thread):
             except queue.Empty:
                 continue
 
-            self.items[msg["data"]] = self.items.get(msg["data"], 0) + 1
+            self.items[msg["original"]] = self.items.get(msg["original"], 0) + 1
 
-            if self.items[msg["data"]] == 3:
-                print("Packer received the processed data from all three workers for the following data: ", msg["data"])
-                del self.items[msg["data"]]
+            if self.items[msg["original"]] == 3:
+                print("Packer received the translated text for the following text from all translators: ", msg["original"])
+                del self.items[msg["original"]]

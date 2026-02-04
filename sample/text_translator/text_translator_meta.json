@@ -156,9 +156,12 @@
             "intent": "Import the threading library."
         },
         "SpanishTranslator-0-2": {
-            "intent": "Import the queue library."
+            "intent": "Import the queue."
         },
         "SpanishTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "SpanishTranslator-0-4": {
             "intent": "Define the SpanishTranslator class that runs in its own thread."
         },
         "SpanishTranslator-1": {
@@ -295,9 +298,12 @@
             "intent": "Import the threading library."
         },
         "TamilTranslator-0-2": {
-            "intent": "Import the queue library."
+            "intent": "Import the queue."
         },
         "TamilTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "TamilTranslator-0-4": {
             "intent": "Define the TamilTranslator class that runs in its own thread."
         },
         "TamilTranslator-1": {
@@ -437,6 +443,9 @@
             "intent": "Import the queue library."
         },
         "FrenchTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "FrenchTranslator-0-4": {
             "intent": "Define the worker class that runs in its own thread."
         },
         "FrenchTranslator-1": {
@@ -545,7 +554,7 @@
             "functionalId": "DisplayReceivedMessageFrenchTranslator"
         },
         "FrenchTranslator-2-1-4": {
-            "intent": "Process the message.",
+            "intent": "Translate the message into french.",
             "functionalId": "ProcessMessageFrenchTranslator"
         },
         "FrenchTranslator-2-1-5": {

@@ -1,5 +1,6 @@
 import threading
 import queue
+from deep_translator import GoogleTranslator
 
 class TamilTranslator(threading.Thread):
     def __init__(self, id, queue, consumerQueue):
@@ -17,8 +18,9 @@ class TamilTranslator(threading.Thread):
                 continue
 
             print("Worker Received message:", msg)
-            msg = msg[0] + msg
+            translatedMsg = GoogleTranslator(source="auto", target="tamil").translate(msg)
             self.consumer_queue.put({
                 "id": self.id,
-                "data": msg
+                "original": msg,
+                "translated": translatedMsg
             })
