@@ -21,13 +21,19 @@
             "intent": "Import the consumer thread."
         },
         "producer-0-5": {
-            "intent": "Import the worker thread."
+            "intent": "Import the TamilTranslator."
         },
         "producer-0-6": {
+            "intent": "Import the FrenchTranslator."
+        },
+        "producer-0-7": {
+            "intent": "Import the SpanishTranslator."
+        },
+        "producer-0-8": {
             "intent": "Check if we are in main entry to program.",
             "type": "conditional_branch"
         },
-        "producer-0-6-1": {
+        "producer-0-8-1": {
             "intent": "Start the producer.",
             "type": "function_call",
             "target": "producer-1"
@@ -51,33 +57,33 @@
             "functionalId": "InitializeConsumer"
         },
         "producer-1-3": {
-            "intent": "Create queue to worker A.",
-            "functionalId": "CreateQueueA",
+            "intent": "Create queue to spanish translator.",
+            "functionalId": "CreateQueueSpanish",
             "variables": [
                 {
-                    "name": "message_queue_a",
+                    "name": "message_queue_spanish",
                     "scope": "local",
                     "keys": []
                 }
             ]
         },
         "producer-1-4": {
-            "intent": "Create queue to worker B.",
-            "functionalId": "CreateQueueB",
+            "intent": "Create queue to french translator.",
+            "functionalId": "CreateQueueFrench",
             "variables": [
                 {
-                    "name": "message_queue_b",
+                    "name": "message_queue_french",
                     "scope": "local",
                     "keys": []
                 }
             ]
         },
         "producer-1-5": {
-            "intent": "Create queue to worker C.",
-            "functionalId": "CreateQueueC",
+            "intent": "Create queue to tamil translator.",
+            "functionalId": "CreateQueueTamil",
             "variables": [
                 {
-                    "name": "message_queue_c",
+                    "name": "message_queue_tamil",
                     "scope": "local",
                     "keys": []
                 }
@@ -107,18 +113,6 @@
                     "name": "data",
                     "scope": "local",
                     "keys": []
-                }
-            ],
-            "constraint": [
-                {
-                    "id": "producer-1-9-1+1",
-                    "name": "data",
-                    "constraint_layer": "design_constraint",
-                    "scope": "local",
-                    "type":"minLength",
-                    "value": 1,
-                    "description": "Failed semantic contract to accept non empty string.",
-                    "failures": ["worker-2-1-4"]
                 }
             ]
         },
@@ -153,21 +147,21 @@
             "intent": "Sleep before accepting more data.",
             "functionalId": "SleepToThrottleIngestion"
         },
-        "worker-0": {
+        "SpanishTranslator-0": {
             "intent": "Global path for the worker thread module.",
             "name": "global",
             "type": "global"
         },
-        "worker-0-1": {
+        "SpanishTranslator-0-1": {
             "intent": "Import the threading library."
         },
-        "worker-0-2": {
+        "SpanishTranslator-0-2": {
             "intent": "Import the queue library."
         },
-        "worker-0-3": {
+        "SpanishTranslator-0-3": {
             "intent": "Define the worker class that runs in its own thread."
         },
-        "worker-1": {
+        "SpanishTranslator-1": {
             "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
             "type": "function",
             "variables": [
@@ -193,10 +187,10 @@
                 }
             ]
         },
-        "worker-1-1": {
+        "SpanishTranslator-1-1": {
             "intent": "Initialize the base Thread class."
         },
-        "worker-1-2": {
+        "SpanishTranslator-1-2": {
             "intent": "Initialize the queue.",
             "variables": [
                 {
@@ -206,7 +200,7 @@
                 }
             ]
         },
-        "worker-1-3": {
+        "SpanishTranslator-1-3": {
             "intent": "Initialize the ID.",
             "variables": [
                 {
@@ -216,7 +210,7 @@
                 }
             ]
         },
-        "worker-1-4": {
+        "SpanishTranslator-1-4": {
             "intent": "Initialize the consumer queue.",
             "variables": [
                 {
@@ -226,10 +220,10 @@
                 }
             ]
         },
-        "worker-1-5": {
+        "SpanishTranslator-1-5": {
             "intent": "Start the worker."
         },
-        "worker-2": {
+        "SpanishTranslator-2": {
             "intent": "Define the run worker module.",
             "type": "function",
             "variables": [
@@ -240,15 +234,15 @@
                 }
             ]
         },
-        "worker-2-1": {
+        "SpanishTranslator-2-1": {
             "intent": "Enter main loop to receive task in worker.",
             "functionalId": "MainLoopWorker"
         },
-        "worker-2-1-1": {
+        "SpanishTranslator-2-1-1": {
             "intent": "Try to receive messages in worker.",
             "functionalId": "TryToReceiveMessageWorker"
         },
-        "worker-2-1-1-1": {
+        "SpanishTranslator-2-1-1-1": {
             "intent": "Receive message in worker.",
             "functionalId": "ReceiveMessageWorker",
             "input": true,
@@ -260,23 +254,301 @@
                 }
             ]
         },
-        "worker-2-1-2": {
+        "SpanishTranslator-2-1-2": {
             "intent": "Catch exception if no message was received",
             "functionalId": "CatchNoMsgExceptionWorker"
         },
-        "worker-2-1-2-1": {
+        "SpanishTranslator-2-1-2-1": {
             "intent": "Continue receiving messages in worker.",
             "functionalId": "ContinueRecvMessagesWorker"
         },
-        "worker-2-1-3": {
+        "SpanishTranslator-2-1-3": {
             "intent": "Display the received message.",
             "functionalId": "DisplayReceivedMessageWorker"
         },
-        "worker-2-1-4": {
+        "SpanishTranslator-2-1-4": {
             "intent": "Process the message.",
             "functionalId": "ProcessMessageWorker"
         },
-        "worker-2-1-5": {
+        "SpanishTranslator-2-1-5": {
+            "intent": "Put the processed result in queue.",
+            "functionalId": "PutProcessedResultInQueueWorker",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "TamilTranslator-0-1": {
+            "intent": "Import the threading library."
+        },
+        "TamilTranslator-0-2": {
+            "intent": "Import the queue library."
+        },
+        "TamilTranslator-0-3": {
+            "intent": "Define the worker class that runs in its own thread."
+        },
+        "TamilTranslator-1": {
+            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "consumerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-1": {
+            "intent": "Initialize the base Thread class."
+        },
+        "TamilTranslator-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-3": {
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-4": {
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-5": {
+            "intent": "Start the worker."
+        },
+        "TamilTranslator-2": {
+            "intent": "Define the run worker module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2-1": {
+            "intent": "Enter main loop to receive task in worker.",
+            "functionalId": "MainLoopWorker"
+        },
+        "TamilTranslator-2-1-1": {
+            "intent": "Try to receive messages in worker.",
+            "functionalId": "TryToReceiveMessageWorker"
+        },
+        "TamilTranslator-2-1-1-1": {
+            "intent": "Receive message in worker.",
+            "functionalId": "ReceiveMessageWorker",
+            "input": true,
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2-1-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionWorker"
+        },
+        "TamilTranslator-2-1-2-1": {
+            "intent": "Continue receiving messages in worker.",
+            "functionalId": "ContinueRecvMessagesWorker"
+        },
+        "TamilTranslator-2-1-3": {
+            "intent": "Display the received message.",
+            "functionalId": "DisplayReceivedMessageWorker"
+        },
+        "TamilTranslator-2-1-4": {
+            "intent": "Process the message.",
+            "functionalId": "ProcessMessageWorker"
+        },
+        "TamilTranslator-2-1-5": {
+            "intent": "Put the processed result in queue.",
+            "functionalId": "PutProcessedResultInQueueWorker",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "FrenchTranslator-0-1": {
+            "intent": "Import the threading library."
+        },
+        "FrenchTranslator-0-2": {
+            "intent": "Import the queue library."
+        },
+        "FrenchTranslator-0-3": {
+            "intent": "Define the worker class that runs in its own thread."
+        },
+        "FrenchTranslator-1": {
+            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "consumerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-1": {
+            "intent": "Initialize the base Thread class."
+        },
+        "FrenchTranslator-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-3": {
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-4": {
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-5": {
+            "intent": "Start the worker."
+        },
+        "FrenchTranslator-2": {
+            "intent": "Define the run worker module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2-1": {
+            "intent": "Enter main loop to receive task in worker.",
+            "functionalId": "MainLoopWorker"
+        },
+        "FrenchTranslator-2-1-1": {
+            "intent": "Try to receive messages in worker.",
+            "functionalId": "TryToReceiveMessageWorker"
+        },
+        "FrenchTranslator-2-1-1-1": {
+            "intent": "Receive message in worker.",
+            "functionalId": "ReceiveMessageWorker",
+            "input": true,
+            "variables": [
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2-1-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionWorker"
+        },
+        "FrenchTranslator-2-1-2-1": {
+            "intent": "Continue receiving messages in worker.",
+            "functionalId": "ContinueRecvMessagesWorker"
+        },
+        "FrenchTranslator-2-1-3": {
+            "intent": "Display the received message.",
+            "functionalId": "DisplayReceivedMessageWorker"
+        },
+        "FrenchTranslator-2-1-4": {
+            "intent": "Process the message.",
+            "functionalId": "ProcessMessageWorker"
+        },
+        "FrenchTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueWorker",
             "output": [

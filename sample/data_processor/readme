@@ -1,6 +1,0 @@
-This folder contains a multi-threaded data processor.
-
-High level:
-- Producer accepts data, sends to three workers.
-- Worker process data and sends to consumer.
-- Once all workers have completed, consumer writes all three results to file.

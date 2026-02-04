@@ -4,7 +4,7 @@
     "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
     "files": [
         {
-            "path": "producer.py",
+            "path": "text_translator.py",
             "threadId": 1,
             "modules": {
                 "producer-global": {
@@ -33,22 +33,32 @@
                         {
                             "id": "producer-0-5",
                             "lineDelta": 4,
-                            "syntax": "from worker import WorkerThread"
+                            "syntax": "from TamilTranslator import TamilTranslator"
                         },
                         {
                             "id": "producer-0-6",
-                            "lineDelta": 25,
+                            "lineDelta": 5,
+                            "syntax": "from FrenchTranslator import FrenchTranslator"
+                        },
+                        {
+                            "id": "producer-0-7",
+                            "lineDelta": 6,
+                            "syntax": "from SpanishTranslator import SpanishTranslator"
+                        },
+                        {
+                            "id": "producer-0-8",
+                            "lineDelta": 27,
                             "syntax": "if \"__main__\" == __name__:"
                         },
                         {
-                            "id": "producer-0-6-1",
-                            "lineDelta": 26,
+                            "id": "producer-0-8-1",
+                            "lineDelta": 28,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
                 },
                 "producer-1": {
-                    "startLine": 7,
+                    "startLine": 9,
                     "abstractions": [
                         {
                             "id": "producer-1",
@@ -130,109 +140,331 @@
             }
         },
         {
-            "path": "worker.py",
+            "path": "FrenchTranslator.py",
             "threadId": 2,
             "modules": {
-                "worker-global": {
+                "FrenchTranslator-global": {
                     "startLine": 1,
                     "abstractions": [
                         {
-                            "id": "worker-0-1",
+                            "id": "FrenchTranslator-0-1",
                             "lineDelta": 0,
                             "syntax": "import threading"
                         },
                         {
-                            "id": "worker-0-2",
+                            "id": "FrenchTranslator-0-2",
                             "lineDelta": 1,
                             "syntax": "import queue"
                         },
                         {
-                            "id": "worker-0-3",
+                            "id": "FrenchTranslator-0-3",
                             "lineDelta": 3,
-                            "syntax": "class WorkerThread(threading.Thread):"
+                            "syntax": "class FrenchTranslator(threading.Thread):"
                         }
                     ]
                 },
-                "worker-1": {
+                "FrenchTranslator-1": {
                     "startLine": 5,
                     "abstractions": [
                         {
-                            "id": "worker-1",
+                            "id": "FrenchTranslator-1",
                             "lineDelta": 0,
                             "syntax": "def __init__(self, id, queue, consumerQueue):"
                         },
                         {
-                            "id": "worker-1-1",
+                            "id": "FrenchTranslator-1-1",
                             "lineDelta": 1,
                             "syntax": "super().__init__(daemon=False)"
                         },
                         {
-                            "id": "worker-1-2",
+                            "id": "FrenchTranslator-1-2",
                             "lineDelta": 2,
                             "syntax": "self.queue = queue"
                         },
                         {
-                            "id": "worker-1-3",
+                            "id": "FrenchTranslator-1-3",
                             "lineDelta": 3,
                             "syntax": "self.id = id"
                         },
                         {
-                            "id": "worker-1-4",
+                            "id": "FrenchTranslator-1-4",
                             "lineDelta": 4,
                             "syntax": "self.consumer_queue = consumerQueue"
                         },
                         {
-                            "id": "worker-1-5",
+                            "id": "FrenchTranslator-1-5",
                             "lineDelta": 5,
                             "syntax": "self.start()"
                         }
                     ]
                 },
-                "worker-2": {
+                "FrenchTranslator-2": {
                     "startLine": 12,
                     "abstractions": [
                         {
-                            "id": "worker-2",
+                            "id": "FrenchTranslator-2",
                             "lineDelta": 0,
                             "syntax": "def run(self):"
                         },
                         {
-                            "id": "worker-2-1",
+                            "id": "FrenchTranslator-2-1",
                             "lineDelta": 1,
                             "syntax": "while True:"
                         },
                         {
-                            "id": "worker-2-1-1",
+                            "id": "FrenchTranslator-2-1-1",
                             "lineDelta": 2,
                             "syntax": "try:"
                         },
                         {
-                            "id": "worker-2-1-1-1",
+                            "id": "FrenchTranslator-2-1-1-1",
                             "lineDelta": 3,
                             "syntax": "msg = self.queue.get(timeout=10)"
                         },
                         {
-                            "id": "worker-2-1-2",
+                            "id": "FrenchTranslator-2-1-2",
                             "lineDelta": 4,
                             "syntax": "except queue.Empty:"
                         },
                         {
-                            "id": "worker-2-1-2-1",
+                            "id": "FrenchTranslator-2-1-2-1",
                             "lineDelta": 5,
                             "syntax": "continue"
                         },
                         {
-                            "id": "worker-2-1-3",
+                            "id": "FrenchTranslator-2-1-3",
                             "lineDelta": 7,
                             "syntax": "print(\"Worker Received message:\", msg)"
                         },
                         {
-                            "id": "worker-2-1-4",
+                            "id": "FrenchTranslator-2-1-4",
                             "lineDelta": 8,
                             "syntax": "msg = msg[0] + msg"
                         },
                         {
-                            "id": "worker-2-1-5",
+                            "id": "FrenchTranslator-2-1-5",
+                            "lineDelta": 9,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "SpanishTranslator.py",
+            "threadId": 2,
+            "modules": {
+                "SpanishTranslator-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "SpanishTranslator-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "SpanishTranslator-0-3",
+                            "lineDelta": 3,
+                            "syntax": "class SpanishTranslator(threading.Thread):"
+                        }
+                    ]
+                },
+                "SpanishTranslator-1": {
+                    "startLine": 5,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "SpanishTranslator-2": {
+                    "startLine": 12,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "print(\"Worker Received message:\", msg)"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "msg = msg[0] + msg"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-5",
+                            "lineDelta": 9,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "TamilTranslator.py",
+            "threadId": 2,
+            "modules": {
+                "TamilTranslator-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "TamilTranslator-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "TamilTranslator-0-3",
+                            "lineDelta": 3,
+                            "syntax": "class TamilTranslator(threading.Thread):"
+                        }
+                    ]
+                },
+                "TamilTranslator-1": {
+                    "startLine": 5,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "TamilTranslator-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "TamilTranslator-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "TamilTranslator-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "TamilTranslator-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "TamilTranslator-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "TamilTranslator-2": {
+                    "startLine": 12,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "print(\"Worker Received message:\", msg)"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "msg = msg[0] + msg"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-5",
                             "lineDelta": 9,
                             "syntax": "self.consumer_queue.put({"
                         }
