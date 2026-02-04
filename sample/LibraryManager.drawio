@@ -953,10 +953,13 @@
     </mxGraphModel>
   </diagram>
   <diagram id="-ggXPHcaspVBdo7nJuyq" name="text-translator">
-    <mxGraphModel dx="2206" dy="1298" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1062" dy="625" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-73" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="6" y="4" width="1694" height="1091" as="geometry" />
+        </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-1" target="xC5nuUzwBxij4A9lajhx-14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -1005,7 +1008,7 @@
         <mxCell id="xC5nuUzwBxij4A9lajhx-20" value="Employee Sends Text to Tamil Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
           <mxGeometry x="311" y="749" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-22" value="Throtle for 1s&amp;nbsp;&lt;div&gt;and continue&amp;nbsp;&lt;/div&gt;&lt;div&gt;to&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;get data&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
+        <mxCell id="xC5nuUzwBxij4A9lajhx-22" value="Wait for 1s before accepting more text." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
           <mxGeometry x="311" y="862" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-24" target="xC5nuUzwBxij4A9lajhx-40">
