@@ -1,6 +1,6 @@
 import threading
 import queue
-from deep_translator import GoogleTranslator
+from deep_translator import GoogleTranslator # type: ignore
 
 class TamilTranslator(threading.Thread):
     def __init__(self, id, queue, consumerQueue):
