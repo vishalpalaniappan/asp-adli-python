@@ -321,8 +321,7 @@
             "id": "SelectProcessReceivedMsgTamilTranslator",
             "intent": "Translate the text into tamil.",
             "abstractions": [
-                "TranslateIntoTamil",
-                "DisplayTranslatedMessageTamil"
+                "TranslateIntoTamil"
             ]
         },
         {
@@ -330,6 +329,7 @@
             "intent": "Send the translated text to the packer.",
             "target": "consumer",
             "abstractions": [
+                "DisplayTranslatedMessageTamil",
                 "PutProcessedResultInQueueTamilTranslator"
             ]
         },
@@ -346,7 +346,7 @@
             ]
         },
         {
-            "id": "SelectProcessReceivedMsgSpanishTranslator",
+            "id": "SelectNoMsgReceivedSpaniesTranslater",
             "intent": "No message received by spanish translator.",
             "abstractions": [
                 "CatchNoMsgExceptionSpanishTranslator",
@@ -357,8 +357,7 @@
             "id": "SelectProcessReceivedMsgSpanishTranslator",
             "intent": "Translate the received text into spanish.",
             "abstractions": [
-                "TranslateIntoSpanish",
-                "DisplayTranslatedMessageSpanish"
+                "TranslateIntoSpanish"
             ]
         },
         {
@@ -366,6 +365,7 @@
             "intent": "Send translated text to packer.",
             "target": "consumer",
             "abstractions": [
+                "DisplayTranslatedMessageSpanish",
                 "PutProcessedResultInQueueSpanishTranslator"
             ]
         },
@@ -382,7 +382,7 @@
             ]
         },
         {
-            "id": "SelectProcessReceivedMsgFrenchTranslator",
+            "id": "SelectNoMsgReceivedFrenchWorker",
             "intent": "No message received in french translator.",
             "abstractions": [
                 "CatchNoMsgExceptionFrenchTranslator",
@@ -393,8 +393,7 @@
             "id": "SelectProcessReceivedMsgFrenchTranslator",
             "intent": "Translate recieved text into french.",
             "abstractions": [
-                "TranslateIntoFrench",
-                "DisplayTranslatedMessageFrench"
+                "TranslateIntoFrench"
             ]
         },
         {
@@ -402,6 +401,7 @@
             "intent": "Send translated text to packer",
             "target": "consumer",
             "abstractions": [
+                "DisplayTranslatedMessageFrench",
                 "PutProcessedResultInQueueFrenchTranslator"
             ]
         },
