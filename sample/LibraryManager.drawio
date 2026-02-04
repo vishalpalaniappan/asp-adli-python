@@ -1009,7 +1009,7 @@
           <mxGeometry x="311" y="786" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-22" value="Wait for 1s before accepting more text." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="311" y="891" width="120" height="60" as="geometry" />
+          <mxGeometry x="311" y="904" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-24" target="xC5nuUzwBxij4A9lajhx-40">
           <mxGeometry relative="1" as="geometry" />
@@ -1099,7 +1099,7 @@
           <mxGeometry x="1266" y="689" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-56" value="Mark Translation Job as Done in Cabinet" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#ffff88;strokeColor=#36393d;" vertex="1" parent="1">
-          <mxGeometry x="1248" y="882" width="116" height="56" as="geometry" />
+          <mxGeometry x="1248" y="895" width="116" height="56" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-60" value="French&lt;div&gt;Translation&lt;/div&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
           <mxGeometry x="658.5" y="116.5" width="81.5" height="77" as="geometry" />
