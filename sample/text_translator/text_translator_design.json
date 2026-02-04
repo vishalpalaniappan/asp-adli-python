@@ -321,8 +321,8 @@
             "id": "SelectProcessReceivedMsgTamilTranslator",
             "intent": "Translate the text into tamil.",
             "abstractions": [
-                "DisplayReceivedMessageTamilTranslator",
-                "ProcessMessageTamilTranslator"
+                "TranslateIntoTamil",
+                "DisplayTranslatedMessageTamil"
             ]
         },
         {
@@ -357,8 +357,8 @@
             "id": "SelectProcessReceivedMsgSpanishTranslator",
             "intent": "Translate the received text into spanish.",
             "abstractions": [
-                "DisplayReceivedMessageSpanishTranslator",
-                "ProcessMessageSpanishTranslator"
+                "TranslateIntoSpanish",
+                "DisplayTranslatedMessageSpanish"
             ]
         },
         {
@@ -393,8 +393,8 @@
             "id": "SelectProcessReceivedMsgFrenchTranslator",
             "intent": "Translate recieved text into french.",
             "abstractions": [
-                "DisplayReceivedMessageFrenchTranslator",
-                "ProcessMessageFrenchTranslator"
+                "TranslateIntoFrench",
+                "DisplayTranslatedMessageFrench"
             ]
         },
         {

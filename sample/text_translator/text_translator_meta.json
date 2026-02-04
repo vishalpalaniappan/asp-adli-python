@@ -266,12 +266,12 @@
             "functionalId": "ContinueRecvMessagesSpanishTranslator"
         },
         "SpanishTranslator-2-1-3": {
-            "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageSpanishTranslator"
+            "intent": "Translate the text into spanish.",
+            "functionalId": "TranslateIntoSpanish"
         },
         "SpanishTranslator-2-1-4": {
-            "intent": "Process the message.",
-            "functionalId": "ProcessMessageSpanishTranslator"
+            "intent": "Display the translated message in spanish.",
+            "functionalId": "DisplayTranslatedMessageSpanish"
         },
         "SpanishTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
@@ -408,12 +408,12 @@
             "functionalId": "ContinueRecvMessagesTamilTranslator"
         },
         "TamilTranslator-2-1-3": {
-            "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageTamilTranslator"
+            "intent": "Translate the text into tamil.",
+            "functionalId": "TranslateIntoTamil"
         },
         "TamilTranslator-2-1-4": {
-            "intent": "Process the message.",
-            "functionalId": "ProcessMessageTamilTranslator"
+            "intent": "Display the translated message.",
+            "functionalId": "DisplayTranslatedMessageTamil"
         },
         "TamilTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
@@ -550,12 +550,12 @@
             "functionalId": "ContinueRecvMessagesWorker"
         },
         "FrenchTranslator-2-1-3": {
-            "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageFrenchTranslator"
+            "intent": "Translate the text into french.",
+            "functionalId": "TranslateIntoFrench"
         },
         "FrenchTranslator-2-1-4": {
-            "intent": "Translate the message into french.",
-            "functionalId": "ProcessMessageFrenchTranslator"
+            "intent": "Display the translated message in french.",
+            "functionalId": "DisplayTranslatedMessageFrench"
         },
         "FrenchTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
