@@ -124,7 +124,7 @@
             ]
         },
         "producer-1-10-2": {
-            "intent": "Add job to database.",
+            "intent": "Add job to cabinet.",
             "functionalId": "AddJob",
             "variables": [
                 {
