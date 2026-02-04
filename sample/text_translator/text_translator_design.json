@@ -276,9 +276,9 @@
         },
         {
             "id": "SelectAddJobToDB",
-            "intent": "Add job to database",
+            "intent": "Add job to cabinet.",
             "abstractions": [
-                "AddJob"
+                "AddJobToCabinet"
             ]
         },
         {
