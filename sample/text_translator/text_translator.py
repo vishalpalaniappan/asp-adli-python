@@ -1,14 +1,14 @@
 import queue
 import sys
 import time
-from consumer import ConsumerThread
+from Packer import PackerThread
 from TamilTranslator import TamilTranslator
 from FrenchTranslator import FrenchTranslator
 from SpanishTranslator import SpanishTranslator
 
 def TextTranslator():
     consumer_queue = queue.Queue()
-    ConsumerThread(consumer_queue)
+    PackerThread(consumer_queue)
 
     message_queue_spanish = queue.Queue()
     message_queue_french = queue.Queue()

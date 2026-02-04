@@ -19,19 +19,19 @@
                     "type": "fanout",
                     "id": "WorkerAFanoutStep",
                     "fanoutRef": "WORKERS",
-                    "module": "SelectSendJobToWorkerA"
+                    "module": "SelectSendJobToSpanishTranslator"
                 },
                 {
                     "type": "fanout",
                     "id": "WorkerBFanoutStep",
                     "fanoutRef": "WORKERS",
-                    "module": "SelectSendJobToWorkerB"
+                    "module": "SelectSendJobToFrenchTranslator"
                 },
                 {
                     "type": "fanout",
                     "id": "WorkerCFanoutStep",
                     "fanoutRef": "WORKERS",
-                    "module": "SelectSendJobToWorkerC"
+                    "module": "SelectSendJobToTamilTranslator"
                 },
                 {
                     "type": "sequential",
@@ -43,21 +43,57 @@
             ]
         },
         {
-            "name": "Process Data With Worker A",
-            "id": "ProcessDataWithWorkerAModule",
+            "id": "TranslateWithFrenchTranslator",
             "type": "fork",
-            "entry": "SelectSendJobToWorkerA",
+            "entry": "SelectSendJobToFrenchTranslator",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "ProcessDataWithWorkerAStep",
+                    "id": "ProcessDataWithFrenchTranslatorStep",
                     "behavior": [
-                        "SelectSendJobToWorkerA",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
+                        "SelectSendJobToFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectProcessReceivedMsgFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
                     ]
                 },
                 {
@@ -74,21 +110,57 @@
             ]
         },
         {
-            "name": "Process Data With Worker B",
-            "id": "ProcessDataWithWorkerBModule",
+            "id": "TranslateWithSpanishTranslator",
             "type": "fork",
-            "entry": "SelectSendJobToWorkerB",
+            "entry": "SelectSendJobToSpanishTranslator",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "ProcessDataWithWorkerBStep",
+                    "id": "ProcessDataWithSpanishTranslatorStep",
                     "behavior": [
-                        "SelectSendJobToWorkerB",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
+                        "SelectSendJobToSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInSpanishTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInSpanishTranslator",
+                    "behavior": [
+                        "SelectProcessReceivedMsgSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerSpanishTranslator",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
                     ]
                 },
                 {
@@ -105,21 +177,57 @@
             ]
         },
         {
-            "name": "Process Data With Worker C",
-            "id": "ProcessDataWithWorkerCModule",
+            "id": "TranslateWithTamilTranslator",
             "type": "fork",
-            "entry": "SelectSendJobToWorkerC",
+            "entry": "SelectSendJobToTamilTranslator",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "ProcessDataWithWorkerCStep",
+                    "id": "ProcessDataWithTamilTranslatorStep",
                     "behavior": [
-                        "SelectSendJobToWorkerC",
-                        "SelectReceiveMessageWorker",
-                        "SelectProcessReceivedMsgWorker",
-                        "SelectSendProcessedResultsToConsumer",
-                        "SelectReceiveMessageConsumer",
-                        "SelectUpdateJobStatus"
+                        "SelectSendJobToTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInTamilTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInTamilTranslator",
+                    "behavior": [
+                        "SelectProcessReceivedMsgTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerTamilTranslator",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
                     ]
                 },
                 {
@@ -160,27 +268,27 @@
             ]
         },
         {
-            "id": "SelectSendJobToWorkerA",
-            "intent": "Send jobs to worker A.",
+            "id": "SelectSendJobToFrenchTranslator",
+            "intent": "Send jobs to french translator.",
             "target": "worker",
             "abstractions": [
-                "SendDataToWorkerA"
+                "SendTextToFrenchTranslator"
             ]
         },
         {
-            "id": "SelectSendJobToWorkerB",
-            "intent": "Send jobs to worker B.",
+            "id": "SelectSendJobToSpanishTranslator",
+            "intent": "Send jobs to spanish translator.",
             "target": "worker",
             "abstractions": [
-                "SendDataToWorkerB"
+                "SendDataToSpanishTranslator"
             ]
         },
         {
-            "id": "SelectSendJobToWorkerC",
-            "intent": "Send jobs to worker C.",
+            "id": "SelectSendJobToTamilTranslator",
+            "intent": "Send jobs to tamil translator.",
             "target": "worker",
             "abstractions": [
-                "SendDataToWorkerC"
+                "SendDataToTamilTranslator"
             ]
         },
         {
@@ -190,70 +298,155 @@
                 "SleepToThrottleIngestion"
             ]
         },
+
+
         {
-            "id": "SelectReceiveMessageWorker",
-            "intent": "Receive message in worker.",
+            "id": "SelectReceiveMessageTamilTranslator",
+            "intent": "Receive text in tamil translator.",
             "abstractions": [
-                "MainLoopWorker",
-                "TryToReceiveMessageWorker",
-                "ReceiveMessageWorker"
+                "MainLoopTamilTranslator",
+                "TryToReceiveMessageTamilTranslator",
+                "ReceiveMessageTamilTranslator"
             ]
         },
         {
-            "id": "SelectNoMsgReceivedWorker",
-            "intent": "No message received worker.",
+            "id": "SelectNoMsgReceivedTamilWorker",
+            "intent": "No message received in tamil worker.",
             "abstractions": [
-                "CatchNoMsgExceptionWorker",
-                "ContinueRecvMessagesWorker"
+                "CatchNoMsgExceptionTamilTranslator",
+                "ContinueRecvMessagesTamilTranslator"
             ]
         },
         {
-            "id": "SelectProcessReceivedMsgWorker",
+            "id": "SelectProcessReceivedMsgTamilTranslator",
             "intent": "Process Received Message in Worker.",
             "abstractions": [
-                "DisplayReceivedMessageWorker",
-                "ProcessMessageWorker"
+                "DisplayReceivedMessageTamilTranslator",
+                "ProcessMessageTamilTranslator"
             ]
         },
         {
-            "id": "SelectSendProcessedResultsToConsumer",
+            "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
             "intent": "Send Processed Results to Consumer.",
             "target": "consumer",
             "abstractions": [
-                "PutProcessedResultInQueueWorker"
+                "PutProcessedResultInQueueTamilTranslator"
+            ]
+        },
+
+        
+
+        {
+            "id": "SelectReceiveMessageSpanishTranslator",
+            "intent": "Receive text in spanish translator.",
+            "abstractions": [
+                "MainLoopSpanishTranslator",
+                "TryToReceiveMessageSpanishTranslator",
+                "ReceiveMessageSpanishTranslator"
             ]
         },
         {
-            "id": "SelectReceiveMessageConsumer",
-            "intent": "Receive message in consumer.",
+            "id": "SelectProcessReceivedMsgSpanishTranslator",
+            "intent": "No message received in spanish worker.",
             "abstractions": [
-                "MainLoopConsumer",
-                "TryToReceiveMessageConsumer",
-                "ReceiveMessageConsumer"
+                "CatchNoMsgExceptionSpanishTranslator",
+                "ContinueRecvMessagesSpanishTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgSpanishTranslator",
+            "intent": "Process Received Message in spanish translator.",
+            "abstractions": [
+                "DisplayReceivedMessageTamilTranslator",
+                "ProcessMessageTamilTranslator"
+            ]
+        },
+        {
+            "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
+            "intent": "Send Processed Results to packer.",
+            "target": "consumer",
+            "abstractions": [
+                "PutProcessedResultInQueueSpanishTranslator"
+            ]
+        },
+
+        
+
+        {
+            "id": "SelectReceiveMessageFrenchTranslator",
+            "intent": "Receive text in french translator.",
+            "abstractions": [
+                "MainLoopFrenchTranslator",
+                "TryToReceiveMessageFrenchTranslator",
+                "ReceiveMessageFrenchTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgFrenchTranslator",
+            "intent": "No message received in french worker.",
+            "abstractions": [
+                "CatchNoMsgExceptionFrenchTranslator",
+                "ContinueRecvMessagesFrenchTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgFrenchTranslator",
+            "intent": "Process Received Message in french translator.",
+            "abstractions": [
+                "DisplayReceivedMessageFrenchTranslator",
+                "ProcessMessageFrenchTranslator"
+            ]
+        },
+        {
+            "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
+            "intent": "Send Processed Results to packer.",
+            "target": "consumer",
+            "abstractions": [
+                "PutProcessedResultInQueueFrenchTranslator"
+            ]
+        },
+
+
+        
+
+
+        {
+            "id": "SelectReceiveMessageConsumer",
+            "intent": "Receive message in packer.",
+            "abstractions": [
+                "MainLoopPacker",
+                "TryToReceiveMessagePacker",
+                "ReceiveMessagePacker"
+            ]
+        },
+        {
+            "id": "SelectIncrementJobStatusPacker",
+            "intent": "Increment the job status in packer.",
+            "abstractions": [
+                "IncrementJobStatusPacker"
             ]
         },
         {
             "id": "SelectNoMsgReceivedConsumer",
             "intent": "No message received in consumer.",
             "abstractions": [
-                "NoMsgExceptionConsumer",
-                "ContinueRecvMsgConsumer"
+                "NoMsgExceptionPacker",
+                "ContinueRecvMsgPacker"
             ]
         },
         {
-            "id": "SelectUpdateJobStatus",
-            "intent": "Update the status of the job.",
+            "id": "SelectIsJobDone",
+            "intent": "Check if the job is done.",
             "abstractions": [
-                "IncrementJobStatusConsumer",
-                "CheckIfJobIsDoneConsumer"
+                "CheckIfJobIsDonePacker"
             ]
         },
         {
             "id": "SelectCleanupJob",
             "intent": "Cleanup the completed job.",
             "abstractions": [
-                "DisplayConfirmationConsumer",
-                "CleanUpJobStatusConsumer"
+                "DisplayConfirmationPacker",
+                "CleanUpJobStatusPacker"
             ]
         }
     ]

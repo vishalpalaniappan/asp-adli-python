@@ -117,8 +117,8 @@
             ]
         },
         "producer-1-9-2": {
-            "intent": "Send data to worker A.",
-            "functionalId": "SendDataToWorkerA",
+            "intent": "Send text to spanish translator.",
+            "functionalId": "SendDataToSpanishTranslator",
             "output": [
                 {
                     "function": "put"
@@ -126,8 +126,8 @@
             ]
         },
         "producer-1-9-3": {
-            "intent": "Send data to worker B.",
-            "functionalId": "SendDataToWorkerB",
+            "intent": "Send text to french translator.",
+            "functionalId": "SendTextToFrenchTranslator",
             "output": [
                 {
                     "function": "put"
@@ -135,8 +135,8 @@
             ]
         },
         "producer-1-9-4": {
-            "intent": "Send data to worker C.",
-            "functionalId": "SendDataToWorkerC",
+            "intent": "Send data to tamil translator.",
+            "functionalId": "SendDataToTamilTranslator",
             "output": [
                 {
                     "function": "put"
@@ -144,7 +144,7 @@
             ]
         },
         "producer-1-9-5": {
-            "intent": "Sleep before accepting more data.",
+            "intent": "Sleep before accepting more text.",
             "functionalId": "SleepToThrottleIngestion"
         },
         "SpanishTranslator-0": {
@@ -159,10 +159,10 @@
             "intent": "Import the queue library."
         },
         "SpanishTranslator-0-3": {
-            "intent": "Define the worker class that runs in its own thread."
+            "intent": "Define the SpanishTranslator class that runs in its own thread."
         },
         "SpanishTranslator-1": {
-            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "intent": "Initialize the SpanishTranslator with the parent queue and the consumer queue",
             "type": "function",
             "variables": [
                 {
@@ -188,7 +188,7 @@
             ]
         },
         "SpanishTranslator-1-1": {
-            "intent": "Initialize the base Thread class."
+            "intent": "Initialize the base SpanishTranslator class."
         },
         "SpanishTranslator-1-2": {
             "intent": "Initialize the queue.",
@@ -221,10 +221,10 @@
             ]
         },
         "SpanishTranslator-1-5": {
-            "intent": "Start the worker."
+            "intent": "Start the SpanishTranslator."
         },
         "SpanishTranslator-2": {
-            "intent": "Define the run worker module.",
+            "intent": "Define the run SpanishTranslator module.",
             "type": "function",
             "variables": [
                 {
@@ -235,16 +235,16 @@
             ]
         },
         "SpanishTranslator-2-1": {
-            "intent": "Enter main loop to receive task in worker.",
-            "functionalId": "MainLoopWorker"
+            "intent": "Enter main loop to receive task in SpanishTranslator.",
+            "functionalId": "MainLoopSpanishTranslator"
         },
         "SpanishTranslator-2-1-1": {
-            "intent": "Try to receive messages in worker.",
-            "functionalId": "TryToReceiveMessageWorker"
+            "intent": "Try to receive messages in SpanishTranslator.",
+            "functionalId": "TryToReceiveMessageSpanishTranslator"
         },
         "SpanishTranslator-2-1-1-1": {
-            "intent": "Receive message in worker.",
-            "functionalId": "ReceiveMessageWorker",
+            "intent": "Receive message in SpanishTranslator.",
+            "functionalId": "ReceiveMessageSpanishTranslator",
             "input": true,
             "variables": [
                 {
@@ -256,23 +256,23 @@
         },
         "SpanishTranslator-2-1-2": {
             "intent": "Catch exception if no message was received",
-            "functionalId": "CatchNoMsgExceptionWorker"
+            "functionalId": "CatchNoMsgExceptionSpanishTranslator"
         },
         "SpanishTranslator-2-1-2-1": {
-            "intent": "Continue receiving messages in worker.",
-            "functionalId": "ContinueRecvMessagesWorker"
+            "intent": "Continue receiving messages in SpanishTranslator.",
+            "functionalId": "ContinueRecvMessagesSpanishTranslator"
         },
         "SpanishTranslator-2-1-3": {
             "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageWorker"
+            "functionalId": "DisplayReceivedMessageSpanishTranslator"
         },
         "SpanishTranslator-2-1-4": {
             "intent": "Process the message.",
-            "functionalId": "ProcessMessageWorker"
+            "functionalId": "ProcessMessageSpanishTranslator"
         },
         "SpanishTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
-            "functionalId": "PutProcessedResultInQueueWorker",
+            "functionalId": "PutProcessedResultInQueueSpanishTranslator",
             "output": [
                 {
                     "function": "put"
@@ -298,10 +298,10 @@
             "intent": "Import the queue library."
         },
         "TamilTranslator-0-3": {
-            "intent": "Define the worker class that runs in its own thread."
+            "intent": "Define the TamilTranslator class that runs in its own thread."
         },
         "TamilTranslator-1": {
-            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "intent": "Initialize the TamilTranslator with the parent queue and the consumer queue",
             "type": "function",
             "variables": [
                 {
@@ -327,7 +327,7 @@
             ]
         },
         "TamilTranslator-1-1": {
-            "intent": "Initialize the base Thread class."
+            "intent": "Initialize the base TamilTranslator class."
         },
         "TamilTranslator-1-2": {
             "intent": "Initialize the queue.",
@@ -360,10 +360,10 @@
             ]
         },
         "TamilTranslator-1-5": {
-            "intent": "Start the worker."
+            "intent": "Start the TamilTranslator."
         },
         "TamilTranslator-2": {
-            "intent": "Define the run worker module.",
+            "intent": "Define the run TamilTranslator module.",
             "type": "function",
             "variables": [
                 {
@@ -374,16 +374,16 @@
             ]
         },
         "TamilTranslator-2-1": {
-            "intent": "Enter main loop to receive task in worker.",
-            "functionalId": "MainLoopWorker"
+            "intent": "Enter main loop to receive task in TamilTranslator.",
+            "functionalId": "MainLoopTamilTranslator"
         },
         "TamilTranslator-2-1-1": {
-            "intent": "Try to receive messages in worker.",
-            "functionalId": "TryToReceiveMessageWorker"
+            "intent": "Try to receive messages in TamilTranslator.",
+            "functionalId": "TryToReceiveMessageTamilTranslator"
         },
         "TamilTranslator-2-1-1-1": {
-            "intent": "Receive message in worker.",
-            "functionalId": "ReceiveMessageWorker",
+            "intent": "Receive message in TamilTranslator.",
+            "functionalId": "ReceiveMessageTamilTranslator",
             "input": true,
             "variables": [
                 {
@@ -395,23 +395,23 @@
         },
         "TamilTranslator-2-1-2": {
             "intent": "Catch exception if no message was received",
-            "functionalId": "CatchNoMsgExceptionWorker"
+            "functionalId": "CatchNoMsgExceptionTamilTranslator"
         },
         "TamilTranslator-2-1-2-1": {
-            "intent": "Continue receiving messages in worker.",
-            "functionalId": "ContinueRecvMessagesWorker"
+            "intent": "Continue receiving messages in TamilTranslator.",
+            "functionalId": "ContinueRecvMessagesTamilTranslator"
         },
         "TamilTranslator-2-1-3": {
             "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageWorker"
+            "functionalId": "DisplayReceivedMessageTamilTranslator"
         },
         "TamilTranslator-2-1-4": {
             "intent": "Process the message.",
-            "functionalId": "ProcessMessageWorker"
+            "functionalId": "ProcessMessageTamilTranslator"
         },
         "TamilTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
-            "functionalId": "PutProcessedResultInQueueWorker",
+            "functionalId": "PutProcessedResultInQueueTamilTranslator",
             "output": [
                 {
                     "function": "put"
@@ -440,7 +440,7 @@
             "intent": "Define the worker class that runs in its own thread."
         },
         "FrenchTranslator-1": {
-            "intent": "Initialize the WorkerThread with the parent queue and the consumer queue",
+            "intent": "Initialize the FrenchTranslator with the parent queue and the consumer queue",
             "type": "function",
             "variables": [
                 {
@@ -466,7 +466,7 @@
             ]
         },
         "FrenchTranslator-1-1": {
-            "intent": "Initialize the base Thread class."
+            "intent": "Initialize the base FrenchTranslator class."
         },
         "FrenchTranslator-1-2": {
             "intent": "Initialize the queue.",
@@ -499,10 +499,10 @@
             ]
         },
         "FrenchTranslator-1-5": {
-            "intent": "Start the worker."
+            "intent": "Start the FrenchTranslator."
         },
         "FrenchTranslator-2": {
-            "intent": "Define the run worker module.",
+            "intent": "Define the run FrenchTranslator module.",
             "type": "function",
             "variables": [
                 {
@@ -513,16 +513,16 @@
             ]
         },
         "FrenchTranslator-2-1": {
-            "intent": "Enter main loop to receive task in worker.",
-            "functionalId": "MainLoopWorker"
+            "intent": "Enter main loop to receive task in FrenchTranslator.",
+            "functionalId": "MainLoopFrenchTranslator"
         },
         "FrenchTranslator-2-1-1": {
-            "intent": "Try to receive messages in worker.",
-            "functionalId": "TryToReceiveMessageWorker"
+            "intent": "Try to receive messages in FrenchTranslator.",
+            "functionalId": "TryToReceiveMessageFrenchTranslator"
         },
         "FrenchTranslator-2-1-1-1": {
-            "intent": "Receive message in worker.",
-            "functionalId": "ReceiveMessageWorker",
+            "intent": "Receive message in FrenchTranslator.",
+            "functionalId": "ReceiveMessageFrenchTranslator",
             "input": true,
             "variables": [
                 {
@@ -534,23 +534,23 @@
         },
         "FrenchTranslator-2-1-2": {
             "intent": "Catch exception if no message was received",
-            "functionalId": "CatchNoMsgExceptionWorker"
+            "functionalId": "CatchNoMsgExceptionFrenchTranslator"
         },
         "FrenchTranslator-2-1-2-1": {
-            "intent": "Continue receiving messages in worker.",
+            "intent": "Continue receiving messages in FrenchTranslator.",
             "functionalId": "ContinueRecvMessagesWorker"
         },
         "FrenchTranslator-2-1-3": {
             "intent": "Display the received message.",
-            "functionalId": "DisplayReceivedMessageWorker"
+            "functionalId": "DisplayReceivedMessageFrenchTranslator"
         },
         "FrenchTranslator-2-1-4": {
             "intent": "Process the message.",
-            "functionalId": "ProcessMessageWorker"
+            "functionalId": "ProcessMessageFrenchTranslator"
         },
         "FrenchTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
-            "functionalId": "PutProcessedResultInQueueWorker",
+            "functionalId": "PutProcessedResultInQueueFrenchTranslator",
             "output": [
                 {
                     "function": "put"
@@ -564,22 +564,22 @@
                 }
             ]
         },
-        "consumer-0": {
-            "intent": "Global path for the consumer thread module.",
+        "Packer-0": {
+            "intent": "Global path for the packer thread module.",
             "name": "global",
             "type": "global"
         },
-        "consumer-0-1": {
+        "Packer-0-1": {
             "intent": "Import the threading library."
         },
-        "consumer-0-2": {
+        "Packer-0-2": {
             "intent": "Import the queue library."
         },
-        "consumer-0-3": {
-            "intent": "Define the consumer class that runs in its own thread."
+        "Packer-0-3": {
+            "intent": "Define the Packer class that runs in its own thread."
         },
-        "consumer-1": {
-            "intent": "Initialize the ConsumerThread",
+        "Packer-1": {
+            "intent": "Initialize the PackerThread",
             "type": "function",
             "variables": [
                 {
@@ -594,10 +594,10 @@
                 }
             ]
         },
-        "consumer-1-1": {
-            "intent": "Initialize the base Thread class."
+        "Packer-1-1": {
+            "intent": "Initialize the base Packer class."
         },
-        "consumer-1-2": {
+        "Packer-1-2": {
             "intent": "Initialize the queue.",
             "variables": [
                 {
@@ -607,7 +607,7 @@
                 }
             ]
         },
-        "consumer-1-3": {
+        "Packer-1-3": {
             "intent": "Initialize the items.",
             "variables": [
                 {
@@ -617,8 +617,8 @@
                 }
             ]
         },
-        "consumer-1-4": {
-            "intent": "Start the consumer thread.",
+        "Packer-1-4": {
+            "intent": "Start the packer thread.",
             "variables": [
                 {
                     "name": "self",
@@ -627,8 +627,8 @@
                 }
             ]
         },
-        "consumer-2": {
-            "intent": "Define the consumer run module.",
+        "Packer-2": {
+            "intent": "Define the packer run module.",
             "type": "function",
             "variables": [
                 {
@@ -638,17 +638,17 @@
                 }
             ]
         },
-        "consumer-2-1": {
-            "intent": "Enter main loop to receive results in consumer.",
-            "functionalId": "MainLoopConsumer"
+        "Packer-2-1": {
+            "intent": "Enter main loop to receive results in Packer.",
+            "functionalId": "MainLoopPacker"
         },
-        "consumer-2-1-1": {
-            "intent": "Try to receive messages in consumer.",
-            "functionalId": "TryToReceiveMessageConsumer"
+        "Packer-2-1-1": {
+            "intent": "Try to receive messages in Packer.",
+            "functionalId": "TryToReceiveMessagePacker"
         },
-        "consumer-2-1-1-1": {
-            "intent": "Receive message in consumer.",
-            "functionalId": "ReceiveMessageConsumer",
+        "Packer-2-1-1-1": {
+            "intent": "Receive message in Packer.",
+            "functionalId": "ReceiveMessagePacker",
             "input": true,
             "variables": [
                 {
@@ -658,17 +658,17 @@
                 }
             ]
         },
-        "consumer-2-1-2": {
+        "Packer-2-1-2": {
             "intent": "Catch exception if no message was received",
-            "functionalId": "NoMsgExceptionConsumer"
+            "functionalId": "NoMsgExceptionPacker"
         },
-        "consumer-2-1-2-1": {
-            "intent": "Continue receiving messages in consumer.",
-            "functionalId": "ContinueRecvMsgConsumer"
+        "Packer-2-1-2-1": {
+            "intent": "Continue receiving messages in Packer.",
+            "functionalId": "ContinueRecvMsgPacker"
         },
-        "consumer-2-1-3": {
+        "Packer-2-1-3": {
             "intent": "Increment the number of parts done for the current data.",
-            "functionalId": "IncrementJobStatusConsumer",
+            "functionalId": "IncrementJobStatusPacker",
             "variables": [
                 {
                     "name": "self",
@@ -677,21 +677,21 @@
                 }
             ]
         },
-        "consumer-2-1-4": {
+        "Packer-2-1-4": {
             "intent": "Check if all the parts are done",
-            "functionalId": "CheckIfJobIsDoneConsumer",
+            "functionalId": "CheckIfJobIsDonePacker",
             "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectCleanupJob"
             ]
         },
-        "consumer-2-1-4-1": {
+        "Packer-2-1-4-1": {
             "intent": "Display confirmation that all parts for job are done.",
-            "functionalId": "DisplayConfirmationConsumer"
+            "functionalId": "DisplayConfirmationPacker"
         },
-        "consumer-2-1-4-2": {
+        "Packer-2-1-4-2": {
             "intent": "Delete the key from the items to cleanup.",
-            "functionalId": "CleanUpJobStatusConsumer",
+            "functionalId": "CleanUpJobStatusPacker",
             "variables": [
                 {
                     "name": "self",

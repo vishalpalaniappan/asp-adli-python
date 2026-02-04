@@ -1,7 +1,7 @@
 import threading
 import queue
 
-class ConsumerThread(threading.Thread):
+class PackerThread(threading.Thread):
     def __init__(self, queue):
         super().__init__(daemon=True)
         self.queue = queue
@@ -18,5 +18,5 @@ class ConsumerThread(threading.Thread):
             self.items[msg["data"]] = self.items.get(msg["data"], 0) + 1
 
             if self.items[msg["data"]] == 3:
-                print("Consumer received the processed data from all three workers for the following data: ", msg["data"])
+                print("Packer received the processed data from all three workers for the following data: ", msg["data"])
                 del self.items[msg["data"]]
