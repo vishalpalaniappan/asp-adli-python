@@ -304,17 +304,7 @@
             "id": "SelectReceiveMessageTamilTranslator",
             "intent": "Receive text in tamil translator.",
             "abstractions": [
-                "MainLoopTamilTranslator",
-                "TryToReceiveMessageTamilTranslator",
                 "ReceiveMessageTamilTranslator"
-            ]
-        },
-        {
-            "id": "SelectNoMsgReceivedTamilWorker",
-            "intent": "No message received in tamil worker.",
-            "abstractions": [
-                "CatchNoMsgExceptionTamilTranslator",
-                "ContinueRecvMessagesTamilTranslator"
             ]
         },
         {
@@ -340,17 +330,7 @@
             "id": "SelectReceiveMessageSpanishTranslator",
             "intent": "Receive text in spanish translator.",
             "abstractions": [
-                "MainLoopSpanishTranslator",
-                "TryToReceiveMessageSpanishTranslator",
                 "ReceiveMessageSpanishTranslator"
-            ]
-        },
-        {
-            "id": "SelectNoMsgReceivedSpaniesTranslater",
-            "intent": "No message received by spanish translator.",
-            "abstractions": [
-                "CatchNoMsgExceptionSpanishTranslator",
-                "ContinueRecvMessagesSpanishTranslator"
             ]
         },
         {
@@ -376,17 +356,7 @@
             "id": "SelectReceiveMessageFrenchTranslator",
             "intent": "Receive text in french translator.",
             "abstractions": [
-                "MainLoopFrenchTranslator",
-                "TryToReceiveMessageFrenchTranslator",
                 "ReceiveMessageFrenchTranslator"
-            ]
-        },
-        {
-            "id": "SelectNoMsgReceivedFrenchWorker",
-            "intent": "No message received in french translator.",
-            "abstractions": [
-                "CatchNoMsgExceptionFrenchTranslator",
-                "ContinueRecvMessagesFrenchTranslator"
             ]
         },
         {
