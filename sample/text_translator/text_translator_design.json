@@ -1,5 +1,5 @@
 {
-    "description": "Contains the design and behavioral abstractions of the multi-threaded data processor.",
+    "description": "Contains the design and behavioral abstractions of the multi-threaded text translator.",
     "design": [
         {
             "name": "Translate Provided Text",
