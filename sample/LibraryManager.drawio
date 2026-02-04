@@ -953,7 +953,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="-ggXPHcaspVBdo7nJuyq" name="text-translator">
-    <mxGraphModel dx="1062" dy="625" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2607" dy="1535" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -970,46 +970,46 @@
           <mxGeometry x="703" y="41" width="311" height="30" as="geometry" />
         </mxCell>
         <mxCell id="oDOPSPffB4xI8Mb_iqUP-5" value="User" style="shape=actor;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontSize=15;" vertex="1" parent="1">
-          <mxGeometry x="101" y="120" width="40.67" height="61" as="geometry" />
+          <mxGeometry x="144" y="121" width="40.67" height="61" as="geometry" />
         </mxCell>
         <mxCell id="oDOPSPffB4xI8Mb_iqUP-7" value="French&amp;nbsp;&lt;div&gt;Translator&lt;/div&gt;" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=middle;verticalAlign=middle;align=right;html=1;fontSize=14;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;labelPosition=left;" vertex="1" parent="1">
-          <mxGeometry x="499.5" y="117.5" width="66" height="66" as="geometry" />
+          <mxGeometry x="580" y="122" width="66" height="66" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-2" value="Spanish&amp;nbsp;&lt;div&gt;Translator&lt;/div&gt;" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=middle;verticalAlign=middle;align=right;html=1;fontSize=14;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;labelPosition=left;" vertex="1" parent="1">
-          <mxGeometry x="790" y="117.5" width="66" height="66" as="geometry" />
+          <mxGeometry x="860" y="117" width="66" height="66" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-3" value="Tamil&amp;nbsp;&lt;div&gt;Translator&lt;/div&gt;" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=middle;verticalAlign=middle;align=right;html=1;fontSize=14;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;labelPosition=left;" vertex="1" parent="1">
-          <mxGeometry x="1063" y="117.5" width="66" height="66" as="geometry" />
+          <mxGeometry x="1114" y="114" width="66" height="66" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-7" value="Employee" style="shape=actor;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontSize=15;" vertex="1" parent="1">
-          <mxGeometry x="232" y="120" width="40.67" height="61" as="geometry" />
+          <mxGeometry x="311" y="124.5" width="40.67" height="61" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-14" target="xC5nuUzwBxij4A9lajhx-16">
+        <mxCell id="xC5nuUzwBxij4A9lajhx-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-14" target="xC5nuUzwBxij4A9lajhx-75">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-14" value="Employee Receives Text To Translate" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="311" y="421" width="120" height="60" as="geometry" />
+          <mxGeometry x="311" y="410" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-16" target="xC5nuUzwBxij4A9lajhx-18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-16" value="Employee Sends Text to French Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="311" y="537" width="120" height="60" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-16" value="Employee Sends Job to French Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="311" y="600" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-18" target="xC5nuUzwBxij4A9lajhx-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-18" value="Employee Sends Text to Spanish Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="311" y="645" width="120" height="60" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-18" value="Employee Sends Job to Spanish Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="311" y="694" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-20" target="xC5nuUzwBxij4A9lajhx-22">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-20" value="Employee Sends Text to Tamil Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="311" y="749" width="120" height="60" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-20" value="Employee Sends Job to Tamil Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="311" y="786" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-22" value="Wait for 1s before accepting more text." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="311" y="862" width="120" height="60" as="geometry" />
+          <mxGeometry x="311" y="891" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-24" target="xC5nuUzwBxij4A9lajhx-40">
           <mxGeometry relative="1" as="geometry" />
@@ -1039,10 +1039,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-30" value="Translates Text To French&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="564" y="537" width="120" height="60" as="geometry" />
+          <mxGeometry x="564" y="552" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-32" value="Sens the translated result to the packer." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="564" y="654.5" width="120" height="60" as="geometry" />
+          <mxGeometry x="564" y="695.25" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-40" target="xC5nuUzwBxij4A9lajhx-42">
           <mxGeometry relative="1" as="geometry" />
@@ -1054,10 +1054,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-42" value="Translates Text To Spanish" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="797" y="540.75" width="120" height="60" as="geometry" />
+          <mxGeometry x="797" y="555.75" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-43" value="Sens the translated result to the packer." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="797" y="658.25" width="120" height="60" as="geometry" />
+          <mxGeometry x="797" y="699" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-45" target="xC5nuUzwBxij4A9lajhx-47">
           <mxGeometry relative="1" as="geometry" />
@@ -1069,58 +1069,61 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-47" value="Translates Text To Tamil" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1023" y="540.75" width="120" height="60" as="geometry" />
+          <mxGeometry x="1023" y="555.75" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-48" value="Sens the translated result to the packer." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1023" y="658.25" width="120" height="60" as="geometry" />
+          <mxGeometry x="1023" y="699" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-49" target="xC5nuUzwBxij4A9lajhx-50">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-49" value="Packer" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1285" y="305" width="44" height="44" as="geometry" />
+          <mxGeometry x="1284" y="305" width="44" height="44" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-50" target="xC5nuUzwBxij4A9lajhx-51">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-50" value="Packer Receives Translated Trext from Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1246" y="421" width="120" height="60" as="geometry" />
+          <mxGeometry x="1246" y="415.75" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-51" target="xC5nuUzwBxij4A9lajhx-54">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-51" value="Adds the translation to the translated document." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1246" y="540.75" width="120" height="60" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-51" value="Add translation to cabinet." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#ffff88;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="1246" y="552" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-54" target="xC5nuUzwBxij4A9lajhx-56">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-54" value="Checks if all translators have finished" style="rhombus;whiteSpace=wrap;html=1;fontSize=13;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1266" y="648.25" width="80" height="80" as="geometry" />
+          <mxGeometry x="1266" y="689" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-56" value="Add document to cabinet." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="1268" y="773" width="74.5" height="60" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-56" value="Mark Translation Job as Done in Cabinet" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#ffff88;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="1248" y="882" width="116" height="56" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-60" value="FrenchTranslation" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
-          <mxGeometry x="587.5" y="112" width="115.5" height="77" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-60" value="French&lt;div&gt;Translation&lt;/div&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="658.5" y="116.5" width="81.5" height="77" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-61" value="Spanish Translation" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
-          <mxGeometry x="860" y="112" width="115.5" height="77" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-61" value="Spanish&amp;nbsp;&lt;div&gt;Translation&lt;/div&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="111.5" width="76" height="77" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-62" value="Tamil Translation" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
-          <mxGeometry x="1137" y="112" width="115.5" height="77" as="geometry" />
-        </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-63" value="Original Text" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
-          <mxGeometry x="301" y="112" width="115.5" height="77" as="geometry" />
-        </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-64" value="Translated Document" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
-          <mxGeometry x="1399" y="112" width="115.5" height="77" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-62" value="Tamil&amp;nbsp;&lt;div&gt;Translation&lt;/div&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="1188" y="108.5" width="83" height="77" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-65" value="Packer" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=middle;verticalAlign=middle;align=right;html=1;fontSize=14;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;labelPosition=left;" vertex="1" parent="1">
-          <mxGeometry x="1326" y="117.25" width="66.5" height="66.5" as="geometry" />
+          <mxGeometry x="1354" y="116.75" width="66.5" height="66.5" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-66" value="Cabinet" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;" vertex="1" parent="1">
-          <mxGeometry x="1546" y="110.5" width="120" height="80" as="geometry" />
+        <mxCell id="xC5nuUzwBxij4A9lajhx-66" value="Cabinet" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#ffff88;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="1454" y="111.5" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xC5nuUzwBxij4A9lajhx-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="xC5nuUzwBxij4A9lajhx-75" target="xC5nuUzwBxij4A9lajhx-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xC5nuUzwBxij4A9lajhx-75" value="Create Job with UID and add slot in cabinet with translation job." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#ffff88;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="311" y="497" width="120" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="xC5nuUzwBxij4A9lajhx-83" value="Translation Job" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="377" y="115" width="83" height="75" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
