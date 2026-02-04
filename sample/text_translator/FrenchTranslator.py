@@ -17,8 +17,7 @@ class FrenchTranslator(threading.Thread):
             except queue.Empty:
                 continue
 
-            translatedMsg = GoogleTranslator(source="auto", target="french").translate(msg)       
-            print("Translated string:", msg, "into french", translatedMsg)
+            translatedMsg = GoogleTranslator(source="auto", target="french").translate(msg)
             self.consumer_queue.put({
                 "id": self.id,
                 "original": msg,

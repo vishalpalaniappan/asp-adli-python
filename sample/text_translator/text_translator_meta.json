@@ -270,10 +270,6 @@
             "functionalId": "TranslateIntoSpanish"
         },
         "SpanishTranslator-2-1-4": {
-            "intent": "Display the translated message in spanish.",
-            "functionalId": "DisplayTranslatedMessageSpanish"
-        },
-        "SpanishTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueSpanishTranslator",
             "output": [
@@ -412,10 +408,6 @@
             "functionalId": "TranslateIntoTamil"
         },
         "TamilTranslator-2-1-4": {
-            "intent": "Display the translated message.",
-            "functionalId": "DisplayTranslatedMessageTamil"
-        },
-        "TamilTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueTamilTranslator",
             "output": [
@@ -554,10 +546,6 @@
             "functionalId": "TranslateIntoFrench"
         },
         "FrenchTranslator-2-1-4": {
-            "intent": "Display the translated message in french.",
-            "functionalId": "DisplayTranslatedMessageFrench"
-        },
-        "FrenchTranslator-2-1-5": {
             "intent": "Put the processed result in queue.",
             "functionalId": "PutProcessedResultInQueueFrenchTranslator",
             "output": [
@@ -695,10 +683,6 @@
             ]
         },
         "Packer-2-1-4-1": {
-            "intent": "Display confirmation that all parts for job are done.",
-            "functionalId": "DisplayConfirmationPacker"
-        },
-        "Packer-2-1-4-2": {
             "intent": "Delete the key from the items to cleanup.",
             "functionalId": "CleanUpJobStatusPacker",
             "variables": [

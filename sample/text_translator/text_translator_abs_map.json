@@ -244,11 +244,6 @@
                         {
                             "id": "FrenchTranslator-2-1-4",
                             "lineDelta": 8,
-                            "syntax": "print(\"Worker Received message:\", msg)"
-                        },
-                        {
-                            "id": "FrenchTranslator-2-1-5",
-                            "lineDelta": 9,
                             "syntax": "self.consumer_queue.put({"
                         }
                     ]
@@ -360,11 +355,6 @@
                         {
                             "id": "SpanishTranslator-2-1-4",
                             "lineDelta": 8,
-                            "syntax": "print(\"Worker Received message:\", msg)"
-                        },
-                        {
-                            "id": "SpanishTranslator-2-1-5",
-                            "lineDelta": 9,
                             "syntax": "self.consumer_queue.put({"
                         }
                     ]
@@ -476,11 +466,6 @@
                         {
                             "id": "TamilTranslator-2-1-4",
                             "lineDelta": 8,
-                            "syntax": "print(\"Worker Received message:\", msg)"
-                        },
-                        {
-                            "id": "TamilTranslator-2-1-5",
-                            "lineDelta": 9,
                             "syntax": "self.consumer_queue.put({"
                         }
                     ]
@@ -587,11 +572,6 @@
                         {
                             "id": "Packer-2-1-4-1",
                             "lineDelta": 10,
-                            "syntax": "print(\"Consumer received the processed data from all three workers for the following data: \", msg[\"data\"])"
-                        },
-                        {
-                            "id": "Packer-2-1-4-2",
-                            "lineDelta": 11,
                             "syntax": "del self.items[msg[\"data\"]]"
                         }
                     ]

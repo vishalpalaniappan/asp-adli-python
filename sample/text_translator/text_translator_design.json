@@ -2,8 +2,8 @@
     "description": "Contains the design and behavioral abstractions of the multi-threaded data processor.",
     "design": [
         {
-            "name": "ProcessData",
-            "id": "ProcessDataModule",
+            "name": "Translate Provided Text",
+            "id": "TranslateProvidedText",
             "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
             "type": "atomic",
             "entry": "SelectMainMenuAndAcceptData",
@@ -319,7 +319,6 @@
             "intent": "Send the translated text to the packer.",
             "target": "consumer",
             "abstractions": [
-                "DisplayTranslatedMessageTamil",
                 "PutProcessedResultInQueueTamilTranslator"
             ]
         },
@@ -345,7 +344,6 @@
             "intent": "Send translated text to packer.",
             "target": "consumer",
             "abstractions": [
-                "DisplayTranslatedMessageSpanish",
                 "PutProcessedResultInQueueSpanishTranslator"
             ]
         },
@@ -371,7 +369,6 @@
             "intent": "Send translated text to packer",
             "target": "consumer",
             "abstractions": [
-                "DisplayTranslatedMessageFrench",
                 "PutProcessedResultInQueueFrenchTranslator"
             ]
         },
@@ -415,7 +412,6 @@
             "id": "SelectCleanupJob",
             "intent": "Place the translated document in the cabinet.",
             "abstractions": [
-                "DisplayConfirmationPacker",
                 "CleanUpJobStatusPacker"
             ]
         }

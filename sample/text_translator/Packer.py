@@ -18,5 +18,4 @@ class PackerThread(threading.Thread):
             self.items[msg["original"]] = self.items.get(msg["original"], 0) + 1
 
             if self.items[msg["original"]] == 3:
-                print("Packer received the translated text for the following text from all translators: ", msg["original"])
                 del self.items[msg["original"]]
