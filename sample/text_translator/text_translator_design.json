@@ -16,6 +16,13 @@
                     ]
                 },
                 {
+                    "type": "sequential",
+                    "id": "AddJobToDB",
+                    "behavior": [
+                        "SelectAddJobToDB"
+                    ]
+                },
+                {
                     "type": "fanout",
                     "id": "WorkerAFanoutStep",
                     "fanoutRef": "WORKERS",
@@ -268,6 +275,13 @@
             ]
         },
         {
+            "id": "SelectAddJobToDB",
+            "intent": "Add job to database",
+            "abstractions": [
+                "AddJob"
+            ]
+        },
+        {
             "id": "SelectSendJobToFrenchTranslator",
             "intent": "Send text to french translator.",
             "target": "worker",
@@ -388,17 +402,9 @@
         },
         {
             "id": "SelectIncrementJobStatusPacker",
-            "intent": "Add translation to document.",
+            "intent": "Add translation to cabinet.",
             "abstractions": [
                 "IncrementJobStatusPacker"
-            ]
-        },
-        {
-            "id": "SelectNoMsgReceivedConsumer",
-            "intent": "No message received in packer.",
-            "abstractions": [
-                "NoMsgExceptionPacker",
-                "ContinueRecvMsgPacker"
             ]
         },
         {
@@ -410,7 +416,7 @@
         },
         {
             "id": "SelectCleanupJob",
-            "intent": "Place the translated document in the cabinet.",
+            "intent": "Note job as done in cabinet.",
             "abstractions": [
                 "CleanUpJobStatusPacker"
             ]

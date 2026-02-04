@@ -5,6 +5,7 @@ from Packer import PackerThread
 from TamilTranslator import TamilTranslator
 from FrenchTranslator import FrenchTranslator
 from SpanishTranslator import SpanishTranslator
+from TransactionDB import TransactionDB
 
 def TextTranslator():
     consumer_queue = queue.Queue()
@@ -18,11 +19,14 @@ def TextTranslator():
     FrenchTranslator(2, message_queue_french, consumer_queue)
     TamilTranslator(3, message_queue_tamil, consumer_queue)
 
+    db = TransactionDB()
+
     while True:    
         data = input("\nEnter any string:")
-        message_queue_spanish.put(data)
-        message_queue_french.put(data)
-        message_queue_tamil.put(data)
+        job = db.addJob(data)
+        message_queue_spanish.put(job)
+        message_queue_french.put(job)
+        message_queue_tamil.put(job)
         time.sleep(1)
 
 if "__main__" == __name__:

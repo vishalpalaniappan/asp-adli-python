@@ -74,6 +74,7 @@ class LogInjectorDesign(ast.NodeTransformer):
 
         absMeta = None
         wrapper = []
+        meta = None
 
         # Get the abstraction metadata if available.
         if self.fileAbsMap and node.lineno in self.fileAbsMap:

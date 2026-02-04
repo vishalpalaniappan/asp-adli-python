@@ -1,5 +1,6 @@
 import threading
 import queue
+from TransactionDB import TransactionDB
 
 class PackerThread(threading.Thread):
     def __init__(self, queue):
@@ -9,13 +10,14 @@ class PackerThread(threading.Thread):
         self.start()
 
     def run(self):
+        self.db = TransactionDB()
         while True:
             try:
                 msg = self.queue.get(timeout=10)
             except queue.Empty:
                 continue
 
-            self.items[msg["original"]] = self.items.get(msg["original"], 0) + 1
+            self.db.addTranslation(msg)
 
-            if self.items[msg["original"]] == 3:
-                del self.items[msg["original"]]
+            if self.db.isDone(msg):
+                self.db.setDone(msg)

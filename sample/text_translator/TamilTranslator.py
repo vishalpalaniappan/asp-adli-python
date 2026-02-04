@@ -17,9 +17,10 @@ class TamilTranslator(threading.Thread):
             except queue.Empty:
                 continue
 
-            translatedMsg = GoogleTranslator(source="auto", target="tamil").translate(msg)
+            translatedMsg = GoogleTranslator(source="auto", target="tamil").translate(msg["data"])
             self.consumer_queue.put({
-                "id": self.id,
-                "original": msg,
+                "uid": msg["uid"],
+                "language": "tamil",
+                "original": msg["data"],
                 "translated": translatedMsg
             })
