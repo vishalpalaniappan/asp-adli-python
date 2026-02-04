@@ -261,7 +261,7 @@
         {
             "id": "SelectMainMenuAndAcceptData",
             "atomic": true,
-            "intent": "Get the data to process from the user.",
+            "intent": "Accept text to be translated from user.",
             "abstractions": [
                 "EnterDataIngestorLoop",
                 "AcceptData"
@@ -269,7 +269,7 @@
         },
         {
             "id": "SelectSendJobToFrenchTranslator",
-            "intent": "Send jobs to french translator.",
+            "intent": "Send text to french translator.",
             "target": "worker",
             "abstractions": [
                 "SendTextToFrenchTranslator"
@@ -277,7 +277,7 @@
         },
         {
             "id": "SelectSendJobToSpanishTranslator",
-            "intent": "Send jobs to spanish translator.",
+            "intent": "Send text to spanish translator.",
             "target": "worker",
             "abstractions": [
                 "SendDataToSpanishTranslator"
@@ -285,7 +285,7 @@
         },
         {
             "id": "SelectSendJobToTamilTranslator",
-            "intent": "Send jobs to tamil translator.",
+            "intent": "Send text to tamil translator.",
             "target": "worker",
             "abstractions": [
                 "SendDataToTamilTranslator"
@@ -293,7 +293,7 @@
         },
         {
             "id": "SelectThrottleIngestion",
-            "intent": "Throttle the ingestion.",
+            "intent": "Wait a secon before accepting more text from the user.",
             "abstractions": [
                 "SleepToThrottleIngestion"
             ]
@@ -319,7 +319,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgTamilTranslator",
-            "intent": "Process Received Message in Worker.",
+            "intent": "Translate the text into tamil.",
             "abstractions": [
                 "DisplayReceivedMessageTamilTranslator",
                 "ProcessMessageTamilTranslator"
@@ -327,7 +327,7 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
-            "intent": "Send Processed Results to Consumer.",
+            "intent": "Send the translated text to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueTamilTranslator"
@@ -347,7 +347,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
-            "intent": "No message received in spanish worker.",
+            "intent": "No message received by spanish translator.",
             "abstractions": [
                 "CatchNoMsgExceptionSpanishTranslator",
                 "ContinueRecvMessagesSpanishTranslator"
@@ -355,15 +355,15 @@
         },
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
-            "intent": "Process Received Message in spanish translator.",
+            "intent": "Translate the received text into spanish.",
             "abstractions": [
-                "DisplayReceivedMessageTamilTranslator",
-                "ProcessMessageTamilTranslator"
+                "DisplayReceivedMessageSpanishTranslator",
+                "ProcessMessageSpanishTranslator"
             ]
         },
         {
             "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
-            "intent": "Send Processed Results to packer.",
+            "intent": "Send translated text to packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueSpanishTranslator"
@@ -383,7 +383,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
-            "intent": "No message received in french worker.",
+            "intent": "No message received in french translator.",
             "abstractions": [
                 "CatchNoMsgExceptionFrenchTranslator",
                 "ContinueRecvMessagesFrenchTranslator"
@@ -391,7 +391,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
-            "intent": "Process Received Message in french translator.",
+            "intent": "Translate recieved text into french.",
             "abstractions": [
                 "DisplayReceivedMessageFrenchTranslator",
                 "ProcessMessageFrenchTranslator"
@@ -399,7 +399,7 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
-            "intent": "Send Processed Results to packer.",
+            "intent": "Send translated text to packer",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueFrenchTranslator"
@@ -412,7 +412,7 @@
 
         {
             "id": "SelectReceiveMessageConsumer",
-            "intent": "Receive message in packer.",
+            "intent": "Receive translated text in packer.",
             "abstractions": [
                 "MainLoopPacker",
                 "TryToReceiveMessagePacker",
@@ -421,14 +421,14 @@
         },
         {
             "id": "SelectIncrementJobStatusPacker",
-            "intent": "Increment the job status in packer.",
+            "intent": "Add translation to document.",
             "abstractions": [
                 "IncrementJobStatusPacker"
             ]
         },
         {
             "id": "SelectNoMsgReceivedConsumer",
-            "intent": "No message received in consumer.",
+            "intent": "No message received in packer.",
             "abstractions": [
                 "NoMsgExceptionPacker",
                 "ContinueRecvMsgPacker"
@@ -436,14 +436,14 @@
         },
         {
             "id": "SelectIsJobDone",
-            "intent": "Check if the job is done.",
+            "intent": "Check if all the translaters finished.",
             "abstractions": [
                 "CheckIfJobIsDonePacker"
             ]
         },
         {
             "id": "SelectCleanupJob",
-            "intent": "Cleanup the completed job.",
+            "intent": "Place the translated document in the cabinet.",
             "abstractions": [
                 "DisplayConfirmationPacker",
                 "CleanUpJobStatusPacker"
