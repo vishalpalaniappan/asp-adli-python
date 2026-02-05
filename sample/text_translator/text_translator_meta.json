@@ -230,7 +230,7 @@
                     "keys": []
                 },
                 {
-                    "name": "consumerQueue",
+                    "name": "packerQueue",
                     "scope": "local",
                     "keys": []
                 }
@@ -270,7 +270,14 @@
             ]
         },
         "SpanishTranslator-1-5": {
-            "intent": "Start the SpanishTranslator."
+            "intent": "Start the SpanishTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "SpanishTranslator-2": {
             "intent": "Define the run SpanishTranslator module.",
@@ -313,7 +320,14 @@
         },
         "SpanishTranslator-2-1-3": {
             "intent": "Translate the text into spanish.",
-            "functionalId": "TranslateIntoSpanish"
+            "functionalId": "TranslateIntoSpanish",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "SpanishTranslator-2-1-4": {
             "intent": "Put the processed result in queue.",
@@ -368,7 +382,7 @@
                     "keys": []
                 },
                 {
-                    "name": "consumerQueue",
+                    "name": "packerQueue",
                     "scope": "local",
                     "keys": []
                 }
@@ -408,7 +422,14 @@
             ]
         },
         "TamilTranslator-1-5": {
-            "intent": "Start the TamilTranslator."
+            "intent": "Start the TamilTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TamilTranslator-2": {
             "intent": "Define the run TamilTranslator module.",
@@ -451,7 +472,14 @@
         },
         "TamilTranslator-2-1-3": {
             "intent": "Translate the text into tamil.",
-            "functionalId": "TranslateIntoTamil"
+            "functionalId": "TranslateIntoTamil",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TamilTranslator-2-1-4": {
             "intent": "Put the processed result in queue.",
@@ -506,7 +534,7 @@
                     "keys": []
                 },
                 {
-                    "name": "consumerQueue",
+                    "name": "packerQueue",
                     "scope": "local",
                     "keys": []
                 }
@@ -546,7 +574,14 @@
             ]
         },
         "FrenchTranslator-1-5": {
-            "intent": "Start the FrenchTranslator."
+            "intent": "Start the FrenchTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "FrenchTranslator-2": {
             "intent": "Define the run FrenchTranslator module.",
@@ -589,7 +624,14 @@
         },
         "FrenchTranslator-2-1-3": {
             "intent": "Translate the text into french.",
-            "functionalId": "TranslateIntoFrench"
+            "functionalId": "TranslateIntoFrench",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "FrenchTranslator-2-1-4": {
             "intent": "Put the processed result in queue.",

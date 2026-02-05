@@ -3,11 +3,11 @@ import queue
 from deep_translator import GoogleTranslator # type: ignore
 
 class SpanishTranslator(threading.Thread):
-    def __init__(self, id, queue, consumerQueue):
+    def __init__(self, id, queue, packerQueue):
         super().__init__(daemon=True)
         self.queue = queue
         self.id = id
-        self.consumer_queue = consumerQueue
+        self.packerQueue = packerQueue
         self.start()
 
     def run(self):
@@ -18,7 +18,7 @@ class SpanishTranslator(threading.Thread):
                 continue
 
             translatedMsg = GoogleTranslator(source="auto", target="spanish").translate(msg["data"])
-            self.consumer_queue.put({
+            self.packerQueue.put({
                 "uid": msg["uid"],
                 "language": "spanish",
                 "original": msg["data"],
