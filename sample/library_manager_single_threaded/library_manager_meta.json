@@ -87,7 +87,7 @@
         },
         "1-1-1-3": {
             "intent": "Get first letter of book named <name> to create slot for book on shelf.",
-            "functionalId": "GettingFirstNameOfBook",
+            "functionalId": "GettingFirstLetterOfBookName",
             "variables": [
                 {
                     "name": "firstLetter",

@@ -290,13 +290,7 @@
                 {
                     "name": "name",
                     "functionalId": "AcceptBookName",
-                    "scope": "local",
-                    "constraint": [
-                        {
-                            "type":"minLength",
-                            "value": 1
-                        }
-                    ]
+                    "scope": "local"
                 }
             ],
             "abstractions": [
@@ -347,7 +341,15 @@
                 {
                     "name": "book_details",
                     "functionalId": "AddBookToBasket",
-                    "scope": "local"
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "value": 1,
+                            "keys": ["name"],
+                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
+                        }
+                    ]
                 },
                 {
                     "name": "basket",
@@ -445,23 +447,34 @@
         },
         {
             "id": "SelectGettingFirstLetterOfBookName",
-            "intent": "Got the first letter '<first_letter>' of the books name.",
+            "intent": "Got the first letter '<first_letter>' of the books named <book_name>.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
                     "type": "value",
                     "participantName": "firstLetter"
+                },
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["name"]
                 }
             ],
             "participants": [
                 {
                     "name": "firstLetter",
-                    "functionalId": "GettingFirstNameOfBook",
+                    "functionalId": "GettingFirstLetterOfBookName",
+                    "scope": "local"
+                },
+                {
+                    "name": "book",
+                    "functionalId": "GettingFirstLetterOfBookName",
                     "scope": "local"
                 }
             ],
             "abstractions": [
-                "GettingFirstNameOfBook"
+                "GettingFirstLetterOfBookName"
             ]
         },
         {
