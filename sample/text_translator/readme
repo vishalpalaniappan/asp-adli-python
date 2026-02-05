@@ -1,6 +1,1 @@
 This folder contains a text translator that uses three workers to translate the text and uses a packer to add the results to a cabinet.
-
-High level:
-- Producer accepts the text, sends to three workers.
-- Worker produce the translated text and sends it to the packer
-- Once all workers have completed, consumer writes the translated document to a cabinet.
