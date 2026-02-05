@@ -728,7 +728,14 @@
         },
         "Packer-2-1": {
             "intent": "Initialize DB connection.",
-            "functionalId": "InitDBConn"
+            "functionalId": "InitDBConn",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "Packer-2-2": {
             "intent": "Enter main loop to receive results in Packer.",
@@ -768,11 +775,25 @@
             "behavioral_role": "selector",
             "targetBehaviors": [
                 "SelectCleanupJob"
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
             ]
         },
         "Packer-2-2-4-1": {
             "intent": "Delete the key from the items to cleanup.",
-            "functionalId": "CleanUpJobStatusPacker"
+            "functionalId": "CleanUpJobStatusPacker",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-0": {
             "intent": "Global path for transaction persistence layer.",
@@ -793,86 +814,276 @@
         },
         "TransactionDB-1": {
             "intent": "Initialize the transaction database abstraction.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-1-1": {
-            "intent": "Register cleanup handler on program exit."
+            "intent": "Register cleanup handler on program exit.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-1-2": {
-            "intent": "Initialize database schema and connection."
+            "intent": "Initialize database schema and connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-2": {
             "intent": "Cleanup database resources.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-2-1": {
-            "intent": "Close database connection."
+            "intent": "Close database connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-3": {
             "intent": "Initialize database schema.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-3-1": {
-            "intent": "Open SQLite database connection."
+            "intent": "Open SQLite database connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-3-2": {
-            "intent": "Create cursor for executing SQL statements."
+            "intent": "Create cursor for executing SQL statements.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-3-3": {
-            "intent": "Create translation_jobs table if it does not exist."
+            "intent": "Create translation_jobs table if it does not exist.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-3-4": {
-            "intent": "Commit schema changes."
+            "intent": "Commit schema changes.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-4": {
             "intent": "Create a new translation job.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "data",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-4-1": {
-            "intent": "Generate unique identifier for the job."
+            "intent": "Generate unique identifier for the job.",
+            "variables": [
+                {
+                    "name": "uid",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-4-2": {
-            "intent": "Insert new job into database."
+            "intent": "Insert new job into database.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-4-3": {
-            "intent": "Persist the new job."
+            "intent": "Persist the new job.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-4-4": {
             "intent": "Return job descriptor for downstream workers."
         },
         "TransactionDB-5": {
             "intent": "Store translation result for a job.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-5-1": {
-            "intent": "Update translated language column."
+            "intent": "Update translated language column.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-5-2": {
-            "intent": "Persist translation update."
+            "intent": "Persist translation update.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-6": {
             "intent": "Check if all translations are complete.",
             "type": "function",
-            "behavioral_role": "selector"
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-6-1": {
-            "intent": "Query completion state of all language columns."
+            "intent": "Query completion state of all language columns.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "cur",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-6-2": {
-            "intent": "Fetch completion status."
+            "intent": "Fetch completion status.",
+            "variables": [
+                {
+                    "name": "row",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "cur",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-6-3": {
             "intent": "Return completion decision."
         },
         "TransactionDB-7": {
             "intent": "Mark job as completed.",
-            "type": "function"
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-7-1": {
-            "intent": "Set done flag for job."
+            "intent": "Set done flag for job.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "TransactionDB-7-2": {
-            "intent": "Persist completion state."
+            "intent": "Persist completion state.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         }
     }
 }
