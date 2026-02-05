@@ -283,7 +283,7 @@
         },
         {
             "id": "SelectAddJobToDB",
-            "intent": "Add translation job for text '<data>' to cabinet.",
+            "intent": "Add translation job to cabinet.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -373,7 +373,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgTamilTranslator",
-            "intent": "Translate the text '<data>' into tamil: '<translated>'.",
+            "intent": "Translate the text into tamil.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -423,7 +423,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
-            "intent": "Translate the text '<data>' into spanish: '<translated>'.",
+            "intent": "Translate the text into spanish.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -473,7 +473,7 @@
         },
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
-            "intent": "Translate the text '<data>' into french: '<translated>'.",
+            "intent": "Translate the text into french.",
             "placeholders": [
                 {
                     "string": "<data>",
