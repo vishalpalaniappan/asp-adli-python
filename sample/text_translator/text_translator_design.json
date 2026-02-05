@@ -305,24 +305,45 @@
         },
         {
             "id": "SelectSendJobToFrenchTranslator",
-            "intent": "Send text to french translator.",
+            "intent": "Send job to french translator.",
             "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendTextToFrenchTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "SendTextToFrenchTranslator"
             ]
         },
         {
             "id": "SelectSendJobToSpanishTranslator",
-            "intent": "Send text to spanish translator.",
+            "intent": "Send job to spanish translator.",
             "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendDataToSpanishTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "SendDataToSpanishTranslator"
             ]
         },
         {
             "id": "SelectSendJobToTamilTranslator",
-            "intent": "Send text to tamil translator.",
+            "intent": "Send job to tamil translator.",
             "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendDataToTamilTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "SendDataToTamilTranslator"
             ]
@@ -339,20 +360,52 @@
         {
             "id": "SelectReceiveMessageTamilTranslator",
             "intent": "Receive text in tamil translator.",
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "ReceiveMessageTamilTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ReceiveMessageTamilTranslator"
             ]
         },
         {
             "id": "SelectProcessReceivedMsgTamilTranslator",
-            "intent": "Translate the text into tamil.",
+            "intent": "Translate the text '<data>' into tamil: '<translated>'.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoTamil",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoTamil",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "TranslateIntoTamil"
             ]
         },
         {
             "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
-            "intent": "Send the translated text to the packer.",
+            "intent": "Send the job with the translated text to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueTamilTranslator"
@@ -370,14 +423,39 @@
         },
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
-            "intent": "Translate the received text into spanish.",
+            "intent": "Translate the text '<data>' into spanish: '<translated>'.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoSpanish",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoSpanish",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "TranslateIntoSpanish"
             ]
         },
         {
             "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
-            "intent": "Send translated text to packer.",
+            "intent": "Send the job with the translated text to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueSpanishTranslator"
@@ -395,7 +473,32 @@
         },
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
-            "intent": "Translate recieved text into french.",
+            "intent": "Translate the text '<data>' into french: '<translated>'.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoFrench",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoFrench",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "TranslateIntoFrench"
             ]
