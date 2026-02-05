@@ -17,18 +17,23 @@
                         },
                         {
                             "id": "1-0-2",
-                            "lineDelta": 77,
+                            "lineDelta": 1,
+                            "syntax": "import uuid"
+                        },
+                        {
+                            "id": "1-0-3",
+                            "lineDelta": 78,
                             "syntax": "if __name__ == \"__main__\":"
                         },
                         {
-                            "id": "1-0-2-1",
-                            "lineDelta": 78,
+                            "id": "1-0-3-1",
+                            "lineDelta": 79,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
                 },
                 "1": {
-                    "startLine": 3,
+                    "startLine": 4,
                     "abstractions": [
                         {
                             "id": "1-1",
@@ -78,7 +83,7 @@
                     ]
                 },
                 "2": {
-                    "startLine": 25,
+                    "startLine": 26,
                     "abstractions": [
                         {
                             "id": "1-2",
@@ -113,7 +118,7 @@
                     ]
                 },
                 "3": {
-                    "startLine": 35,
+                    "startLine": 36,
                     "abstractions": [
                         {
                             "id": "1-3",

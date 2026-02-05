@@ -1,4 +1,5 @@
 import sys
+import uuid
 
 def place_books_on_shelf_from_basket(book_shelf, basket):
     '''
@@ -29,7 +30,7 @@ def accept_book():
     print("\nEnter book details:")        
     name = input("Book name: ")
     genre = input("Genre: ")
-    book_details = {"name": name, "genre":genre}
+    book_details = {"name": name, "genre":genre, "uid": str(uuid.uuid4())}
     return book_details
 
 def library_manager():

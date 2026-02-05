@@ -12,10 +12,13 @@
             "intent": "Import the sys library."
         },
         "1-0-2": {
+            "intent": "Import the uuid library."
+        },
+        "1-0-3": {
             "intent": "Script is being run directly.",
             "type": "conditional_branch"
         },
-        "1-0-2-1": {
+        "1-0-3-1": {
             "intent": "Start the library manager.",
             "type": "function_call",
             "target": "3"
