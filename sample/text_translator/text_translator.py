@@ -8,16 +8,16 @@ from SpanishTranslator import SpanishTranslator
 from TransactionDB import TransactionDB
 
 def TextTranslator():
-    consumer_queue = queue.Queue()
-    PackerThread(consumer_queue)
+    packer_queue = queue.Queue()
+    PackerThread(packer_queue)
 
     message_queue_spanish = queue.Queue()
     message_queue_french = queue.Queue()
     message_queue_tamil = queue.Queue()
 
-    SpanishTranslator(1, message_queue_spanish, consumer_queue)
-    FrenchTranslator(2, message_queue_french, consumer_queue)
-    TamilTranslator(3, message_queue_tamil, consumer_queue)
+    SpanishTranslator(1, message_queue_spanish, packer_queue)
+    FrenchTranslator(2, message_queue_french, packer_queue)
+    TamilTranslator(3, message_queue_tamil, packer_queue)
 
     db = TransactionDB()
 

@@ -77,12 +77,12 @@
                         {
                             "id": "producer-1-1",
                             "lineDelta": 1,
-                            "syntax": "consumer_queue = queue.Queue()"
+                            "syntax": "packer_queue = queue.Queue()"
                         },
                         {
                             "id": "producer-1-2",
                             "lineDelta": 2,
-                            "syntax": "PackerThread(consumer_queue)"
+                            "syntax": "PackerThread(packer_queue)"
                         },
                         {
                             "id": "producer-1-3",

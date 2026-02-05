@@ -49,7 +49,7 @@
             "functionalId": "CreateConsumerQueue",
             "variables": [
                 {
-                    "name": "consumer_queue",
+                    "name": "packer_queue",
                     "scope": "local",
                     "keys": []
                 }
@@ -93,20 +93,27 @@
             ]
         },
         "producer-1-6": {
-            "intent": "Create worker thread A.",
-            "functionalId": "CreateWorkerThreadA"
+            "intent": "Create spanish translator..",
+            "functionalId": "CreateSpanishTranslator"
         },
         "producer-1-7": {
-            "intent": "Create worker thread B.",
-            "functionalId": "CreateWorkerThreadB"
+            "intent": "Create french translator.",
+            "functionalId": "CreateFrenchTranslator"
         },
         "producer-1-8": {
-            "intent": "Create worker thread C.",
-            "functionalId": "CreateWorkerThreadC"
+            "intent": "Create tamil translator.",
+            "functionalId": "CreateTamilTranslator"
         },
         "producer-1-9": {
             "intent": "Initialize databse to store jobs.",
-            "functionalId": "InitializeDB"
+            "functionalId": "InitializeDB",
+            "variables": [
+                {
+                    "name": "db",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
         },
         "producer-1-10": {
             "intent": "Enter the main data ingestor loop.",
@@ -141,6 +148,13 @@
                 {
                     "function": "put"
                 }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_spanish",
+                    "scope": "local",
+                    "keys": []
+                }
             ]
         },
         "producer-1-10-4": {
@@ -150,6 +164,13 @@
                 {
                     "function": "put"
                 }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_french",
+                    "scope": "local",
+                    "keys": []
+                }
             ]
         },
         "producer-1-10-5": {
@@ -158,6 +179,13 @@
             "output": [
                 {
                     "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_tamil",
+                    "scope": "local",
+                    "keys": []
                 }
             ]
         },
