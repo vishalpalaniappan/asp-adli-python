@@ -23,7 +23,7 @@
                         {
                             "id": "AddBooksToBasketModule",
                             "value": "add books to the basket",                            
-                            "module": "SelectRequestBook"
+                            "module": "SelectAcceptBookFromUser"
                         },
                         {
                             "id": "PlaceBooksOnShelfModule",
@@ -49,27 +49,13 @@
             "id": "AddBooksToBasketModule",
             "action": "The user submitted a book named <book_name> with genre <book_genre> and it was added to the basket.",
             "description": "Accept Book From User and Add to Basket",
-            "entry": "SelectRequestBook",
+            "entry": "SelectAcceptBookFromUser",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "RequestBookStep",
                     "behavior": [
-                        "SelectRequestBook"
-                    ]
-                },
-                {
-                    "type": "sequential",
-                    "id": "AcceptBookNameStep",
-                    "behavior": [
-                        "SelectAcceptBookName"
-                    ]
-                },
-                {
-                    "type": "sequential",
-                    "id": "AcceptBookGenreStep",
-                    "behavior": [
-                        "SelectAcceptBookGenre"
+                        "SelectAcceptBookFromUser"
                     ]
                 },
                 {
@@ -269,53 +255,52 @@
             ]
         },
         {
-            "id": "SelectRequestBook",
-            "intent": "Librarian requests the book from the user.",
-            "abstractions": [
-                "AcceptBookInformation",
-                "DisplayRequest"
-            ]
-        },
-        {
-            "id": "SelectAcceptBookName",
-            "intent": "Librarian accepts the books name: <name>.",
+            "id": "SelectAcceptBookFromUser",
+            "intent": "Librarian accepted a book with name '<name>' and genre '<genre>'.",
             "placeholders": [
                 {
                     "string": "<name>",
-                    "type": "value",
-                    "participantName": "name"
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["name"]
+                },
+                {
+                    "string": "<genre>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["genre"]
                 }
             ],
             "participants": [
                 {
                     "name": "name",
                     "functionalId": "AcceptBookName",
-                    "scope": "local"
-                }
-            ],
-            "abstractions": [
-                "AcceptBookName"
-            ]
-        },
-        {
-            "id": "SelectAcceptBookGenre",
-            "intent": "Librarian accepts the books genre: <genre>",
-            "placeholders": [
-                {
-                    "string": "<genre>",
-                    "type": "value",
-                    "participantName": "genre"
-                }
-            ],
-            "participants": [
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "value": 1,
+                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
+                        }
+                    ]
+                },
                 {
                     "name": "genre",
                     "functionalId": "AcceptBookGenre",
                     "scope": "local"
+                },
+                {
+                    "name": "book_details",
+                    "functionalId": "AssembleBookDetails",
+                    "scope": "local"
                 }
             ],
             "abstractions": [
-                "AcceptBookGenre"
+                "AcceptBookInformation",
+                "DisplayRequest",
+                "AcceptBookName",
+                "AcceptBookGenre",
+                "AssembleBookDetails"
             ]
         },
         {
@@ -341,15 +326,7 @@
                 {
                     "name": "book_details",
                     "functionalId": "AddBookToBasket",
-                    "scope": "local",
-                    "constraint": [
-                        {
-                            "type":"minLength",
-                            "value": 1,
-                            "keys": ["name"],
-                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
-                        }
-                    ]
+                    "scope": "local"
                 },
                 {
                     "name": "basket",
@@ -358,7 +335,6 @@
                 }
             ],
             "abstractions": [
-                "AssembleBookDetails",
                 "ReturnBookDetails",
                 "AddBookToBasket"
             ]
