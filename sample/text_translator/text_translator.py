@@ -23,7 +23,7 @@ def TextTranslator():
 
     while True:    
         data = input("\nEnter any string:")
-        job = db.addJob(data)
+        job = db.addJob(data + "," + data)
         message_queue_spanish.put(job)
         message_queue_french.put(job)
         message_queue_tamil.put(job)
