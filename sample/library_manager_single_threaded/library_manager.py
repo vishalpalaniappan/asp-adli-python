@@ -1,5 +1,6 @@
 import sys
 import uuid
+import json
 
 def place_books_on_shelf_from_basket(book_shelf, basket):
     '''
@@ -70,8 +71,8 @@ def library_manager():
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
 
         elif response == "d":
-            print("\nBook Shelf:", book_shelf)
-            print("Basket:", basket)
+            audit = {"Book Shelf": book_shelf, "Basket": basket}
+            print("\nLibrary Audit:", json.dumps(audit, indent=2))
 
         else:        
             break

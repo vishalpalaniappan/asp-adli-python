@@ -22,18 +22,23 @@
                         },
                         {
                             "id": "1-0-3",
-                            "lineDelta": 78,
+                            "lineDelta": 2,
+                            "syntax": "import json"
+                        },
+                        {
+                            "id": "1-0-4",
+                            "lineDelta": 79,
                             "syntax": "if __name__ == \"__main__\":"
                         },
                         {
-                            "id": "1-0-3-1",
-                            "lineDelta": 79,
+                            "id": "1-0-4-1",
+                            "lineDelta": 80,
                             "syntax": "sys.exit(library_manager())"
                         }
                     ]
                 },
                 "1": {
-                    "startLine": 4,
+                    "startLine": 5,
                     "abstractions": [
                         {
                             "id": "1-1",
@@ -83,7 +88,7 @@
                     ]
                 },
                 "2": {
-                    "startLine": 26,
+                    "startLine": 27,
                     "abstractions": [
                         {
                             "id": "1-2",
@@ -118,7 +123,7 @@
                     ]
                 },
                 "3": {
-                    "startLine": 36,
+                    "startLine": 37,
                     "abstractions": [
                         {
                             "id": "1-3",

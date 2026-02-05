@@ -15,10 +15,13 @@
             "intent": "Import the uuid library."
         },
         "1-0-3": {
+            "intent": "Import the uuid library."
+        },
+        "1-0-4": {
             "intent": "Script is being run directly.",
             "type": "conditional_branch"
         },
-        "1-0-3-1": {
+        "1-0-4-1": {
             "intent": "Start the library manager.",
             "type": "function_call",
             "target": "3"
@@ -439,12 +442,12 @@
             "type": "conditional_branch"
         },
         "1-3-3-4-1": {
-            "intent": "Display the shelf",
-            "functionalId": "DisplayBookShelf"
+            "intent": "Generates an audit report of the contents of the library.",
+            "functionalId": "GenerateAuditOfLibrary"
         },
         "1-3-3-4-2": {
-            "intent": "Display the basket",
-            "functionalId": "DisplayBasket"
+            "intent": "Hand the audit report to the user.",
+            "functionalId": "HandAuditToUser"
         },
         "1-3-3-5": {
             "intent": "Exit the menu.",

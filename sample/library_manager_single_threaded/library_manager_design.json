@@ -31,9 +31,9 @@
                             "module": "SelectCheckIfTooManyBooks"
                         },
                         {
-                            "id": "DisplayLibraryContentsModule",
-                            "value": "display the contents of the library",
-                            "module": "SelectDisplayBookShelf"
+                            "id": "GenerateAuditReportForUserModule",
+                            "value": "generate audit report of library for the user",
+                            "module": "SelectGenerateAuditReport"
                         },
                         {
                             "id": "ExitProgramModule",
@@ -192,22 +192,22 @@
             ]
         },
         {
-            "name": "Display Books",
-            "id": "DisplayLibraryContentsModule",
-            "entry": "SelectDisplayBookShelf",
+            "name": "Audit Library and Provide Report To User",
+            "id": "GenerateAuditReportForUserModule",
+            "entry": "SelectGenerateAuditReport",
             "steps": [
                 {
                     "type": "sequential",
-                    "id": "DisplayBookShelfStep",
+                    "id": "GenerateAuditStep",
                     "behavior": [
-                        "SelectDisplayBookShelf"
+                        "SelectGenerateAuditReport"
                     ]
                 },
                 {
                     "type": "sequential",
-                    "id": "DisplayBasketStep",
+                    "id": "HandAuditToUserStep",
                     "behavior": [
-                        "SelectDisplayBasket"
+                        "SelectHandReportToUser"
                     ]
                 }
             ]
@@ -558,31 +558,31 @@
             ]
         },
         {
-            "id": "SelectDisplayBookShelf",
+            "id": "SelectGenerateAuditReport",
             "participants": [
                 {
-                    "name": "book_shelf",
-                    "functionalId": "DisplayBookShelf",
+                    "name": "audit",
+                    "functionalId": "GenerateAuditOfLibrary",
                     "scope": "local"    
                 }
             ],
-            "intent": "Librarian displays the contents of the bookshelf to the user.",
+            "intent": "Librarian audits the library and generates a report of its contents.",
             "abstractions": [
-                "DisplayBookShelf"
+                "GenerateAuditOfLibrary"
             ]
         },
         {
-            "id": "SelectDisplayBasket",
+            "id": "SelectHandReportToUser",
             "participants": [
                 {
-                    "name": "basket",
-                    "functionalId": "DisplayBasket",
+                    "name": "audit",
+                    "functionalId": "HandAuditToUser",
                     "scope": "local"
                 }
             ],
-            "intent": "Librarian displays the contents of the basket to the user.",
+            "intent": "Librarian hands the audit report to the user.",
             "abstractions": [
-                "DisplayBasket"
+                "HandAuditToUser"
             ]
         },
         {
