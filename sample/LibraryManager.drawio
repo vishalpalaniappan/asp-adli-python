@@ -700,12 +700,12 @@
     </mxGraphModel>
   </diagram>
   <diagram id="d36U6bBc5eHirfBQ7eSF" name="libary-manager-design-v2">
-    <mxGraphModel dx="2049" dy="1206" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1195" dy="703" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="cF0m9kQgirqLR0RK9UqF-11" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
-          <mxGeometry x="3" y="2" width="1687" height="1087" as="geometry" />
+          <mxGeometry x="7" y="4.5" width="1687" height="1087" as="geometry" />
         </mxCell>
         <mxCell id="bFhEZHSqGO3KHoaH2zJ6-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bFhEZHSqGO3KHoaH2zJ6-2" target="XdBDbQ1BQy5mNp7bCcms-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -776,7 +776,7 @@
         <mxCell id="pXmw6R75mtPUzVqG9uPS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="pXmw6R75mtPUzVqG9uPS-13" target="pXmw6R75mtPUzVqG9uPS-25" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-13" value="Librarian accepts users choice to display the contents of the library." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="pXmw6R75mtPUzVqG9uPS-13" value="Librarian accepts users choice to receive audit of library." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="405" y="539.5" width="77" height="107" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="pXmw6R75mtPUzVqG9uPS-15" target="pXmw6R75mtPUzVqG9uPS-31" edge="1">
@@ -794,7 +794,7 @@
         <mxCell id="pXmw6R75mtPUzVqG9uPS-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="pXmw6R75mtPUzVqG9uPS-25" target="pXmw6R75mtPUzVqG9uPS-31" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pXmw6R75mtPUzVqG9uPS-25" value="The librarian displays the contents of the basket and the shelf to the user." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+        <mxCell id="pXmw6R75mtPUzVqG9uPS-25" value="The librarian generates an audit of the basket and bookshelf&amp;nbsp; and hands it to the user." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
           <mxGeometry x="404" y="713.5" width="78" height="126" as="geometry" />
         </mxCell>
         <mxCell id="pXmw6R75mtPUzVqG9uPS-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pXmw6R75mtPUzVqG9uPS-28" target="pXmw6R75mtPUzVqG9uPS-29" edge="1">
@@ -908,13 +908,13 @@
         <mxCell id="Fpi0qzqqW6lkwwqkjho4-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="Fpi0qzqqW6lkwwqkjho4-1" target="Fpi0qzqqW6lkwwqkjho4-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Fpi0qzqqW6lkwwqkjho4-1" value="Librarian Displays The Contents Of The Library" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+        <mxCell id="Fpi0qzqqW6lkwwqkjho4-1" value="Librarian Generates Audit Report For User" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
           <mxGeometry x="1521" y="339" width="44" height="44" as="geometry" />
         </mxCell>
         <mxCell id="Fpi0qzqqW6lkwwqkjho4-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="Fpi0qzqqW6lkwwqkjho4-2" target="Fpi0qzqqW6lkwwqkjho4-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Fpi0qzqqW6lkwwqkjho4-2" value="Librarian displays the contents of the basket." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Fpi0qzqqW6lkwwqkjho4-2" value="Librarian performs audit of basket and bookshelf and generates a audit report." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1473.81" y="527.25" width="138.38" height="66" as="geometry" />
         </mxCell>
         <mxCell id="Fpi0qzqqW6lkwwqkjho4-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Fpi0qzqqW6lkwwqkjho4-5" target="cF0m9kQgirqLR0RK9UqF-4" edge="1">
@@ -922,7 +922,7 @@
             <mxPoint x="1543" y="928" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Fpi0qzqqW6lkwwqkjho4-5" value="Librarian displays the contents of the book shelf." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Fpi0qzqqW6lkwwqkjho4-5" value="Librarian hands the report to the user." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1473.81" y="695" width="138.38" height="66" as="geometry" />
         </mxCell>
         <mxCell id="cF0m9kQgirqLR0RK9UqF-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" parent="1" vertex="1">
@@ -933,6 +933,9 @@
         </mxCell>
         <mxCell id="cF0m9kQgirqLR0RK9UqF-4" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" parent="1" vertex="1">
           <mxGeometry x="1521" y="925" width="44" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oL11jr7pzL0GYqFlJ8Bv-3" value="&lt;b&gt;Audit&lt;/b&gt;&lt;div&gt;&lt;b&gt;Report&lt;/b&gt;&lt;/div&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1398" y="188" width="69" height="46" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
