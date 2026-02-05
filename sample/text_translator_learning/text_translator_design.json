@@ -1,0 +1,595 @@
+{
+    "description": "Contains the design and behavioral abstractions of the multi-threaded text translator.",
+    "design": [
+        {
+            "name": "Translate Provided Text",
+            "id": "TranslateProvidedText",
+            "description": "This design abstraction accepts data from the user at the producer, leverages three workers to process the data and then aggregates the results in the consumer before finishing the job.",
+            "type": "atomic",
+            "entry": "SelectMainMenuAndAcceptData",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "DisplayMenuAndAcceptDataStep",
+                    "behavior": [
+                        "SelectMainMenuAndAcceptData"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SelectCheckStringLengthStep",
+                    "behavior": [
+                        "SelectCheckStringLength"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectStringTooLongStep",
+                    "options": [
+                        {
+                            "id": "SelectStringTooLong",
+                            "module": "SelectStringTooLong"
+                        }
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AddJobToDB",
+                    "behavior": [
+                        "SelectAddJobToDB"
+                    ]
+                },
+                {
+                    "type": "fanout",
+                    "id": "WorkerAFanoutStep",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToSpanishTranslator"
+                },
+                {
+                    "type": "fanout",
+                    "id": "WorkerBFanoutStep",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToFrenchTranslator"
+                },
+                {
+                    "type": "fanout",
+                    "id": "WorkerCFanoutStep",
+                    "fanoutRef": "WORKERS",
+                    "module": "SelectSendJobToTamilTranslator"
+                },
+                {
+                    "type": "sequential",
+                    "id": "ThrottleIngestionStep",
+                    "behavior": [
+                        "SelectThrottleIngestion"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Reject Submitted String",
+            "entry": "SelectStringTooLong",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectStringTooLong",
+                    "behavior": [
+                        "SelectStringTooLong"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "TranslateWithFrenchTranslator",
+            "type": "fork",
+            "entry": "SelectSendJobToFrenchTranslator",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataWithFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectSendJobToFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectProcessReceivedMsgFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerFrenchTranslatorStep",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerFrenchTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCleanupJobStep",
+                    "options": [
+                        {
+                            "id": "SelectCleanupJob",
+                            "module": "SelectCleanupJob"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "TranslateWithSpanishTranslator",
+            "type": "fork",
+            "entry": "SelectSendJobToSpanishTranslator",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataWithSpanishTranslatorStep",
+                    "behavior": [
+                        "SelectSendJobToSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInSpanishTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInSpanishTranslator",
+                    "behavior": [
+                        "SelectProcessReceivedMsgSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerSpanishTranslator",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerSpanishTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCleanupJobStep",
+                    "options": [
+                        {
+                            "id": "SelectCleanupJob",
+                            "module": "SelectCleanupJob"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "TranslateWithTamilTranslator",
+            "type": "fork",
+            "entry": "SelectSendJobToTamilTranslator",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ProcessDataWithTamilTranslatorStep",
+                    "behavior": [
+                        "SelectSendJobToTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveDataInTamilTranslatorStep",
+                    "behavior": [
+                        "SelectReceiveMessageTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ProcessReceivedMessageInTamilTranslator",
+                    "behavior": [
+                        "SelectProcessReceivedMsgTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "SendResultsToConsumerTamilTranslator",
+                    "behavior": [
+                        "SelectSendProcessedResultsToConsumerTamilTranslator"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "ReceiveMessageInConsumer",
+                    "behavior": [
+                        "SelectReceiveMessageConsumer"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "IncrementJobStatusPackerStep",
+                    "behavior": [
+                        "SelectIncrementJobStatusPacker"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfJobDoneStep",
+                    "behavior": [
+                        "SelectIsJobDone"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCleanupJobStep",
+                    "options": [
+                        {
+                            "id": "SelectCleanupJob",
+                            "module": "SelectCleanupJob"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cleanup job.",
+            "entry": "SelectCleanupJob",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectCleanupJob",
+                    "behavior": [
+                        "SelectCleanupJob"
+                    ]
+                }
+            ]
+        }
+    ],
+    "behavior": [
+        {
+            "id": "SelectMainMenuAndAcceptData",
+            "atomic": true,
+            "intent": "Accept text to be translated from user.",
+            "participants": [
+                {
+                    "name": "data",
+                    "functionalId": "AcceptData",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "EnterDataIngestorLoop",
+                "AcceptData"
+            ]
+        },
+        {
+            "id": "SelectStringTooLong",
+            "intent": "Reject users submission because it is invalid.",
+            "abstractions": [
+                "RejectSumittedString"
+            ]
+        },
+        {
+            "id": "SelectCheckStringLength",
+            "intent": "Check if use submitted text that is too long.",
+            "abstractions": [
+                "CheckStringLength"
+            ]
+        },
+        {
+            "id": "SelectAddJobToDB",
+            "intent": "Add translation job to cabinet.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "job",
+                    "keys": ["data"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "AddJobToCabinet",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "AddJobToCabinet"
+            ]
+        },
+        {
+            "id": "SelectSendJobToFrenchTranslator",
+            "intent": "Send job to french translator.",
+            "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendTextToFrenchTranslator",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "SendTextToFrenchTranslator"
+            ]
+        },
+        {
+            "id": "SelectSendJobToSpanishTranslator",
+            "intent": "Send job to spanish translator.",
+            "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendDataToSpanishTranslator",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "SendDataToSpanishTranslator"
+            ]
+        },
+        {
+            "id": "SelectSendJobToTamilTranslator",
+            "intent": "Send job to tamil translator.",
+            "target": "worker",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "SendDataToTamilTranslator",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "SendDataToTamilTranslator"
+            ]
+        },
+        {
+            "id": "SelectThrottleIngestion",
+            "intent": "Wait a secon before accepting more text from the user.",
+            "abstractions": [
+                "SleepToThrottleIngestion"
+            ]
+        },
+
+
+        {
+            "id": "SelectReceiveMessageTamilTranslator",
+            "intent": "Receive text in tamil translator.",
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "ReceiveMessageTamilTranslator",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "ReceiveMessageTamilTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgTamilTranslator",
+            "intent": "Translate the text into tamil.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoTamil",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoTamil",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "TranslateIntoTamil"
+            ]
+        },
+        {
+            "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
+            "intent": "Send the job with the translated text to the packer.",
+            "target": "consumer",
+            "abstractions": [
+                "PutProcessedResultInQueueTamilTranslator"
+            ]
+        },
+
+        
+
+        {
+            "id": "SelectReceiveMessageSpanishTranslator",
+            "intent": "Receive text in spanish translator.",
+            "abstractions": [
+                "ReceiveMessageSpanishTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgSpanishTranslator",
+            "intent": "Translate the text into spanish.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoSpanish",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoSpanish",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "TranslateIntoSpanish"
+            ]
+        },
+        {
+            "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
+            "intent": "Send the job with the translated text to the packer.",
+            "target": "consumer",
+            "abstractions": [
+                "PutProcessedResultInQueueSpanishTranslator"
+            ]
+        },
+
+        
+
+        {
+            "id": "SelectReceiveMessageFrenchTranslator",
+            "intent": "Receive text in french translator.",
+            "abstractions": [
+                "ReceiveMessageFrenchTranslator"
+            ]
+        },
+        {
+            "id": "SelectProcessReceivedMsgFrenchTranslator",
+            "intent": "Translate the text into french.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "msg",
+                    "keys": ["data"]
+                },
+                {
+                    "string": "<translated>",
+                    "type": "value",
+                    "participantName": "translatedMsg"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "msg",
+                    "functionalId": "TranslateIntoFrench",
+                    "scope": "local"
+                },
+                {
+                    "name": "translatedMsg",
+                    "functionalId": "TranslateIntoFrench",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "TranslateIntoFrench"
+            ]
+        },
+        {
+            "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
+            "intent": "Send translated text to packer",
+            "target": "consumer",
+            "abstractions": [
+                "PutProcessedResultInQueueFrenchTranslator"
+            ]
+        },
+
+
+        
+
+
+        {
+            "id": "SelectReceiveMessageConsumer",
+            "intent": "Receive translated text in packer.",
+            "abstractions": [
+                "MainLoopPacker",
+                "TryToReceiveMessagePacker",
+                "ReceiveMessagePacker"
+            ]
+        },
+        {
+            "id": "SelectIncrementJobStatusPacker",
+            "intent": "Add translation to cabinet.",
+            "abstractions": [
+                "IncrementJobStatusPacker"
+            ]
+        },
+        {
+            "id": "SelectIsJobDone",
+            "intent": "Check if all the translaters finished.",
+            "abstractions": [
+                "CheckIfJobIsDonePacker"
+            ]
+        },
+        {
+            "id": "SelectCleanupJob",
+            "intent": "Note job as done in cabinet.",
+            "abstractions": [
+                "CleanUpJobStatusPacker"
+            ]
+        }
+    ]
+}

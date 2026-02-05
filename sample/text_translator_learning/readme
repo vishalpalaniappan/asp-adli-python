@@ -2,4 +2,4 @@ This folder contains a text translator that uses three workers to translate the 
 
 This design evolved from the original text_translator design when it became aware of an environmental contraint that wouldn't allow the length of the data in a job to be larger than 5000 characters. This is because the API cannot support this. 
 
-The designs behavior was modified to reflect this fact and it now rejects strings that are too long instead of letting it pollute its reality.
+The designs behavior was modified to reflect this fact and it now rejects strings that are too long. In this case, the design rejects the environment from entering its reality because it will be unable to realize its intentions.
