@@ -269,6 +269,13 @@
             "id": "SelectMainMenuAndAcceptData",
             "atomic": true,
             "intent": "Accept text to be translated from user.",
+            "participants": [
+                {
+                    "name": "data",
+                    "functionalId": "AcceptData",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "EnterDataIngestorLoop",
                 "AcceptData"
@@ -276,7 +283,22 @@
         },
         {
             "id": "SelectAddJobToDB",
-            "intent": "Add job to cabinet.",
+            "intent": "Add translation job for text '<data>' to cabinet.",
+            "placeholders": [
+                {
+                    "string": "<data>",
+                    "type": "key_value",
+                    "participantName": "job",
+                    "keys": ["data"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "AddJobToCabinet",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "AddJobToCabinet"
             ]
