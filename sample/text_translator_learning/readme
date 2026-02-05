@@ -1,0 +1,5 @@
+This folder contains a text translator that uses three workers to translate the text and uses a packer to add the results to a cabinet.
+
+This design evolved from the original text_translator design when it became aware of an environmental contraint that wouldn't allow the length of the data in a job to be larger than 5000 characters. This is because the API cannot support this. 
+
+The designs behavior was modified to reflect this fact and it now rejects strings that are too long instead of letting it pollute its reality.
