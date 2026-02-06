@@ -299,14 +299,7 @@
                 {
                     "name": "name",
                     "functionalId": "AcceptBookName",
-                    "scope": "local",
-                    "constraint": [
-                        {
-                            "type":"minLength",
-                            "value": 1,
-                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
-                        }
-                    ]
+                    "scope": "local"
                 },
                 {
                     "name": "genre",
@@ -351,7 +344,15 @@
                 {
                     "name": "book_details",
                     "functionalId": "AddBookToBasket",
-                    "scope": "local"
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "keys": ["name"],
+                            "value": 1,
+                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
+                        }
+                    ]
                 },
                 {
                     "name": "basket",
