@@ -300,7 +300,8 @@
                 "DisplayRequest",
                 "AcceptBookName",
                 "AcceptBookGenre",
-                "AssembleBookDetails"
+                "AssembleBookDetails",
+                "ReturnBookDetails"
             ]
         },
         {
@@ -335,7 +336,6 @@
                 }
             ],
             "abstractions": [
-                "ReturnBookDetails",
                 "AddBookToBasket"
             ]
         },
@@ -548,13 +548,6 @@
             ],
             "abstractions": [
                 "AddingBookToShelf"
-            ]
-        },
-        {
-            "id": "SelectSaveUpdatedBookSHelf",
-            "intent": "Save the updated bookshelf.",
-            "abstractions": [
-                "ReturnBookShelf"
             ]
         },
         {
