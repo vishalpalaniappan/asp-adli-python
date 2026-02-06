@@ -331,8 +331,22 @@
         {
             "id": "SelectAddBookToBasket",
             "intent": "Librarian added book named <name> to basket.",
-            "intent_validation": [],
-            "placeholders": [],
+            "intent_validation": [
+                {
+                    "type": "data_exists",
+                    "source_var": "book_details",
+                    "target_var": "basket",
+                    "position": "end"
+                }
+            ],
+            "placeholders": [
+                {
+                    "string": "<name>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["name"]
+                }
+            ],
             "participants": [
                 {
                     "name": "book_details",
