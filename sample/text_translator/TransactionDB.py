@@ -42,22 +42,22 @@ class TransactionDB():
 
         return {
             "uid": uid,
-            "data": data
+            "value": {"data": data}
         }
     
     def addTranslation(self, msg):
         self.conn.execute(
             f"""
             UPDATE translation_jobs
-            SET {msg["language"]} = ?
+            SET {msg["value"]["language"]} = ?
             WHERE uid = ?
             """,
-            (msg["translated"], msg["uid"])
+            (msg["value"]["translated"], msg["uid"])
         )
         self.conn.commit()
 
 
-    def isDone(self, msg):
+    def isDone(self, uid):
         cur = self.conn.execute(
             """
             SELECT
@@ -67,19 +67,19 @@ class TransactionDB():
             FROM translation_jobs
             WHERE uid = ?
             """,
-            (msg["uid"],)
+            (uid,)
         )
         row = cur.fetchone()
         return bool(row[0]) if row else False
     
-    def setDone(self, msg):
+    def setDone(self, uid):
         self.conn.execute(
             """
             UPDATE translation_jobs
             SET done = 1
             WHERE uid = ?
             """,
-            (msg["uid"],)
+            (uid,)
         )
         self.conn.commit()
 

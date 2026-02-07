@@ -13,14 +13,16 @@ class FrenchTranslator(threading.Thread):
     def run(self):
         while True:
             try:
-                msg = self.queue.get(timeout=10)
+                job = self.queue.get(timeout=10)
             except queue.Empty:
                 continue
 
-            translatedMsg = GoogleTranslator(source="auto", target="french").translate(msg["data"])
+            translatedMsg = GoogleTranslator(source="auto", target="french").translate(job["value"]["data"])
             self.packerQueue.put({
-                "uid": msg["uid"],
-                "language": "french",
-                "original": msg["data"],
-                "translated": translatedMsg
+                "uid": job["uid"],
+                "value": {
+                    "language": "french",
+                    "original": job["value"]["data"],
+                    "translated": translatedMsg
+                }
             })

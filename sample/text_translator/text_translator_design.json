@@ -289,14 +289,31 @@
                     "string": "<data>",
                     "type": "key_value",
                     "participantName": "job",
-                    "keys": ["data"]
+                    "keys": [
+                        "data"
+                    ]
                 }
             ],
             "participants": [
                 {
                     "name": "job",
                     "functionalId": "AddJobToCabinet",
-                    "scope": "local"
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type": "maxLength",
+                            "value": 2500,
+                            "keys": [
+                                "value",
+                                "data"
+                            ],
+                            "guards": [
+                                "SelectProcessReceivedMsgTamilTranslator",
+                                "SelectProcessReceivedMsgFrenchTranslator",
+                                "SelectProcessReceivedMsgSpanishTranslator"
+                            ]
+                        }
+                    ]
                 }
             ],
             "abstractions": [
@@ -355,14 +372,12 @@
                 "SleepToThrottleIngestion"
             ]
         },
-
-
         {
             "id": "SelectReceiveMessageTamilTranslator",
             "intent": "Receive text in tamil translator.",
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "ReceiveMessageTamilTranslator",
                     "scope": "local"
                 }
@@ -378,8 +393,10 @@
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -389,7 +406,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoTamil",
                     "scope": "local"
                 },
@@ -411,12 +428,16 @@
                 "PutProcessedResultInQueueTamilTranslator"
             ]
         },
-
-        
-
         {
             "id": "SelectReceiveMessageSpanishTranslator",
             "intent": "Receive text in spanish translator.",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "ReceiveMessageSpanishTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ReceiveMessageSpanishTranslator"
             ]
@@ -428,8 +449,10 @@
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -439,7 +462,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoSpanish",
                     "scope": "local"
                 },
@@ -461,12 +484,16 @@
                 "PutProcessedResultInQueueSpanishTranslator"
             ]
         },
-
-        
-
         {
             "id": "SelectReceiveMessageFrenchTranslator",
             "intent": "Receive text in french translator.",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "ReceiveMessageFrenchTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ReceiveMessageFrenchTranslator"
             ]
@@ -478,8 +505,10 @@
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -489,7 +518,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoFrench",
                     "scope": "local"
                 },
@@ -511,11 +540,6 @@
                 "PutProcessedResultInQueueFrenchTranslator"
             ]
         },
-
-
-        
-
-
         {
             "id": "SelectReceiveMessageConsumer",
             "intent": "Receive translated text in packer.",

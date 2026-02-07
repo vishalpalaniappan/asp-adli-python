@@ -304,7 +304,7 @@
             "input": true,
             "variables": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "scope": "local",
                     "keys": []
                 }
@@ -456,7 +456,7 @@
             "input": true,
             "variables": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "scope": "local",
                     "keys": []
                 }
@@ -608,7 +608,7 @@
             "input": true,
             "variables": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "scope": "local",
                     "keys": []
                 }
@@ -751,7 +751,7 @@
             "input": true,
             "variables": [
                 {
-                    "name": "msg",
+                    "name": "translatedJobPart",
                     "scope": "local",
                     "keys": []
                 }
@@ -1010,7 +1010,7 @@
                     "keys": []
                 },
                 {
-                    "name": "msg",
+                    "name": "uid",
                     "scope": "local",
                     "keys": []
                 }
@@ -1059,7 +1059,7 @@
                     "keys": []
                 },
                 {
-                    "name": "msg",
+                    "name": "uid",
                     "scope": "local",
                     "keys": []
                 }
