@@ -12,15 +12,15 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
     :param basket: Array representing the basket.
     '''
     while len(basket) > 0:
-        book = basket.pop()
-        print(f"Accepted book: {book['name']} (Genre: {book['genre']})")
+        book = basket["value"].pop()
+        print(f"Accepted book: {book['value']['name']} (Genre: {book['value']['genre']})")
         
-        firstLetter = book['name'][0]
+        firstLetter = book["value"]['name'][0]
 
-        if (firstLetter not in book_shelf):
-            book_shelf[firstLetter] = []
+        if (firstLetter not in book_shelf["value"]):
+            book_shelf["value"][firstLetter] = []
 
-        book_shelf[firstLetter].append(book['name'])
+        book_shelf["value"][firstLetter].append(book["value"]['name'])
 
     return book_shelf
 
@@ -31,7 +31,7 @@ def accept_book():
     print("\nEnter book details:")        
     name = input("Book name: ")
     genre = input("Genre: ")
-    book_details = {"name": name, "genre":genre, "uid": str(uuid.uuid4())}
+    book_details = {"uid": str(uuid.uuid4()), "value": {"name": name, "genre":genre}}
     return book_details
 
 def library_manager():
@@ -44,9 +44,9 @@ def library_manager():
     allows the user to exit the library.
     '''
 
-    book_shelf = {}
+    book_shelf = {"uid": str(uuid.uuid4()), "value":{}}
 
-    basket = []
+    basket = {"uid": str(uuid.uuid4()), "value":[]}
 
     while True:
         
@@ -63,7 +63,7 @@ def library_manager():
 
         if response == "a":
             book_details = accept_book()
-            basket.append(book_details)
+            basket["value"].append(book_details)
 
         elif response == "p":
             if (len(basket) > 5):
@@ -71,8 +71,8 @@ def library_manager():
             book_shelf = place_books_on_shelf_from_basket(book_shelf, basket)
 
         elif response == "d":
-            audit = {"Book Shelf": book_shelf, "Basket": basket}
-            print("\nLibrary Audit:", json.dumps(audit, indent=2))
+            audit = {"uid": str(uuid.uuid4()), "value":{"Book Shelf": book_shelf, "Basket": basket}}
+            print("\nLibrary Audit:", json.dumps(audit["value"], indent=2))
 
         else:        
             break
