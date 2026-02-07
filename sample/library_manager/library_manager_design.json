@@ -262,13 +262,13 @@
                     "string": "<name>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 },
                 {
                     "string": "<genre>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["genre"]
+                    "keys": ["value","genre"]
                 }
             ],
             "participants": [
@@ -305,6 +305,7 @@
                     "type": "data_exists",
                     "source_var": "book_details",
                     "target_var": "basket",
+                    "target_var_keys": ["value"],
                     "position": "end"
                 }
             ],
@@ -313,7 +314,7 @@
                     "string": "<name>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -324,7 +325,7 @@
                     "constraint": [
                         {
                             "type":"minLength",
-                            "keys": ["name"],
+                            "keys": ["value","name"],
                             "value": 1,
                             "guards": ["SelectGettingFirstLetterOfBookName"]                            
                         }
@@ -407,7 +408,7 @@
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -435,7 +436,7 @@
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -526,13 +527,13 @@
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 },
                 {
                     "string": "<book_genre>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["genre"]
+                    "keys": ["value","genre"]
                 }
             ],
             "participants": [
