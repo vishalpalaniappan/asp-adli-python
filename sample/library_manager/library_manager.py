@@ -11,7 +11,7 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
     :param book_shelf: Object representing the bookshelf.
     :param basket: Array representing the basket.
     '''
-    while len(basket) > 0:
+    while len(basket["value"]) > 0:
         book = basket["value"].pop()
         print(f"Accepted book: {book['value']['name']} (Genre: {book['value']['genre']})")
         
