@@ -368,6 +368,7 @@
                 {
                     "string": "<num_books>",
                     "type": "semantic_property",
+                    "keys": ["value"],
                     "participantName": "basket",
                     "property": "length"
                 }
@@ -391,6 +392,7 @@
                 {
                     "string": "<num_books>",
                     "type": "semantic_property",
+                    "keys": ["value"],
                     "participantName": "basket",
                     "property": "length"
                 }
