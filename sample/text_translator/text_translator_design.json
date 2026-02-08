@@ -315,7 +315,7 @@
                                 "SelectProcessReceivedMsgSpanishTranslator"
                             ],
                             "violationSentence": "The employee accepted a translation job that had text which was longer than 2500 characters.",
-                            "rootCauseSentence": "The root cause of this failure is that the librarian accepted a book with no name"
+                            "rootCauseSentence": "The root cause of this failure is that the employee accepted a translation job that had text which was longer than 2500 characters."
                         }
                     ]
                 }
