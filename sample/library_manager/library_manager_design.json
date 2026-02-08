@@ -232,6 +232,7 @@
             "id": "SelectDisplayMenu",
             "atomic": true,
             "intent": "Displayed the menu to user and they selected the response <response>.",
+            "intent_failed": "Displayed the menu and failed to get a response from the user.",
             "placeholders": [
                 {
                     "string": "<response>",
@@ -257,6 +258,7 @@
         {
             "id": "SelectAcceptBookFromUser",
             "intent": "Librarian accepted a book with name '<name>' and genre '<genre>'.",
+            "intent_failed": "Failed to accept a book from the user.",
             "placeholders": [
                 {
                     "string": "<name>",
@@ -300,6 +302,7 @@
         {
             "id": "SelectAddBookToBasket",
             "intent": "Librarian added book named <name> to basket.",
+            "intent_failed": "Failed to add book to the basket.",
             "intent_validation": [
                 {
                     "type": "data_exists",
@@ -344,6 +347,7 @@
         {
             "id": "SelectCheckIfTooManyBooks",
             "intent": "Checked if there are more than 5 books in the basket.",
+            "intent_failed": "Failed to check if there are more than 5 books in the basket.",
             "participants": [
                 {
                     "name": "basket",
@@ -358,6 +362,7 @@
         {
             "id": "SelectTooManyBooks",
             "intent": "Artificially raise exception because there are <num_books> books in the basket.",
+            "intent_failed": "Failed to raise exception because there are more than 5 books in the basket.",
             "placeholders": [
                 {
                     "string": "<num_books>",
@@ -380,6 +385,7 @@
         {
             "id": "SelectCheckBasketForBook",
             "intent": "The basket has <num_books> book(s) in it.",
+            "intent_failed": "Failed to check if there are books in the basket.",
             "placeholders": [
                 {
                     "string": "<num_books>",
@@ -403,6 +409,7 @@
         {
             "id": "SelectGettingBookFromBasket",
             "intent": "Got a book named <book_name> from the basket.",
+            "intent_failed": "Failed to get a book from the basket.",
             "placeholders": [
                 {
                     "string": "<book_name>",
@@ -426,6 +433,7 @@
         {
             "id": "SelectGettingFirstLetterOfBookName",
             "intent": "Got the first letter '<first_letter>' of the books named <book_name>.",
+            "intent_failed": "Failed to get the first letter of the books name.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -458,6 +466,7 @@
         {
             "id": "SelectCheckingIfShelfHasSlot",
             "intent": "Checking if shelf has a slot for the letter <first_letter>",
+            "intent_failed": "Failed to check if the slot exists on the shelf.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -490,6 +499,7 @@
         {
             "id": "SelectCreateSlotForBook",
             "intent": "Creating a slot for the letter <first_letter>",
+            "intent_failed": "Failed to create slot on the shelf for the book.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -522,6 +532,7 @@
         {
             "id": "SelectAddingBookToShelf",
             "intent": "Adding a book named <book_name> with genre <book_genre> to the shelf.",
+            "intent_failed": "Failed to add book to shelf.",
             "placeholders": [
                 {
                     "string": "<book_name>",
@@ -562,6 +573,7 @@
                 }
             ],
             "intent": "Librarian audits the library and generates a report of its contents.",
+            "intent_failed": "Failed to audit library and generate a report of its contents.",
             "abstractions": [
                 "GenerateAuditOfLibrary"
             ]
@@ -576,6 +588,7 @@
                 }
             ],
             "intent": "Librarian hands the audit report to the user.",
+            "intent_failed": "Failed to hand audit to the user.",
             "abstractions": [
                 "HandAuditToUser"
             ]
@@ -583,6 +596,7 @@
         {
             "id": "SelectTerminateProgram",
             "intent": "Terminated the library manager.",
+            "intent_failed": "Failed to terminate the library manager.",
             "abstractions": [
                 "ExitTheMenu"
             ]

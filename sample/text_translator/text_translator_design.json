@@ -269,6 +269,7 @@
             "id": "SelectMainMenuAndAcceptData",
             "atomic": true,
             "intent": "Accept text to be translated from user.",
+            "intent_failed": "Failed to accept text to be transated from user.",
             "participants": [
                 {
                     "name": "data",
@@ -284,6 +285,7 @@
         {
             "id": "SelectAddJobToDB",
             "intent": "Add translation job to cabinet.",
+            "intent_failed": "Failed to add translation job to cabinet.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -322,7 +324,8 @@
         },
         {
             "id": "SelectSendJobToFrenchTranslator",
-            "intent": "Send job to french translator.",
+            "intent": "Send translation job to french translator.",
+            "intent_failed": "Failed to send translation job to french translator.",
             "target": "worker",
             "participants": [
                 {
@@ -337,7 +340,8 @@
         },
         {
             "id": "SelectSendJobToSpanishTranslator",
-            "intent": "Send job to spanish translator.",
+            "intent": "Send translation job to spanish translator.",
+            "intent_failed": "Failed to send translation job to spanish translator.",
             "target": "worker",
             "participants": [
                 {
@@ -352,7 +356,8 @@
         },
         {
             "id": "SelectSendJobToTamilTranslator",
-            "intent": "Send job to tamil translator.",
+            "intent": "Send translation job to tamil translator.",
+            "intent_failed": "Failed to send translation job to tamil translator.",
             "target": "worker",
             "participants": [
                 {
@@ -367,14 +372,16 @@
         },
         {
             "id": "SelectThrottleIngestion",
-            "intent": "Wait a secon before accepting more text from the user.",
+            "intent": "Wait a second before accepting more jobs from the user.",
+            "intent_failed": "Failed to wait a second before accepting more jobs.",
             "abstractions": [
                 "SleepToThrottleIngestion"
             ]
         },
         {
             "id": "SelectReceiveMessageTamilTranslator",
-            "intent": "Receive text in tamil translator.",
+            "intent": "Receive translation job in tamil translator.",
+            "intent_failed": "Tamil translator failed to receive translation job.",
             "participants": [
                 {
                     "name": "job",
@@ -389,6 +396,7 @@
         {
             "id": "SelectProcessReceivedMsgTamilTranslator",
             "intent": "Translate the text into tamil.",
+            "intent_failed": "Tamil translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -422,7 +430,8 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
-            "intent": "Send the job with the translated text to the packer.",
+            "intent": "Send the compelted tamil translation job to the packer.",
+            "intent_failed": "Failed to send completed tamil translation job to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueTamilTranslator"
@@ -430,7 +439,8 @@
         },
         {
             "id": "SelectReceiveMessageSpanishTranslator",
-            "intent": "Receive text in spanish translator.",
+            "intent": "Receive translation job in spanish translator.",
+            "intent_failed": "Spanish translator failed to receive translation job.",
             "participants": [
                 {
                     "name": "job",
@@ -445,6 +455,7 @@
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
             "intent": "Translate the text into spanish.",
+            "intent_failed": "Spanish translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -478,7 +489,8 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
-            "intent": "Send the job with the translated text to the packer.",
+            "intent": "Send the compelted spanish translation job to the packer.",
+            "intent_failed": "Failed to send completed spanish translation job to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueSpanishTranslator"
@@ -486,7 +498,8 @@
         },
         {
             "id": "SelectReceiveMessageFrenchTranslator",
-            "intent": "Receive text in french translator.",
+            "intent": "Receive translation job in french translator.",
+            "intent_failed": "French translator failed to receive job.",
             "participants": [
                 {
                     "name": "job",
@@ -501,6 +514,7 @@
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
             "intent": "Translate the text into french.",
+            "intent_failed": "French translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
@@ -534,7 +548,8 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
-            "intent": "Send translated text to packer",
+            "intent": "Send the compelted french translation job to the packer.",
+            "intent_failed": "Failed to send completed french translation job to the packer.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueFrenchTranslator"
@@ -543,6 +558,7 @@
         {
             "id": "SelectReceiveMessageConsumer",
             "intent": "Receive translated text in packer.",
+            "intent_failed": "Failed to receive completed translation job in packer.",
             "abstractions": [
                 "MainLoopPacker",
                 "TryToReceiveMessagePacker",
@@ -552,6 +568,7 @@
         {
             "id": "SelectIncrementJobStatusPacker",
             "intent": "Add translation to cabinet.",
+            "intent_failed": "Failed to add translation to cabinet.",
             "abstractions": [
                 "IncrementJobStatusPacker"
             ]
@@ -559,6 +576,7 @@
         {
             "id": "SelectIsJobDone",
             "intent": "Check if all the translaters finished.",
+            "intent_failed": "Failed to check if all translators have finished.",
             "abstractions": [
                 "CheckIfJobIsDonePacker"
             ]
@@ -566,6 +584,7 @@
         {
             "id": "SelectCleanupJob",
             "intent": "Note job as done in cabinet.",
+            "intent_failed": "Failed to note job as done.",
             "abstractions": [
                 "CleanUpJobStatusPacker"
             ]
