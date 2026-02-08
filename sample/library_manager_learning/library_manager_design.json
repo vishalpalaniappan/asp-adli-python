@@ -256,6 +256,7 @@
             "id": "SelectDisplayMenu",
             "atomic": true,
             "intent": "Displayed the menu to user and they selected the response <response>.",
+            "intent_failed": "Displayed the menu and failed to get a response from the user.",
             "placeholders": [
                 {
                     "string": "<response>",
@@ -281,18 +282,19 @@
         {
             "id": "SelectAcceptBookFromUser",
             "intent": "Librarian accepted a book with name '<name>' and genre '<genre>'.",
+            "intent_failed": "Failed to accept a book from the user.",
             "placeholders": [
                 {
                     "string": "<name>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 },
                 {
                     "string": "<genre>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["genre"]
+                    "keys": ["value","genre"]
                 }
             ],
             "participants": [
@@ -324,11 +326,13 @@
         {
             "id": "SelectAddBookToBasket",
             "intent": "Librarian added book named <name> to basket.",
+            "intent_failed": "Failed to add book to the basket.",
             "intent_validation": [
                 {
                     "type": "data_exists",
                     "source_var": "book_details",
                     "target_var": "basket",
+                    "target_var_keys": ["value"],
                     "position": "end"
                 }
             ],
@@ -337,7 +341,7 @@
                     "string": "<name>",
                     "type": "key_value",
                     "participantName": "book_details",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -348,9 +352,11 @@
                     "constraint": [
                         {
                             "type":"minLength",
-                            "keys": ["name"],
+                            "keys": ["value","name"],
                             "value": 1,
-                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
+                            "guards": ["SelectGettingFirstLetterOfBookName"],
+                            "violationSentence": "The librarian accepted a book with no name",
+                            "rootCauseSentence": "The root cause of this failure is that the librarian accepted a book with no name"                          
                         }
                     ]
                 },
@@ -367,6 +373,7 @@
         {
             "id": "SelectCheckIfTooManyBooks",
             "intent": "Checked if there are more than 5 books in the basket.",
+            "intent_failed": "Failed to check if there are more than 5 books in the basket.",
             "participants": [
                 {
                     "name": "basket",
@@ -381,10 +388,12 @@
         {
             "id": "SelectTooManyBooks",
             "intent": "Artificially raise exception because there are <num_books> books in the basket.",
+            "intent_failed": "Failed to raise exception because there are more than 5 books in the basket.",
             "placeholders": [
                 {
                     "string": "<num_books>",
                     "type": "semantic_property",
+                    "keys": ["value"],
                     "participantName": "basket",
                     "property": "length"
                 }
@@ -403,10 +412,12 @@
         {
             "id": "SelectCheckBasketForBook",
             "intent": "The basket has <num_books> book(s) in it.",
+            "intent_failed": "Failed to check if there are books in the basket.",
             "placeholders": [
                 {
                     "string": "<num_books>",
                     "type": "semantic_property",
+                    "keys": ["value"],
                     "participantName": "basket",
                     "property": "length"
                 }
@@ -426,12 +437,13 @@
         {
             "id": "SelectGettingBookFromBasket",
             "intent": "Got a book named <book_name> from the basket.",
+            "intent_failed": "Failed to get a book from the basket.",
             "placeholders": [
                 {
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -448,7 +460,8 @@
         },
         {
             "id": "SelectGettingFirstLetterOfBookName",
-            "intent": "Got the first letter '<first_letter>' of the books named <book_name>.",
+            "intent": "Got the first letter '<first_letter>' of the books named <book_name> to choose the right slot on the shelf.",
+            "intent_failed": "Failed to get the first letter of the books name to choose the right slot on the shelf.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -459,7 +472,7 @@
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 }
             ],
             "participants": [
@@ -481,6 +494,7 @@
         {
             "id": "SelectCheckingIfShelfHasSlot",
             "intent": "Checking if shelf has a slot for the letter <first_letter>",
+            "intent_failed": "Failed to check if the slot exists on the shelf.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -513,6 +527,7 @@
         {
             "id": "SelectCreateSlotForBook",
             "intent": "Creating a slot for the letter <first_letter>",
+            "intent_failed": "Failed to create slot on the shelf for the book.",
             "placeholders": [
                 {
                     "string": "<first_letter>",
@@ -545,18 +560,19 @@
         {
             "id": "SelectAddingBookToShelf",
             "intent": "Adding a book named <book_name> with genre <book_genre> to the shelf.",
+            "intent_failed": "Failed to add book to shelf.",
             "placeholders": [
                 {
                     "string": "<book_name>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["name"]
+                    "keys": ["value","name"]
                 },
                 {
                     "string": "<book_genre>",
                     "type": "key_value",
                     "participantName": "book",
-                    "keys": ["genre"]
+                    "keys": ["value","genre"]
                 }
             ],
             "participants": [
@@ -576,13 +592,6 @@
             ]
         },
         {
-            "id": "SelectSaveUpdatedBookSHelf",
-            "intent": "Save the updated bookshelf.",
-            "abstractions": [
-                "ReturnBookShelf"
-            ]
-        },
-        {
             "id": "SelectGenerateAuditReport",
             "participants": [
                 {
@@ -592,6 +601,7 @@
                 }
             ],
             "intent": "Librarian audits the library and generates a report of its contents.",
+            "intent_failed": "Failed to audit library and generate a report of its contents.",
             "abstractions": [
                 "GenerateAuditOfLibrary"
             ]
@@ -606,6 +616,7 @@
                 }
             ],
             "intent": "Librarian hands the audit report to the user.",
+            "intent_failed": "Failed to hand audit to the user.",
             "abstractions": [
                 "HandAuditToUser"
             ]
@@ -613,6 +624,7 @@
         {
             "id": "SelectTerminateProgram",
             "intent": "Terminated the library manager.",
+            "intent_failed": "Failed to terminate the library manager.",
             "abstractions": [
                 "ExitTheMenu"
             ]
@@ -620,6 +632,7 @@
         {
             "id": "SelectCheckBookName",
             "intent": "Check if the book has a name.",
+            "intent_failed": "Failed to check if the book has a name.",
             "abstractions": [
                 "CheckBookName"
             ]
