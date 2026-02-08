@@ -330,7 +330,8 @@
                             "type":"minLength",
                             "keys": ["value","name"],
                             "value": 1,
-                            "guards": ["SelectGettingFirstLetterOfBookName"]                            
+                            "guards": ["SelectGettingFirstLetterOfBookName"],
+                            "violationSentence": "The librarian accepted a book with no name"                            
                         }
                     ]
                 },

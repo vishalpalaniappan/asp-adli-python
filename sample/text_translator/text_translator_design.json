@@ -313,7 +313,8 @@
                                 "SelectProcessReceivedMsgTamilTranslator",
                                 "SelectProcessReceivedMsgFrenchTranslator",
                                 "SelectProcessReceivedMsgSpanishTranslator"
-                            ]
+                            ],
+                            "violationSentence": "The employee accepted a translation job that had text which was longer than 2500 characters."       
                         }
                     ]
                 }
