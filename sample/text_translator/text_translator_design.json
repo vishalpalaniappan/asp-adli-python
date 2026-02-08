@@ -314,7 +314,8 @@
                                 "SelectProcessReceivedMsgFrenchTranslator",
                                 "SelectProcessReceivedMsgSpanishTranslator"
                             ],
-                            "violationSentence": "The employee accepted a translation job that had text which was longer than 2500 characters."       
+                            "violationSentence": "The employee accepted a translation job that had text which was longer than 2500 characters.",
+                            "rootCauseSentence": "The root cause of this failure is that the librarian accepted a book with no name"
                         }
                     ]
                 }
@@ -327,6 +328,7 @@
             "id": "SelectSendJobToFrenchTranslator",
             "intent": "Send translation job to french translator.",
             "intent_failed": "Failed to send translation job to french translator.",
+            "availability_failed": "French translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -343,6 +345,7 @@
             "id": "SelectSendJobToSpanishTranslator",
             "intent": "Send translation job to spanish translator.",
             "intent_failed": "Failed to send translation job to spanish translator.",
+            "availability_failed": "Spanish translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -359,6 +362,7 @@
             "id": "SelectSendJobToTamilTranslator",
             "intent": "Send translation job to tamil translator.",
             "intent_failed": "Failed to send translation job to tamil translator.",
+            "availability_failed": "Tamil translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -433,6 +437,7 @@
             "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
             "intent": "Send the compelted tamil translation job to the packer.",
             "intent_failed": "Failed to send completed tamil translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueTamilTranslator"
@@ -492,6 +497,7 @@
             "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
             "intent": "Send the compelted spanish translation job to the packer.",
             "intent_failed": "Failed to send completed spanish translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueSpanishTranslator"
@@ -551,6 +557,7 @@
             "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
             "intent": "Send the compelted french translation job to the packer.",
             "intent_failed": "Failed to send completed french translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueFrenchTranslator"

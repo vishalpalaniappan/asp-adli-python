@@ -331,7 +331,8 @@
                             "keys": ["value","name"],
                             "value": 1,
                             "guards": ["SelectGettingFirstLetterOfBookName"],
-                            "violationSentence": "The librarian accepted a book with no name"                            
+                            "violationSentence": "The librarian accepted a book with no name",
+                            "rootCauseSentence": "The root cause of this failure is that the librarian accepted a book with no name"                          
                         }
                     ]
                 },
