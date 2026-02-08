@@ -13,11 +13,11 @@ class PackerThread(threading.Thread):
         self.db = TransactionDB()
         while True:
             try:
-                msg = self.queue.get(timeout=10)
+                translatedJobPart = self.queue.get(timeout=10)
             except queue.Empty:
                 continue
 
-            self.db.addTranslation(msg)
+            self.db.addTranslation(translatedJobPart)
 
-            if self.db.isDone(msg):
-                self.db.setDone(msg)
+            if self.db.isDone(translatedJobPart["uid"]):
+                self.db.setDone(translatedJobPart["uid"])

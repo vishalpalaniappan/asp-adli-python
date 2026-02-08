@@ -300,6 +300,7 @@
             "id": "SelectMainMenuAndAcceptData",
             "atomic": true,
             "intent": "Accept text to be translated from user.",
+            "intent_failed": "Failed to accept text to be transated from user.",
             "participants": [
                 {
                     "name": "data",
@@ -315,13 +316,15 @@
         {
             "id": "SelectStringTooLong",
             "intent": "Reject users submission because it is invalid.",
+            "intent_failed": "Failed to reject user submission because it is invalid.",
             "abstractions": [
                 "RejectSumittedString"
             ]
         },
         {
             "id": "SelectCheckStringLength",
-            "intent": "Check if use submitted text that is too long.",
+            "intent": "Check if user submitted text that is too long.",
+            "intent_failed": "Failed to check if user submitted text that is too long.",
             "abstractions": [
                 "CheckStringLength"
             ]
@@ -329,19 +332,39 @@
         {
             "id": "SelectAddJobToDB",
             "intent": "Add translation job to cabinet.",
+            "intent_failed": "Failed to add translation job to cabinet.",
             "placeholders": [
                 {
                     "string": "<data>",
                     "type": "key_value",
                     "participantName": "job",
-                    "keys": ["data"]
+                    "keys": [
+                        "data"
+                    ]
                 }
             ],
             "participants": [
                 {
                     "name": "job",
                     "functionalId": "AddJobToCabinet",
-                    "scope": "local"
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type": "maxLength",
+                            "value": 2500,
+                            "keys": [
+                                "value",
+                                "data"
+                            ],
+                            "guards": [
+                                "SelectProcessReceivedMsgTamilTranslator",
+                                "SelectProcessReceivedMsgFrenchTranslator",
+                                "SelectProcessReceivedMsgSpanishTranslator"
+                            ],
+                            "violationSentence": "The employee accepted a translation job that had text which was longer than 2500 characters.",
+                            "rootCauseSentence": "The root cause of this failure is that the employee accepted a translation job that had text which was longer than 2500 characters."
+                        }
+                    ]
                 }
             ],
             "abstractions": [
@@ -350,7 +373,9 @@
         },
         {
             "id": "SelectSendJobToFrenchTranslator",
-            "intent": "Send job to french translator.",
+            "intent": "Send translation job to french translator.",
+            "intent_failed": "Failed to send translation job to french translator.",
+            "availability_failed": "French translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -365,7 +390,9 @@
         },
         {
             "id": "SelectSendJobToSpanishTranslator",
-            "intent": "Send job to spanish translator.",
+            "intent": "Send translation job to spanish translator.",
+            "intent_failed": "Failed to send translation job to spanish translator.",
+            "availability_failed": "Spanish translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -380,7 +407,9 @@
         },
         {
             "id": "SelectSendJobToTamilTranslator",
-            "intent": "Send job to tamil translator.",
+            "intent": "Send translation job to tamil translator.",
+            "intent_failed": "Failed to send translation job to tamil translator.",
+            "availability_failed": "Tamil translator was not available.",
             "target": "worker",
             "participants": [
                 {
@@ -395,7 +424,8 @@
         },
         {
             "id": "SelectThrottleIngestion",
-            "intent": "Wait a secon before accepting more text from the user.",
+            "intent": "Wait a second before accepting more jobs from the user.",
+            "intent_failed": "Failed to wait a second before accepting more jobs.",
             "abstractions": [
                 "SleepToThrottleIngestion"
             ]
@@ -404,10 +434,11 @@
 
         {
             "id": "SelectReceiveMessageTamilTranslator",
-            "intent": "Receive text in tamil translator.",
+            "intent": "Receive translation job in tamil translator.",
+            "intent_failed": "Tamil translator failed to receive translation job.",
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "ReceiveMessageTamilTranslator",
                     "scope": "local"
                 }
@@ -419,12 +450,15 @@
         {
             "id": "SelectProcessReceivedMsgTamilTranslator",
             "intent": "Translate the text into tamil.",
+            "intent_failed": "Tamil translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -434,7 +468,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoTamil",
                     "scope": "local"
                 },
@@ -450,7 +484,9 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerTamilTranslator",
-            "intent": "Send the job with the translated text to the packer.",
+            "intent": "Send the compelted tamil translation job to the packer.",
+            "intent_failed": "Failed to send completed tamil translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueTamilTranslator"
@@ -459,9 +495,18 @@
 
         
 
+
         {
             "id": "SelectReceiveMessageSpanishTranslator",
-            "intent": "Receive text in spanish translator.",
+            "intent": "Receive translation job in spanish translator.",
+            "intent_failed": "Spanish translator failed to receive translation job.",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "ReceiveMessageSpanishTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ReceiveMessageSpanishTranslator"
             ]
@@ -469,12 +514,15 @@
         {
             "id": "SelectProcessReceivedMsgSpanishTranslator",
             "intent": "Translate the text into spanish.",
+            "intent_failed": "Spanish translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -484,7 +532,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoSpanish",
                     "scope": "local"
                 },
@@ -500,7 +548,9 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerSpanishTranslator",
-            "intent": "Send the job with the translated text to the packer.",
+            "intent": "Send the compelted spanish translation job to the packer.",
+            "intent_failed": "Failed to send completed spanish translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueSpanishTranslator"
@@ -509,9 +559,18 @@
 
         
 
+
         {
             "id": "SelectReceiveMessageFrenchTranslator",
-            "intent": "Receive text in french translator.",
+            "intent": "Receive translation job in french translator.",
+            "intent_failed": "French translator failed to receive job.",
+            "participants": [
+                {
+                    "name": "job",
+                    "functionalId": "ReceiveMessageFrenchTranslator",
+                    "scope": "local"
+                }
+            ],
             "abstractions": [
                 "ReceiveMessageFrenchTranslator"
             ]
@@ -519,12 +578,15 @@
         {
             "id": "SelectProcessReceivedMsgFrenchTranslator",
             "intent": "Translate the text into french.",
+            "intent_failed": "French translator failed to translate text.",
             "placeholders": [
                 {
                     "string": "<data>",
                     "type": "key_value",
-                    "participantName": "msg",
-                    "keys": ["data"]
+                    "participantName": "job",
+                    "keys": [
+                        "data"
+                    ]
                 },
                 {
                     "string": "<translated>",
@@ -534,7 +596,7 @@
             ],
             "participants": [
                 {
-                    "name": "msg",
+                    "name": "job",
                     "functionalId": "TranslateIntoFrench",
                     "scope": "local"
                 },
@@ -550,7 +612,9 @@
         },
         {
             "id": "SelectSendProcessedResultsToConsumerFrenchTranslator",
-            "intent": "Send translated text to packer",
+            "intent": "Send the compelted french translation job to the packer.",
+            "intent_failed": "Failed to send completed french translation job to the packer.",
+            "availability_failed": "Packer was not available.",
             "target": "consumer",
             "abstractions": [
                 "PutProcessedResultInQueueFrenchTranslator"
@@ -564,6 +628,7 @@
         {
             "id": "SelectReceiveMessageConsumer",
             "intent": "Receive translated text in packer.",
+            "intent_failed": "Failed to receive completed translation job in packer.",
             "abstractions": [
                 "MainLoopPacker",
                 "TryToReceiveMessagePacker",
@@ -573,6 +638,7 @@
         {
             "id": "SelectIncrementJobStatusPacker",
             "intent": "Add translation to cabinet.",
+            "intent_failed": "Failed to add translation to cabinet.",
             "abstractions": [
                 "IncrementJobStatusPacker"
             ]
@@ -580,6 +646,7 @@
         {
             "id": "SelectIsJobDone",
             "intent": "Check if all the translaters finished.",
+            "intent_failed": "Failed to check if all translators have finished.",
             "abstractions": [
                 "CheckIfJobIsDonePacker"
             ]
@@ -587,6 +654,7 @@
         {
             "id": "SelectCleanupJob",
             "intent": "Note job as done in cabinet.",
+            "intent_failed": "Failed to note job as done.",
             "abstractions": [
                 "CleanUpJobStatusPacker"
             ]
