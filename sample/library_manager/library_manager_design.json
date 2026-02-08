@@ -433,7 +433,7 @@
         },
         {
             "id": "SelectGettingFirstLetterOfBookName",
-            "intent": "Got the first letter '<first_letter>' of the books named <book_name>.",
+            "intent": "Got the first letter '<first_letter>' of the books named <book_name> to choose the right slot on the shelf.",
             "intent_failed": "Failed to get the first letter of the books name to choose the right slot on the shelf.",
             "placeholders": [
                 {
