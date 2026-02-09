@@ -29,7 +29,7 @@
                     "options": [
                         {
                             "id": "SelectStringTooLong",
-                            "module": "SelectStringTooLong"
+                            "behavior": "SelectStringTooLong"
                         }
                     ]
                 },
@@ -141,7 +141,7 @@
                     "options": [
                         {
                             "id": "SelectCleanupJob",
-                            "module": "SelectCleanupJob"
+                            "behavior": "SelectCleanupJob"
                         }
                     ]
                 }
@@ -208,7 +208,7 @@
                     "options": [
                         {
                             "id": "SelectCleanupJob",
-                            "module": "SelectCleanupJob"
+                            "behavior": "SelectCleanupJob"
                         }
                     ]
                 }
@@ -275,7 +275,7 @@
                     "options": [
                         {
                             "id": "SelectCleanupJob",
-                            "module": "SelectCleanupJob"
+                            "behavior": "SelectCleanupJob"
                         }
                     ]
                 }

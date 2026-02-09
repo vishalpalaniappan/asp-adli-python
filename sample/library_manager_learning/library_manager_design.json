@@ -23,22 +23,22 @@
                         {
                             "id": "AddBooksToBasketModule",
                             "value": "add books to the basket",                            
-                            "module": "SelectAcceptBookFromUser"
+                            "behavior": "SelectAcceptBookFromUser"
                         },
                         {
                             "id": "PlaceBooksOnShelfModule",
                             "value": "place books from basket onto the shelf",
-                            "module": "SelectCheckIfTooManyBooks"
+                            "behavior": "SelectCheckIfTooManyBooks"
                         },
                         {
                             "id": "GenerateAuditReportForUserModule",
                             "value": "generate audit report of library for the user",
-                            "module": "SelectGenerateAuditReport"
+                            "behavior": "SelectGenerateAuditReport"
                         },
                         {
                             "id": "ExitProgramModule",
                             "value": "leave the library",
-                            "module": "SelectTerminateProgram"
+                            "behavior": "SelectTerminateProgram"
                         }
                     ]
                 }
@@ -72,7 +72,7 @@
                     "options": [
                         {
                             "id": "SelectBookHasNameModule",
-                            "module": "SelectAddBookToBasket"
+                            "behavior": "SelectAddBookToBasket"
                         }
                     ]
                 }
@@ -111,7 +111,7 @@
                     "options": [
                         {
                             "id": "SelectTooManyBooksModule",
-                            "module": "SelectTooManyBooks"
+                            "behavior": "SelectTooManyBooks"
                         }
                     ]
                 },
@@ -129,7 +129,7 @@
                     "options": [
                         {
                             "id": "GetBookFromBasketModule",
-                            "module": "SelectGettingBookFromBasket"
+                            "behavior": "SelectGettingBookFromBasket"
                         }
                     ]
                 }
@@ -183,7 +183,7 @@
                     "options": [
                         {
                             "id": "CreateSlotForBookModule",
-                            "module": "SelectCreateSlotForBook"
+                            "behavior": "SelectCreateSlotForBook"
                         }
                     ]
                 },
