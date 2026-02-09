@@ -143,7 +143,7 @@ def injectRootLoggingSetup(tree):
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("adli.logException()"),
+            ast.parse("adli.logException(e)"),
             ast.parse("raise"),
         ]
     )
@@ -169,7 +169,7 @@ def injectExceptionHandling(funcBody):
         type=ast.Name(id='Exception', ctx=ast.Load()),
         name='e',
         body=[
-            ast.parse("adli.logException()"),
+            ast.parse("adli.logException(e)"),
             ast.parse("raise"),
         ]
     )

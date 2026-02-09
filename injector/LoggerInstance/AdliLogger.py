@@ -127,15 +127,16 @@ class AdliLogger:
         }
         logger.info(stmtObj)
 
-    def logException(self):
+    def logException(self, e):
         '''
             Logs the exception using the traceback.
         '''
-
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "value": traceback.format_exc()
+            "value": traceback.format_exc(),
+            "exc_type": type(e).__name__,
+            "exc_value": str(e)
         }
         logger.info(exceptionObj)
 
