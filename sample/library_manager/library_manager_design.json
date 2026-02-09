@@ -275,16 +275,6 @@
             ],
             "participants": [
                 {
-                    "name": "name",
-                    "functionalId": "AcceptBookName",
-                    "scope": "local"
-                },
-                {
-                    "name": "genre",
-                    "functionalId": "AcceptBookGenre",
-                    "scope": "local"
-                },
-                {
                     "name": "book_details",
                     "functionalId": "AssembleBookDetails",
                     "scope": "local"
