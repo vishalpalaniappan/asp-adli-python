@@ -6,13 +6,13 @@
             "id": "LibraryManagerModule",
             "action": "The user selected <option_SelectMenuOptionStep>.",
             "type": "atomic",
-            "entry": "SelectDisplayMenu",
+            "entry": "SelectDisplayMenuAndAcceptResponse",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "DisplayMenuStep",
                     "behavior": [
-                        "SelectDisplayMenu"
+                        "SelectDisplayMenuAndAcceptResponse"
                     ]
                 },
                 {
@@ -21,23 +21,19 @@
                     "id": "SelectMenuOptionStep",
                     "options": [
                         {
-                            "id": "AddBooksToBasketModule",
-                            "value": "add books to the basket",                            
+                            "id": "AddBooksToBasketModule",                        
                             "behavior": "SelectAcceptBookFromUser"
                         },
                         {
                             "id": "PlaceBooksOnShelfModule",
-                            "value": "place books from basket onto the shelf",
                             "behavior": "SelectCheckIfTooManyBooks"
                         },
                         {
                             "id": "GenerateAuditReportForUserModule",
-                            "value": "generate audit report of library for the user",
                             "behavior": "SelectGenerateAuditReport"
                         },
                         {
                             "id": "ExitProgramModule",
-                            "value": "leave the library",
                             "behavior": "SelectTerminateProgram"
                         }
                     ]
@@ -253,7 +249,7 @@
     ],
     "behavior": [
         {
-            "id": "SelectDisplayMenu",
+            "id": "SelectDisplayMenuAndAcceptResponse",
             "atomic": true,
             "intent": "Displayed the menu to user and they selected the response <response>.",
             "intent_failed": "Displayed the menu and failed to get a response from the user.",
