@@ -1193,7 +1193,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="-ggXPHcaspVBdo7nJuyq" name="text-translator">
-    <mxGraphModel dx="2206" dy="1298" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1062" dy="625" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1218,19 +1218,19 @@
         <mxCell id="xC5nuUzwBxij4A9lajhx-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" source="xC5nuUzwBxij4A9lajhx-16" target="xC5nuUzwBxij4A9lajhx-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-16" value="Employee Sends Job to French Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
+        <mxCell id="xC5nuUzwBxij4A9lajhx-16" value="Employee Sends Copy of Job to French Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
           <mxGeometry x="311" y="562" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" source="xC5nuUzwBxij4A9lajhx-18" target="xC5nuUzwBxij4A9lajhx-20" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-18" value="Employee Sends Job to Spanish Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
+        <mxCell id="xC5nuUzwBxij4A9lajhx-18" value="Employee Sends Copy of&amp;nbsp;Job to Spanish Translator" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
           <mxGeometry x="311" y="645" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" source="xC5nuUzwBxij4A9lajhx-20" target="xC5nuUzwBxij4A9lajhx-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xC5nuUzwBxij4A9lajhx-20" value="Employee Sends Job to&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Tamil Translator&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
+        <mxCell id="xC5nuUzwBxij4A9lajhx-20" value="Employee Sends Copy of&amp;nbsp;Job to&amp;nbsp;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Tamil Translator&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
           <mxGeometry x="311" y="729" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xC5nuUzwBxij4A9lajhx-22" value="Wait for 1s before accepting more text." style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
@@ -1369,7 +1369,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="text-translator-learning" id="pepi9VtPWd9-A6Xl_-C_">
-    <mxGraphModel dx="1168" dy="1688" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="-13" dy="993" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="TF8jpmrPXX2lxt6rtCn0-0" />
         <mxCell id="TF8jpmrPXX2lxt6rtCn0-1" parent="TF8jpmrPXX2lxt6rtCn0-0" />
