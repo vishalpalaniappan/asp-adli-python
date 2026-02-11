@@ -235,13 +235,13 @@
         {
             "name": "Exit Program",
             "id": "ExitProgramModule",
-            "entry": "SelectTerminateProgram",
+            "entry": "SelectUserLeavesLibrary",
             "steps": [
                 {
                     "type": "sequential",
                     "id": "ExitStep",
                     "behavior": [
-                        "SelectTerminateProgram"
+                        "SelectUserLeavesLibrary"
                     ]
                 }
             ]
@@ -608,9 +608,9 @@
             ]
         },
         {
-            "id": "SelectTerminateProgram",
-            "intent": "Terminated the library manager.",
-            "intent_failed": "Failed to terminate the library manager.",
+            "id": "SelectUserLeavesLibrary",
+            "intent": "User left the library.",
+            "intent_failed": "User failed to leave the library.",
             "abstractions": [
                 "ExitTheMenu"
             ]
