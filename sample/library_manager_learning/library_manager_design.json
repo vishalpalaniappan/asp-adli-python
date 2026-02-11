@@ -626,18 +626,26 @@
     ],    
     "semantic_participants": [
         {
+            "name": "Library",
+            "can_hold": ["User","Librarian","Bookshelf","Basket"]
+        },
+        {
             "name": "User",
             "can_hold": ["Book","AuditReport"]
         },
         {
-            "name": "SelectedMenuOption"
+            "name": "SelectedMenuOption",
+            "belongs_to": {
+                "allowed": ["User", "Librarian"],
+                "multiple_owners": true
+            }
         },
         {
             "name": "Librarian",
             "can_hold": ["Book","SelectedMenuOption","AuditReport"]
         },
         {
-            "name": "Bookshelf",
+            "name": "BookShelf",
             "can_hold": {
                 "type": ["Book"],
                 "multiple": true
@@ -654,14 +662,14 @@
             "name": "Book",
             "belongs_to": {
                 "allowed": ["User", "Librarian", "Basket", "BookShelf"],
-                "multiple_owners": "false"
+                "multiple_owners": false
             }
         },
         {
             "name": "AuditReport",
             "belongs_to": {
                 "allowed": ["User", "Librarian"],
-                "multiple_owners": "false"
+                "multiple_owners": false
             }
         }         
     ],
@@ -673,7 +681,8 @@
             "item": "<item>",
             "from": "<from>",
             "to": "<to>",
-            "syntax": "give <item> <from> <to>"
+            "syntax": "give <item> <from> <to>",
+            "example": "give book librarian basket"
         },
         {
             "name": "take",
@@ -681,10 +690,29 @@
             "item": "<item>",
             "from": "<from>",
             "by": "<by>",
-            "syntax": "take <item> <from> <by>"
+            "syntax": "take <item> <from> <by>",
+            "example": "take book librarian basket"
+        },
+        {
+            "name": "create",
+            "description": "<item> is created with <value> and is owned by <target>",
+            "item": "<item>",
+            "target": "<target>",
+            "value": "<value>",
+            "syntax": "create <item> <value> <target>",
+            "example": "create SelectedMenuOption a user"
         }
     ],
     "initial_world_state": [
+        {
+            "participant": "Library",
+            "Librarian": {},
+            "Bookshelf": {},
+            "Basket": {}
+        },
+        {
+            "participant": "User"
+        },
         {
             "participant": "Basket",
             "books": []
