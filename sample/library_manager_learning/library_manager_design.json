@@ -669,7 +669,7 @@
         {
             "name": "give",
             "alias": ["place"],
-            "description": "Transfers ownership of item.",
+            "description": "<item> ownership transfers from <from> to <to>",
             "item": "<item>",
             "from": "<from>",
             "to": "<to>",
@@ -677,7 +677,7 @@
         },
         {
             "name": "take",
-            "description": "Item taken from object by participant.",
+            "description": "<item> ownership transfers from <from> to <by>",
             "item": "<item>",
             "from": "<from>",
             "by": "<by>",
