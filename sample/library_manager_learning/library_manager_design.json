@@ -623,5 +623,79 @@
                 "CheckBookName"
             ]
         }
+    ],    
+    "semantic_participants": [
+        {
+            "name": "User",
+            "can_hold": ["Book","AuditReport"]
+        },
+        {
+            "name": "SelectedMenuOption"
+        },
+        {
+            "name": "Librarian",
+            "can_hold": ["Book","SelectedMenuOption","AuditReport"]
+        },
+        {
+            "name": "Bookshelf",
+            "can_hold": {
+                "type": ["Book"],
+                "multiple": true
+            }
+        },
+        {
+            "name": "Basket",
+            "can_hold": {
+                "type": ["Book"],
+                "multiple": true
+            }
+        },
+        {
+            "name": "Book",
+            "belongs_to": {
+                "allowed": ["User", "Librarian", "Basket", "BookShelf"],
+                "multiple_owners": "false"
+            }
+        },
+        {
+            "name": "AuditReport",
+            "belongs_to": {
+                "allowed": ["User", "Librarian"],
+                "multiple_owners": "false"
+            }
+        }         
+    ],
+    "actions": [
+        {
+            "name": "give",
+            "alias": ["place"],
+            "description": "Transfers ownership of item.",
+            "item": "<item>",
+            "from": "<from>",
+            "to": "<to>",
+            "syntax": "give <item> <from> <to>"
+        },
+        {
+            "name": "take",
+            "description": "Item taken from object by participant.",
+            "item": "<item>",
+            "from": "<from>",
+            "by": "<by>",
+            "syntax": "take <item> <from> <by>"
+        }
+    ],
+    "initial_world_state": [
+        {
+            "participant": "Basket",
+            "books": []
+        },
+        {
+            "participant": "BookShelf",
+            "books": []
+        },
+        {
+            "participant": "Librarian",
+            "book": null
+        }
     ]
 }
