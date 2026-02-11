@@ -313,15 +313,6 @@
             "id": "SelectAddBookToBasket",
             "intent": "Librarian added book named <name> to basket.",
             "intent_failed": "Failed to add book to the basket.",
-            "intent_validation": [
-                {
-                    "type": "data_exists",
-                    "source_var": "book_details",
-                    "target_var": "basket",
-                    "target_var_keys": ["value"],
-                    "position": "end"
-                }
-            ],
             "placeholders": [
                 {
                     "string": "<name>",
@@ -333,6 +324,7 @@
             "participants": [
                 {
                     "name": "book_details",
+                    "type": "Book",
                     "functionalId": "AddBookToBasket",
                     "scope": "local",
                     "constraint": [
@@ -348,13 +340,20 @@
                 },
                 {
                     "name": "basket",
+                    "type": "Basket",
                     "functionalId": "AddBookToBasket",
                     "scope": "local"
                 }
             ],
             "abstractions": [
                 "AddBookToBasket"
-            ]
+            ],
+            "action": {
+                "type": "give",
+                "item": "Book",
+                "from": "Librarian",
+                "to": "Basket"
+            }
         },
         {
             "id": "SelectCheckIfTooManyBooks",
