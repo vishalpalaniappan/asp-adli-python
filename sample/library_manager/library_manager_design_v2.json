@@ -1,0 +1,59 @@
+{
+    "description": "State machine based design.",
+    "design": [
+        {
+            "entry": true,
+            "behavior": "AcceptUserChoice",
+            "options": [
+                {
+                    "goto": "AcceptBookFromUser"
+                },
+                {
+                    "goto": "GettingBookFromBasket"
+                },
+                {
+                    "goto": "GenerateAuditReport"
+                },
+                {
+                    "goto": "LeaveLibrary"
+                }
+            ]
+        },
+        {
+            "behavior": "AcceptBookFromUser",
+            "goto": "AddBookToBasket"
+        },
+        {
+            "behavior": "AddBookToBasket",
+            "goto": "entry"
+        },
+        {
+            "behavior": "GettingBookFromBasket",
+            "goto": "GettingFirstLetterOfBookName"
+        },
+        {
+            "behavior": "GettingFirstLetterOfBookName",
+            "goto": ["CreateSlotForBook","AddingBookToShelf"]
+        },
+        {
+            "behavior": "CreateSlotForBook",
+            "goto": "AddingBookToShelf"
+        },
+        {
+            "behavior": "AddingBookToShelf",
+            "goto": ["GettingBookFromBasket","entry"]
+        },
+        {
+            "behavior": "GenerateAuditReport",
+            "goto": "HandReportToUser"
+        },
+        {
+            "behavior": "HandReportToUser",
+            "goto": "entry"
+        },
+        {
+            "behavior": "LeaveLibrary",
+            "terminate": true
+        }
+    ]
+}
