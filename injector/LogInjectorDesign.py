@@ -1,11 +1,8 @@
 import ast
 import json
 from injector.helper import getVarLogStmt, getLtLogStmt, getAssignStmt, getAdliConfiguration, getEncodedOutputStmt, getEmptyRootNode, getUniqueIdAssignStmt, getRootUidAssign
-from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag
-from injector.VariableCollectors.CollectAssignVarInfo import CollectAssignVarInfo
-from injector.VariableCollectors.CollectVariableDefault import CollectVariableDefault
-from injector.VariableCollectors.CollectCallVariables import CollectCallVariables
-from injector.VariableCollectors.CollectFunctionArgInfo import CollectFunctionArgInfo
+from injector.helper import injectRootLoggingSetup, injectLoggingSetup, getTag, injectExceptionHandling
+from injector.OutputWrapper.OutputWrapper import OutputWrapper
 
 class LogInjectorDesign(ast.NodeTransformer):
     def __init__(self, source, tree, logTypeCount, file, isRoot, absMap, sdg_meta):
@@ -75,16 +72,14 @@ class LogInjectorDesign(ast.NodeTransformer):
         # Save the logtype count in the node. This is used to save the new lineno in ltMap after injecting the logs.
         node.logTypeCount = self.logTypeCount
 
-
         absMeta = None
-        variables = []
+        wrapper = []
+        meta = None
 
         # Get the abstraction metadata if available.
         if self.fileAbsMap and node.lineno in self.fileAbsMap:
             absMeta = self.fileAbsMap[node.lineno]
             meta = self.sdg_meta["abstractions"][absMeta]
-            if "variables" in meta:
-                variables = meta["variables"]
 
         self.ltMap[self.logTypeCount] = {
             "id": self.logTypeCount,
@@ -103,23 +98,30 @@ class LogInjectorDesign(ast.NodeTransformer):
             funcId = self.funcId
 
         varLogs = []
-        for variable in variables:
-            varInfo = {
-                "varId": absMeta + "_" + variable["name"],
-                "name": variable["name"],
-                "keys": [],
-                "syntax": variable["name"],
-                "meta": meta["intent"],
-                "logType": self.logTypeCount,
-                "funcId": funcId,
-                "isTemp": False,
-                "global": (variable["scope"] == "global")
-            }
-            varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
-            self.varMap[varInfo["varId"]] = varInfo
+        if "variables" in meta:
+            for variable in meta["variables"]:
+                varInfo = {
+                    "varId": absMeta + "_" + variable["name"],
+                    "name": variable["name"],
+                    "keys": [],
+                    "syntax": variable["name"],
+                    "meta": meta["intent"],
+                    "logType": self.logTypeCount,
+                    "funcId": funcId,
+                    "isTemp": False,
+                    "global": (variable["scope"] == "global")
+                }
+                varLogs.append(getVarLogStmt(varInfo["syntax"], varInfo["varId"]))
+                self.varMap[varInfo["varId"]] = varInfo
+
+        # If the node is instrumented as an output, then wrap the data that is sent as an output.
+        wrapperStmts = []
+        if "output" in meta:
+            wrapper = OutputWrapper(node, meta["output"])
+            wrapperStmts= wrapper.metaStmts
 
         return {
-            "logStmt": getLtLogStmt(self.logTypeCount),
+            "logStmt": wrapperStmts + [getLtLogStmt(self.logTypeCount)],
             "varLogs": varLogs
         }
 
@@ -142,11 +144,12 @@ class LogInjectorDesign(ast.NodeTransformer):
         self.generic_visit(node)
 
         uidAssign = getUniqueIdAssignStmt()
-        node.body = [meta_tag, uidAssign] + logStmt["varLogs"] + node.body
+        newBody = [meta_tag, uidAssign] + logStmt["varLogs"] + node.body
+        node.body = [injectExceptionHandling(newBody)]
         
         self.funcId = 0
         
-        return [node]
+        return node
 
     
     def visit_FunctionDef(self, node):
@@ -325,9 +328,6 @@ class LogInjectorDesign(ast.NodeTransformer):
     def visit_ExceptHandler(self, node):
         return self.injectLogTypesC(node)
     
-    def visit_While(self, node):
-        return self.injectLogTypesC(node)
-    
     '''
         INJECT LOGS TYPE D
         Example:
@@ -349,6 +349,9 @@ class LogInjectorDesign(ast.NodeTransformer):
         return self.injectLogTypesD(node)
     
     def visit_AsyncFor(self, node):
+        return self.injectLogTypesD(node)
+    
+    def visit_While(self, node):
         return self.injectLogTypesD(node)
 
 

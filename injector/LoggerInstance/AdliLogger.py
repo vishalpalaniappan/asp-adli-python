@@ -26,15 +26,6 @@ class AdliLogger:
         uniquely identified.
     '''
 
-    def __init__(self):
-        self.count = 0
-        self.variableLogCount = 0
-        self.stmtLogCount = 0
-        self.exceptionLogCount = 0
-        self.inputCount = 0
-        self.outputCount = 0
-        self.traceback = traceback
-
     def processLevel(self, o, k, depth, max_depth):
         if isinstance(o, (str, int, float, bool)) or o is None:
             return o
@@ -92,8 +83,8 @@ class AdliLogger:
             :param int varid: A number representing the mapped variable index in varMap.   
             :param value: Value of the variable being encoded.
         '''
-        self.count += 1
-        self.variableLogCount += 1
+
+        value = self.decodeInput(value)
 
         try:
             # Try to serialize the variable
@@ -118,7 +109,7 @@ class AdliLogger:
             }
             logger.info(varObj)
 
-        return self.decodeInput(value)
+        return value
 
     def logStmt(self, stmtId, scope_uid, fullStack):
         '''
@@ -127,8 +118,6 @@ class AdliLogger:
 
             :param int stmtId: A number representing the mapped statement index in ltMap.
         '''
-        self.count += 1
-        self.stmtLogCount += 1
         stmtObj = {
             "type": "adli_execution",
             "thread": threading.get_ident(),
@@ -138,17 +127,16 @@ class AdliLogger:
         }
         logger.info(stmtObj)
 
-    def logException(self):
+    def logException(self, e):
         '''
             Logs the exception using the traceback.
         '''
-        self.count += 1
-        self.exceptionLogCount += 1
-
         exceptionObj = {
             "type": "adli_exception",
             "thread": threading.get_ident(),
-            "value": traceback.format_exc()
+            "value": traceback.format_exc(),
+            "exc_type": type(e).__name__,
+            "exc_value": str(e)
         }
         logger.info(exceptionObj)
 
@@ -158,7 +146,6 @@ class AdliLogger:
 
             :param dict header: Dictionary representing the header of the CDL file.
         '''
-        self.count += 1
 
         with open("header.json", "r") as f:
             header = json.loads(f.read())
@@ -187,23 +174,21 @@ class AdliLogger:
             :param str variableName: Name of the variable being encoded.
             :param value: Value of the variable being encoded.
         '''
-        self.count += 1
-        self.outputCount += 1
+
+        execId = str(threading.get_ident()) + str(uuid.uuid4())
 
         logInfo = {
             "type": "adli_output",
             "outputName": variableName,
             "thread": threading.get_ident(),
-            "adliExecutionId": ADLI_EXECUTION_ID,
-            "adliExecutionIndex": self.count + 1,
+            "adliExecutionId": execId,
             "adliValue": value
         }
         
         logger.info(logInfo)
 
         return {
-            "adliExecutionId": ADLI_EXECUTION_ID,
-            "adliExecutionIndex": self.count + 1,
+            "adliExecutionId": execId,
             "adliValue": value
         }
     
@@ -215,15 +200,12 @@ class AdliLogger:
 
             :param value: Value of the variable being inspected. 
         '''
-        if isinstance(value, dict) and "adliExecutionId" in value and "adliExecutionIndex" in value:
-            self.count += 1
-            self.inputCount += 1
+        if isinstance(value, dict) and "adliExecutionId" in value:
 
             logInfo = {
                 "type": "adli_input",
                 "thread": threading.get_ident(),
                 "adliExecutionId": value["adliExecutionId"],
-                "adliExecutionIndex": value["adliExecutionIndex"],
                 "adliValue": value["adliValue"]
             }
 

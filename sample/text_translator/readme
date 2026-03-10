@@ -1,0 +1,1 @@
+This folder contains a text translator that uses three workers to translate the text and uses a packer to add the results to a cabinet.

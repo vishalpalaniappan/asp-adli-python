@@ -1,0 +1,728 @@
+{
+    "description": "Contains the design for library manager v2. The ID's refer to abstractions that can be observed from the execution of a system. This allows you to construct design level traces from execution that is distributed across nodes, threads and processes.",
+    "design": [
+        {
+            "name": "LibraryManager",
+            "id": "LibraryManagerModule",
+            "action": "The user selected <option_SelectMenuOptionStep>.",
+            "type": "atomic",
+            "entry": "SelectDisplayMenuAndAcceptResponse",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "DisplayMenuStep",
+                    "behavior": [
+                        "SelectDisplayMenuAndAcceptResponse"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": true,
+                    "id": "SelectMenuOptionStep",
+                    "options": [
+                        {
+                            "id": "AddBooksToBasketModule",                        
+                            "behavior": "SelectAcceptBookFromUser"
+                        },
+                        {
+                            "id": "PlaceBooksOnShelfModule",
+                            "behavior": "SelectCheckIfTooManyBooks"
+                        },
+                        {
+                            "id": "GenerateAuditReportForUserModule",
+                            "behavior": "SelectGenerateAuditReport"
+                        },
+                        {
+                            "id": "ExitProgramModule",
+                            "behavior": "SelectTerminateProgram"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Add Books to Basket",
+            "id": "AddBooksToBasketModule",
+            "action": "The user submitted a book named <book_name> with genre <book_genre> and it was added to the basket.",
+            "description": "Accept Book From User and Add to Basket",
+            "entry": "SelectAcceptBookFromUser",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "RequestBookStep",
+                    "behavior": [
+                        "SelectAcceptBookFromUser"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AddBookToBasketStep",
+                    "behavior": [
+                        "SelectCheckBookName"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCheckIfBookHasName",
+                    "options": [
+                        {
+                            "id": "SelectBookHasNameModule",
+                            "behavior": "SelectAddBookToBasket"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "SelectBookHasNameModule",
+            "entry": "SelectAddBookToBasket",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "AddBookToBasketStep",
+                    "behavior": [
+                        "SelectAddBookToBasket"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Place Books on Shelf",
+            "id": "PlaceBooksOnShelfModule",
+            "action": "Picked up <num_books_from_steps> books from the basket and placed on the shelf.",
+            "entry": "SelectCheckIfTooManyBooks",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "CheckIfTooManyBooksStep",
+                    "behavior": [
+                        "SelectCheckIfTooManyBooks"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCheckIfTooManyBooksStep",
+                    "options": [
+                        {
+                            "id": "SelectTooManyBooksModule",
+                            "behavior": "SelectTooManyBooks"
+                        }
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckBasketForBookStep",
+                    "behavior": [
+                        "SelectCheckBasketForBook"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectBasketHasBookStep",
+                    "options": [
+                        {
+                            "id": "GetBookFromBasketModule",
+                            "behavior": "SelectGettingBookFromBasket"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Select Too Many Books",
+            "id": "SelectTooManyBooksModule",
+            "entry": "SelectTooManyBooks",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectTooManyBooksStep",
+                    "behavior": [
+                        "SelectTooManyBooks"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Get Book From Basket",
+            "id": "GetBookFromBasketModule",
+            "entry": "SelectGettingBookFromBasket",
+            "action": "Got a book named <name_of_book_from_basket> from the basket and added it to the shelf in the slot named <first_letter_of_book_name><created_slot_for_letter>.",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "GettingBookFromBasketStep",
+                    "behavior": [
+                        "SelectGettingBookFromBasket"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "GettingFirstLetterOfBookName",
+                    "behavior": [
+                        "SelectGettingFirstLetterOfBookName"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "CheckIfShelfHasSlotStep",
+                    "behavior": [
+                        "SelectCheckingIfShelfHasSlot"
+                    ]
+                },
+                {
+                    "type": "selector",
+                    "mutex": false,
+                    "id": "SelectCreateSlotForBookStep",
+                    "options": [
+                        {
+                            "id": "CreateSlotForBookModule",
+                            "behavior": "SelectCreateSlotForBook"
+                        }
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "AddingBookToShelfStep",
+                    "goto": {
+                        "module": "PlaceBooksOnShelfModule",
+                        "step": 3
+                    },
+                    "behavior": [
+                        "SelectAddingBookToShelf"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Create Slot For Book",
+            "id": "CreateSlotForBookModule",
+            "action": "Created slot for letter <created_slot_for_letter> on the bookshelf",
+            "entry": "SelectCreateSlotForBook",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "SelectCreateSlotForBook",
+                    "behavior": [
+                        "SelectCreateSlotForBook"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Audit Library and Provide Report To User",
+            "id": "GenerateAuditReportForUserModule",
+            "entry": "SelectGenerateAuditReport",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "GenerateAuditStep",
+                    "behavior": [
+                        "SelectGenerateAuditReport"
+                    ]
+                },
+                {
+                    "type": "sequential",
+                    "id": "HandAuditToUserStep",
+                    "behavior": [
+                        "SelectHandReportToUser"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Exit Program",
+            "id": "ExitProgramModule",
+            "entry": "SelectUserLeavesLibrary",
+            "steps": [
+                {
+                    "type": "sequential",
+                    "id": "ExitStep",
+                    "behavior": [
+                        "SelectUserLeavesLibrary"
+                    ]
+                }
+            ]
+        }
+    ],
+    "behavior": [
+        {
+            "id": "SelectDisplayMenuAndAcceptResponse",
+            "atomic": true,
+            "intent": "Displayed the menu to user and they selected the response <response>.",
+            "intent_failed": "Displayed the menu and failed to get a response from the user.",
+            "placeholders": [
+                {
+                    "string": "<response>",
+                    "type": "value",
+                    "participantName": "response"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "response",
+                    "functionalId": "PromptUserForChoice",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "ChooseToDisplayMenu",
+                "PromptUserForChoice",
+                "CheckIfUserChoseAddBook",
+                "CheckIfUserChosePlaceBook",
+                "CheckIfUserChoseDisplayLibrary"
+            ]
+        },
+        {
+            "id": "SelectAcceptBookFromUser",
+            "intent": "Librarian accepted a book with name '<name>' and genre '<genre>'.",
+            "intent_failed": "Failed to accept a book from the user.",
+            "placeholders": [
+                {
+                    "string": "<name>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["value","name"]
+                },
+                {
+                    "string": "<genre>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["value","genre"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book_details",
+                    "functionalId": "AssembleBookDetails",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "AcceptBookInformation",
+                "DisplayRequest",
+                "AcceptBookName",
+                "AcceptBookGenre",
+                "AssembleBookDetails",
+                "ReturnBookDetails"
+            ]
+        },
+        {
+            "id": "SelectAddBookToBasket",
+            "intent": "Librarian added book named <name> to basket.",
+            "intent_failed": "Failed to add book to the basket.",
+            "placeholders": [
+                {
+                    "string": "<name>",
+                    "type": "key_value",
+                    "participantName": "book_details",
+                    "keys": ["value","name"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book_details",
+                    "type": "Book",
+                    "functionalId": "AddBookToBasket",
+                    "scope": "local",
+                    "constraint": [
+                        {
+                            "type":"minLength",
+                            "keys": ["value","name"],
+                            "value": 1,
+                            "guards": ["SelectGettingFirstLetterOfBookName"],
+                            "violationSentence": "The librarian accepted a book with no name",
+                            "rootCauseSentence": "The root cause of this failure is that the librarian accepted a book with no name"                          
+                        }
+                    ]
+                },
+                {
+                    "name": "basket",
+                    "type": "Basket",
+                    "functionalId": "AddBookToBasket",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "AddBookToBasket"
+            ],
+            "action": {
+                "type": "give",
+                "item": "Book",
+                "from": "Librarian",
+                "to": "Basket"
+            }
+        },
+        {
+            "id": "SelectCheckIfTooManyBooks",
+            "intent": "Checked if there are more than 5 books in the basket.",
+            "intent_failed": "Failed to check if there are more than 5 books in the basket.",
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "CheckIfTooManyBooks",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "CheckIfTooManyBooks"
+            ]
+        },
+        {
+            "id": "SelectTooManyBooks",
+            "intent": "Artificially raise exception because there are <num_books> books in the basket.",
+            "intent_failed": "Failed to raise exception because there are more than 5 books in the basket.",
+            "placeholders": [
+                {
+                    "string": "<num_books>",
+                    "type": "semantic_property",
+                    "keys": ["value"],
+                    "participantName": "basket",
+                    "property": "length"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "FailIfTooManyBooks",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "FailIfTooManyBooks"
+            ]
+        },
+        {
+            "id": "SelectCheckBasketForBook",
+            "intent": "The basket has <num_books> book(s) in it.",
+            "intent_failed": "Failed to check if there are books in the basket.",
+            "placeholders": [
+                {
+                    "string": "<num_books>",
+                    "type": "semantic_property",
+                    "keys": ["value"],
+                    "participantName": "basket",
+                    "property": "length"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "basket",
+                    "functionalId": "CheckingBasketForBook",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "CheckingBasketForBook",
+                "ReturnBookShelf"
+            ]
+        },
+        {
+            "id": "SelectGettingBookFromBasket",
+            "intent": "Got a book named <book_name> from the basket.",
+            "intent_failed": "Failed to get a book from the basket.",
+            "placeholders": [
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["value","name"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book",
+                    "functionalId": "GettingBookFromBasket",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "GettingBookFromBasket",
+                "DisplayBookInformation"
+            ]
+        },
+        {
+            "id": "SelectGettingFirstLetterOfBookName",
+            "intent": "Got the first letter '<first_letter>' of the books named <book_name> to choose the right slot on the shelf.",
+            "intent_failed": "Failed to get the first letter of the books name to choose the right slot on the shelf.",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                },
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["value","name"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "firstLetter",
+                    "functionalId": "GettingFirstLetterOfBookName",
+                    "scope": "local"
+                },
+                {
+                    "name": "book",
+                    "functionalId": "GettingFirstLetterOfBookName",
+                    "scope": "local"
+                }
+            ],
+            "abstractions": [
+                "GettingFirstLetterOfBookName"
+            ]
+        },
+        {
+            "id": "SelectCheckingIfShelfHasSlot",
+            "intent": "Checking if shelf has a slot for the letter <first_letter>",
+            "intent_failed": "Failed to check if the slot exists on the shelf.",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"    
+                },
+                {
+                    "name": "firstLetter",
+                    "provenance": "book",
+                    "functionalId": "CheckingIfShelfHasSlot",
+                    "scope": "local"    
+                }
+            ],
+            "abstractions": [
+                "CheckingIfShelfHasSlot"
+            ]
+        },
+        {
+            "id": "SelectCreateSlotForBook",
+            "intent": "Creating a slot for the letter <first_letter>",
+            "intent_failed": "Failed to create slot on the shelf for the book.",
+            "placeholders": [
+                {
+                    "string": "<first_letter>",
+                    "type": "value",
+                    "participantName": "firstLetter"
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book",
+                    "functionalId": "CreateSlotForBookOnShelf",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "CreateSlotForBookOnShelf",
+                    "scope": "local"    
+                },
+                {
+                    "name": "firstLetter",
+                    "provenance": "book",
+                    "functionalId": "CreateSlotForBookOnShelf",
+                    "scope": "local"    
+                }
+            ],
+            "abstractions": [
+                "CreateSlotForBookOnShelf"
+            ]
+        },
+        {
+            "id": "SelectAddingBookToShelf",
+            "intent": "Adding a book named <book_name> with genre <book_genre> to the shelf.",
+            "intent_failed": "Failed to add book to shelf.",
+            "placeholders": [
+                {
+                    "string": "<book_name>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["value","name"]
+                },
+                {
+                    "string": "<book_genre>",
+                    "type": "key_value",
+                    "participantName": "book",
+                    "keys": ["value","genre"]
+                }
+            ],
+            "participants": [
+                {
+                    "name": "book",
+                    "functionalId": "AddingBookToShelf",
+                    "scope": "local"
+                },
+                {
+                    "name": "book_shelf",
+                    "functionalId": "AddingBookToShelf",
+                    "scope": "local"    
+                }
+            ],
+            "abstractions": [
+                "AddingBookToShelf"
+            ]
+        },
+        {
+            "id": "SelectGenerateAuditReport",
+            "participants": [
+                {
+                    "name": "audit",
+                    "functionalId": "GenerateAuditOfLibrary",
+                    "scope": "local"    
+                }
+            ],
+            "intent": "Librarian audits the library and generates a report of its contents.",
+            "intent_failed": "Failed to audit library and generate a report of its contents.",
+            "abstractions": [
+                "GenerateAuditOfLibrary"
+            ]
+        },
+        {
+            "id": "SelectHandReportToUser",
+            "participants": [
+                {
+                    "name": "audit",
+                    "functionalId": "HandAuditToUser",
+                    "scope": "local"
+                }
+            ],
+            "intent": "Librarian hands the audit report to the user.",
+            "intent_failed": "Failed to hand audit to the user.",
+            "abstractions": [
+                "HandAuditToUser"
+            ]
+        },
+        {
+            "id": "SelectUserLeavesLibrary",
+            "intent": "User left the library.",
+            "intent_failed": "User failed to leave the library.",
+            "abstractions": [
+                "ExitTheMenu"
+            ]
+        },
+        {
+            "id": "SelectCheckBookName",
+            "intent": "Check if the book has a name.",
+            "intent_failed": "Failed to check if the book has a name.",
+            "abstractions": [
+                "CheckBookName"
+            ]
+        }
+    ],    
+    "semantic_participants": [
+        {
+            "name": "Library",
+            "can_hold": ["User","Librarian","Bookshelf","Basket"]
+        },
+        {
+            "name": "User",
+            "can_hold": ["Book","AuditReport"]
+        },
+        {
+            "name": "SelectedMenuOption",
+            "belongs_to": {
+                "allowed": ["User", "Librarian"],
+                "multiple_owners": true
+            }
+        },
+        {
+            "name": "Librarian",
+            "can_hold": ["Book","SelectedMenuOption","AuditReport"]
+        },
+        {
+            "name": "BookShelf",
+            "can_hold": {
+                "type": ["Book"],
+                "multiple": true
+            }
+        },
+        {
+            "name": "Basket",
+            "can_hold": {
+                "type": ["Book"],
+                "multiple": true
+            }
+        },
+        {
+            "name": "Book",
+            "belongs_to": {
+                "allowed": ["User", "Librarian", "Basket", "BookShelf"],
+                "multiple_owners": false
+            }
+        },
+        {
+            "name": "AuditReport",
+            "belongs_to": {
+                "allowed": ["User", "Librarian"],
+                "multiple_owners": false
+            }
+        }         
+    ],
+    "actions": [
+        {
+            "name": "give",
+            "alias": ["place"],
+            "description": "<item> ownership transfers from <from> to <to>",
+            "item": "<item>",
+            "from": "<from>",
+            "to": "<to>",
+            "syntax": "give <item> <from> <to>",
+            "example": "give book librarian basket"
+        },
+        {
+            "name": "take",
+            "description": "<item> ownership transfers from <from> to <by>",
+            "item": "<item>",
+            "from": "<from>",
+            "by": "<by>",
+            "syntax": "take <item> <from> <by>",
+            "example": "take book librarian basket"
+        },
+        {
+            "name": "create",
+            "description": "<item> is created with <value> and is owned by <target>",
+            "item": "<item>",
+            "target": "<target>",
+            "value": "<value>",
+            "syntax": "create <item> <value> <target>",
+            "example": "create SelectedMenuOption a user"
+        }
+    ],
+    "initial_world_state": [
+        {
+            "participant": "Library",
+            "Librarian": {},
+            "Bookshelf": {},
+            "Basket": {}
+        },
+        {
+            "participant": "User"
+        },
+        {
+            "participant": "Basket",
+            "books": []
+        },
+        {
+            "participant": "BookShelf",
+            "books": []
+        },
+        {
+            "participant": "Librarian",
+            "book": null
+        }
+    ]
+}

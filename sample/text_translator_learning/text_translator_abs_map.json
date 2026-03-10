@@ -1,0 +1,811 @@
+{
+    "file": "Multi-Threaded Data Processor",
+    "version": "0.0.0",
+    "description": "Maps the abstraction to the line number. This will be used by the log injector to automatically instrument the abstraction ID's when it parses the AST and reads the line number.",
+    "files": [
+        {
+            "path": "TransactionDB.py",
+            "modules": {}
+        },
+        {
+            "path": "text_translator.py",
+            "threadId": 1,
+            "modules": {
+                "producer-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "producer-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "producer-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import sys"
+                        },
+                        {
+                            "id": "producer-0-3",
+                            "lineDelta": 2,
+                            "syntax": "import time"
+                        },
+                        {
+                            "id": "producer-0-4",
+                            "lineDelta": 3,
+                            "syntax": "from Packer import PackerThread"
+                        },
+                        {
+                            "id": "producer-0-5",
+                            "lineDelta": 4,
+                            "syntax": "from TamilTranslator import TamilTranslator"
+                        },
+                        {
+                            "id": "producer-0-6",
+                            "lineDelta": 5,
+                            "syntax": "from FrenchTranslator import FrenchTranslator"
+                        },
+                        {
+                            "id": "producer-0-7",
+                            "lineDelta": 6,
+                            "syntax": "from SpanishTranslator import SpanishTranslator"
+                        },
+                        {
+                            "id": "producer-0-8",
+                            "lineDelta": 7,
+                            "syntax": "from TransactionDB import TransactionDB"
+                        },
+                        {
+                            "id": "producer-0-9",
+                            "lineDelta": 33,
+                            "syntax": "if \"__main__\" == __name__:"
+                        },
+                        {
+                            "id": "producer-0-9-1",
+                            "lineDelta": 34,
+                            "syntax": "sys.exit(TextTranslator())"
+                        }
+                    ]
+                },
+                "producer-1": {
+                    "startLine": 10,
+                    "abstractions": [
+                        {
+                            "id": "producer-1",
+                            "lineDelta": 0,
+                            "syntax": "def TextTranslator():"
+                        },
+                        {
+                            "id": "producer-1-1",
+                            "lineDelta": 1,
+                            "syntax": "packer_queue = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-2",
+                            "lineDelta": 2,
+                            "syntax": "PackerThread(packer_queue)"
+                        },
+                        {
+                            "id": "producer-1-3",
+                            "lineDelta": 4,
+                            "syntax": "message_queue_spanish = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-4",
+                            "lineDelta": 5,
+                            "syntax": "message_queue_french = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-5",
+                            "lineDelta": 6,
+                            "syntax": "message_queue_tamil = queue.Queue()"
+                        },
+                        {
+                            "id": "producer-1-6",
+                            "lineDelta": 8,
+                            "syntax": "SpanishTranslator(1, message_queue_spanish, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-7",
+                            "lineDelta": 9,
+                            "syntax": "FrenchTranslator(2, message_queue_french, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-8",
+                            "lineDelta": 10,
+                            "syntax": "TamilTranslator(3, message_queue_tamil, consumer_queue)"
+                        },
+                        {
+                            "id": "producer-1-9",
+                            "lineDelta": 12,
+                            "syntax": "db = TransactionDB()"
+                        },
+                        {
+                            "id": "producer-1-10",
+                            "lineDelta": 14,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "producer-1-10-1",
+                            "lineDelta": 15,
+                            "syntax": "data = input(\"\nEnter any string:\")"
+                        },
+                        {
+                            "id": "producer-1-10-2",
+                            "lineDelta": 16,
+                            "syntax": "if(len(data + data) >= 5000):"
+                        },
+                        {
+                            "id": "producer-1-10-2-1",
+                            "lineDelta": 17,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "producer-1-10-3",
+                            "lineDelta": 18,
+                            "syntax": "job = db.addJob(data)"
+                        },
+                        {
+                            "id": "producer-1-10-4",
+                            "lineDelta": 19,
+                            "syntax": "message_queue_spanish.put(data)"
+                        },
+                        {
+                            "id": "producer-1-10-5",
+                            "lineDelta": 20,
+                            "syntax": "message_queue_french.put(data)"
+                        },
+                        {
+                            "id": "producer-1-10-6",
+                            "lineDelta": 21,
+                            "syntax": "message_queue_tamil.put(data)"
+                        },
+                        {
+                            "id": "producer-1-10-7",
+                            "lineDelta": 22,
+                            "syntax": "time.sleep(1)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "FrenchTranslator.py",
+            "threadId": 2,
+            "modules": {
+                "FrenchTranslator-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "FrenchTranslator-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "FrenchTranslator-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "FrenchTranslator-0-3",
+                            "lineDelta": 2,
+                            "syntax": "from deep_translator import GoogleTranslator"
+                        },
+                        {
+                            "id": "FrenchTranslator-0-4",
+                            "lineDelta": 4,
+                            "syntax": "class FrenchTranslator(threading.Thread):"
+                        }
+                    ]
+                },
+                "FrenchTranslator-1": {
+                    "startLine": 6,
+                    "abstractions": [
+                        {
+                            "id": "FrenchTranslator-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "FrenchTranslator-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "FrenchTranslator-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "FrenchTranslator-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "FrenchTranslator-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "FrenchTranslator-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "FrenchTranslator-2": {
+                    "startLine": 13,
+                    "abstractions": [
+                        {
+                            "id": "FrenchTranslator-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "translatedMsg = GoogleTranslator(source=\"auto\", target=\"tamil\").translate(msg)"
+                        },
+                        {
+                            "id": "FrenchTranslator-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "SpanishTranslator.py",
+            "threadId": 2,
+            "modules": {
+                "SpanishTranslator-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "SpanishTranslator-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "SpanishTranslator-0-3",
+                            "lineDelta": 2,
+                            "syntax": "from deep_translator import GoogleTranslator"
+                        },
+                        {
+                            "id": "SpanishTranslator-0-4",
+                            "lineDelta": 4,
+                            "syntax": "class SpanishTranslator(threading.Thread):"
+                        }
+                    ]
+                },
+                "SpanishTranslator-1": {
+                    "startLine": 6,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "SpanishTranslator-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "SpanishTranslator-2": {
+                    "startLine": 13,
+                    "abstractions": [
+                        {
+                            "id": "SpanishTranslator-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "translatedMsg = GoogleTranslator(source=\"auto\", target=\"tamil\").translate(msg)"
+                        },
+                        {
+                            "id": "SpanishTranslator-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "TamilTranslator.py",
+            "threadId": 2,
+            "modules": {
+                "TamilTranslator-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "TamilTranslator-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "TamilTranslator-0-3",
+                            "lineDelta": 2,
+                            "syntax": "from deep_translator import GoogleTranslator"
+                        },
+                        {
+                            "id": "TamilTranslator-0-4",
+                            "lineDelta": 4,
+                            "syntax": "class TamilTranslator(threading.Thread):"
+                        }
+                    ]
+                },
+                "TamilTranslator-1": {
+                    "startLine": 6,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, id, queue, consumerQueue):"
+                        },
+                        {
+                            "id": "TamilTranslator-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=False)"
+                        },
+                        {
+                            "id": "TamilTranslator-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "TamilTranslator-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.id = id"
+                        },
+                        {
+                            "id": "TamilTranslator-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.consumer_queue = consumerQueue"
+                        },
+                        {
+                            "id": "TamilTranslator-1-5",
+                            "lineDelta": 5,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "TamilTranslator-2": {
+                    "startLine": 13,
+                    "abstractions": [
+                        {
+                            "id": "TamilTranslator-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1",
+                            "lineDelta": 1,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-1",
+                            "lineDelta": 2,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-1-1",
+                            "lineDelta": 3,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-2",
+                            "lineDelta": 4,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-2-1",
+                            "lineDelta": 5,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-3",
+                            "lineDelta": 7,
+                            "syntax": "translatedMsg = GoogleTranslator(source=\"auto\", target=\"tamil\").translate(msg)"
+                        },
+                        {
+                            "id": "TamilTranslator-2-1-4",
+                            "lineDelta": 8,
+                            "syntax": "self.consumer_queue.put({"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "Packer.py",
+            "threadId": 3,
+            "modules": {
+                "Packer-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "Packer-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import threading"
+                        },
+                        {
+                            "id": "Packer-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import queue"
+                        },
+                        {
+                            "id": "Packer-0-3",
+                            "lineDelta": 2,
+                            "syntax": "from TransactionDB import TransactionDB"
+                        },
+                        {
+                            "id": "Packer-0-4",
+                            "lineDelta": 4,
+                            "syntax": "class PackerThread(threading.Thread):"
+                        }
+                    ]
+                },
+                "Packer-1": {
+                    "startLine": 6,
+                    "abstractions": [
+                        {
+                            "id": "Packer-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self, queue):"
+                        },
+                        {
+                            "id": "Packer-1-1",
+                            "lineDelta": 1,
+                            "syntax": "super().__init__(daemon=True)"
+                        },
+                        {
+                            "id": "Packer-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.queue = queue"
+                        },
+                        {
+                            "id": "Packer-1-3",
+                            "lineDelta": 3,
+                            "syntax": "self.items = {}"
+                        },
+                        {
+                            "id": "Packer-1-4",
+                            "lineDelta": 4,
+                            "syntax": "self.start()"
+                        }
+                    ]
+                },
+                "Packer-2": {
+                    "startLine": 12,
+                    "abstractions": [
+                        {
+                            "id": "Packer-2",
+                            "lineDelta": 0,
+                            "syntax": "def run(self):"
+                        },
+                        {
+                            "id": "Packer-2-1",
+                            "lineDelta": 1,
+                            "syntax": "self.db = TransactionDB()"
+                        },
+                        {
+                            "id": "Packer-2-2",
+                            "lineDelta": 2,
+                            "syntax": "while True:"
+                        },
+                        {
+                            "id": "Packer-2-2-1",
+                            "lineDelta": 3,
+                            "syntax": "try:"
+                        },
+                        {
+                            "id": "Packer-2-2-1-1",
+                            "lineDelta": 4,
+                            "syntax": "msg = self.queue.get(timeout=10)"
+                        },
+                        {
+                            "id": "Packer-2-2-2",
+                            "lineDelta": 5,
+                            "syntax": "except queue.Empty:"
+                        },
+                        {
+                            "id": "Packer-2-2-2-1",
+                            "lineDelta": 6,
+                            "syntax": "continue"
+                        },
+                        {
+                            "id": "Packer-2-2-3",
+                            "lineDelta": 8,
+                            "syntax": "self.db.addTranslation(msg)"
+                        },
+                        {
+                            "id": "Packer-2-2-4",
+                            "lineDelta": 10,
+                            "syntax": "if self.db.isDone(msg):"
+                        },
+                        {
+                            "id": "Packer-2-2-4-1",
+                            "lineDelta": 11,
+                            "syntax": "self.db.setDone(msg)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "path": "TransactionDB.py",
+            "modules": {
+                "TransactionDB-global": {
+                    "startLine": 1,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-0-1",
+                            "lineDelta": 0,
+                            "syntax": "import sqlite3"
+                        },
+                        {
+                            "id": "TransactionDB-0-2",
+                            "lineDelta": 1,
+                            "syntax": "import atexit"
+                        },
+                        {
+                            "id": "TransactionDB-0-3",
+                            "lineDelta": 2,
+                            "syntax": "import uuid"
+                        },
+                        {
+                            "id": "TransactionDB-0-4",
+                            "lineDelta": 4,
+                            "syntax": "class TransactionDB():"
+                        }
+                    ]
+                },
+                "TransactionDB-1": {
+                    "startLine": 7,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-1",
+                            "lineDelta": 0,
+                            "syntax": "def __init__(self):"
+                        },
+                        {
+                            "id": "TransactionDB-1-1",
+                            "lineDelta": 1,
+                            "syntax": "atexit.register(self.cleanup_function)"
+                        },
+                        {
+                            "id": "TransactionDB-1-2",
+                            "lineDelta": 2,
+                            "syntax": "self.initializeDB()"
+                        }
+                    ]
+                },
+                "TransactionDB-2": {
+                    "startLine": 11,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-2",
+                            "lineDelta": 0,
+                            "syntax": "def cleanup_function(self):"
+                        },
+                        {
+                            "id": "TransactionDB-2-1",
+                            "lineDelta": 1,
+                            "syntax": "self.conn.close()"
+                        }
+                    ]
+                },
+                "TransactionDB-3": {
+                    "startLine": 14,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-3",
+                            "lineDelta": 0,
+                            "syntax": "def initializeDB(self):"
+                        },
+                        {
+                            "id": "TransactionDB-3-1",
+                            "lineDelta": 2,
+                            "syntax": "self.conn = sqlite3.connect(\"translations.db\")"
+                        },
+                        {
+                            "id": "TransactionDB-3-2",
+                            "lineDelta": 3,
+                            "syntax": "self.cursor = self.conn.cursor()"
+                        },
+                        {
+                            "id": "TransactionDB-3-3",
+                            "lineDelta": 5,
+                            "syntax": "self.cursor.execute(\"\"\" CREATE TABLE IF NOT EXISTS translation_jobs (...) \"\"\")"
+                        },
+                        {
+                            "id": "TransactionDB-3-4",
+                            "lineDelta": 16,
+                            "syntax": "self.conn.commit()"
+                        }
+                    ]
+                },
+                "TransactionDB-4": {
+                    "startLine": 32,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-4",
+                            "lineDelta": 0,
+                            "syntax": "def addJob(self, data):"
+                        },
+                        {
+                            "id": "TransactionDB-4-1",
+                            "lineDelta": 1,
+                            "syntax": "uid = str(uuid.uuid4())"
+                        },
+                        {
+                            "id": "TransactionDB-4-2",
+                            "lineDelta": 2,
+                            "syntax": "self.conn.execute(\"INSERT INTO translation_jobs ...\")"
+                        },
+                        {
+                            "id": "TransactionDB-4-3",
+                            "lineDelta": 9,
+                            "syntax": "self.conn.commit()"
+                        },
+                        {
+                            "id": "TransactionDB-4-4",
+                            "lineDelta": 11,
+                            "syntax": "return {\"uid\": uid, \"data\": data}"
+                        }
+                    ]
+                },
+                "TransactionDB-5": {
+                    "startLine": 48,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-5",
+                            "lineDelta": 0,
+                            "syntax": "def addTranslation(self, msg):"
+                        },
+                        {
+                            "id": "TransactionDB-5-1",
+                            "lineDelta": 1,
+                            "syntax": "self.conn.execute(\"UPDATE translation_jobs SET ...\")"
+                        },
+                        {
+                            "id": "TransactionDB-5-2",
+                            "lineDelta": 9,
+                            "syntax": "self.conn.commit()"
+                        }
+                    ]
+                },
+                "TransactionDB-6": {
+                    "startLine": 60,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-6",
+                            "lineDelta": 0,
+                            "syntax": "def isDone(self, msg):"
+                        },
+                        {
+                            "id": "TransactionDB-6-1",
+                            "lineDelta": 1,
+                            "syntax": "cur = self.conn.execute(\"SELECT french IS NOT NULL ...\")"
+                        },
+                        {
+                            "id": "TransactionDB-6-2",
+                            "lineDelta": 12,
+                            "syntax": "row = cur.fetchone()"
+                        },
+                        {
+                            "id": "TransactionDB-6-3",
+                            "lineDelta": 13,
+                            "syntax": "return bool(row[0]) if row else False"
+                        }
+                    ]
+                },
+                "TransactionDB-7": {
+                    "startLine": 75,
+                    "abstractions": [
+                        {
+                            "id": "TransactionDB-7",
+                            "lineDelta": 0,
+                            "syntax": "def setDone(self, msg):"
+                        },
+                        {
+                            "id": "TransactionDB-7-1",
+                            "lineDelta": 1,
+                            "syntax": "self.conn.execute(\"UPDATE translation_jobs SET done = 1\")"
+                        },
+                        {
+                            "id": "TransactionDB-7-2",
+                            "lineDelta": 9,
+                            "syntax": "self.conn.commit()"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

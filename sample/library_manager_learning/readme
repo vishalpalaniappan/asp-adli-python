@@ -1,0 +1,5 @@
+This folder contains a single threaded and instrumented library manager.
+
+The library_manager folder contains a design which identifies a constrint that a book must have a name that is not an empty string. This is because the first letter of the books name is used to find the slot for the book on the shelf. This constraint is intrisic to the design and is a result of the semantic relationships between the abstractions in the design and how they realize the intentions of the design.
+
+The design in this folder has evolved to reject books with invalid names (empty string). This prevents a downstream failure by refining the designs behavior to enforce an invariant.

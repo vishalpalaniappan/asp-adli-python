@@ -1,0 +1,1089 @@
+{
+    "description": "Metadata for abstractions in multi-threaded data processor.",
+    "format": "<filename>-[Repeat][<abstraction>-<step>]",
+    "abstractions": {
+        "producer-0": {
+            "intent": "Global path to initialize the data processor.",
+            "name": "global",
+            "type": "global",
+            "start": true
+        },
+        "producer-0-1": {
+            "intent": "Import the queue library."
+        },
+        "producer-0-2": {
+            "intent": "Import the sys library."
+        },
+        "producer-0-3": {
+            "intent": "Import the time library."
+        },
+        "producer-0-4": {
+            "intent": "Import the consumer thread."
+        },
+        "producer-0-5": {
+            "intent": "Import the TamilTranslator."
+        },
+        "producer-0-6": {
+            "intent": "Import the FrenchTranslator."
+        },
+        "producer-0-7": {
+            "intent": "Import the SpanishTranslator."
+        },
+        "producer-0-8": {
+            "intent": "Import the TransactionDB."
+        },
+        "producer-0-9": {
+            "intent": "Check if we are in main entry to program.",
+            "type": "conditional_branch"
+        },
+        "producer-0-9-1": {
+            "intent": "Start the producer.",
+            "type": "function_call",
+            "target": "producer-1"
+        },
+        "producer-1": {
+            "intent": "Define the producer module"
+        },
+        "producer-1-1": {
+            "intent": "Create the consumer queue.",
+            "functionalId": "CreateConsumerQueue",
+            "variables": [
+                {
+                    "name": "packer_queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-2": {
+            "intent": "Initialize the consumer thread",
+            "functionalId": "InitializeConsumer"
+        },
+        "producer-1-3": {
+            "intent": "Create queue to spanish translator.",
+            "functionalId": "CreateQueueSpanish",
+            "variables": [
+                {
+                    "name": "message_queue_spanish",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-4": {
+            "intent": "Create queue to french translator.",
+            "functionalId": "CreateQueueFrench",
+            "variables": [
+                {
+                    "name": "message_queue_french",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-5": {
+            "intent": "Create queue to tamil translator.",
+            "functionalId": "CreateQueueTamil",
+            "variables": [
+                {
+                    "name": "message_queue_tamil",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-6": {
+            "intent": "Create spanish translator..",
+            "functionalId": "CreateSpanishTranslator"
+        },
+        "producer-1-7": {
+            "intent": "Create french translator.",
+            "functionalId": "CreateFrenchTranslator"
+        },
+        "producer-1-8": {
+            "intent": "Create tamil translator.",
+            "functionalId": "CreateTamilTranslator"
+        },
+        "producer-1-9": {
+            "intent": "Initialize databse to store jobs.",
+            "functionalId": "InitializeDB",
+            "variables": [
+                {
+                    "name": "db",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10": {
+            "intent": "Enter the main data ingestor loop.",
+            "functionalId": "EnterDataIngestorLoop"
+        },
+        "producer-1-10-1": {
+            "intent": "Accept the data from the user.",
+            "functionalId": "AcceptData",
+            "variables": [
+                {
+                    "name": "data",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10-2": {
+            "intent": "Add job to cabinet.",
+            "functionalId": "AddJobToCabinet",
+            "variables": [
+                {
+                    "name": "job",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10-3": {
+            "intent": "Send text to spanish translator.",
+            "functionalId": "SendDataToSpanishTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_spanish",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10-4": {
+            "intent": "Send text to french translator.",
+            "functionalId": "SendTextToFrenchTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_french",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10-5": {
+            "intent": "Send data to tamil translator.",
+            "functionalId": "SendDataToTamilTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "message_queue_tamil",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "producer-1-10-6": {
+            "intent": "Sleep before accepting more text.",
+            "functionalId": "SleepToThrottleIngestion"
+        },
+        "SpanishTranslator-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "SpanishTranslator-0-1": {
+            "intent": "Import the threading library."
+        },
+        "SpanishTranslator-0-2": {
+            "intent": "Import the queue."
+        },
+        "SpanishTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "SpanishTranslator-0-4": {
+            "intent": "Define the SpanishTranslator class that runs in its own thread."
+        },
+        "SpanishTranslator-1": {
+            "intent": "Initialize the SpanishTranslator with the parent queue and the consumer queue",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "packerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-1-1": {
+            "intent": "Initialize the base SpanishTranslator class."
+        },
+        "SpanishTranslator-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-1-3": {
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-1-4": {
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-1-5": {
+            "intent": "Start the SpanishTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-2": {
+            "intent": "Define the run SpanishTranslator module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-2-1": {
+            "intent": "Enter main loop to receive task in SpanishTranslator.",
+            "functionalId": "MainLoopSpanishTranslator"
+        },
+        "SpanishTranslator-2-1-1": {
+            "intent": "Try to receive messages in SpanishTranslator.",
+            "functionalId": "TryToReceiveMessageSpanishTranslator"
+        },
+        "SpanishTranslator-2-1-1-1": {
+            "intent": "Receive message in SpanishTranslator.",
+            "functionalId": "ReceiveMessageSpanishTranslator",
+            "input": true,
+            "variables": [
+                {
+                    "name": "job",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-2-1-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionSpanishTranslator"
+        },
+        "SpanishTranslator-2-1-2-1": {
+            "intent": "Continue receiving messages in SpanishTranslator.",
+            "functionalId": "ContinueRecvMessagesSpanishTranslator"
+        },
+        "SpanishTranslator-2-1-3": {
+            "intent": "Translate the text into spanish.",
+            "functionalId": "TranslateIntoSpanish",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "SpanishTranslator-2-1-4": {
+            "intent": "Put the processed result in queue.",
+            "functionalId": "PutProcessedResultInQueueSpanishTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "TamilTranslator-0-1": {
+            "intent": "Import the threading library."
+        },
+        "TamilTranslator-0-2": {
+            "intent": "Import the queue."
+        },
+        "TamilTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "TamilTranslator-0-4": {
+            "intent": "Define the TamilTranslator class that runs in its own thread."
+        },
+        "TamilTranslator-1": {
+            "intent": "Initialize the TamilTranslator with the parent queue and the consumer queue",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "packerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-1": {
+            "intent": "Initialize the base TamilTranslator class."
+        },
+        "TamilTranslator-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-3": {
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-4": {
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-1-5": {
+            "intent": "Start the TamilTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2": {
+            "intent": "Define the run TamilTranslator module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2-1": {
+            "intent": "Enter main loop to receive task in TamilTranslator.",
+            "functionalId": "MainLoopTamilTranslator"
+        },
+        "TamilTranslator-2-1-1": {
+            "intent": "Try to receive messages in TamilTranslator.",
+            "functionalId": "TryToReceiveMessageTamilTranslator"
+        },
+        "TamilTranslator-2-1-1-1": {
+            "intent": "Receive message in TamilTranslator.",
+            "functionalId": "ReceiveMessageTamilTranslator",
+            "input": true,
+            "variables": [
+                {
+                    "name": "job",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2-1-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionTamilTranslator"
+        },
+        "TamilTranslator-2-1-2-1": {
+            "intent": "Continue receiving messages in TamilTranslator.",
+            "functionalId": "ContinueRecvMessagesTamilTranslator"
+        },
+        "TamilTranslator-2-1-3": {
+            "intent": "Translate the text into tamil.",
+            "functionalId": "TranslateIntoTamil",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TamilTranslator-2-1-4": {
+            "intent": "Put the processed result in queue.",
+            "functionalId": "PutProcessedResultInQueueTamilTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-0": {
+            "intent": "Global path for the worker thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "FrenchTranslator-0-1": {
+            "intent": "Import the threading library."
+        },
+        "FrenchTranslator-0-2": {
+            "intent": "Import the queue library."
+        },
+        "FrenchTranslator-0-3": {
+            "intent": "Import the google translator."
+        },
+        "FrenchTranslator-0-4": {
+            "intent": "Define the worker class that runs in its own thread."
+        },
+        "FrenchTranslator-1": {
+            "intent": "Initialize the FrenchTranslator with the parent queue and the consumer queue",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "id",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "packerQueue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-1": {
+            "intent": "Initialize the base FrenchTranslator class."
+        },
+        "FrenchTranslator-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-3": {
+            "intent": "Initialize the ID.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-4": {
+            "intent": "Initialize the consumer queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-1-5": {
+            "intent": "Start the FrenchTranslator.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2": {
+            "intent": "Define the run FrenchTranslator module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2-1": {
+            "intent": "Enter main loop to receive task in FrenchTranslator.",
+            "functionalId": "MainLoopFrenchTranslator"
+        },
+        "FrenchTranslator-2-1-1": {
+            "intent": "Try to receive messages in FrenchTranslator.",
+            "functionalId": "TryToReceiveMessageFrenchTranslator"
+        },
+        "FrenchTranslator-2-1-1-1": {
+            "intent": "Receive message in FrenchTranslator.",
+            "functionalId": "ReceiveMessageFrenchTranslator",
+            "input": true,
+            "variables": [
+                {
+                    "name": "job",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2-1-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "CatchNoMsgExceptionFrenchTranslator"
+        },
+        "FrenchTranslator-2-1-2-1": {
+            "intent": "Continue receiving messages in FrenchTranslator.",
+            "functionalId": "ContinueRecvMessagesWorker"
+        },
+        "FrenchTranslator-2-1-3": {
+            "intent": "Translate the text into french.",
+            "functionalId": "TranslateIntoFrench",
+            "variables": [
+                {
+                    "name": "translatedMsg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "FrenchTranslator-2-1-4": {
+            "intent": "Put the processed result in queue.",
+            "functionalId": "PutProcessedResultInQueueFrenchTranslator",
+            "output": [
+                {
+                    "function": "put"
+                }
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-0": {
+            "intent": "Global path for the packer thread module.",
+            "name": "global",
+            "type": "global"
+        },
+        "Packer-0-1": {
+            "intent": "Import the threading library."
+        },
+        "Packer-0-2": {
+            "intent": "Import the queue library."
+        },
+        "Packer-0-3": {
+            "intent": "Import the transaction DB."
+        },
+        "Packer-0-4": {
+            "intent": "Define the Packer class that runs in its own thread."
+        },
+        "Packer-1": {
+            "intent": "Initialize the PackerThread",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "queue",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-1-1": {
+            "intent": "Initialize the base Packer class."
+        },
+        "Packer-1-2": {
+            "intent": "Initialize the queue.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-1-3": {
+            "intent": "Initialize the items.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-1-4": {
+            "intent": "Start the packer thread.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-2": {
+            "intent": "Define the packer run module.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-2-1": {
+            "intent": "Initialize DB connection.",
+            "functionalId": "InitDBConn",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-2-2": {
+            "intent": "Enter main loop to receive results in Packer.",
+            "functionalId": "MainLoopPacker"
+        },
+        "Packer-2-2-1": {
+            "intent": "Try to receive messages in Packer.",
+            "functionalId": "TryToReceiveMessagePacker"
+        },
+        "Packer-2-2-1-1": {
+            "intent": "Receive message in Packer.",
+            "functionalId": "ReceiveMessagePacker",
+            "input": true,
+            "variables": [
+                {
+                    "name": "translatedJobPart",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-2-2-2": {
+            "intent": "Catch exception if no message was received",
+            "functionalId": "NoMsgExceptionPacker"
+        },
+        "Packer-2-2-2-1": {
+            "intent": "Continue receiving messages in Packer.",
+            "functionalId": "ContinueRecvMsgPacker"
+        },
+        "Packer-2-2-3": {
+            "intent": "Increment the number of parts done for the current data.",
+            "functionalId": "IncrementJobStatusPacker"
+        },
+        "Packer-2-2-4": {
+            "intent": "Check if all the parts are done",
+            "functionalId": "CheckIfJobIsDonePacker",
+            "behavioral_role": "selector",
+            "targetBehaviors": [
+                "SelectCleanupJob"
+            ],
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "Packer-2-2-4-1": {
+            "intent": "Delete the key from the items to cleanup.",
+            "functionalId": "CleanUpJobStatusPacker",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-0": {
+            "intent": "Global path for transaction persistence layer.",
+            "name": "global",
+            "type": "global"
+        },
+        "TransactionDB-0-1": {
+            "intent": "Import sqlite3 for persistent storage."
+        },
+        "TransactionDB-0-2": {
+            "intent": "Import atexit to ensure cleanup on shutdown."
+        },
+        "TransactionDB-0-3": {
+            "intent": "Import uuid generator for job identity."
+        },
+        "TransactionDB-0-4": {
+            "intent": "Define the TransactionDB abstraction."
+        },
+        "TransactionDB-1": {
+            "intent": "Initialize the transaction database abstraction.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-1-1": {
+            "intent": "Register cleanup handler on program exit.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-1-2": {
+            "intent": "Initialize database schema and connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-2": {
+            "intent": "Cleanup database resources.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-2-1": {
+            "intent": "Close database connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-3": {
+            "intent": "Initialize database schema.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-3-1": {
+            "intent": "Open SQLite database connection.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-3-2": {
+            "intent": "Create cursor for executing SQL statements.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-3-3": {
+            "intent": "Create translation_jobs table if it does not exist.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-3-4": {
+            "intent": "Commit schema changes.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-4": {
+            "intent": "Create a new translation job.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "data",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-4-1": {
+            "intent": "Generate unique identifier for the job.",
+            "variables": [
+                {
+                    "name": "uid",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-4-2": {
+            "intent": "Insert new job into database.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-4-3": {
+            "intent": "Persist the new job.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-4-4": {
+            "intent": "Return job descriptor for downstream workers."
+        },
+        "TransactionDB-5": {
+            "intent": "Store translation result for a job.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "msg",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-5-1": {
+            "intent": "Update translated language column.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-5-2": {
+            "intent": "Persist translation update.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-6": {
+            "intent": "Check if all translations are complete.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "uid",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-6-1": {
+            "intent": "Query completion state of all language columns.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "cur",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-6-2": {
+            "intent": "Fetch completion status.",
+            "variables": [
+                {
+                    "name": "row",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "cur",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-6-3": {
+            "intent": "Return completion decision."
+        },
+        "TransactionDB-7": {
+            "intent": "Mark job as completed.",
+            "type": "function",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                },
+                {
+                    "name": "uid",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-7-1": {
+            "intent": "Set done flag for job.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        },
+        "TransactionDB-7-2": {
+            "intent": "Persist completion state.",
+            "variables": [
+                {
+                    "name": "self",
+                    "scope": "local",
+                    "keys": []
+                }
+            ]
+        }
+    }
+}
