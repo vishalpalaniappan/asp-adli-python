@@ -20,7 +20,7 @@ def place_books_on_shelf_from_basket(book_shelf, basket):
         if (firstLetter not in book_shelf["value"]):
             book_shelf["value"][firstLetter] = []
 
-        book_shelf["value"][firstLetter].append(book["value"]['name'])
+        book_shelf["value"][firstLetter].append(book)
 
     return book_shelf
 
